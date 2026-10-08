@@ -4,6 +4,8 @@
 // @version      1.0.0
 // @description  扫描你转发的抽奖动态，建立台账，自动判定开奖与中奖，按风险分级后手动勾选批量清理；转发时可即时录入开奖信息。删除与取关均不可撤销，脚本绝不自动执行。
 // @author       糖心月
+// @updateURL    https://raw.githubusercontent.com/1710368392/bilibili-lottery-manager/main/bilibili-lottery-manager.user.js
+// @downloadURL  https://raw.githubusercontent.com/1710368392/bilibili-lottery-manager/main/bilibili-lottery-manager.user.js
 // @match        https://*.bilibili.com/*
 // @noframes     B 站视频播放器是 player.bilibili.com 的 iframe，域名同样匹配，不排除会导致同一页面出现两个悬浮按钮
 // @grant        GM_xmlhttpRequest
