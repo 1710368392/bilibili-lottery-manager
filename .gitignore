@@ -1,0 +1,11 @@
+# 工作区临时文件（不入库）
+nul
+_t.txt
+_css_var_transform.js
+
+# WorkBuddy 项目数据
+.workbuddy/
+
+# 系统文件
+Thumbs.db
+Desktop.ini
