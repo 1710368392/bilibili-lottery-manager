@@ -1345,7 +1345,7 @@
     .blm-statustag.blm-stopen .blm-caret{transform:rotate(180deg);opacity:.95;}
     /* 核验入口：挂在卡片右上角的凸起胶囊（纯文字链接太隐蔽，胶囊 + 微投影让它像颗「待办按钮」） */
     .blm-vfy{position:absolute;top:8px;right:12px;font-size:11px;line-height:1;cursor:pointer;
-      color:var(--blm-info-text);background:var(--blm-info-bg);padding:4px 10px;border-radius:999px;
+      color:var(--blm-info-text);background:var(--blm-bg);padding:4px 10px;border-radius:999px;
       border:1px solid var(--blm-border);
       box-shadow:0 1px 2px var(--blm-shadow);transition:transform .12s, box-shadow .12s;}
     .blm-vfy:hover{transform:translateY(-1px);box-shadow:0 3px 6px var(--blm-shadow);text-decoration:none;}
