@@ -1515,6 +1515,15 @@ S.allowCheckUnverified = false;
     src51.indexOf('<div class="blm-bar" id="blm-bar">') >= 0
       && src51.indexOf('<div class="blm-bar2" id="blm-bar2">') >= 0);
 
+  console.log('\n[52] v1.0.1 已删除条目状态封存（不再显示可改标记的误导提示）');
+  const src52 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
+  check('已删除条目不挂 data-wontoggle（点击入口摘除）',
+    src52.indexOf("(it.deleted ? '' : ' data-wontoggle=\"' + it.dynId + '\"')") >= 0);
+  check('已删除条目悬停提示改为「留档不可改」',
+    src52.indexOf('这条已从 B 站删除，状态只作留档，不可再改') >= 0);
+  check('toggleWon 兜底拦截已删除条目',
+    src52.indexOf('if (!it || it.deleted) return;') >= 0);
+
   console.log('\n结果: ' + passed + ' 通过, ' + failed + ' 失败');
   process.exit(failed ? 1 : 0);
 })();

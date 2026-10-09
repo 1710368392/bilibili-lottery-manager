@@ -2307,9 +2307,11 @@
                 + '加码 ' + escapeHtml(issuer) + '</span>'
               : '') +
             '<span class="blm-tag blm-statustag' + (it.won === true ? ' blm-wontag' : '') + '"'
-              + ' data-wontoggle="' + it.dynId + '"'
+              + (it.deleted ? '' : ' data-wontoggle="' + it.dynId + '"')
               + (it.won === true ? '' : ' style="color:' + st.color + '"')
-              + ' title="' + (it.won === true
+              + ' title="' + (it.deleted
+                  ? '这条已从 B 站删除，状态只作留档，不可再改'
+                  : it.won === true
                   ? '点一下取消中奖标记'
                   : '点一下：先标记「确认未中奖」（开放删除），再点一次标记「我中奖了」（锁定）') + '">'
               + st.label + '</span>' +
@@ -3114,7 +3116,8 @@
   function toggleWon(dynId) {
     const ledger = loadLedger();
     const it = ledger[dynId];
-    if (!it) return;
+    // 已删除条目状态封存：标签只是留档，不可再改（渲染层已摘掉点击入口，这里兜底）
+    if (!it || it.deleted) return;
     // 三态循环：未确认(null) → 确认未中奖(false) → 我中奖了(true) → 回到未确认(null)
     // 第一次点（从 null）先变成「确认未中奖」，安全地开放删除通道，而不是直接锁死成「中奖」。
     // 想真正标记中奖需要再点一次，避免手滑把一条动态永久锁死、再也删不掉。
