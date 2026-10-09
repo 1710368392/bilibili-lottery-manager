@@ -1504,6 +1504,17 @@ S.allowCheckUnverified = false;
   check('renderListInner 的计数块改为调用共用函数（无重复实现）',
     /refreshSelCounts\(items\);/.test(src50));
 
+  console.log('\n[51] v1.0.1 工具栏只在「动态台账」tab 显示');
+  const src51 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
+  check('存在显隐开关 setToolbarVisible', /function setToolbarVisible\(/.test(src51));
+  check('renderListInner 按 tab 决定工具栏显隐',
+    src51.indexOf("setToolbarVisible(curTab === 'list')") >= 0);
+  check('收起范围覆盖五段：扫描核验搜索行/排序筛选行/时间范围/chips/只看UP',
+    ['blm-bar', 'blm-bar2', 'blm-timerow', 'blm-chips', 'blm-only'].every(id => src51.indexOf("'" + id + "'") >= 0));
+  check('两个工具栏 div 已挂 id 供开关寻址',
+    src51.indexOf('<div class="blm-bar" id="blm-bar">') >= 0
+      && src51.indexOf('<div class="blm-bar2" id="blm-bar2">') >= 0);
+
   console.log('\n结果: ' + passed + ' 通过, ' + failed + ' 失败');
   process.exit(failed ? 1 : 0);
 })();

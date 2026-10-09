@@ -1481,12 +1481,12 @@
       <button data-tab="stats">中奖统计</button>
       <button data-tab="set">设置</button>
     </div>
-    <div class="blm-bar">
+    <div class="blm-bar" id="blm-bar">
       <button class="blm-btn" id="blm-scan">扫描建档</button>
       <button class="blm-btn" id="blm-verify">核验开奖状态</button>
       <span class="blm-searchwrap"><input id="blm-search" placeholder="搜 UP 主 / 正文关键词" autocomplete="off"><button id="blm-sclear" title="退出检索：清空搜索词 + 取消「只看 UP」（也可在搜索框里按 Esc）" style="display:none">×</button></span>
     </div>
-    <div class="blm-bar2">
+    <div class="blm-bar2" id="blm-bar2">
       <select id="blm-sort" title="排序方式">
         <option value="pub">按转发时间</option>
         <option value="draw">按开奖时间</option>
@@ -2132,8 +2132,18 @@
     }
   }
 
+  // 筛选/操作工具栏（扫描核验搜索行、排序筛选行、时间范围、状态 chips、只看UP 条）
+  // 只在「动态台账」tab 有意义 —— 其余三个 tab（关注/统计/设置）整体收起，别占地方
+  function setToolbarVisible(show) {
+    ['blm-bar', 'blm-bar2', 'blm-timerow', 'blm-chips', 'blm-only'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = show ? '' : 'none';
+    });
+  }
+
   function renderListInner() {
     const body = document.getElementById('blm-body');
+    setToolbarVisible(curTab === 'list');
     if (curTab === 'set') { renderSettings(); return; }
     if (curTab === 'follow') { renderFollow(); return; }
     if (curTab === 'stats') { renderStats(); return; }
