@@ -3158,22 +3158,23 @@
     const it = loadLedger()[dynId];
     if (!it || it.deleted) return;
     const opts = [
-      { v: null,  label: '结果未定', desc: '还没确认中没中奖' },
-      { v: true,  label: '已中奖',   desc: '领奖凭证，自动锁定、移出勾选' },
-      { v: false, label: '未中奖',   desc: '开放删除（自发等 7 天缓冲，官方直接放开）' }
+      { v: null,  label: '结果未定' },
+      { v: true,  label: '已中奖' },
+      { v: false, label: '未中奖' }
     ];
     const cur = it.won === true ? true : (it.won === false ? false : null);
     const menu = document.createElement('div');
     menu.id = 'blm-stmenu';
     menu.style.cssText = 'position:fixed;z-index:99999;background:var(--blm-bg,#fff);border:1px solid var(--blm-border,#E3E5E7);'
-      + 'border-radius:10px;padding:6px;min-width:216px;box-shadow:0 4px 16px rgba(0,0,0,.14);';
+      + 'border-radius:8px;padding:3px;min-width:88px;';
     opts.forEach(o => {
       const on = o.v === cur;
       const b = document.createElement('div');
-      b.style.cssText = 'display:flex;align-items:flex-start;gap:8px;padding:7px 10px;border-radius:7px;cursor:pointer;font-size:12px;line-height:1.5;'
-        + (on ? 'background:#FBEAF0;color:#993556;' : 'color:var(--blm-text,#18191C);');
-      b.innerHTML = '<span style="width:14px;flex:none;text-align:center;">' + (on ? '✓' : '') + '</span>'
-        + '<span><b style="font-weight:600;">' + o.label + '</b><br><span style="font-size:11px;opacity:.65;">' + o.desc + '</span></span>';
+      b.style.cssText = 'display:flex;align-items:center;justify-content:space-between;gap:6px;padding:5px 9px;border-radius:5px;cursor:pointer;font-size:12px;'
+        + (on ? 'background:#FBEAF0;color:#993556;font-weight:600;' : 'color:var(--blm-text,#18191C);');
+      b.innerHTML = '<span>' + o.label + '</span>' + (on ? '<span style="font-size:11px;">✓</span>' : '');
+      b.addEventListener('mouseenter', () => { if (!on) b.style.background = 'var(--blm-hover,#F6F7F8)'; });
+      b.addEventListener('mouseleave', () => { if (!on) b.style.background = ''; });
       b.addEventListener('click', ev => {
         ev.stopPropagation();
         setWonState(dynId, o.v);
@@ -3184,7 +3185,7 @@
     document.body.appendChild(menu);
     const r = anchor.getBoundingClientRect();
     menu.style.left = Math.max(8, Math.min(r.left, window.innerWidth - menu.offsetWidth - 8)) + 'px';
-    menu.style.top = (r.bottom + 6 + menu.offsetHeight > window.innerHeight ? r.top - menu.offsetHeight - 6 : r.bottom + 6) + 'px';
+    menu.style.top = (r.bottom + 4 + menu.offsetHeight > window.innerHeight ? r.top - menu.offsetHeight - 4 : r.bottom + 4) + 'px';
     setTimeout(() => { document.addEventListener('click', closeStatusMenu, { once: true }); }, 0);
   }
 
