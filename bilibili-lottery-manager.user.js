@@ -1808,6 +1808,49 @@
   // 全量重建有两个代价：几百张卡片 innerHTML 重排（点击卡顿）；滚动容器内容被整体替换，
   // 浏览器滚动锚点失效（页面自动跳滚）。锁/勾选只影响这张卡片自己的样式和全局计数，
   // 没必要动整个列表。
+  // 状态标签 HTML：锁住时摘掉点击入口（data-stmenu + 小箭头），只读展示 —— 锁的语义是
+  // 「这条先别动」：不能勾选删除，也不能改中奖状态、改开奖时间（解锁后入口自动恢复）
+  function statusTagHtml(it, st) {
+    const gateOpen = unlocked.has(it.dynId);
+    const clickable = !it.deleted && gateOpen;
+    return '<span class="blm-tag blm-statustag' + (it.won === true ? ' blm-wontag' : '') + '"'
+      + (clickable ? ' data-stmenu="' + it.dynId + '"' : '')
+      + (it.won === true ? '' : ' style="color:' + st.color + '"')
+      + ' title="' + (it.deleted
+          ? '这条已从 B 站删除，状态只作留档，不可再改'
+          : clickable
+            ? '点一下选择中奖状态：结果未定 / 已中奖 / 未中奖'
+            : '上锁了：点左上角的锁解锁后才能改状态') + '">'
+      + st.label
+      + (clickable ? '<svg class="blm-caret" viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>' : '')
+      + '</span>';
+  }
+
+  // 时间行 HTML：转发胶囊永远只读；开奖胶囊解锁时可点击改时间，锁住时只读 + 提示
+  function metaChipsHtml(it, now) {
+    const gateOpen = unlocked.has(it.dynId);
+    const clickCls = gateOpen ? ' blm-chip-click' : '';
+    const editAttr = gateOpen ? ' data-act="edit" data-dyn="' + it.dynId + '"' : '';
+    const hint = gateOpen ? '' : '（上锁中：点左上角的锁解锁后才能改）';
+    let extra = '';
+    extra += timeChip('转发', it.pubTs ? fmtTime(it.pubTs).slice(0, 16) : '未知', 'pub');
+    if (it.drawTs) {
+      if (it.drawTs <= now) {
+        extra += '<span class="blm-chip' + clickCls + '" style="background:var(--blm-ok-bg);color:var(--blm-ok-text)"' + editAttr
+          + ' title="' + fmtTime(it.drawTs) + ' 开奖' + (gateOpen ? '，点击修改开奖时间' : hint) + '">已开奖 · ' + relTime(it.drawTs) + '</span>';
+      } else {
+        extra += '<span class="blm-chip' + clickCls + '" style="background:var(--blm-warn-bg);color:var(--blm-warn-text)"' + editAttr
+          + ' title="' + fmtTime(it.drawTs) + ' 开奖' + (gateOpen ? '，点击修改开奖时间' : hint) + '">开奖 · <span class="blm-count" data-ts="' + it.drawTs + '">'
+          + fmtCountdown(it.drawTs - now) + '</span></span>';
+      }
+    } else {
+      extra += '<span class="blm-chip' + clickCls + '" style="background:var(--blm-grey-bg);color:var(--blm-grey-text)"' + editAttr
+        + ' title="' + (gateOpen ? '点击录入开奖时间' : '上锁中：点左上角的锁解锁后才能录入开奖时间') + '">开奖 未录入</span>';
+    }
+    if (it.forLotteryFollow) extra += '<span class="blm-tag">为抽奖关注</span>';
+    return extra;
+  }
+
   function refreshRowState(dynId) {
     const body = document.getElementById('blm-body');
     const anchor = body && body.querySelector('[data-lock="' + dynId + '"],[data-ck="' + dynId + '"]');
@@ -1831,17 +1874,12 @@
       ckEl.className = 'blm-ck' + (isSel ? ' on' : '') + (canSel ? '' : ' dis');
       ckEl.title = canSel ? '选定这条' : '上锁了，点左上角的锁解锁后才能选';
     }
-    // 状态标签：文字/颜色/金边随新状态走（原地刷新时菜单选完状态不重排整卡）
-    const tagEl = row.querySelector('[data-stmenu="' + dynId + '"]');
-    if (tagEl) {
-      tagEl.className = 'blm-tag blm-statustag' + (st.key === 'won' ? ' blm-wontag' : '')
-        + (stMenuOpenId === dynId ? ' blm-stopen' : '');
-      if (st.key === 'won') tagEl.removeAttribute('style');
-      else tagEl.style.color = st.color;
-      tagEl.innerHTML = st.label
-        + '<svg class="blm-caret" viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
-      tagEl.title = '点一下选择中奖状态：结果未定 / 已中奖 / 未中奖';
-    }
+    // 状态标签 + 时间行：文字/颜色随新状态走，点击入口随锁状态走
+    // （锁上 → 摘掉 data-stmenu/箭头/edit 入口；解锁 → 恢复。用 outerHTML 整体替换最省心）
+    const tagEl = row.querySelector('.blm-statustag');
+    if (tagEl) tagEl.outerHTML = statusTagHtml(it, st);
+    const metaEl = row.querySelector('.blm-meta');
+    if (metaEl) metaEl.innerHTML = metaChipsHtml(it, Date.now());
     refreshSelCounts(curItems);
     return true;
   }
@@ -1849,6 +1887,7 @@
   function toggleLock(dynId) {
     const it = loadLedger()[dynId];
     if (!it || it.deleted) return;
+    if (stMenuOpenId === dynId) closeStatusMenu();   // 标签即将原地重建，开着的菜单先收
     if (unlocked.has(dynId)) { unlocked.delete(dynId); selected.delete(dynId); }
     else unlocked.add(dynId);
     if (!refreshRowState(dynId)) renderList();   // 卡片不在当前页（罕见）才全量重建
@@ -2295,24 +2334,10 @@
       const row = document.createElement('div');
       row.className = 'blm-item' + (canSel ? '' : ' locked') + (tbm ? ' hasbm' : '');
 
-      // C 时间行：两个胶囊都可点击 → 直接改开奖时间（原「改开奖时间」按钮已并入这里）。
+      // C 时间行：转发胶囊只读；开奖胶囊解锁时可点击改时间、锁住时只读（见 metaChipsHtml）。
       // 开奖胶囊精简为「状态 · 相对时间」，完整日期收进悬停提示 —— 长版文案会让
       // 官方卡片（meta 行还有 58px 书签缩进）装不下，挤成两行
-      let extra = '';
-      extra += timeChip('转发', it.pubTs ? fmtTime(it.pubTs).slice(0, 16) : '未知', 'pub');
-      if (it.drawTs) {
-        if (it.drawTs <= now) {
-          extra += '<span class="blm-chip blm-chip-click" style="background:var(--blm-ok-bg);color:var(--blm-ok-text)" data-act="edit" data-dyn="' + it.dynId
-            + '" title="' + fmtTime(it.drawTs) + ' 开奖，点击修改开奖时间">已开奖 · ' + relTime(it.drawTs) + '</span>';
-        } else {
-          extra += '<span class="blm-chip blm-chip-click" style="background:var(--blm-warn-bg);color:var(--blm-warn-text)" data-act="edit" data-dyn="' + it.dynId
-            + '" title="' + fmtTime(it.drawTs) + ' 开奖，点击修改开奖时间">开奖 · <span class="blm-count" data-ts="' + it.drawTs + '">'
-            + fmtCountdown(it.drawTs - now) + '</span></span>';
-        }
-      } else {
-        extra += '<span class="blm-chip blm-chip-click" style="background:var(--blm-grey-bg);color:var(--blm-grey-text)" data-act="edit" data-dyn="' + it.dynId + '" title="点击录入开奖时间">开奖 未录入</span>';
-      }
-      if (it.forLotteryFollow) extra += '<span class="blm-tag">为抽奖关注</span>';
+      const extra = metaChipsHtml(it, now);
 
       // 右下角（编号左侧）：参与热度 + 重复标记
       const dupN = (it.origId && dupMapAll[dupKeyOf(it)] > 1) ? dupMapAll[dupKeyOf(it)] : 0;
@@ -2368,15 +2393,7 @@
                 + ' 的动态并在转发文案里自己加码抽奖。开奖信息以加码文案为准，这条别和源动态的抽奖搞混">'
                 + '加码 ' + escapeHtml(issuer) + '</span>'
               : '') +
-            '<span class="blm-tag blm-statustag' + (it.won === true ? ' blm-wontag' : '') + '"'
-              + (it.deleted ? '' : ' data-stmenu="' + it.dynId + '"')
-              + (it.won === true ? '' : ' style="color:' + st.color + '"')
-              + ' title="' + (it.deleted
-                  ? '这条已从 B 站删除，状态只作留档，不可再改'
-                  : '点一下选择中奖状态：结果未定 / 已中奖 / 未中奖') + '">'
-              + st.label
-              + (it.deleted ? '' : '<svg class="blm-caret" viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>')
-              + '</span>' +
+            + statusTagHtml(it, st) +
             // 核验入口：只给「官方抽奖被你手动覆盖过」的条目（见 needVerify）
             (needVerify(it) ? '' : '') +          '</div>' +
           '<div class="blm-txtwrap">' +

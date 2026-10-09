@@ -1529,8 +1529,9 @@ S.allowCheckUnverified = false;
 
   console.log('\n[52] v1.0.1 已删除条目状态封存（不再显示可改标记的误导提示）');
   const src52 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
-  check('已删除条目不挂 data-stmenu（点击入口摘除）',
-    src52.indexOf("(it.deleted ? '' : ' data-stmenu=\"' + it.dynId + '\"')") >= 0);
+  check('已删除条目不挂 data-stmenu（点击入口摘除，现在统一走 statusTagHtml）',
+    src52.indexOf('const clickable = !it.deleted && gateOpen;') >= 0
+      && src52.indexOf("(clickable ? ' data-stmenu=\"' + it.dynId + '\"' : '')") >= 0);
   check('已删除条目悬停提示改为「留档不可改」',
     src52.indexOf('这条已从 B 站删除，状态只作留档，不可再改') >= 0);
   check('setWonState 兜底拦截已删除条目',
@@ -1554,8 +1555,9 @@ S.allowCheckUnverified = false;
     /function closeStatusMenu\(/.test(src53) && /function ensureStatusMenuOutsideClose\(/.test(src53)
       && src53.indexOf("if (stMenuBound) return;") >= 0
       && src53.indexOf("{ once: true }); }, 0);") < 0);
-  check('refreshRowState 原地更新状态标签（不跳滚）',
-    src53.indexOf("const tagEl = row.querySelector('[data-stmenu=\"' + dynId + '\"]');") >= 0);
+  check('refreshRowState 原地更新状态标签（不跳滚，整体替换 outerHTML）',
+    src53.indexOf("const tagEl = row.querySelector('.blm-statustag');") >= 0
+      && src53.indexOf('tagEl.outerHTML = statusTagHtml(it, st);') >= 0);
 
   console.log('\n[54] v1.0.1 body 弹窗纳入主题变量作用域（修详情页透明）');
   const src54 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
@@ -1610,6 +1612,23 @@ S.allowCheckUnverified = false;
       && src58.indexOf("Array.isArray(u.curFilter)") >= 0);
   check('状态菜单改完状态：新状态仍 match 筛选才原地刷新，否则全量渲染',
     src58.indexOf('if (!filterSet.size || filterSet.has(nk)) {') >= 0);
+
+  console.log('\n[59] 锁状态控制状态标签与开奖时间的可改性');
+  const src59 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
+  check('statusTagHtml：锁住时摘 data-stmenu + 箭头，提示「解锁后才能改状态」',
+    /function statusTagHtml\(/.test(src59)
+      && src59.indexOf("'上锁了：点左上角的锁解锁后才能改状态'") >= 0);
+  check('metaChipsHtml：锁住时摘 data-act="edit" + 点击样式，提示解锁',
+    /function metaChipsHtml\(/.test(src59)
+      && src59.indexOf("const editAttr = gateOpen ? ' data-act=\"edit\" data-dyn=\"' + it.dynId + '\"' : '';") >= 0
+      && src59.indexOf('上锁中：点左上角的锁解锁后才能改') >= 0);
+  check('渲染循环改用两个公共函数（渲染与原地刷新共用，锁切换即时生效）',
+    src59.indexOf('const extra = metaChipsHtml(it, now);') >= 0
+      && src59.indexOf('+ statusTagHtml(it, st) +') >= 0);
+  check('refreshRowState 同步时间行（metaEl.innerHTML = metaChipsHtml）',
+    src59.indexOf("metaEl.innerHTML = metaChipsHtml(it, Date.now());") >= 0);
+  check('toggleLock 关掉该卡片开着的状态菜单（标签即将重建）',
+    src59.indexOf('if (stMenuOpenId === dynId) closeStatusMenu();') >= 0);
 
   console.log('\n结果: ' + passed + ' 通过, ' + failed + ' 失败');
   process.exit(failed ? 1 : 0);
