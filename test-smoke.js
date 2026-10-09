@@ -1431,8 +1431,8 @@ S.allowCheckUnverified = false;
     src47.indexOf("(u.curFilter === 'safe') ? 'all' : u.curFilter") >= 0);
   check('卡片绿色「建议删除」状态标签保留',
     /key: 'safe', label: '建议删除'/.test(src47));
-  check('selectAllSafe 勾选后给 toast 明细汇总',
-    /已勾选 ' \+ targets\.length \+ ' 条安全可删的动态/.test(src47));
+  check('selectAllSafe 勾选后给 toast 明细汇总（点明是当前筛选结果）',
+    /已勾选当前筛选结果里 ' \+ targets\.length \+ ' 条安全可删的动态/.test(src47));
   check('toast 不再提示带⚠️的候选（已按用户要求精简）',
     src47.indexOf("条也能删、但有小风险") < 0 && src47.indexOf("想一起删就用「全选」") < 0);
   check('取消勾选也有 toast 反馈', /已取消勾选 ' \+ targets\.length \+ ' 条/.test(src47));
@@ -1440,8 +1440,13 @@ S.allowCheckUnverified = false;
     src47.indexOf("'<span class=\"blm-badge\">' + targets.length + '</span>'") >= 0);
   check('徽标样式只保留主色计数（灰色⚠️徽标已移除）',
     src47.indexOf('.blm-bar2 .blm-badge{') >= 0 && src47.indexOf('blm-badge2') < 0);
-  check('按钮初始 title 说明零风险语义',
-    src47.indexOf('一键勾选全台账零风险的删除候选') >= 0);
+  check('按钮初始 title 说明零风险语义（且限当前筛选，不跨视图捞人）',
+    src47.indexOf('一键勾选当前筛选结果里零风险的删除候选') >= 0 && src47.indexOf('一键勾选全台账') < 0);
+  check('可删徽标计数基于当前筛选视图 items 而非全台账',
+    /徽标只统计\*\*当前筛选结果\*\*/.test(src47) && src47.indexOf('const targets = items.filter(it => {\n          const st = computeStatus(it);\n          return st.deletable && !st.warn') >= 0);
+  check('selectAllSafe 空态区分：无记录 vs 无零风险条目',
+    src47.indexOf('当前筛选条件下没有记录，先调整筛选或点「全部」看看。') >= 0
+      && src47.indexOf('当前筛选结果里没有零风险可删的条目。') >= 0);
   check('版本号已升至 1.0.1', src47.indexOf('@version      1.0.1') >= 0 && src47.indexOf("VERSION = '1.0.1'") >= 0);
 
   console.log('\n[48] v1.0.1 「清理重复」按钮并入「可删」（重复视图上下文语义）');
@@ -1450,8 +1455,8 @@ S.allowCheckUnverified = false;
   check('cleanDupEntries 保底清理函数保留', /function cleanDupEntries\(/.test(src48));
   check('「可删」在重复视图下分流到保底清理',
     src48.indexOf("if (curFilter === 'dup') { cleanDupEntries(); return; }") >= 0);
-  check('其他视图仍走零风险勾选（分支并存）',
-    src48.indexOf("if (curFilter === 'dup') {") < src48.indexOf("const targets = allItems.filter(it => {"));
+  check('其他视图仍走零风险勾选（分支并存，且基于当前筛选视图 items）',
+    src48.indexOf("if (curFilter === 'dup') {") < src48.indexOf("const targets = items.filter(it => {"));
   check('重复视图徽标显示可清理的多余条数',
     /「重复」视图：徽标 = 按保底规则可清理的多余条数/.test(src48) && src48.indexOf("'<span class=\"blm-badge\">' + extra + '</span>'") >= 0);
   check('重复视图 title 说明保底规则与未开奖可能性',

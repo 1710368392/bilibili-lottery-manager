@@ -1495,7 +1495,7 @@
         <button data-type="all" class="on">全部</button><button data-type="official">官方</button><button data-type="self">自发</button><button data-type="other" title="类型还没核验判定过的 + 加码抽奖（转发链上游另一位 UP 加码开的奖）">其他</button>
       </span>
       <button class="blm-btn" id="blm-sel-cur" title="勾选当前筛选结果里所有可以删的条目"><span class="blm-ck"></span>全选</button>
-      <button class="blm-btn" id="blm-sel-all" title="一键勾选全台账零风险的删除候选（官方已确认未中奖等）；带⚠️警告的候选不在其中；在「重复」筛选下则按保底规则勾选每组多余条目"><span class="blm-ck"></span>可删</button>
+      <button class="blm-btn" id="blm-sel-all" title="一键勾选当前筛选结果里零风险的删除候选（官方已确认未中奖等）；在「重复」筛选下则按保底规则勾选每组多余条目"><span class="blm-ck"></span>可删</button>
       <button class="blm-iconbtn" id="blm-sortdir" title="切换正序 / 倒序" style="margin-left:auto">
         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4v16"/><path d="M4 17l3 3 3-3"/><path d="M17 20V4"/><path d="M14 7l3-3 3 3"/></svg>
       </button>
@@ -2129,17 +2129,17 @@
         selAllBtn.title = '在「重复」视图下点此清理：每组自动保留 1 条（中奖的优先），其余 '
           + extra + ' 条多余转发全部勾选（可含未开奖条目——组内有保底，删除不影响参与资格）';
       } else {
-        const targets = allItems.filter(it => {
+        // 徽标只统计**当前筛选结果**里的零风险候选 —— 视图里 0 条时按钮就是 0，不跨视图捞人
+        const targets = items.filter(it => {
           const st = computeStatus(it);
           return st.deletable && !st.warn && !it.deleted;
         });
         const all = targets.length > 0 && targets.every(it => selected.has(it.dynId));
-        // 徽标：只显示零风险候选数（实时跟台账走）
         selAllBtn.innerHTML = '<span class="blm-ck' + (all ? ' on' : '') + '"></span>可删 '
           + '<span class="blm-badge">' + targets.length + '</span>';
         selAllBtn.title = all
           ? '「可删」条目已全选，点一下取消'
-          : '一键勾选全台账零风险的删除候选（官方已确认未中奖等，当前 ' + targets.length + ' 条）';
+          : '一键勾选当前筛选结果里零风险的删除候选（官方已确认未中奖等，当前 ' + targets.length + ' 条）';
       }
     }
 
@@ -2407,19 +2407,22 @@
   }
 
   function selectAllSafe() {
-    // 「可删」= 帮我把当前视角下该删的都勾上（行为跟随筛选上下文）：
+    // 「可删」= 帮我把**当前筛选结果**里该删的都勾上（行为跟随筛选上下文）：
     //  「重复」视图 → 按保底规则清理每组多余条目（每组保留 1 条，中奖优先；可含未开奖——组内有保底就安全）；
-    //  其他视图   → 全台账零风险条目（官方已确认未中奖等），带⚠️警告的不碰。
+    //  其他视图   → 当前筛选结果里的零风险条目（官方已确认未中奖等），带⚠️警告的不碰。
+    //  注意：不做跨视图捞人 —— 筛选「官方」时就只勾官方的，视图里 0 条就是 0 条。
     if (curFilter === 'dup') { cleanDupEntries(); return; }
     const l = loadLedger();
+    const curIds = {};
+    curItems.forEach(it => { curIds[it.dynId] = true; });
     const targets = Object.values(l).filter(it => {
-      const st = computeStatus(it);
-      return st.deletable && !st.warn && !it.deleted;
+      return curIds[it.dynId] && !it.deleted && (() => { const st = computeStatus(it); return st.deletable && !st.warn; })();
     });
     if (!targets.length) {
       if (!Object.keys(l).length) { toast('台账还是空的，先点「扫描建档」。'); return; }
-      toast('当前没有零风险的「建议删除」条目。\n\n先点「核验开奖状态」把能查的查清楚；'
-        + '剩下的能勾选，但删除时会有额外警告。');
+      toast(curItems.length
+        ? '当前筛选结果里没有零风险可删的条目。'
+        : '当前筛选条件下没有记录，先调整筛选或点「全部」看看。');
       return;
     }
     const allSelected = targets.every(it => selected.has(it.dynId));
@@ -2430,7 +2433,7 @@
       toast('已取消勾选 ' + targets.length + ' 条。');
       return;
     }
-    toast('已勾选 ' + targets.length + ' 条安全可删的动态。\n\n'
+    toast('已勾选当前筛选结果里 ' + targets.length + ' 条安全可删的动态。\n\n'
       + '点「删除选中」执行，删前会再和你确认一次。');
   }
 
