@@ -1544,6 +1544,13 @@ S.allowCheckUnverified = false;
   check('refreshRowState 原地更新状态标签（不跳滚）',
     src53.indexOf("const tagEl = row.querySelector('[data-stmenu=\"' + dynId + '\"]');") >= 0);
 
+  console.log('\n[54] v1.0.1 body 弹窗纳入主题变量作用域（修详情页透明）');
+  const src54 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
+  check('详情浮窗 #blm-detailbox 挂进亮/暗两套 token 作用域',
+    /#blm-panel,#blm-fab,#blm-float,#blm-detailbox,#blm-diag,#blm-stmenu\{/.test(src54)
+      && src54.indexOf('body.blm-dark #blm-detailbox') >= 0);
+  check('token 作用域注释说明踩坑原因', src54.indexOf('整个弹窗透明') >= 0);
+
   console.log('\n结果: ' + passed + ' 通过, ' + failed + ' 失败');
   process.exit(failed ? 1 : 0);
 })();

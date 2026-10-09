@@ -1165,7 +1165,9 @@
 
   GM_addStyle(`
     /* ============ 主题 token：亮色（默认） ============ */
-    #blm-panel,#blm-fab,#blm-float{
+    /* #blm-detailbox / #blm-diag 是挂在 body 上的弹窗，不在面板里，必须一并进变量作用域，
+       否则 background:var(--blm-bg) 取不到值 → 整个弹窗透明（2026-10-10 用户实测踩坑） */
+    #blm-panel,#blm-fab,#blm-float,#blm-detailbox,#blm-diag,#blm-stmenu{
       --blm-bg:#ffffff; --blm-bg2:#f6f7f8; --blm-bg3:#fafbfc;
       --blm-text:#18191c; --blm-text2:#61666d; --blm-text3:#9499a0; --blm-text4:#c9ccd0;
       --blm-border:#e3e5e7; --blm-border2:#f1f2f3; --blm-shadow:rgba(0,0,0,.18);
@@ -1179,7 +1181,7 @@
       --blm-amber-conf-bg:#FFE2D1; --blm-amber-conf2:#FFC09E; --blm-amber-conf-text:#8C4A22;
     }
     /* ============ 主题 token：暗色（body.blm-dark 时生效） ============ */
-    body.blm-dark #blm-panel, body.blm-dark #blm-fab, body.blm-dark #blm-float{
+    body.blm-dark #blm-panel, body.blm-dark #blm-fab, body.blm-dark #blm-float, body.blm-dark #blm-detailbox, body.blm-dark #blm-diag, body.blm-dark #blm-stmenu{
       --blm-bg:#18191c; --blm-bg2:#1e2022; --blm-bg3:#232428;
       --blm-text:#e3e5e7; --blm-text2:#9499a0; --blm-text3:#6b7075; --blm-text4:#565a5f;
       --blm-border:#2f3235; --blm-border2:#26282b; --blm-shadow:rgba(0,0,0,.5);
