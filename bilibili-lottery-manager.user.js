@@ -3167,7 +3167,7 @@
     const cur = it.won === true ? true : (it.won === false ? false : null);
     const menu = document.createElement('div');
     menu.id = 'blm-stmenu';
-    menu.style.cssText = 'position:fixed;z-index:99999;background:var(--blm-bg,#fff);border:1px solid var(--blm-border,#E3E5E7);'
+    menu.style.cssText = 'position:fixed;z-index:2147483006;background:var(--blm-bg,#fff);border:1px solid var(--blm-border,#E3E5E7);'
       + 'border-radius:8px;padding:3px;min-width:88px;';
     opts.forEach(o => {
       const on = o.v === cur;
