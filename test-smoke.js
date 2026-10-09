@@ -1261,7 +1261,7 @@ S.allowCheckUnverified = false;
   console.log('\n[39] 清理重复 / 组安全线');
   const src39 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
   check('「清理重复」已并入「可删」（v1.0.1：无独立按钮，重复视图下点「可删」触发）',
-    src39.indexOf('id="blm-dupclean"') < 0 && src39.indexOf("if (curFilter === 'dup') { cleanDupEntries(); return; }") >= 0);
+    src39.indexOf('id="blm-dupclean"') < 0 && src39.indexOf("if (isDupView()) { cleanDupEntries(); return; }") >= 0);
   check('保留优先级：中奖条目优先', src39.indexOf("sorted.find(it => it.won === true) || sorted[0]") >= 0);
   check('删除防线按整批计算组内剩余（防同组多条互相看不见）',
     src39.indexOf('delPend[dupKeyOf(it)]') >= 0 && src39.indexOf('delPend[dupKeyOf(it)] || 0) < 1') >= 0);
@@ -1437,8 +1437,9 @@ S.allowCheckUnverified = false;
   check('状态筛选里已移除「建议删除」', !!fm && fm[0].indexOf("key: 'safe'") < 0);
   check('其余状态筛选完好（待确认/未开奖/缓冲期/日期不明/已中奖）',
     !!fm && ['needcheck', 'pending', 'cooldown', 'unknown', 'won'].every(k => fm[0].indexOf("key: '" + k + "'") >= 0));
-  check('旧 UI 状态兜底：safe 回退到 all',
-    src47.indexOf("(u.curFilter === 'safe') ? 'all' : u.curFilter") >= 0);
+  check('旧 UI 状态兜底：safe/旧单选字符串收进多选集合（safe 回空集 = 全部）',
+    src47.indexOf("u.curFilter.forEach(k => { if (VALID.indexOf(k) >= 0) filterSet.add(k); })") >= 0
+      && src47.indexOf("u.curFilter !== 'safe'") >= 0);
   check('safe 状态标签随结果变化：未中奖/建议删除',
     /key: 'safe', label: it\.won === false \? '未中奖' : '建议删除'/.test(src47)
       || /key: 'safe', label: '未中奖'/.test(src47));
@@ -1465,9 +1466,9 @@ S.allowCheckUnverified = false;
   check('「清理重复」独立按钮已移除', src48.indexOf('blm-dupclean') < 0);
   check('cleanDupEntries 保底清理函数保留', /function cleanDupEntries\(/.test(src48));
   check('「可删」在重复视图下分流到保底清理',
-    src48.indexOf("if (curFilter === 'dup') { cleanDupEntries(); return; }") >= 0);
+    src48.indexOf("if (isDupView()) { cleanDupEntries(); return; }") >= 0);
   check('其他视图仍走零风险勾选（分支并存，且基于当前筛选视图 items）',
-    src48.indexOf("if (curFilter === 'dup') {") < src48.indexOf("const targets = items.filter(it => {"));
+    src48.indexOf("if (isDupView()) {") < src48.indexOf("const targets = items.filter(it => {"));
   check('重复视图徽标显示可清理的多余条数',
     /「重复」视图：徽标 = 按保底规则可清理的多余条数/.test(src48) && src48.indexOf("'<span class=\"blm-badge\">' + extra + '</span>'") >= 0);
   check('重复视图 title 说明保底规则与未开奖可能性',
@@ -1585,6 +1586,30 @@ S.allowCheckUnverified = false;
     src57.indexOf('return st.deletable || unlocked.has(it.dynId);') >= 0);
   check('全选按钮高亮判断同步含 unlocked',
     src57.indexOf('!it.deleted && (computeStatus(it).deletable || unlocked.has(it.dynId))') >= 0);
+
+  console.log('\n[58] 状态筛选多选化（filterSet 并集语义）');
+  const src58 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
+  check('curFilter 单选变量已移除，改为 filterSet 集合',
+    /const filterSet = new Set\(\)/.test(src58) && /let curFilter =/.test(src58) === false);
+  check('chip 点击 = 切换：all 清空 / 已选减去 / 未选加入',
+    src58.indexOf("if (k === 'all') filterSet.clear();") >= 0
+      && src58.indexOf('else if (filterSet.has(k)) filterSet.delete(k);') >= 0
+      && src58.indexOf('else filterSet.add(k);') >= 0);
+  check('过滤为并集：空集不过滤，「重复」维度叠加在状态之外',
+    src58.indexOf('if (filterSet.size) {') >= 0
+      && src58.indexOf("(filterSet.has('dup') && it.origId && dm[dupKeyOf(it)] > 1)") >= 0
+      && src58.indexOf('|| filterSet.has(computeStatus(it).key)') >= 0);
+  check('「全部」chip 在集合为空时点亮，具体 chip 按集合成员点亮',
+    src58.indexOf("(f.key === 'all' ? filterSet.size === 0 : filterSet.has(f.key))") >= 0);
+  check('「重复」独立视图判定 isDupView（可删分流用）',
+    /const isDupView = \(\) => filterSet\.size === 1 && filterSet\.has\('dup'\)/.test(src58));
+  check('筛选上下文签名用排序后的集合内容（多选变了也跳回第 1 页）',
+    src58.indexOf('[...filterSet].sort().join(',')') >= 0);
+  check('UI 状态持久化存数组，旧单选字符串兼容收编',
+    src58.indexOf('curFilter: [...filterSet]') >= 0
+      && src58.indexOf("Array.isArray(u.curFilter)") >= 0);
+  check('状态菜单改完状态：新状态仍 match 筛选才原地刷新，否则全量渲染',
+    src58.indexOf('if (!filterSet.size || filterSet.has(nk)) {') >= 0);
 
   console.log('\n结果: ' + passed + ' 通过, ' + failed + ' 失败');
   process.exit(failed ? 1 : 0);

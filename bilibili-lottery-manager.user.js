@@ -1548,7 +1548,11 @@
   document.body.appendChild(floatBox);
 
   let curTab = 'list';
-  let curFilter = 'all';
+  // 状态筛选改为**多选**：filterSet 里存选中的状态 key，空集 = 全部。
+  // 并集语义：选中「未开奖 + 已删除」→ 两种状态都显示；「重复」是额外维度（叠加在状态之外）。
+  const filterSet = new Set();
+  // 「重复」独立视图 = 只勾了「重复」一个 —— 「可删」按钮在此视图下变成「清理重复」入口
+  const isDupView = () => filterSet.size === 1 && filterSet.has('dup');
   let curSearch = '';
   let curType = 'all';            // 类型筛选：all / official / self / other（other = 未判定 + 加码抽奖）
   let curSort = 'pub';            // 排序字段：pub 转发时间 / draw 开奖时间
@@ -1570,7 +1574,7 @@
   function saveUiState() {
     try {
       GM_setValue(UI_KEY, {
-        curFilter: curFilter, curType: curType, curSort: curSort, curSortDir: curSortDir,
+        curFilter: [...filterSet], curType: curType, curSort: curSort, curSortDir: curSortDir,
         curSearch: curSearch, curUpMid: curUpMid, timeRange: timeRange
       });
     } catch (e) {}
@@ -1578,8 +1582,13 @@
   (function loadUiState() {
     try {
       const u = GM_getValue(UI_KEY, null) || {};
-      // v1.0.1 移除了「建议删除」筛选：旧 UI 状态里存的 safe 回退到全部，避免筛出空列表
-      if (u.curFilter) curFilter = (u.curFilter === 'safe') ? 'all' : u.curFilter;
+      // 筛选多选化（存数组）；兼容旧单选字符串：'all'/'safe'（已移除）→ 空集，其余收进集合
+      if (Array.isArray(u.curFilter)) {
+        const VALID = ['unknown', 'pending', 'needcheck', 'cooldown', 'won', 'dup', 'deleted'];
+        u.curFilter.forEach(k => { if (VALID.indexOf(k) >= 0) filterSet.add(k); });
+      } else if (u.curFilter && u.curFilter !== 'all' && u.curFilter !== 'safe') {
+        filterSet.add(u.curFilter);
+      }
       // 兼容：旧版存的是 'unknown'（当时叫「类型未知」），现在改叫「其他」
       if (u.curType) curType = (u.curType === 'unknown') ? 'other' : u.curType;
       if (u.curSort) curSort = u.curSort;
@@ -1758,7 +1767,7 @@
     }
     const selAllBtn = document.getElementById('blm-sel-all');
     if (selAllBtn) {
-      if (curFilter === 'dup') {
+      if (isDupView()) {
         // 「重复」视图：徽标 = 按保底规则可清理的多余条数（每组留 1 条，中奖优先）
         const groups = {};
         curItems.forEach(it => {
@@ -1940,7 +1949,15 @@
     if (!chips) return;
     chips.addEventListener('click', e => {
       const f = e.target.closest('[data-filter]');
-      if (f) { curFilter = f.getAttribute('data-filter'); saveUiState(); renderList(); return; }
+      if (f) {
+        // 多选切换：点「全部」清空回到全量；点具体项在集合里加/减，
+        // 减到空集就等价于「全部」（此时「全部」chip 会重新亮起）
+        const k = f.getAttribute('data-filter');
+        if (k === 'all') filterSet.clear();
+        else if (filterSet.has(k)) filterSet.delete(k);
+        else filterSet.add(k);
+        saveUiState(); renderList(); return;
+      }
       // 「时间范围」按钮在 chips 末尾（每次重建），所以走委托
       if (e.target.closest('#blm-timebtn')) {
         setTimeRowOpen(!timeRange.on);   // 读状态而非读样式 —— 样式会被渲染流程改写，状态不会骗人
@@ -2193,7 +2210,7 @@
     if (curTab === 'stats') { renderStats(); return; }
 
     // II档：筛选上下文变了（切换 tab / 筛选 / 搜索 / 类型 / 只看UP / 时间范围）→ 跳回第 1 页
-    const ctxSig = [curTab, curFilter, curSearch, curType, curUpMid, timeRange.on, timeRange.from, timeRange.to].join('|');
+    const ctxSig = [curTab, [...filterSet].sort().join(','), curSearch, curType, curUpMid, timeRange.on, timeRange.from, timeRange.to].join('|');
     if (ctxSig !== lastListCtx) { curPage = 0; lastListCtx = ctxSig; }
 
     const ledger = loadLedger();
@@ -2219,13 +2236,14 @@
     renderChips(base);
     updateOnlyBar();
 
-    // 再套状态筛选（含「重复」这个特殊项）
+    // 再套状态筛选（多选并集）：空集 = 全部不过滤；
+    // 「重复」是状态之外的维度 —— 勾了它，重复条目无论什么状态都放进结果
     let items = base;
-    if (curFilter === 'dup') {
+    if (filterSet.size) {
       const dm = dupMapOf(base);
-      items = items.filter(it => it.origId && dm[dupKeyOf(it)] > 1);
-    } else if (curFilter !== 'all') {
-      items = items.filter(it => computeStatus(it).key === curFilter);
+      items = items.filter(it =>
+        (filterSet.has('dup') && it.origId && dm[dupKeyOf(it)] > 1)
+        || filterSet.has(computeStatus(it).key));
     }
     items = sortItems(items.slice());
     curItems = items;   // 供「全选当前」使用
@@ -2461,9 +2479,9 @@
     });
     counts.dup = dupN;
 
-    // 全部筛选项常驻显示，末尾跟一个「时间范围」开关
+    // 全部筛选项常驻显示，末尾跟一个「时间范围」开关；多选模式下「全部」= 集合为空时点亮
     box.innerHTML = FILTERS.map(f =>
-      '<button class="blm-chipbtn' + (curFilter === f.key ? ' on' : '') + '" data-filter="' + f.key + '"'
+      '<button class="blm-chipbtn' + ((f.key === 'all' ? filterSet.size === 0 : filterSet.has(f.key)) ? ' on' : '') + '" data-filter="' + f.key + '"'
         + (f.tip ? ' title="' + escapeHtml(f.tip) + '"' : '') + '>'
         + f.label + ' ' + (counts[f.key] || 0) + '</button>'
     ).join('')
@@ -2520,7 +2538,7 @@
     //  「重复」视图 → 按保底规则清理每组多余条目（每组保留 1 条，中奖优先；可含未开奖——组内有保底就安全）；
     //  其他视图   → 当前筛选结果里的零风险条目（官方已确认未中奖等），带⚠️警告的不碰。
     //  注意：不做跨视图捞人 —— 筛选「官方」时就只勾官方的，视图里 0 条就是 0 条。
-    if (curFilter === 'dup') { cleanDupEntries(); return; }
+    if (isDupView()) { cleanDupEntries(); return; }
     const l = loadLedger();
     const curIds = {};
     curItems.forEach(it => { curIds[it.dynId] = true; });
@@ -3183,8 +3201,10 @@
     it.won = val;   // null=结果未定 / true=已中奖 / false=未中奖
     if (val === true) selected.delete(dynId);   // 标记中奖后从选中集合里剔除，避免误删
     saveLedger(ledger);
-    // 「全部」视图原地刷新那张卡片即可（不跳滚）；状态筛选下条目可能该换页/消失，回退全量渲染
-    if (curFilter === 'all' || curFilter === 'dup') {
+    // 没勾任何状态筛选（= 全部）时原地刷新那张卡片即可（不跳滚）；
+    // 勾了筛选就要看新状态还 match 不 match：match 才能原地刷新，否则条目该消失/换页，回退全量渲染
+    const nk = computeStatus(it).key;
+    if (!filterSet.size || filterSet.has(nk)) {
       if (!refreshRowState(dynId)) renderList();
     } else {
       renderList();
