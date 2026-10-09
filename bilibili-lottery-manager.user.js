@@ -2431,7 +2431,7 @@
     const allSelected = targets.every(it => selected.has(it.dynId));
     targets.forEach(it => { allSelected ? selected.delete(it.dynId) : selected.add(it.dynId); });
     renderList();
-    // 结果汇总：让用户知道勾了什么、还有多少带⚠️的候选没动 —— 数字说话，不用猜
+    // 结果汇总：一句话说清勾了什么、还有什么没勾、下一步干嘛 —— 超过两行就算失败
     if (allSelected) {
       toast('已取消勾选 ' + targets.length + ' 条。');
       return;
@@ -2440,9 +2440,9 @@
       const st = computeStatus(it);
       return st.deletable && st.warn && !it.deleted;
     }).length;
-    toast('已勾选 ' + targets.length + ' 条零风险条目（官方已确认未中奖等）。\n\n'
-      + (warnN ? '另有 ' + warnN + ' 条带⚠️的可删候选（缓冲期中 / 你确认过日期的自发抽奖）未勾选 —— 需要的话用「全选」或手勾。\n' : '')
-      + '检查一下列表，然后点「删除选中」执行 —— 删除前还会再确认一次。');
+    toast('已勾选 ' + targets.length + ' 条安全可删的动态。\n\n'
+      + (warnN ? '另有 ' + warnN + ' 条也能删、但有小风险（还在缓冲期等），没勾 —— 想一起删就用「全选」。\n' : '')
+      + '点「删除选中」执行，删前会再和你确认一次。');
   }
 
   function renderFollow() {

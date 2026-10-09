@@ -1432,9 +1432,9 @@ S.allowCheckUnverified = false;
   check('卡片绿色「建议删除」状态标签保留',
     /key: 'safe', label: '建议删除'/.test(src47));
   check('selectAllSafe 勾选后给 toast 明细汇总',
-    /已勾选 ' \+ targets\.length \+ ' 条零风险条目/.test(src47));
+    /已勾选 ' \+ targets\.length \+ ' 条安全可删的动态/.test(src47));
   check('toast 提示带⚠️的候选数量并引导用「全选」',
-    src47.indexOf("warnN + ' 条带⚠️的可删候选") >= 0 && src47.indexOf("用「全选」或手勾") >= 0);
+    src47.indexOf("warnN + ' 条也能删、但有小风险") >= 0 && src47.indexOf("想一起删就用「全选」") >= 0);
   check('取消勾选也有 toast 反馈', /已取消勾选 ' \+ targets\.length \+ ' 条/.test(src47));
   check('「可删」按钮带计数徽标 blm-badge',
     src47.indexOf("'<span class=\"blm-badge\">' + targets.length + '</span>'") >= 0);
