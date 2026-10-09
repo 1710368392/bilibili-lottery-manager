@@ -1561,6 +1561,15 @@ S.allowCheckUnverified = false;
   check('设置页渲染水印作者栏并引用常量',
     src55.indexOf("img src=\"' + OC_WATERMARK + '\"") >= 0 && src55.indexOf('作者 <b style="color:var(--blm-text)">糖心月</b>') >= 0);
 
+  console.log('\n[56] v1.0.1 修时间范围行被工具栏显隐按回去 + 时间按钮读状态');
+  const src56 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
+  check('setToolbarVisible 不再对 timerow/only 恢复空串',
+    src56.indexOf("['blm-bar', 'blm-bar2', 'blm-chips'].forEach") >= 0
+      && src56.indexOf("(show && timeRange.on) ? 'flex' : 'none'") >= 0);
+  check('时间按钮开关读 timeRange.on 状态而非读样式',
+    src56.indexOf('setTimeRowOpen(!timeRange.on);') >= 0
+      && src56.indexOf("timeRow.style.display !== 'flex'") < 0);
+
   console.log('\n结果: ' + passed + ' 通过, ' + failed + ' 失败');
   process.exit(failed ? 1 : 0);
 })();

@@ -1933,7 +1933,7 @@
       if (f) { curFilter = f.getAttribute('data-filter'); saveUiState(); renderList(); return; }
       // 「时间范围」按钮在 chips 末尾（每次重建），所以走委托
       if (e.target.closest('#blm-timebtn')) {
-        setTimeRowOpen(timeRow.style.display !== 'flex');
+        setTimeRowOpen(!timeRange.on);   // 读状态而非读样式 —— 样式会被渲染流程改写，状态不会骗人
         saveUiState();
         renderList();
       }
@@ -2159,10 +2159,20 @@
   // 筛选/操作工具栏（扫描核验搜索行、排序筛选行、时间范围、状态 chips、只看UP 条）
   // 只在「动态台账」tab 有意义 —— 其余三个 tab（关注/统计/设置）整体收起，别占地方
   function setToolbarVisible(show) {
-    ['blm-bar', 'blm-bar2', 'blm-timerow', 'blm-chips', 'blm-only'].forEach(id => {
+    // bar/bar2/chips 默认可见 → 恢复 '' 即可；
+    // timerow/only 默认 display:none、由各自状态驱动（timeRange.on / updateOnlyBar），
+    // 不能粗暴恢复 '' —— 否则每次渲染都会把时间范围行按回去（用户实测：抽屉闪一下就没了）
+    ['blm-bar', 'blm-bar2', 'blm-chips'].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.style.display = show ? '' : 'none';
     });
+    const tr = document.getElementById('blm-timerow');
+    if (tr) tr.style.display = (show && timeRange.on) ? 'flex' : 'none';
+    const only = document.getElementById('blm-only');
+    if (only) {
+      if (show) updateOnlyBar();   // 恢复时交给它自己的显隐逻辑
+      else only.style.display = 'none';
+    }
   }
 
   function renderListInner() {
