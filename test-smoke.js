@@ -1624,7 +1624,9 @@ S.allowCheckUnverified = false;
       && src59.indexOf('上锁中：点左上角的锁解锁后才能改') >= 0);
   check('渲染循环改用两个公共函数（渲染与原地刷新共用，锁切换即时生效）',
     src59.indexOf('const extra = metaChipsHtml(it, now);') >= 0
-      && src59.indexOf('+ statusTagHtml(it, st) +') >= 0);
+      && src59.indexOf(': \'\') +\n            statusTagHtml(it, st) +') >= 0);
+  check('回归：statusTagHtml 拼接处无双加号（曾致字符串转数字变 NaN、标签消失）',
+    /\+\s*\+\s*statusTagHtml\(/.test(src59) === false);
   check('refreshRowState 同步时间行（metaEl.innerHTML = metaChipsHtml）',
     src59.indexOf("metaEl.innerHTML = metaChipsHtml(it, Date.now());") >= 0);
   check('toggleLock 关掉该卡片开着的状态菜单（标签即将重建）',

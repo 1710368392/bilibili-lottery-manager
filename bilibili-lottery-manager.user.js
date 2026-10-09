@@ -2407,7 +2407,7 @@
                 + ' 的动态并在转发文案里自己加码抽奖。开奖信息以加码文案为准，这条别和源动态的抽奖搞混">'
                 + '加码 ' + escapeHtml(issuer) + '</span>'
               : '') +
-            + statusTagHtml(it, st) +
+            statusTagHtml(it, st) +
             // 核验入口：只给「官方抽奖被你手动覆盖过」的条目（见 needVerify）
             (needVerify(it) ? '' : '') +          '</div>' +
           '<div class="blm-txtwrap">' +
