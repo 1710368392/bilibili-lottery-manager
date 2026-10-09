@@ -1540,7 +1540,10 @@ S.allowCheckUnverified = false;
     src53.indexOf("label: '结果未定'") >= 0 && src53.indexOf("label: '已中奖'") >= 0
       && src53.indexOf("label: '未中奖'") >= 0 && /function setWonState\(/.test(src53));
   check('旧三态循环 toggleWon 已移除', src53.indexOf('toggleWon') < 0);
-  check('菜单点外部自动关闭', /function closeStatusMenu\(/.test(src53) && src53.indexOf("document.addEventListener('click', closeStatusMenu") >= 0);
+  check('菜单点外部自动关闭（常驻捕获监听，无 once 残留）',
+    /function closeStatusMenu\(/.test(src53) && /function ensureStatusMenuOutsideClose\(/.test(src53)
+      && src53.indexOf("if (stMenuBound) return;") >= 0
+      && src53.indexOf("{ once: true }); }, 0);") < 0);
   check('refreshRowState 原地更新状态标签（不跳滚）',
     src53.indexOf("const tagEl = row.querySelector('[data-stmenu=\"' + dynId + '\"]');") >= 0);
 

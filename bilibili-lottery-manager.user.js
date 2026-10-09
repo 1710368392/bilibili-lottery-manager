@@ -3155,7 +3155,22 @@
     const m = document.getElementById('blm-stmenu');
     if (m) m.remove();
   }
+  // 「点菜单外面就关」用常驻捕获监听统一接管 —— 之前是每次开菜单挂一个 once 监听，
+  // 选中选项后残留到下一次点击：用户再点标签，抽屉刚打开就被这个残留监听关掉，
+  // 表现为"换完状态必须先点/拖一下别处才能再开"（2026-10-10 用户实测）
+  let stMenuBound = false;
+  function ensureStatusMenuOutsideClose() {
+    if (stMenuBound) return;
+    stMenuBound = true;
+    document.addEventListener('click', e => {
+      const m = document.getElementById('blm-stmenu');
+      if (!m) return;
+      if (e.target.closest('#blm-stmenu') || e.target.closest('[data-stmenu]')) return;   // 点在菜单里/标签上：交给各自的点击逻辑
+      closeStatusMenu();
+    }, true);
+  }
   function showStatusMenu(dynId, anchor) {
+    ensureStatusMenuOutsideClose();
     closeStatusMenu();
     const it = loadLedger()[dynId];
     if (!it || it.deleted) return;
@@ -3188,7 +3203,6 @@
     const r = anchor.getBoundingClientRect();
     menu.style.left = Math.max(8, Math.min(r.left, window.innerWidth - menu.offsetWidth - 8)) + 'px';
     menu.style.top = (r.bottom + 4 + menu.offsetHeight > window.innerHeight ? r.top - menu.offsetHeight - 4 : r.bottom + 4) + 'px';
-    setTimeout(() => { document.addEventListener('click', closeStatusMenu, { once: true }); }, 0);
   }
 
   // 对「你已确认」的条目做反向核验：如果它其实是官方抽奖，就用官方数据覆盖你填的日期
