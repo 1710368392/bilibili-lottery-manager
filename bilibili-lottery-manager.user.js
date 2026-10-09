@@ -1303,7 +1303,6 @@
     .blm-bar2 .blm-btn .blm-ck.on::after{left:3px;top:1px;width:2px;height:6px;}
     /* 「可删」按钮上的数字徽标：主色 = 零风险候选数；灰 = 带⚠️候选数 */
     .blm-bar2 .blm-badge{min-width:14px;padding:1px 5px;border-radius:8px;background:var(--blm-primary,#FB7299);color:#fff;font-size:10px;font-weight:700;line-height:1.4;text-align:center;}
-    .blm-bar2 .blm-badge2{padding:1px 4px;border-radius:8px;background:var(--blm-border,#E3E5E7);color:var(--blm-text3);font-size:10px;line-height:1.4;white-space:nowrap;}
     #blm-sort{padding:4px 6px;border:1px solid var(--blm-border);border-radius:6px;font-size:12px;color:var(--blm-text2);background:var(--blm-bg);font-family:inherit;}
     .blm-seg{display:flex;border:1px solid var(--blm-border);border-radius:6px;overflow:hidden;}
     .blm-seg button{border:none;background:var(--blm-bg);padding:4px 9px;font-size:11px;color:var(--blm-text2);cursor:pointer;
@@ -2134,18 +2133,13 @@
           const st = computeStatus(it);
           return st.deletable && !st.warn && !it.deleted;
         });
-        const warnN = allItems.filter(it => {
-          const st = computeStatus(it);
-          return st.deletable && st.warn && !it.deleted;
-        }).length;
         const all = targets.length > 0 && targets.every(it => selected.has(it.dynId));
-        // 徽标：零风险候选数（实时跟台账走）；带⚠️的候选数用灰色小字缀在后面，点按钮看明细
+        // 徽标：只显示零风险候选数（实时跟台账走）
         selAllBtn.innerHTML = '<span class="blm-ck' + (all ? ' on' : '') + '"></span>可删 '
-          + '<span class="blm-badge">' + targets.length + '</span>'
-          + (warnN ? '<span class="blm-badge2">+' + warnN + '⚠</span>' : '');
+          + '<span class="blm-badge">' + targets.length + '</span>';
         selAllBtn.title = all
           ? '「可删」条目已全选，点一下取消'
-          : '一键勾选全台账零风险的删除候选（官方已确认未中奖等，当前 ' + targets.length + ' 条）；带⚠️警告的候选（缓冲期 / 自发确认，共 ' + warnN + ' 条）不在其中，需要的话用「全选」';
+          : '一键勾选全台账零风险的删除候选（官方已确认未中奖等，当前 ' + targets.length + ' 条）';
       }
     }
 
@@ -2431,17 +2425,12 @@
     const allSelected = targets.every(it => selected.has(it.dynId));
     targets.forEach(it => { allSelected ? selected.delete(it.dynId) : selected.add(it.dynId); });
     renderList();
-    // 结果汇总：一句话说清勾了什么、还有什么没勾、下一步干嘛 —— 超过两行就算失败
+    // 结果汇总：一句话说清勾了什么、下一步干嘛 —— 超过两行就算失败
     if (allSelected) {
       toast('已取消勾选 ' + targets.length + ' 条。');
       return;
     }
-    const warnN = Object.values(l).filter(it => {
-      const st = computeStatus(it);
-      return st.deletable && st.warn && !it.deleted;
-    }).length;
     toast('已勾选 ' + targets.length + ' 条安全可删的动态。\n\n'
-      + (warnN ? '另有 ' + warnN + ' 条也能删、但有小风险（还在缓冲期等），没勾 —— 想一起删就用「全选」。\n' : '')
       + '点「删除选中」执行，删前会再和你确认一次。');
   }
 
