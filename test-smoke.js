@@ -1554,6 +1554,13 @@ S.allowCheckUnverified = false;
       && src54.indexOf('body.blm-dark #blm-detailbox') >= 0);
   check('token 作用域注释说明踩坑原因', src54.indexOf('整个弹窗透明') >= 0);
 
+  console.log('\n[55] v1.0.1 OC 水印内嵌（设置页作者栏）');
+  const src55 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
+  check('存在 OC_WATERMARK base64 常量（WebP data URI）',
+    /const OC_WATERMARK = 'data:image\/webp;base64,/.test(src55));
+  check('设置页渲染水印作者栏并引用常量',
+    src55.indexOf("img src=\"' + OC_WATERMARK + '\"") >= 0 && src55.indexOf('作者 <b style="color:var(--blm-text)">糖心月</b>') >= 0);
+
   console.log('\n结果: ' + passed + ' 通过, ' + failed + ' 失败');
   process.exit(failed ? 1 : 0);
 })();
