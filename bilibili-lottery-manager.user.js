@@ -1703,18 +1703,17 @@
       + ' stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
       + '<path d="' + (open ? UNLOCK_SVG : LOCK_SVG) + '"/></svg>';
   }
-  // 是否允许解锁：中奖的永不解锁；未开奖且是该抽奖唯一转发的也不允许（删了=弃权）
+  // 是否允许解锁：v1.0.1 起统一解禁路径 —— 所有未删除条目都可解锁。
+  // 锁的存在逻辑：把不该操作的动态默认锁上；用户考虑好了非得操作，自行解锁 ——
+  // 锁是一条用户摸得到的解禁路径，不搞"有的能解有的不能解"的区别对待。
+  // 后果说明不放解锁环节打扰，改放在删除二次确认里（中奖专项警告 + 组内清零知情确认）。
   function canUnlock(it, st) {
-    if (!it || it.deleted || it.won === true) return false;
-    if (st.key === 'pending') return groupAliveCount(it, it.dynId) >= 1;   // 同组还有别的转发才行
-    return true;
+    return !!it && !it.deleted;
   }
   function toggleLock(dynId) {
     const it = loadLedger()[dynId];
-    if (!it) return;
-    const st = computeStatus(it);
+    if (!it || it.deleted) return;
     if (unlocked.has(dynId)) { unlocked.delete(dynId); selected.delete(dynId); renderList(); return; }
-    if (!canUnlock(it, st)) return;      // 红锁：点了也不动（title 里已说明原因）
     unlocked.add(dynId);
     renderList();
   }
@@ -2179,8 +2178,8 @@
     for (const it of pageItems) {
       const st = computeStatus(it);
       const tOpen = textOpen.has(it.dynId);
-      const isSel = selected.has(it.dynId) && (st.deletable || unlocked.has(it.dynId)) && it.won !== true;
-      const canSel = (st.deletable || unlocked.has(it.dynId)) && !it.deleted && it.won !== true;
+      const isSel = selected.has(it.dynId) && (st.deletable || unlocked.has(it.dynId));
+      const canSel = (st.deletable || unlocked.has(it.dynId)) && !it.deleted;
       const tbm = lotteryTypeBadge(it);   // 左下角书签（无则空串）
       const row = document.createElement('div');
       row.className = 'blm-item' + (canSel ? '' : ' locked') + (tbm ? ' hasbm' : '');
@@ -2234,11 +2233,11 @@
         if (open || !st.deletable) {
           let tip;
           if (open) tip = '已解锁：这条现在可以勾选删除了。点一下重新锁上';
-          else if (it.won === true) tip = '你中奖了 —— 这条是领奖凭证，锁定中，不能解锁';
-          else if (st.key === 'pending' && !canUnlock(it, st)) tip = '未开奖，而且是这条抽奖唯一的转发 —— 删了等于弃权，不能解锁';
+          else if (it.won === true) tip = '你中奖了 —— 这是领奖凭证，默认锁定。点一下解锁后可删（删了无法领奖，想清楚再点）';
+          else if (st.key === 'pending' && groupAliveCount(it, it.dynId) < 1) tip = '未开奖，而且是这条抽奖唯一的转发 —— 默认锁定。点一下解锁后可删（删了等于弃权，想清楚再点）';
           else if (st.key === 'pending') tip = '未开奖。同一条抽奖你还有其他转发，点一下解锁后可删（不影响参与资格）';
           else tip = '这条当前不允许删除，点一下可临时解锁';
-          // 统一一种锁，不再按原因分颜色；能不能解锁写在提示里，点了没反应就是不能解
+          // 统一一种锁、统一解禁路径：所有锁都能解锁，后果写在悬停提示 + 删除二次确认里
           lockHtml = '<span class="blm-lock' + (open ? ' open' : '') + '" data-lock="' + it.dynId
             + '" title="' + tip + '">' + lockIcon(open) + '</span>';
         }
@@ -3255,14 +3254,22 @@
       pending.forEach(it => { const k = dupKeyOf(it); delPend[k] = (delPend[k] || 0) + 1; });
       const rejected = pending.filter(it => (alive[dupKeyOf(it)] || 0) - (delPend[dupKeyOf(it)] || 0) < 1);
       if (rejected.length) {
-        rejected.forEach(it => selected.delete(it.dynId));
-        list = list.filter(it => !rejected.includes(it));
-        if (!list.length) {
-          alert('这些未开奖的动态都是对应抽奖**唯一**的转发，删掉任何一个都等于弃权，已全部取消勾选。');
-          return;
+        // v1.0.1：不再强制取消勾选 —— 统一解禁路径哲学下，用户解锁 + 知情确认后有权放弃。
+        // 但必须把后果说透：删掉这些 = 对应抽奖没有任何转发留存 = 弃权，开奖了也与你无关。
+        const rnames = rejected.slice(0, 8).map(it => '· ' + (it.upName || '?') + '（' + (it.text || '').slice(0, 24) + '）').join('\n');
+        const okGiveup = confirm('【最后确认】这批里有 ' + rejected.length + ' 条未开奖动态，是它们所属抽奖**唯一**的转发：\n\n'
+          + rnames + (rejected.length > 8 ? '\n…等共 ' + rejected.length + ' 条' : '')
+          + '\n\n删掉后这些抽奖将没有任何转发留存 = 放弃这些抽奖，之后开奖也与 你无关，无法反悔。\n\n'
+          + '点「确定」：连这些一起删（知情弃权）。\n'
+          + '点「取消」：自动取消这 ' + rejected.length + ' 条的勾选，其余 ' + (list.length - rejected.length) + ' 条照常删除。');
+        if (!okGiveup) {
+          rejected.forEach(it => selected.delete(it.dynId));
+          list = list.filter(it => !rejected.includes(it));
+          if (!list.length) {
+            alert('已取消全部勾选，没有删除任何动态。');
+            return;
+          }
         }
-        alert('已自动取消 ' + rejected.length + ' 条：删掉这批后，它们所属的抽奖就没有任何转发留存了（= 弃权）。\n'
-          + '其余 ' + list.length + ' 条不受影响（同组还有别的转发，删除不影响参与资格）。');
       }
     }
 
@@ -3281,6 +3288,13 @@
     if (unverified.length) {
       msg += '\n\n【高危】其中 ' + unverified.length + ' 条开奖状态尚未确认！'
         + '这些抽奖可能还没开奖、或者你中了但还没发现，删掉就找不回来了。';
+    }
+    // v1.0.1：锁统一解禁后，中奖条目可能被解锁勾入 —— 删除前必须给最高级别警告
+    const wonList = list.filter(it => it.won === true);
+    if (wonList.length) {
+      msg += '\n\n【最高警告】其中 ' + wonList.length + ' 条是你**中奖**的动态！'
+        + '这是领奖凭证，删掉后 UP 主核验转发时将找不到记录，奖品无法领取。'
+        + '除非你确定放弃奖品，否则请点「取消」。';
     }
     if (SETTINGS.confirmBeforeDelete && !confirm(msg)) return;
     // 未确认的条目再拦一道，哪怕关掉了二次确认也要问

@@ -1314,14 +1314,18 @@ S.allowCheckUnverified = false;
   check('点击锁可切换解锁状态', srcLock.indexOf('toggleLock(lk.getAttribute(\'data-lock\'))') >= 0);
   check('解锁集合不持久化（仅本页会话）', srcLock.indexOf('const unlocked = new Set()') >= 0);
 
-  // canUnlock：中奖永不解锁；未开奖且组内唯一也不解锁
+  // canUnlock：v1.0.1 统一解禁路径 —— 所有未删除条目都可解锁（含中奖、含未开奖唯一转发），
+  // 后果说明移到删除二次确认（won 专项最高警告 + 组内清零知情确认），决定权在用户
   const wonItem = { dynId: 'w1', origId: 'ow', upName: 'U', won: true };
-  check('中奖条目永不解锁', T.canUnlock(wonItem, { key: 'won' }) === false);
+  check('中奖条目也可解锁（锁=默认+解禁路径，后果在删除确认里警告）',
+    T.canUnlock(wonItem, { key: 'won' }) === true);
   globalThis.GM_setValue('bili_lottery_ledger_v1', {
     only: { dynId: 'only', origId: 'OK', upName: 'U', won: null, drawTs: null, source: null, official: null, deleted: false, createdAt: 1 }
   });
-  check('未开奖且是唯一转发 -> 不可解锁',
-    T.canUnlock(globalThis.GM_getValue('bili_lottery_ledger_v1', {}).only, { key: 'pending' }) === false);
+  check('未开奖且是唯一转发 -> 也可解锁（删除时走知情确认）',
+    T.canUnlock(globalThis.GM_getValue('bili_lottery_ledger_v1', {}).only, { key: 'pending' }) === true);
+  check('已删除条目不可解锁',
+    T.canUnlock({ dynId: 'x', deleted: true }, { key: 'deleted' }) === false);
   globalThis.GM_setValue('bili_lottery_ledger_v1', {
     a1: { dynId: 'a1', origId: 'OA', upName: 'U', won: null, drawTs: null, source: null, official: null, deleted: false, createdAt: 1 },
     a2: { dynId: 'a2', origId: 'OA', upName: 'U', won: null, drawTs: null, source: null, official: null, deleted: false, createdAt: 2 }
@@ -1458,6 +1462,25 @@ S.allowCheckUnverified = false;
     src48.indexOf('至少要留一条活着的转发') >= 0 && src48.indexOf('把整组删光才是弃权') >= 0);
   check('保留优先级不变：中奖的 > 编号最小',
     /keep = sorted\.find\(it => it\.won === true\) \|\| sorted\[0\]/.test(src48));
+
+  console.log('\n[49] v1.0.1 保护锁统一解禁路径（默认锁定 + 用户自行解锁）');
+  const src49 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
+  check('canUnlock 已简化：未删除即可解锁',
+    /function canUnlock\(it, st\) \{\s*return !!it && !it\.deleted;/.test(src49));
+  check('toggleLock 不再有三态门槛（无 canUnlock 拦截分支）',
+    !/if \(!canUnlock\(it, st\)\) return/.test(src49));
+  check('勾选层已允许解锁的中奖条目（canSel 不再排除 won）',
+    !/const canSel = \(st\.deletable \|\| unlocked\.has\(it\.dynId\)\) && !it\.deleted && it\.won !== true/.test(src49));
+  check('解锁的中奖条目删除时有【最高警告】',
+    src49.indexOf('【最高警告】其中 ') >= 0 && src49.indexOf('这是领奖凭证，删掉后 UP 主核验转发时将找不到记录') >= 0);
+  check('组内清零从强制拦截改为知情确认（confirm 放弃）',
+    src49.indexOf('【最后确认】这批里有 ') >= 0 && src49.indexOf('放弃这些抽奖，之后开奖也与 你无关') >= 0);
+  check('知情取消后仍会自动摘除被拦条目（防呆兜底）',
+    src48.indexOf("rejected.forEach(it => selected.delete(it.dynId));") >= 0 || src49.indexOf("rejected.forEach(it => selected.delete(it.dynId));") >= 0);
+  check('锁的悬停提示：中奖条目写明后果但仍可解锁',
+    src49.indexOf('点一下解锁后可删（删了无法领奖，想清楚再点）') >= 0);
+  check('锁的悬停提示：唯一转发写明弃权后果但仍可解锁',
+    src49.indexOf('删了等于弃权，想清楚再点') >= 0);
 
   console.log('\n结果: ' + passed + ' 通过, ' + failed + ' 失败');
   process.exit(failed ? 1 : 0);
