@@ -2223,16 +2223,18 @@
       const row = document.createElement('div');
       row.className = 'blm-item' + (canSel ? '' : ' locked') + (tbm ? ' hasbm' : '');
 
-      // C 时间行：两个胶囊都可点击 → 直接改开奖时间（原「改开奖时间」按钮已并入这里）
+      // C 时间行：两个胶囊都可点击 → 直接改开奖时间（原「改开奖时间」按钮已并入这里）。
+      // 开奖胶囊精简为「状态 · 相对时间」，完整日期收进悬停提示 —— 长版文案会让
+      // 官方卡片（meta 行还有 58px 书签缩进）装不下，挤成两行
       let extra = '';
       extra += timeChip('转发', it.pubTs ? fmtTime(it.pubTs).slice(0, 16) : '未知', 'pub');
       if (it.drawTs) {
         if (it.drawTs <= now) {
-          extra += '<span class="blm-chip blm-chip-click" style="background:var(--blm-ok-bg);color:var(--blm-ok-text)" data-act="edit" data-dyn="' + it.dynId + '" title="点击修改开奖时间">已开奖 '
-            + fmtTime(it.drawTs).slice(5, 16) + '（' + relTime(it.drawTs) + '）</span>';
+          extra += '<span class="blm-chip blm-chip-click" style="background:var(--blm-ok-bg);color:var(--blm-ok-text)" data-act="edit" data-dyn="' + it.dynId
+            + '" title="' + fmtTime(it.drawTs) + ' 开奖，点击修改开奖时间">已开奖 · ' + relTime(it.drawTs) + '</span>';
         } else {
-          extra += '<span class="blm-chip blm-chip-click" style="background:var(--blm-warn-bg);color:var(--blm-warn-text)" data-act="edit" data-dyn="' + it.dynId + '" title="点击修改开奖时间">开奖 '
-            + fmtTime(it.drawTs).slice(5, 16) + ' 还有 <span class="blm-count" data-ts="' + it.drawTs + '">'
+          extra += '<span class="blm-chip blm-chip-click" style="background:var(--blm-warn-bg);color:var(--blm-warn-text)" data-act="edit" data-dyn="' + it.dynId
+            + '" title="' + fmtTime(it.drawTs) + ' 开奖，点击修改开奖时间">开奖 · <span class="blm-count" data-ts="' + it.drawTs + '">'
             + fmtCountdown(it.drawTs - now) + '</span></span>';
         }
       } else {
