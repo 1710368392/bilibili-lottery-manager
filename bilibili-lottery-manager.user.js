@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         B站转发抽奖动态管理器
 // @namespace    https://github.com/bili-lottery-manager
-// @version      1.0.0
+// @version      1.0.1
 // @description  扫描你转发的抽奖动态，建立台账，自动判定开奖与中奖，按风险分级后手动勾选批量清理；转发时可即时录入开奖信息。删除与取关均不可撤销，脚本绝不自动执行。
 // @author       糖心月
 // @updateURL    https://raw.githubusercontent.com/1710368392/bilibili-lottery-manager/main/bilibili-lottery-manager.user.js
@@ -23,7 +23,7 @@
 (function () {
   'use strict';
 
-  const VERSION = '1.0.0';   // 与上方 @version 保持一致；设置页和诊断弹窗会显示，方便确认油猴里跑的是哪版
+  const VERSION = '1.0.1';   // 与上方 @version 保持一致；设置页和诊断弹窗会显示，方便确认油猴里跑的是哪版
 
   // 只在上层窗口运行。B 站视频播放器是 player.bilibili.com 的 iframe，域名同样被 @match 命中，
   // 不排除会导致同一个页面里注入两套悬浮按钮。@noframes 已声明，这里是双保险。
@@ -1301,6 +1301,9 @@
     .blm-bar2 .blm-btn{display:inline-flex;align-items:center;gap:4px;}
     .blm-bar2 .blm-btn .blm-ck{width:12px;height:12px;}
     .blm-bar2 .blm-btn .blm-ck.on::after{left:3px;top:1px;width:2px;height:6px;}
+    /* 「可删」按钮上的数字徽标：主色 = 零风险候选数；灰 = 带⚠️候选数 */
+    .blm-bar2 .blm-badge{min-width:14px;padding:1px 5px;border-radius:8px;background:var(--blm-primary,#FB7299);color:#fff;font-size:10px;font-weight:700;line-height:1.4;text-align:center;}
+    .blm-bar2 .blm-badge2{padding:1px 4px;border-radius:8px;background:var(--blm-border,#E3E5E7);color:var(--blm-text3);font-size:10px;line-height:1.4;white-space:nowrap;}
     #blm-sort{padding:4px 6px;border:1px solid var(--blm-border);border-radius:6px;font-size:12px;color:var(--blm-text2);background:var(--blm-bg);font-family:inherit;}
     .blm-seg{display:flex;border:1px solid var(--blm-border);border-radius:6px;overflow:hidden;}
     .blm-seg button{border:none;background:var(--blm-bg);padding:4px 9px;font-size:11px;color:var(--blm-text2);cursor:pointer;
@@ -1493,7 +1496,7 @@
         <button data-type="all" class="on">全部</button><button data-type="official">官方</button><button data-type="self">自发</button><button data-type="other" title="类型还没核验判定过的 + 加码抽奖（转发链上游另一位 UP 加码开的奖）">其他</button>
       </span>
       <button class="blm-btn" id="blm-sel-cur" title="勾选当前筛选结果里所有可以删的条目"><span class="blm-ck"></span>全选</button>
-      <button class="blm-btn" id="blm-sel-all" title="勾选所有处于「建议删除」状态的条目"><span class="blm-ck"></span>可删</button>
+      <button class="blm-btn" id="blm-sel-all" title="一键勾选全台账零风险的删除候选（官方已确认未中奖等）；带⚠️警告的候选不在其中"><span class="blm-ck"></span>可删</button>
       <button class="blm-btn" id="blm-dupclean" style="display:none" title="同一条抽奖转了多次时，每组自动保留一条（中奖的优先），其余勾选 —— 删多余的不影响参与资格">清理重复</button>
       <button class="blm-iconbtn" id="blm-sortdir" title="切换正序 / 倒序" style="margin-left:auto">
         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4v16"/><path d="M4 17l3 3 3-3"/><path d="M17 20V4"/><path d="M14 7l3-3 3 3"/></svg>
@@ -1554,7 +1557,8 @@
   (function loadUiState() {
     try {
       const u = GM_getValue(UI_KEY, null) || {};
-      if (u.curFilter) curFilter = u.curFilter;
+      // v1.0.1 移除了「建议删除」筛选：旧 UI 状态里存的 safe 回退到全部，避免筛出空列表
+      if (u.curFilter) curFilter = (u.curFilter === 'safe') ? 'all' : u.curFilter;
       // 兼容：旧版存的是 'unknown'（当时叫「类型未知」），现在改叫「其他」
       if (u.curType) curType = (u.curType === 'unknown') ? 'other' : u.curType;
       if (u.curSort) curSort = u.curSort;
@@ -2113,9 +2117,18 @@
         const st = computeStatus(it);
         return st.deletable && !st.warn && !it.deleted;
       });
+      const warnN = allItems.filter(it => {
+        const st = computeStatus(it);
+        return st.deletable && st.warn && !it.deleted;
+      }).length;
       const all = targets.length > 0 && targets.every(it => selected.has(it.dynId));
-      selAllBtn.innerHTML = '<span class="blm-ck' + (all ? ' on' : '') + '"></span>可删';
-      selAllBtn.title = all ? '「建议删除」条目已全选，点一下取消' : '勾选所有处于「建议删除」状态的条目';
+      // 徽标：零风险候选数（实时跟台账走）；带⚠️的候选数用灰色小字缀在后面，点按钮看明细
+      selAllBtn.innerHTML = '<span class="blm-ck' + (all ? ' on' : '') + '"></span>可删 '
+        + '<span class="blm-badge">' + targets.length + '</span>'
+        + (warnN ? '<span class="blm-badge2">+' + warnN + '⚠</span>' : '');
+      selAllBtn.title = all
+        ? '「可删」条目已全选，点一下取消'
+        : '一键勾选全台账零风险的删除候选（官方已确认未中奖等，当前 ' + targets.length + ' 条）；带⚠️警告的候选（缓冲期 / 自发确认，共 ' + warnN + ' 条）不在其中，需要的话用「全选」';
     }
 
     if (!items.length) {
@@ -2308,13 +2321,15 @@
     box.innerHTML = html;
   }
 
-  // 筛选 chips：带各状态计数，点一下切换
+  // 筛选 chips：带各状态计数，点一下切换。
+  // v1.0.1 移除了「建议删除」筛选 —— 它是行动建议而非状态事实，与「可删」按钮职责重叠；
+  // 想找可删条目：点「可删」一键勾选零风险条目；想叠加筛选：用「筛选 + 全选」。
+  // 卡片上的绿色「建议删除」状态标签保留，浏览不受影响。
   const FILTERS = [
     { key: 'all', label: '全部', always: true },
     { key: 'needcheck', label: '待确认' },
     { key: 'pending', label: '未开奖' },
     { key: 'cooldown', label: '缓冲期' },
-    { key: 'safe', label: '建议删除' },
     { key: 'unknown', label: '日期不明' },
     { key: 'won', label: '已中奖' },
     // 重复：删到只剩一条后，那条就不再重复、会自动从这里消失 —— title 里说清楚，避免误以为被误删
@@ -2390,13 +2405,25 @@
     });
     if (!targets.length) {
       if (!Object.keys(l).length) { toast('台账还是空的，先点「扫描建档」。'); return; }
-      toast('当前没有「建议删除」状态的记录。\n\n先点「核验开奖状态」把能查的查清楚；'
+      toast('当前没有零风险的「建议删除」条目。\n\n先点「核验开奖状态」把能查的查清楚；'
         + '剩下的能勾选，但删除时会有额外警告。');
       return;
     }
     const allSelected = targets.every(it => selected.has(it.dynId));
     targets.forEach(it => { allSelected ? selected.delete(it.dynId) : selected.add(it.dynId); });
     renderList();
+    // 结果汇总：让用户知道勾了什么、还有多少带⚠️的候选没动 —— 数字说话，不用猜
+    if (allSelected) {
+      toast('已取消勾选 ' + targets.length + ' 条。');
+      return;
+    }
+    const warnN = Object.values(l).filter(it => {
+      const st = computeStatus(it);
+      return st.deletable && st.warn && !it.deleted;
+    }).length;
+    toast('已勾选 ' + targets.length + ' 条零风险条目（官方已确认未中奖等）。\n\n'
+      + (warnN ? '另有 ' + warnN + ' 条带⚠️的可删候选（缓冲期中 / 你确认过日期的自发抽奖）未勾选 —— 需要的话用「全选」或手勾。\n' : '')
+      + '检查一下列表，然后点「删除选中」执行 —— 删除前还会再确认一次。');
   }
 
   function renderFollow() {

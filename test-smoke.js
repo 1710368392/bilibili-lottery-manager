@@ -1416,6 +1416,30 @@ S.allowCheckUnverified = false;
   check('exportWonCsv 带 BOM 导出', /function exportWonCsv\(/.test(src46) && src46.indexOf("'﻿' + csv") >= 0);
   check('统计页隐藏分页条/进度条', src46.indexOf("getElementById('blm-pagebar')") >= 0 && src46.indexOf("getElementById('blm-scanbar')") >= 0);
 
+  console.log('\n[47] v1.0.1 移除「建议删除」筛选 + 可删按钮增强');
+  const src47 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
+  // 从 FILTERS 数组定义段截取（const FILTERS = [ ... ];），避免误匹配到别处的 safe
+  const fm = src47.match(/const FILTERS = \[[\s\S]*?\];/);
+  check('状态筛选里已移除「建议删除」', !!fm && fm[0].indexOf("key: 'safe'") < 0);
+  check('其余状态筛选完好（待确认/未开奖/缓冲期/日期不明/已中奖）',
+    !!fm && ['needcheck', 'pending', 'cooldown', 'unknown', 'won'].every(k => fm[0].indexOf("key: '" + k + "'") >= 0));
+  check('旧 UI 状态兜底：safe 回退到 all',
+    src47.indexOf("(u.curFilter === 'safe') ? 'all' : u.curFilter") >= 0);
+  check('卡片绿色「建议删除」状态标签保留',
+    /key: 'safe', label: '建议删除'/.test(src47));
+  check('selectAllSafe 勾选后给 toast 明细汇总',
+    /已勾选 ' \+ targets\.length \+ ' 条零风险条目/.test(src47));
+  check('toast 提示带⚠️的候选数量并引导用「全选」',
+    src47.indexOf("warnN + ' 条带⚠️的可删候选") >= 0 && src47.indexOf("用「全选」或手勾") >= 0);
+  check('取消勾选也有 toast 反馈', /已取消勾选 ' \+ targets\.length \+ ' 条/.test(src47));
+  check('「可删」按钮带计数徽标 blm-badge',
+    src47.indexOf("'<span class=\"blm-badge\">' + targets.length + '</span>'") >= 0);
+  check('徽标样式已定义（主色 + 灰色⚠️计数）',
+    src47.indexOf('.blm-bar2 .blm-badge{') >= 0 && src47.indexOf('.blm-bar2 .blm-badge2{') >= 0);
+  check('按钮初始 title 说明零风险语义',
+    src47.indexOf('一键勾选全台账零风险的删除候选') >= 0);
+  check('版本号已升至 1.0.1', src47.indexOf('@version      1.0.1') >= 0 && src47.indexOf("VERSION = '1.0.1'") >= 0);
+
   console.log('\n结果: ' + passed + ' 通过, ' + failed + ' 失败');
   process.exit(failed ? 1 : 0);
 })();
