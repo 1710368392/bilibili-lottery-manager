@@ -8,7 +8,7 @@ let src = fs.readFileSync(file, 'utf8');
 // 把内部函数暴露出来供测试
 src = src.replace(
   "console.log('[抽奖动态管理器] 已启动",
-  "globalThis.__T__ = { guessDrawDate, computeStatus, badgeOf, lotteryTypeBadge, needVerify, needReverify, typeOf, dupMapOf, inTimeRange, sortItems, setSort: (f, d) => { if (f) curSort = f; if (d) curSortDir = d; }, timeRange, findMarks, renderHighlighted, conditionRanges, parseUserDate, allWinnersOf, looksLikeLottery, shouldShowFab, clampPos, assignNumbers, detailHtml, timeChip, lotteryUrl, fetchLottery, detectLotteryMode, verifyLottery, fmtCountdown, deleteDynamic, getDeleteDiag: () => lastDeleteDiag, scanIntoLedger, stop: () => { abortFlag = true; }, resetAbort: () => { abortFlag = false; }, textOpen, SETTINGS, buildBackupData, getModeDetectCache, resetModeDetectCache, toggleWon, syncDeleted, getScanTruncated, VERSION, pickLotteryText, lotteryScore, lotteryIssuer, dupKeyOf, groupAliveCount, saveLedger, canUnlock, lockIcon };\n  console.log('[抽奖动态管理器] 已启动"
+  "globalThis.__T__ = { guessDrawDate, computeStatus, badgeOf, lotteryTypeBadge, needVerify, needReverify, typeOf, dupMapOf, inTimeRange, sortItems, setSort: (f, d) => { if (f) curSort = f; if (d) curSortDir = d; }, timeRange, findMarks, renderHighlighted, conditionRanges, parseUserDate, allWinnersOf, looksLikeLottery, shouldShowFab, clampPos, assignNumbers, detailHtml, timeChip, lotteryUrl, fetchLottery, detectLotteryMode, verifyLottery, fmtCountdown, deleteDynamic, getDeleteDiag: () => lastDeleteDiag, scanIntoLedger, stop: () => { abortFlag = true; }, resetAbort: () => { abortFlag = false; }, textOpen, SETTINGS, buildBackupData, getModeDetectCache, resetModeDetectCache, setWonState, showStatusMenu, syncDeleted, getScanTruncated, VERSION, pickLotteryText, lotteryScore, lotteryIssuer, dupKeyOf, groupAliveCount, saveLedger, canUnlock, lockIcon };\n  console.log('[抽奖动态管理器] 已启动"
 );
 
 /* ---- mock 浏览器环境 ---- */
@@ -471,7 +471,7 @@ S.allowCheckUnverified = false;
   check('勾选框点击区放大到 16px', srcUi.indexOf('.blm-ck{display:inline-block;width:16px;height:16px') >= 0);
   check('开奖时间胶囊可点击（绑定 edit）', srcUi.indexOf('blm-chip-click') >= 0);
   check('「改开奖时间」从操作区移除', srcUi.indexOf('>改开奖时间</a>') < 0);
-  check('核验入口改用头部行迷你按钮', srcUi.indexOf('class="blm-mini" data-act="verify"') >= 0);
+  check('核验入口独立挂卡片右上角 blm-vfy', srcUi.indexOf('class="blm-vfy" data-act="verify"') >= 0 && srcUi.indexOf('.blm-vfy{position:absolute;top:10px;right:12px') >= 0);
   check('详情改为浮窗函数', srcUi.indexOf('function showDetailModal') >= 0);
   check('内联详情块已移除', srcUi.indexOf('blm-detail open') < 0);
   check('「开奖日期不明」圆点改浅紫', srcUi.indexOf("'#AFA9EC'") >= 0);
@@ -672,8 +672,8 @@ S.allowCheckUnverified = false;
   check('点 UP 名可筛选', srcFilter.indexOf('blm-uptag') >= 0);
   check('有「全选当前」与「全选可删」两个按钮', srcFilter.indexOf('blm-sel-cur') >= 0 && srcFilter.indexOf('blm-sel-all') >= 0);
   check('「标记我中奖了」按钮已从操作区移除', srcFilter.indexOf('>标记我中奖了</a>') < 0);
-  check('状态标签承担中奖标记功能', srcFilter.indexOf('data-wontoggle') >= 0);
-  check('点状态标签会调用 toggleWon', srcFilter.indexOf("closest('[data-wontoggle]')") >= 0);
+  check('状态标签承担中奖状态选择入口（data-stmenu + 小箭头）', srcFilter.indexOf('data-stmenu') >= 0 && srcFilter.indexOf('blm-caret') >= 0);
+  check('点状态标签会打开选择菜单 showStatusMenu', srcFilter.indexOf("closest('[data-stmenu]')") >= 0 && /function showStatusMenu\(/.test(srcFilter));
   check('中奖标记不再弹窗提示', srcFilter.indexOf("alert('已标记为中奖") < 0);
   check('「你中奖了」有专属样式类', srcFilter.indexOf('.blm-wontag') >= 0);
   check('中奖标签走胶囊形', srcFilter.indexOf('border-radius:999px') >= 0);
@@ -919,18 +919,19 @@ S.allowCheckUnverified = false;
   const offUser = mk({ source: 'user', official: true, won: null, drawTs: Date.now() - 30 * 86400000 });
   check('官方抽奖即便用户录过日期也不走自发分支', T.computeStatus(offUser).key !== 'safe' && T.computeStatus(offUser).key !== 'cooldown', T.computeStatus(offUser).key);
 
-  // —— 中奖标记三态循环：修复 null->true 误锁死 ——
+  // —— 中奖状态写入：菜单单选（取代旧三态循环） ——
   const twId = 'tw1';
   globalThis.GM_setValue('bili_lottery_ledger_v1', { [twId]: { dynId: twId, origId: 'o', upMid: 1, upName: 'A', pubTs: 1, text: 'x', won: null, drawTs: 1, source: 'user', official: false, deleted: false } });
-  T.toggleWon(twId);
+  T.setWonState(twId, false);
   let tw = globalThis.GM_getValue('bili_lottery_ledger_v1')[twId];
-  check('第一次点（null -> 确认未中奖 false）', tw.won === false, 'won=' + tw.won);
-  T.toggleWon(twId);
+  check('菜单选「未中奖」-> won=false', tw.won === false, 'won=' + tw.won);
+  T.setWonState(twId, true);
   tw = globalThis.GM_getValue('bili_lottery_ledger_v1')[twId];
-  check('第二次点（false -> 我中奖了 true 锁定）', tw.won === true, 'won=' + tw.won);
-  T.toggleWon(twId);
+  check('菜单选「已中奖」-> won=true', tw.won === true, 'won=' + tw.won);
+  T.setWonState(twId, null);
   tw = globalThis.GM_getValue('bili_lottery_ledger_v1')[twId];
-  check('第三次点（true -> 回到未确认 null）', tw.won === null, 'won=' + tw.won);
+  check('菜单选「结果未定」-> won=null', tw.won === null, 'won=' + tw.won);
+  check('状态写入后仍可再改（不锁死）', true);
 
   // —— 接口探测缓存：命中后复用，避免每次核验都重跑 9 次探测 ——
   T.resetModeDetectCache();
@@ -1429,8 +1430,9 @@ S.allowCheckUnverified = false;
     !!fm && ['needcheck', 'pending', 'cooldown', 'unknown', 'won'].every(k => fm[0].indexOf("key: '" + k + "'") >= 0));
   check('旧 UI 状态兜底：safe 回退到 all',
     src47.indexOf("(u.curFilter === 'safe') ? 'all' : u.curFilter") >= 0);
-  check('卡片绿色「建议删除」状态标签保留',
-    /key: 'safe', label: '建议删除'/.test(src47));
+  check('safe 状态标签随结果变化：未中奖/建议删除',
+    /key: 'safe', label: it\.won === false \? '未中奖' : '建议删除'/.test(src47)
+      || /key: 'safe', label: '未中奖'/.test(src47));
   check('selectAllSafe 勾选后给 toast 明细汇总（点明是当前筛选结果）',
     /已勾选当前筛选结果里 ' \+ targets\.length \+ ' 条安全可删的动态/.test(src47));
   check('toast 不再提示带⚠️的候选（已按用户要求精简）',
@@ -1517,12 +1519,30 @@ S.allowCheckUnverified = false;
 
   console.log('\n[52] v1.0.1 已删除条目状态封存（不再显示可改标记的误导提示）');
   const src52 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
-  check('已删除条目不挂 data-wontoggle（点击入口摘除）',
-    src52.indexOf("(it.deleted ? '' : ' data-wontoggle=\"' + it.dynId + '\"')") >= 0);
+  check('已删除条目不挂 data-stmenu（点击入口摘除）',
+    src52.indexOf("(it.deleted ? '' : ' data-stmenu=\"' + it.dynId + '\"')") >= 0);
   check('已删除条目悬停提示改为「留档不可改」',
     src52.indexOf('这条已从 B 站删除，状态只作留档，不可再改') >= 0);
-  check('toggleWon 兜底拦截已删除条目',
+  check('setWonState 兜底拦截已删除条目',
     src52.indexOf('if (!it || it.deleted) return;') >= 0);
+
+  console.log('\n[53] v1.0.1 状态体系整顿（改名/未中奖标签/状态菜单/核验右上角）');
+  const src53 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
+  check('needcheck 卡片标签改为「已开奖 · 结果未定」',
+    src53.indexOf("const lbl = (it.official === true && it.awaitingList) ? '名单待公布' : '已开奖 · 结果未定';") >= 0);
+  check('筛选项「待确认」同步改名「结果未定」',
+    src53.indexOf("{ key: 'needcheck', label: '结果未定' }") >= 0
+      && src53.indexOf("{ key: 'needcheck', label: '待确认' }") < 0);
+  check('won=true 标签改为「已中奖」', src53.indexOf("label: '已中奖', color: '#E24B4A'") >= 0);
+  check('won=false 各分支显示「未中奖」（缓冲期带后缀）',
+    src53.indexOf("'未中奖 · 缓冲期中'") >= 0 && src53.indexOf("? '未中奖' : '建议删除'") >= 0);
+  check('状态菜单三选项齐全且写入 setWonState',
+    src53.indexOf("label: '结果未定'") >= 0 && src53.indexOf("label: '已中奖'") >= 0
+      && src53.indexOf("label: '未中奖'") >= 0 && /function setWonState\(/.test(src53));
+  check('旧三态循环 toggleWon 已移除', src53.indexOf('toggleWon') < 0);
+  check('菜单点外部自动关闭', /function closeStatusMenu\(/.test(src53) && src53.indexOf("document.addEventListener('click', closeStatusMenu") >= 0);
+  check('refreshRowState 原地更新状态标签（不跳滚）',
+    src53.indexOf("const tagEl = row.querySelector('[data-stmenu=\"' + dynId + '\"]');") >= 0);
 
   console.log('\n结果: ' + passed + ' 通过, ' + failed + ' 失败');
   process.exit(failed ? 1 : 0);

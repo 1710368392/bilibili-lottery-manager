@@ -230,7 +230,7 @@
      ========================================================================== */
   function computeStatus(it) {
     if (it.deleted) return { key: 'deleted', label: '已删除', color: '#888780', deletable: false };
-    if (it.won === true) return { key: 'won', label: '你中奖了', color: '#E24B4A', deletable: false };
+    if (it.won === true) return { key: 'won', label: '已中奖', color: '#E24B4A', deletable: false };
 
     const now = Date.now();
 
@@ -257,17 +257,18 @@
     // 还没过缓冲期则给黄色警告，避免刚开奖就误删还没领奖的。
     // —— 这条规则的存在，是为了让「自发/未判定抽奖」不再永远卡在「待确认」删不动。
     if (it.source === 'user' && it.official !== true) {
-      if (inBuffer) return { key: 'cooldown', label: '缓冲期中', color: '#EF9F27', deletable: true, warn: true };
+      // 确认过未中奖的把事实亮出来，缓冲信息折进标签后缀
+      if (inBuffer) return { key: 'cooldown', label: it.won === false ? '未中奖 · 缓冲期中' : '缓冲期中', color: '#EF9F27', deletable: true, warn: true };
       // 已确认的自发抽奖 + 已过缓冲期：建议删除，但仍带警告 ——
       // 脚本无法替你知道你是否中奖，删除前仍会二次确认
-      return { key: 'safe', label: '建议删除', color: '#639922', deletable: true, warn: true };
+      return { key: 'safe', label: it.won === false ? '未中奖' : '建议删除', color: '#639922', deletable: true, warn: true };
     }
 
     // 中奖结果还没人工/接口确认（官方抽奖未核验、或脚本猜的日期用户没确认过）
     if (it.won === null || it.won === undefined) {
       // 官方抽奖到了开奖时间、但接口名单还是空的：这是「名单还没同步出来」，
       // 不等于「你没中奖」。标签写清楚，免得被当成可以删的条目。
-      const lbl = (it.official === true && it.awaitingList) ? '名单待公布' : '待确认中奖';
+      const lbl = (it.official === true && it.awaitingList) ? '名单待公布' : '已开奖 · 结果未定';
       return {
         key: 'needcheck', label: lbl, color: '#EF9F27',
         deletable: !!SETTINGS.allowCheckUnverified, warn: true
@@ -282,16 +283,16 @@
     // 而早期版本核验过的旧数据没有 winnersConfirmed 字段，要求它会让旧数据退回 7 天。
     if (it.official === true && it.won === false) {
       const obMs = (Number(SETTINGS.officialBufferDays) || 0) * DAY_MS;
-      if (passed >= obMs) return { key: 'safe', label: '建议删除', color: '#639922', deletable: true };
+      if (passed >= obMs) return { key: 'safe', label: '未中奖', color: '#639922', deletable: true };
       // 填了大于 0 的天数、且还没到 → 走缓冲期（不带警告，官方数据本来就是明确的）
-      return { key: 'cooldown', label: '缓冲期中', color: '#EF9F27', deletable: true };
+      return { key: 'cooldown', label: '未中奖 · 缓冲期中', color: '#EF9F27', deletable: true };
     }
 
     // 已开奖且确认未中奖：还要看缓冲期
     if (inBuffer) {
-      return { key: 'cooldown', label: '缓冲期中', color: '#EF9F27', deletable: true, warn: true };
+      return { key: 'cooldown', label: '未中奖 · 缓冲期中', color: '#EF9F27', deletable: true, warn: true };
     }
-    return { key: 'safe', label: '建议删除', color: '#639922', deletable: true };
+    return { key: 'safe', label: '未中奖', color: '#639922', deletable: true };
   }
 
   // 转发时间 / 开奖时间用不同颜色的胶囊区分，开奖时间还会按「开奖与否」变色
@@ -1327,9 +1328,13 @@
     .blm-dup-tag{font-size:11px;padding:1px 6px;border-radius:4px;background:var(--blm-dup-bg);color:var(--blm-dup-text);white-space:nowrap;}
     .blm-uptag{cursor:pointer;}
     .blm-uptag:hover{color:#FB7299;text-decoration:underline;}
-    /* 状态标签 = 中奖标记开关（原「标记我中奖了」按钮的功能移到这里） */
+    /* 状态标签 = 中奖状态选择入口（点标签或右侧小箭头弹出菜单） */
     .blm-statustag{cursor:pointer;}
     .blm-statustag:hover{text-decoration:underline;}
+    .blm-caret{margin-left:2px;vertical-align:-0.5px;opacity:.55;}
+    /* 核验入口：挂在卡片右上角（原来挤在状态标签后面容易被忽略） */
+    .blm-vfy{position:absolute;top:10px;right:12px;font-size:11px;color:#185FA5;}
+    .blm-vfy:hover{text-decoration:underline;}
     /* 「你中奖了」专属样式：胶囊形 + 金色双层描边 + 阴影，一眼能从其他状态里跳出来 */
     .blm-wontag{
       font-size:12px;
@@ -1799,6 +1804,16 @@
       ckEl.className = 'blm-ck' + (isSel ? ' on' : '') + (canSel ? '' : ' dis');
       ckEl.title = canSel ? '选定这条' : '上锁了，点左上角的锁解锁后才能选';
     }
+    // 状态标签：文字/颜色/金边随新状态走（原地刷新时菜单选完状态不重排整卡）
+    const tagEl = row.querySelector('[data-stmenu="' + dynId + '"]');
+    if (tagEl) {
+      tagEl.className = 'blm-tag blm-statustag' + (st.key === 'won' ? ' blm-wontag' : '');
+      if (st.key === 'won') tagEl.removeAttribute('style');
+      else tagEl.style.color = st.color;
+      tagEl.innerHTML = st.label
+        + '<svg class="blm-caret" viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+      tagEl.title = '点一下选择中奖状态：结果未定 / 已中奖 / 未中奖';
+    }
     refreshSelCounts(curItems);
     return true;
   }
@@ -1850,9 +1865,9 @@
       const lk = t.closest('[data-lock]');
       if (lk) { toggleLock(lk.getAttribute('data-lock')); return; }
 
-      // 点状态标签 = 切换「我中奖了」标记
-      const wt = t.closest('[data-wontoggle]');
-      if (wt) { toggleWon(wt.getAttribute('data-wontoggle')); return; }
+      // 点状态标签 / 右侧小箭头 = 打开中奖状态选择菜单
+      const sm = t.closest('[data-stmenu]');
+      if (sm) { showStatusMenu(sm.getAttribute('data-stmenu'), sm); return; }
 
       // II档：空状态里的「清空筛选条件」按钮
       const cs = t.closest('[data-clear-search]');
@@ -2307,19 +2322,16 @@
                 + '加码 ' + escapeHtml(issuer) + '</span>'
               : '') +
             '<span class="blm-tag blm-statustag' + (it.won === true ? ' blm-wontag' : '') + '"'
-              + (it.deleted ? '' : ' data-wontoggle="' + it.dynId + '"')
+              + (it.deleted ? '' : ' data-stmenu="' + it.dynId + '"')
               + (it.won === true ? '' : ' style="color:' + st.color + '"')
               + ' title="' + (it.deleted
                   ? '这条已从 B 站删除，状态只作留档，不可再改'
-                  : it.won === true
-                  ? '点一下取消中奖标记'
-                  : '点一下：先标记「确认未中奖」（开放删除），再点一次标记「我中奖了」（锁定）') + '">'
-              + st.label + '</span>' +
+                  : '点一下选择中奖状态：结果未定 / 已中奖 / 未中奖') + '">'
+              + st.label
+              + (it.deleted ? '' : '<svg class="blm-caret" viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>')
+              + '</span>' +
             // 核验入口：只给「官方抽奖被你手动覆盖过」的条目（见 needVerify）
-            (needVerify(it)
-              ? '<a href="javascript:;" class="blm-mini" data-act="verify" data-dyn="' + it.dynId + '" title="这条原本是官方抽奖，你覆盖过开奖时间 —— 点这里用官方数据恢复">核验</a>'
-              : '') +
-          '</div>' +
+            (needVerify(it) ? '' : '') +          '</div>' +
           '<div class="blm-txtwrap">' +
             '<div class="blm-txt' + (tOpen ? ' open' : '') + '">' + renderHighlighted(it.text, it) + '</div>' +
             '<span class="blm-more" data-more="' + it.dynId + '">' + (tOpen ? '收起正文 ▲' : '展开正文 ▼') + '</span>' +
@@ -2333,7 +2345,12 @@
             '<a href="javascript:;" data-act="open" data-dyn="' + it.dynId + '">打开原动态</a>' +
           '</div>' +
         '</div>' +
-        '<div class="blm-footright">' + footRight + '</div>';
+        '<div class="blm-footright">' + footRight + '</div>'
+        // 核验是「需要你处理的动作」，独立挂到卡片右上角更醒目（原来挤在状态标签后面容易被忽略）
+        + (needVerify(it)
+          ? '<a href="javascript:;" class="blm-vfy" data-act="verify" data-dyn="' + it.dynId
+            + '" title="这条原本是官方抽奖，你覆盖过开奖时间 —— 点这里用官方数据恢复">核验</a>'
+          : '');
 
       body.appendChild(row);
     }
@@ -2386,7 +2403,7 @@
   // 卡片上的绿色「建议删除」状态标签保留，浏览不受影响。
   const FILTERS = [
     { key: 'all', label: '全部', always: true },
-    { key: 'needcheck', label: '待确认' },
+    { key: 'needcheck', label: '结果未定' },
     { key: 'pending', label: '未开奖' },
     { key: 'cooldown', label: '缓冲期' },
     { key: 'unknown', label: '日期不明' },
@@ -2818,7 +2835,7 @@
         '<option value="light"' + (SETTINGS.appearance === 'light' ? ' selected' : '') + '>永远亮</option>' +
         '<option value="dark"' + (SETTINGS.appearance === 'dark' ? ' selected' : '') + '>永远暗</option>' +
       '</select></div>' +
-      '<div class="blm-set"><label>允许勾选「待确认」条目<div class="blm-tip">默认关闭：开奖状态不明的动态一律不许删。打开后也能勾选，但删除时会再警告一次。新手扫描完发现全都选不动，就是因为这个开关</div></label><input type="checkbox" id="s-allowunverified"' + (SETTINGS.allowCheckUnverified ? ' checked' : '') + ' style="width:auto"></div>' +
+      '<div class="blm-set"><label>允许勾选「结果未定」条目<div class="blm-tip">默认关闭：开奖结果还没确认的动态一律不许删。打开后也能勾选，但删除时会再警告一次。新手扫描完发现全都选不动，就是因为这个开关</div></label><input type="checkbox" id="s-allowunverified"' + (SETTINGS.allowCheckUnverified ? ' checked' : '') + ' style="width:auto"></div>' +
       '<div class="blm-set"><label>中奖系统通知<div class="blm-tip">开奖后自动查到你中奖时，发一条系统桌面通知（页面切到后台也能收到，点通知可回到本页）。关掉则完全不弹，中奖只会标记在列表里</div></label><span style="display:flex;align-items:center;gap:6px"><input type="checkbox" id="s-winnotify"' + (SETTINGS.winNotify ? ' checked' : '') + ' style="width:auto"><button class="blm-btn" id="s-testnotify" style="padding:3px 8px;font-size:11px">测试</button></span></div>' +
       '<div class="blm-set"><label>正文高亮<div class="blm-tip">把「参与条件」标青、「开奖奖品」标紫，一眼扫到关键信息。单字简写（转/评/关）只在识别出条件块时才标，避免误伤</div></label><input type="checkbox" id="s-hl"' + (SETTINGS.highlightText ? ' checked' : '') + ' style="width:auto"></div>' +
       '<div class="blm-set"><label>转发后自动弹录入浮条</label><input type="checkbox" id="s-auto"' + (SETTINGS.autoFloatOnRepost ? ' checked' : '') + ' style="width:auto"></div>' +
@@ -3113,20 +3130,62 @@
     renderList();
   }
 
-  function toggleWon(dynId) {
+  // 中奖状态写入（状态菜单选中后调用；取代旧版"点标签三态循环"——
+  // 循环要连点两次才能到「已中奖」，手滑风险高，改成菜单单选更稳）
+  function setWonState(dynId, val) {
     const ledger = loadLedger();
     const it = ledger[dynId];
     // 已删除条目状态封存：标签只是留档，不可再改（渲染层已摘掉点击入口，这里兜底）
     if (!it || it.deleted) return;
-    // 三态循环：未确认(null) → 确认未中奖(false) → 我中奖了(true) → 回到未确认(null)
-    // 第一次点（从 null）先变成「确认未中奖」，安全地开放删除通道，而不是直接锁死成「中奖」。
-    // 想真正标记中奖需要再点一次，避免手滑把一条动态永久锁死、再也删不掉。
-    if (it.won === true) it.won = null;
-    else if (it.won === false) it.won = true;
-    else it.won = false;
-    if (it.won === true) selected.delete(dynId);   // 标记中奖后从选中集合里剔除，避免误删
+    it.won = val;   // null=结果未定 / true=已中奖 / false=未中奖
+    if (val === true) selected.delete(dynId);   // 标记中奖后从选中集合里剔除，避免误删
     saveLedger(ledger);
-    renderList();
+    // 「全部」视图原地刷新那张卡片即可（不跳滚）；状态筛选下条目可能该换页/消失，回退全量渲染
+    if (curFilter === 'all' || curFilter === 'dup') {
+      if (!refreshRowState(dynId)) renderList();
+    } else {
+      renderList();
+    }
+  }
+
+  // 中奖状态选择菜单：点状态标签或右侧小箭头展开，三个状态单选
+  function closeStatusMenu() {
+    const m = document.getElementById('blm-stmenu');
+    if (m) m.remove();
+  }
+  function showStatusMenu(dynId, anchor) {
+    closeStatusMenu();
+    const it = loadLedger()[dynId];
+    if (!it || it.deleted) return;
+    const opts = [
+      { v: null,  label: '结果未定', desc: '还没确认中没中奖' },
+      { v: true,  label: '已中奖',   desc: '领奖凭证，自动锁定、移出勾选' },
+      { v: false, label: '未中奖',   desc: '开放删除（自发等 7 天缓冲，官方直接放开）' }
+    ];
+    const cur = it.won === true ? true : (it.won === false ? false : null);
+    const menu = document.createElement('div');
+    menu.id = 'blm-stmenu';
+    menu.style.cssText = 'position:fixed;z-index:99999;background:var(--blm-bg,#fff);border:1px solid var(--blm-border,#E3E5E7);'
+      + 'border-radius:10px;padding:6px;min-width:216px;box-shadow:0 4px 16px rgba(0,0,0,.14);';
+    opts.forEach(o => {
+      const on = o.v === cur;
+      const b = document.createElement('div');
+      b.style.cssText = 'display:flex;align-items:flex-start;gap:8px;padding:7px 10px;border-radius:7px;cursor:pointer;font-size:12px;line-height:1.5;'
+        + (on ? 'background:#FBEAF0;color:#993556;' : 'color:var(--blm-text,#18191C);');
+      b.innerHTML = '<span style="width:14px;flex:none;text-align:center;">' + (on ? '✓' : '') + '</span>'
+        + '<span><b style="font-weight:600;">' + o.label + '</b><br><span style="font-size:11px;opacity:.65;">' + o.desc + '</span></span>';
+      b.addEventListener('click', ev => {
+        ev.stopPropagation();
+        setWonState(dynId, o.v);
+        closeStatusMenu();
+      });
+      menu.appendChild(b);
+    });
+    document.body.appendChild(menu);
+    const r = anchor.getBoundingClientRect();
+    menu.style.left = Math.max(8, Math.min(r.left, window.innerWidth - menu.offsetWidth - 8)) + 'px';
+    menu.style.top = (r.bottom + 6 + menu.offsetHeight > window.innerHeight ? r.top - menu.offsetHeight - 6 : r.bottom + 6) + 'px';
+    setTimeout(() => { document.addEventListener('click', closeStatusMenu, { once: true }); }, 0);
   }
 
   // 对「你已确认」的条目做反向核验：如果它其实是官方抽奖，就用官方数据覆盖你填的日期
