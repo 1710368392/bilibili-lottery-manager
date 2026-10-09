@@ -2422,10 +2422,10 @@
   // 卡片上的绿色「建议删除」状态标签保留，浏览不受影响。
   const FILTERS = [
     { key: 'all', label: '全部', always: true },
-    { key: 'needcheck', label: '结果未定' },
-    { key: 'pending', label: '未开奖' },
-    { key: 'cooldown', label: '缓冲期' },
     { key: 'unknown', label: '日期不明' },
+    { key: 'pending', label: '未开奖' },
+    { key: 'needcheck', label: '结果未定' },
+    { key: 'cooldown', label: '缓冲期' },
     { key: 'won', label: '已中奖' },
     // 重复：删到只剩一条后，那条就不再重复、会自动从这里消失 —— title 里说清楚，避免误以为被误删
     { key: 'dup', label: '重复', tip: '同一条抽奖你转了多次。注意：删到只剩一条后，它就不再算重复，会自动从这里消失（不是被删掉了），去「全部」里能看到它' },
