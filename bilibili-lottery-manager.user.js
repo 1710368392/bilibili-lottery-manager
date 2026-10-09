@@ -1336,7 +1336,8 @@
     /* 状态标签 = 中奖状态选择入口（点标签或右侧小箭头弹出菜单） */
     .blm-statustag{cursor:pointer;}
     .blm-statustag:hover{text-decoration:underline;}
-    .blm-caret{margin-left:2px;vertical-align:-0.5px;opacity:.55;}
+    .blm-caret{margin-left:2px;vertical-align:-0.5px;opacity:.55;transition:transform .15s;}
+    .blm-statustag.blm-stopen .blm-caret{transform:rotate(180deg);opacity:.95;}
     /* 核验入口：挂在卡片右上角（原来挤在状态标签后面容易被忽略） */
     .blm-vfy{position:absolute;top:10px;right:12px;font-size:11px;color:#185FA5;}
     .blm-vfy:hover{text-decoration:underline;}
@@ -1814,7 +1815,8 @@
     // 状态标签：文字/颜色/金边随新状态走（原地刷新时菜单选完状态不重排整卡）
     const tagEl = row.querySelector('[data-stmenu="' + dynId + '"]');
     if (tagEl) {
-      tagEl.className = 'blm-tag blm-statustag' + (st.key === 'won' ? ' blm-wontag' : '');
+      tagEl.className = 'blm-tag blm-statustag' + (st.key === 'won' ? ' blm-wontag' : '')
+        + (stMenuOpenId === dynId ? ' blm-stopen' : '');
       if (st.key === 'won') tagEl.removeAttribute('style');
       else tagEl.style.color = st.color;
       tagEl.innerHTML = st.label
@@ -3160,10 +3162,6 @@
   }
 
   // 中奖状态选择菜单：点状态标签或右侧小箭头展开，三个状态单选
-  function closeStatusMenu() {
-    const m = document.getElementById('blm-stmenu');
-    if (m) m.remove();
-  }
   // 「点菜单外面就关」用常驻捕获监听统一接管 —— 之前是每次开菜单挂一个 once 监听，
   // 选中选项后残留到下一次点击：用户再点标签，抽屉刚打开就被这个残留监听关掉，
   // 表现为"换完状态必须先点/拖一下别处才能再开"（2026-10-10 用户实测）
@@ -3178,8 +3176,22 @@
       closeStatusMenu();
     }, true);
   }
+  // 当前展开的抽屉归属哪张卡片 —— 用于「再点一次同一个标签 = 收起」的开关语义
+  let stMenuOpenId = null;
+  function closeStatusMenu() {
+    const m = document.getElementById('blm-stmenu');
+    if (m) m.remove();
+    // 箭头转回原位
+    if (stMenuOpenId) {
+      const tag = document.querySelector('[data-stmenu="' + stMenuOpenId + '"]');
+      if (tag) tag.classList.remove('blm-stopen');
+    }
+    stMenuOpenId = null;
+  }
   function showStatusMenu(dynId, anchor) {
     ensureStatusMenuOutsideClose();
+    // 同一个标签再点一次 = 收起（开关语义）；点别的标签 = 换目标展开
+    if (stMenuOpenId === dynId) { closeStatusMenu(); return; }
     closeStatusMenu();
     const it = loadLedger()[dynId];
     if (!it || it.deleted) return;
@@ -3212,6 +3224,9 @@
     const r = anchor.getBoundingClientRect();
     menu.style.left = Math.max(8, Math.min(r.left, window.innerWidth - menu.offsetWidth - 8)) + 'px';
     menu.style.top = (r.bottom + 4 + menu.offsetHeight > window.innerHeight ? r.top - menu.offsetHeight - 4 : r.bottom + 4) + 'px';
+    // 箭头翻转，标记展开态
+    stMenuOpenId = dynId;
+    anchor.classList.add('blm-stopen');
   }
 
   // 对「你已确认」的条目做反向核验：如果它其实是官方抽奖，就用官方数据覆盖你填的日期
