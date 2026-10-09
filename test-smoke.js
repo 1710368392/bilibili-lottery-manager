@@ -1629,6 +1629,10 @@ S.allowCheckUnverified = false;
     src59.indexOf("metaEl.innerHTML = metaChipsHtml(it, Date.now());") >= 0);
   check('toggleLock 关掉该卡片开着的状态菜单（标签即将重建）',
     src59.indexOf('if (stMenuOpenId === dynId) closeStatusMenu();') >= 0);
+  check('展开/收起正文原地切换（不再 renderList 全量重建）',
+    src59.indexOf("txt.classList.toggle('open', opening);") >= 0
+      && src59.indexOf("more.textContent = opening ? '收起正文 ▲' : '展开正文 ▼';") >= 0
+      && /data-more'\];\n[\s\S]*?renderList\(\); return;/.test(src59) === false);
 
   console.log('\n结果: ' + passed + ' 通过, ' + failed + ' 失败');
   process.exit(failed ? 1 : 0);

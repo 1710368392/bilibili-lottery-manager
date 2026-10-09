@@ -1952,8 +1952,19 @@
       const more = t.closest('[data-more]');
       if (more) {
         const d = more.getAttribute('data-more');
-        if (textOpen.has(d)) textOpen.delete(d); else textOpen.add(d);
-        renderList(); return;
+        const opening = !textOpen.has(d);
+        if (opening) textOpen.add(d); else textOpen.delete(d);
+        // 原地切换：正文全文本来就渲染在 DOM 里，「展开/收起」只是加减一个 CSS 钳制类，
+        // 没必要 renderList 全量重建几百张卡（之前每次点都整页重排，所以卡）
+        const wrap = more.parentElement;
+        const txt = wrap && wrap.querySelector('.blm-txt');
+        if (txt && txt.classList && txt.classList.toggle) {
+          txt.classList.toggle('open', opening);
+          more.textContent = opening ? '收起正文 ▲' : '展开正文 ▼';
+        } else {
+          renderList();   // 兜底：DOM 结构对不上时才全量重建
+        }
+        return;
       }
 
       const dt = t.closest('[data-detail]');
