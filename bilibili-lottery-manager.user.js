@@ -319,10 +319,13 @@
     return '';
   }
 
-  // 是否需要「核验」入口：只有「本来就是官方抽奖、又被你手动覆盖了日期」的条目才需要。
-  // 纯自发抽奖就算你手填过日期，核验也查不到官方数据，所以不给这个入口，免得白点。
+  // 是否需要「核验」入口：你手动覆盖过日期（source==='user'）、且这条**没有被判死为自发**
+  // （official !== false）时给入口。official 有三种值：true=官方 / false=自发 / null=还没判定
+  // （浮条新建、老版本台账记录、没跑过类型判定的条目都是 null）——
+  // 以前只认 true，导致"看起来是官方抽奖"但 official 还没判定的条目手填日期后永远没有核验按钮（实测踩坑）。
+  // 纯自发（false）核验也查不到官方数据，所以不给这个入口，免得白点。
   function needVerify(it) {
-    return it.source === 'user' && it.official === true;
+    return it.source === 'user' && it.official !== false;
   }
 
   // 角标：这条记录的开奖信息是哪儿来的
@@ -2366,9 +2369,13 @@
         '</div>' +
         '<div class="blm-footright">' + footRight + '</div>'
         // 核验是「需要你处理的动作」，独立挂到卡片右上角更醒目（原来挤在状态标签后面容易被忽略）
+        // 官方（true）与未判定（null）的提示措辞不同：前者是"恢复官方数据"，后者是"试试查官方数据"
         + (needVerify(it)
           ? '<a href="javascript:;" class="blm-vfy" data-act="verify" data-dyn="' + it.dynId
-            + '" title="这条原本是官方抽奖，你覆盖过开奖时间 —— 点这里用官方数据恢复">核验</a>'
+            + '" title="' + (it.official === true
+              ? '这条原本是官方抽奖，你覆盖过开奖时间 —— 点这里用官方数据恢复'
+              : '不确定这条是不是官方抽奖 —— 点这里试试查官方数据，查到就替换你手填的日期')
+            + '">核验</a>'
           : '');
 
       body.appendChild(row);

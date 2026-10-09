@@ -580,13 +580,17 @@ S.allowCheckUnverified = false;
   console.log('\n[22] 核验按钮的出现条件（只在「原本官方 + 被人工覆盖」时出现）');
   check('官方抽奖被人工覆盖 → 显示核验', T.needVerify({ source: 'user', official: true }) === true);
   check('纯自发抽奖 + 人工填日期 → 不显示', T.needVerify({ source: 'user', official: false }) === false);
-  check('类型未判定 + 人工填日期 → 不显示', T.needVerify({ source: 'user', official: null }) === false);
+  check('类型未判定(null) + 人工填日期 → 显示（浮条新建/老记录官方= null，以前漏掉核验按钮）', T.needVerify({ source: 'user', official: null }) === true);
   check('官方抽奖且数据就来自接口 → 不显示', T.needVerify({ source: 'api', official: true }) === false);
   check('脚本猜的日期 → 不显示', T.needVerify({ source: 'guess', official: true }) === false);
   check('完全没核验过 → 不显示', T.needVerify({}) === false);
-  check('官方=undefined 也当成未判定', T.needVerify({ source: 'user', official: undefined }) === false);
+  check('官方=undefined 也当成未判定 → 显示', T.needVerify({ source: 'user', official: undefined }) === true);
   const srcVerify = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
   check('列表与浮窗都改用 needVerify 判定', (srcVerify.match(/needVerify\(it\)/g) || []).length >= 2);
+  check('核验提示区分「官方恢复」与「未判定试查」两种措辞',
+    srcVerify.indexOf('这条原本是官方抽奖，你覆盖过开奖时间') >= 0
+    && srcVerify.indexOf('不确定这条是不是官方抽奖') >= 0);
+  check('needVerify 放宽为 official !== false', /it\.official !== false/.test(srcVerify));
 
   console.log('\n[23] 筛选系统：类型 / 重复 / 时间范围 / 排序');
   check('official=true → official', T.typeOf({ official: true }) === 'official');
