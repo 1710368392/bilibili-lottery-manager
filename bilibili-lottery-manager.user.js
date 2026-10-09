@@ -1355,10 +1355,12 @@
     .blm-iconbtn:hover{border-color:#FB7299;color:#FB7299;}
     .blm-badge{font-size:11px;padding:1px 6px;border-radius:4px;white-space:nowrap;}
     .blm-tag{font-size:11px;padding:1px 6px;border-radius:4px;background:var(--blm-border2);color:var(--blm-text2);white-space:nowrap;}
-    .blm-foot{padding:9px 12px;border-top:1px solid var(--blm-border);display:flex;gap:8px;align-items:center;}
-    .blm-prog{font-size:12px;color:var(--blm-text2);flex:1;}
+    .blm-foot{padding:9px 12px;border-top:1px solid var(--blm-border);display:flex;gap:8px;align-items:center;position:relative;}
+    /* 进度条悬浮在底栏上缘 —— 若留在 flex 流里，display:block 后会占一行宽度，
+       把旁边 flex:1 的进度文字挤成一列竖排字（2026-10-10 用户实测） */
+    .blm-scanbar{position:absolute;left:0;right:0;top:-2px;height:4px;border-radius:3px;background:var(--blm-border2);overflow:hidden;margin:0;}
+    .blm-prog{font-size:12px;color:var(--blm-text2);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
     /* II档：扫描/核验/删除进行中的加载态 —— 不确定进度条（我们拿不到总页数，用流动动画表示"在忙"） */
-    .blm-scanbar{height:4px;width:100%;border-radius:3px;background:var(--blm-border2);overflow:hidden;margin-bottom:8px;}
     .blm-scanbar i{display:block;height:100%;width:38%;border-radius:3px;background:#FB7299;animation:blm-indet 1.1s ease-in-out infinite;}
     @keyframes blm-indet{0%{transform:translateX(-110%)}100%{transform:translateX(360%)}}
     /* II档：长列表分页条（仅在条目超过 PAGE_SIZE 时出现） */
