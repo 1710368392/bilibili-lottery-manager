@@ -1629,6 +1629,8 @@ S.allowCheckUnverified = false;
     src59.indexOf("metaEl.innerHTML = metaChipsHtml(it, Date.now());") >= 0);
   check('toggleLock 关掉该卡片开着的状态菜单（标签即将重建）',
     src59.indexOf('if (stMenuOpenId === dynId) closeStatusMenu();') >= 0);
+  check('gate 判定：只限「挂着关闭的锁」的卡片（可删/已解锁/已删除不受限）',
+    (src59.match(/const gateOpen = it\.deleted \? true : \(st\.deletable \|\| unlocked\.has\(it\.dynId\)\);/g) || []).length >= 2);
   check('展开/收起正文原地切换（不再 renderList 全量重建）',
     src59.indexOf("txt.classList.toggle('open', opening);") >= 0
       && src59.indexOf("more.textContent = opening ? '收起正文 ▲' : '展开正文 ▼';") >= 0

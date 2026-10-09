@@ -1808,10 +1808,11 @@
   // 全量重建有两个代价：几百张卡片 innerHTML 重排（点击卡顿）；滚动容器内容被整体替换，
   // 浏览器滚动锚点失效（页面自动跳滚）。锁/勾选只影响这张卡片自己的样式和全局计数，
   // 没必要动整个列表。
-  // 状态标签 HTML：锁住时摘掉点击入口（data-stmenu + 小箭头），只读展示 —— 锁的语义是
-  // 「这条先别动」：不能勾选删除，也不能改中奖状态、改开奖时间（解锁后入口自动恢复）
+  // 状态标签 HTML：只有「挂着关闭的锁」的卡片摘掉点击入口（data-stmenu + 小箭头）。
+  // 没显示锁的卡片（本身可删 / 已解锁 / 已删除留档）不受限 —— 锁的语义是「这条先别动」，
+  // 没锁就无所谓动不动
   function statusTagHtml(it, st) {
-    const gateOpen = unlocked.has(it.dynId);
+    const gateOpen = it.deleted ? true : (st.deletable || unlocked.has(it.dynId));
     const clickable = !it.deleted && gateOpen;
     return '<span class="blm-tag blm-statustag' + (it.won === true ? ' blm-wontag' : '') + '"'
       + (clickable ? ' data-stmenu="' + it.dynId + '"' : '')
@@ -1826,9 +1827,11 @@
       + '</span>';
   }
 
-  // 时间行 HTML：转发胶囊永远只读；开奖胶囊解锁时可点击改时间，锁住时只读 + 提示
+  // 时间行 HTML：转发胶囊永远只读；开奖胶囊只在「挂着关闭的锁」时只读 + 提示
+  // （同 statusTagHtml：没显示锁的卡片可点击改时间）
   function metaChipsHtml(it, now) {
-    const gateOpen = unlocked.has(it.dynId);
+    const st = computeStatus(it);
+    const gateOpen = it.deleted ? true : (st.deletable || unlocked.has(it.dynId));
     const clickCls = gateOpen ? ' blm-chip-click' : '';
     const editAttr = gateOpen ? ' data-act="edit" data-dyn="' + it.dynId + '"' : '';
     const hint = gateOpen ? '' : '（上锁中：点左上角的锁解锁后才能改）';
