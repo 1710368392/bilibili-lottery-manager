@@ -471,7 +471,12 @@ S.allowCheckUnverified = false;
   check('勾选框点击区放大到 16px', srcUi.indexOf('.blm-ck{display:inline-block;width:16px;height:16px') >= 0);
   check('开奖时间胶囊可点击（绑定 edit）', srcUi.indexOf('blm-chip-click') >= 0);
   check('「改开奖时间」从操作区移除', srcUi.indexOf('>改开奖时间</a>') < 0);
-  check('核验入口独立挂卡片右上角 blm-vfy', srcUi.indexOf('class="blm-vfy" data-act="verify"') >= 0 && srcUi.indexOf('.blm-vfy{position:absolute;top:10px;right:12px') >= 0);
+  check('核验入口独立挂卡片右上角 blm-vfy', srcUi.indexOf('class="blm-vfy" data-act="verify"') >= 0 && srcUi.indexOf('.blm-vfy{position:absolute;top:8px;right:12px') >= 0);
+  check('核验为凸起胶囊 + 三态反馈（默认投影 / 悬浮抬升 / 按压回落）',
+    srcUi.indexOf('.blm-vfy{position:absolute') >= 0
+    && srcUi.indexOf('border-radius:999px') >= 0
+    && srcUi.indexOf('.blm-vfy:hover{transform:translateY(-1px)') >= 0
+    && srcUi.indexOf('.blm-vfy:active{transform:translateY(0)') >= 0);
   check('详情改为浮窗函数', srcUi.indexOf('function showDetailModal') >= 0);
   check('内联详情块已移除', srcUi.indexOf('blm-detail open') < 0);
   check('「开奖日期不明」圆点改浅紫', srcUi.indexOf("'#AFA9EC'") >= 0);

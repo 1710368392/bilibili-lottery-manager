@@ -1179,6 +1179,7 @@
       --blm-border:#e3e5e7; --blm-border2:#f1f2f3; --blm-shadow:rgba(0,0,0,.18);
       --blm-ok-bg:#EAF3DE; --blm-ok-text:#3B6D11;
       --blm-warn-bg:#FCEBEB; --blm-warn-text:#A32D2D;
+      --blm-info-bg:#E6F1FB; --blm-info-text:#185FA5;
       --blm-grey-bg:#F1EFE8; --blm-grey-text:#5F5E5A;
       --blm-hl-cond-bg:#E1F5EE; --blm-hl-cond-text:#0F6E56;
       --blm-hl-prize-bg:#EEEDFE; --blm-hl-prize-text:#534AB7;
@@ -1193,6 +1194,7 @@
       --blm-border:#2f3235; --blm-border2:#26282b; --blm-shadow:rgba(0,0,0,.5);
       --blm-ok-bg:#1d2b16; --blm-ok-text:#9bd45a;
       --blm-warn-bg:#3a1d1d; --blm-warn-text:#ff8d8d;
+      --blm-info-bg:#16283a; --blm-info-text:#7db4e8;
       --blm-grey-bg:#2a2a26; --blm-grey-text:#b8b5a8;
       --blm-hl-cond-bg:#11322a; --blm-hl-cond-text:#5fd6b0;
       --blm-hl-prize-bg:#2a2740; --blm-hl-prize-text:#b3a8ff;
@@ -1341,9 +1343,14 @@
     .blm-statustag:hover{text-decoration:underline;}
     .blm-caret{margin-left:2px;vertical-align:-0.5px;opacity:.55;transition:transform .15s;}
     .blm-statustag.blm-stopen .blm-caret{transform:rotate(180deg);opacity:.95;}
-    /* 核验入口：挂在卡片右上角（原来挤在状态标签后面容易被忽略） */
-    .blm-vfy{position:absolute;top:10px;right:12px;font-size:11px;color:#185FA5;}
-    .blm-vfy:hover{text-decoration:underline;}
+    /* 核验入口：挂在卡片右上角的凸起胶囊（纯文字链接太隐蔽，胶囊 + 微投影让它像颗「待办按钮」） */
+    .blm-vfy{position:absolute;top:8px;right:12px;font-size:11px;line-height:1;cursor:pointer;
+      color:var(--blm-info-text);background:var(--blm-info-bg);padding:4px 10px;border-radius:999px;
+      border:1px solid var(--blm-border);
+      box-shadow:0 1px 2px var(--blm-shadow);transition:transform .12s, box-shadow .12s;}
+    .blm-vfy:hover{transform:translateY(-1px);box-shadow:0 3px 6px var(--blm-shadow);text-decoration:none;}
+    /* 按压时「按下去」：抬升取消 + 投影收紧，松开（松开鼠标 active 结束）自然弹回悬浮态再回落 */
+    .blm-vfy:active{transform:translateY(0);box-shadow:0 1px 1px var(--blm-shadow);}
     /* 「你中奖了」专属样式：胶囊形 + 金色双层描边 + 阴影，一眼能从其他状态里跳出来 */
     .blm-wontag{
       font-size:12px;
