@@ -1250,8 +1250,8 @@ S.allowCheckUnverified = false;
   /* ---- [39] 清理重复：删多余转发不影响参与资格（iQOO 案例：同一官方抽奖转了 4 次） ---- */
   console.log('\n[39] 清理重复 / 组安全线');
   const src39 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
-  check('存在「清理重复」按钮', src39.indexOf('id="blm-dupclean"') >= 0);
-  check('按钮只在「重复」筛选下显示', src39.indexOf("(curFilter === 'dup') ? '' : 'none'") >= 0);
+  check('「清理重复」已并入「可删」（v1.0.1：无独立按钮，重复视图下点「可删」触发）',
+    src39.indexOf('id="blm-dupclean"') < 0 && src39.indexOf("if (curFilter === 'dup') { cleanDupEntries(); return; }") >= 0);
   check('保留优先级：中奖条目优先', src39.indexOf("sorted.find(it => it.won === true) || sorted[0]") >= 0);
   check('删除防线按整批计算组内剩余（防同组多条互相看不见）',
     src39.indexOf('delPend[dupKeyOf(it)]') >= 0 && src39.indexOf('delPend[dupKeyOf(it)] || 0) < 1') >= 0);
@@ -1439,6 +1439,25 @@ S.allowCheckUnverified = false;
   check('按钮初始 title 说明零风险语义',
     src47.indexOf('一键勾选全台账零风险的删除候选') >= 0);
   check('版本号已升至 1.0.1', src47.indexOf('@version      1.0.1') >= 0 && src47.indexOf("VERSION = '1.0.1'") >= 0);
+
+  console.log('\n[48] v1.0.1 「清理重复」按钮并入「可删」（重复视图上下文语义）');
+  const src48 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
+  check('「清理重复」独立按钮已移除', src48.indexOf('blm-dupclean') < 0);
+  check('cleanDupEntries 保底清理函数保留', /function cleanDupEntries\(/.test(src48));
+  check('「可删」在重复视图下分流到保底清理',
+    src48.indexOf("if (curFilter === 'dup') { cleanDupEntries(); return; }") >= 0);
+  check('其他视图仍走零风险勾选（分支并存）',
+    src48.indexOf("if (curFilter === 'dup') {") < src48.indexOf("const targets = allItems.filter(it => {"));
+  check('重复视图徽标显示可清理的多余条数',
+    /「重复」视图：徽标 = 按保底规则可清理的多余条数/.test(src48) && src48.indexOf("'<span class=\"blm-badge\">' + extra + '</span>'") >= 0);
+  check('重复视图 title 说明保底规则与未开奖可能性',
+    src48.indexOf('每组自动保留 1 条（中奖的优先），其余 ') >= 0 && src48.indexOf('可含未开奖条目——组内有保底') >= 0);
+  check('勾选后 toast 说明未开奖条目的安全性（组内保底 + 执行时逐组核对）',
+    src48.indexOf('条尚未开奖 —— 组内有保底，删多余的照样有效') >= 0 && src48.indexOf('绝不会把任何一组清零') >= 0);
+  check('删除执行层的组内清零拦截仍在（绝对安全线）',
+    src48.indexOf('至少要留一条活着的转发') >= 0 && src48.indexOf('把整组删光才是弃权') >= 0);
+  check('保留优先级不变：中奖的 > 编号最小',
+    /keep = sorted\.find\(it => it\.won === true\) \|\| sorted\[0\]/.test(src48));
 
   console.log('\n结果: ' + passed + ' 通过, ' + failed + ' 失败');
   process.exit(failed ? 1 : 0);

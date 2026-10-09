@@ -1496,8 +1496,7 @@
         <button data-type="all" class="on">全部</button><button data-type="official">官方</button><button data-type="self">自发</button><button data-type="other" title="类型还没核验判定过的 + 加码抽奖（转发链上游另一位 UP 加码开的奖）">其他</button>
       </span>
       <button class="blm-btn" id="blm-sel-cur" title="勾选当前筛选结果里所有可以删的条目"><span class="blm-ck"></span>全选</button>
-      <button class="blm-btn" id="blm-sel-all" title="一键勾选全台账零风险的删除候选（官方已确认未中奖等）；带⚠️警告的候选不在其中"><span class="blm-ck"></span>可删</button>
-      <button class="blm-btn" id="blm-dupclean" style="display:none" title="同一条抽奖转了多次时，每组自动保留一条（中奖的优先），其余勾选 —— 删多余的不影响参与资格">清理重复</button>
+      <button class="blm-btn" id="blm-sel-all" title="一键勾选全台账零风险的删除候选（官方已确认未中奖等）；带⚠️警告的候选不在其中；在「重复」筛选下则按保底规则勾选每组多余条目"><span class="blm-ck"></span>可删</button>
       <button class="blm-iconbtn" id="blm-sortdir" title="切换正序 / 倒序" style="margin-left:auto">
         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4v16"/><path d="M4 17l3 3 3-3"/><path d="M17 20V4"/><path d="M14 7l3-3 3 3"/></svg>
       </button>
@@ -2095,9 +2094,6 @@
     const prog = document.getElementById('blm-prog');
     if (prog) prog.textContent = '显示 ' + items.length + ' 条，已选 ' + selected.size + ' 条';
     syncSearchClear();   // 搜索词 / 只看 UP 有任一生效时显示「×」退出按钮
-    // 「清理重复」按钮：只在「重复」筛选下出现
-    const dc = document.getElementById('blm-dupclean');
-    if (dc) dc.style.display = (curFilter === 'dup') ? '' : 'none';
     const delBtn = document.getElementById('blm-del');
     if (delBtn) {
       delBtn.textContent = '删除选中 (' + selected.size + ')';
@@ -2113,22 +2109,45 @@
     }
     const selAllBtn = document.getElementById('blm-sel-all');
     if (selAllBtn) {
-      const targets = allItems.filter(it => {
-        const st = computeStatus(it);
-        return st.deletable && !st.warn && !it.deleted;
-      });
-      const warnN = allItems.filter(it => {
-        const st = computeStatus(it);
-        return st.deletable && st.warn && !it.deleted;
-      }).length;
-      const all = targets.length > 0 && targets.every(it => selected.has(it.dynId));
-      // 徽标：零风险候选数（实时跟台账走）；带⚠️的候选数用灰色小字缀在后面，点按钮看明细
-      selAllBtn.innerHTML = '<span class="blm-ck' + (all ? ' on' : '') + '"></span>可删 '
-        + '<span class="blm-badge">' + targets.length + '</span>'
-        + (warnN ? '<span class="blm-badge2">+' + warnN + '⚠</span>' : '');
-      selAllBtn.title = all
-        ? '「可删」条目已全选，点一下取消'
-        : '一键勾选全台账零风险的删除候选（官方已确认未中奖等，当前 ' + targets.length + ' 条）；带⚠️警告的候选（缓冲期 / 自发确认，共 ' + warnN + ' 条）不在其中，需要的话用「全选」';
+      if (curFilter === 'dup') {
+        // 「重复」视图：徽标 = 按保底规则可清理的多余条数（每组留 1 条，中奖优先）
+        const groups = {};
+        curItems.forEach(it => {
+          if (it.deleted || !it.origId) return;
+          const k = dupKeyOf(it);
+          (groups[k] = groups[k] || []).push(it);
+        });
+        let extra = 0;
+        Object.values(groups).forEach(arr => {
+          if (arr.length < 2) return;
+          const sorted = arr.slice().sort((a, b) => (a.no || 0) - (b.no || 0));
+          const keep = sorted.find(it => it.won === true) || sorted[0];
+          extra += sorted.filter(it => it !== keep && it.won !== true).length;
+        });
+        const alive = curItems.filter(it => !it.deleted);
+        const all = extra > 0 && alive.length > 0 && alive.every(it => selected.has(it.dynId));
+        selAllBtn.innerHTML = '<span class="blm-ck' + (all ? ' on' : '') + '"></span>可删 '
+          + '<span class="blm-badge">' + extra + '</span>';
+        selAllBtn.title = '在「重复」视图下点此清理：每组自动保留 1 条（中奖的优先），其余 '
+          + extra + ' 条多余转发全部勾选（可含未开奖条目——组内有保底，删除不影响参与资格）';
+      } else {
+        const targets = allItems.filter(it => {
+          const st = computeStatus(it);
+          return st.deletable && !st.warn && !it.deleted;
+        });
+        const warnN = allItems.filter(it => {
+          const st = computeStatus(it);
+          return st.deletable && st.warn && !it.deleted;
+        }).length;
+        const all = targets.length > 0 && targets.every(it => selected.has(it.dynId));
+        // 徽标：零风险候选数（实时跟台账走）；带⚠️的候选数用灰色小字缀在后面，点按钮看明细
+        selAllBtn.innerHTML = '<span class="blm-ck' + (all ? ' on' : '') + '"></span>可删 '
+          + '<span class="blm-badge">' + targets.length + '</span>'
+          + (warnN ? '<span class="blm-badge2">+' + warnN + '⚠</span>' : '');
+        selAllBtn.title = all
+          ? '「可删」条目已全选，点一下取消'
+          : '一键勾选全台账零风险的删除候选（官方已确认未中奖等，当前 ' + targets.length + ' 条）；带⚠️警告的候选（缓冲期 / 自发确认，共 ' + warnN + ' 条）不在其中，需要的话用「全选」';
+      }
     }
 
     if (!items.length) {
@@ -2356,6 +2375,7 @@
   }
 
   // 「清理重复」：同一条抽奖转了多次时，删多余的不影响参与资格（留一条就行）。
+  // v1.0.1 起不再有独立按钮 —— 在「重复」筛选下点「可删」触发本逻辑（见 selectAllSafe 分流）。
   // 自动勾选每组除"保留条"之外的全部，删除仍走正常确认流程。保留优先级：中奖的 > 编号最小（最早转发）。
   function cleanDupEntries() {
     const groups = {};
@@ -2376,8 +2396,10 @@
     });
     renderList();
     if (!picked) { toast('没有可以清理的多余转发。\n\n每组只有一条（或组内其他条目是中奖锁定），本来就不用清。'); return; }
+    const pendN = curItems.filter(it => selected.has(it.dynId) && computeStatus(it).key === 'pending').length;
     toast('已勾选 ' + picked + ' 条多余的转发（来自 ' + groupsHit + ' 组重复）。\n\n'
       + '每一组都保留了 1 条（组内有中奖记录的话保留中奖那条），参与资格不受影响。\n'
+      + (pendN ? '其中 ' + pendN + ' 条尚未开奖 —— 组内有保底，删多余的照样有效；执行时脚本还会逐组核对，绝不会把任何一组清零。\n' : '')
       + '检查一下列表，然后点「删除选中」执行 —— 删除前还会再确认一次。');
   }
 
@@ -2392,6 +2414,10 @@
   }
 
   function selectAllSafe() {
+    // 「可删」= 帮我把当前视角下该删的都勾上（行为跟随筛选上下文）：
+    //  「重复」视图 → 按保底规则清理每组多余条目（每组保留 1 条，中奖优先；可含未开奖——组内有保底就安全）；
+    //  其他视图   → 全台账零风险条目（官方已确认未中奖等），带⚠️警告的不碰。
+    if (curFilter === 'dup') { cleanDupEntries(); return; }
     const l = loadLedger();
     const targets = Object.values(l).filter(it => {
       const st = computeStatus(it);
@@ -3607,8 +3633,6 @@
   if (selCurBtn) selCurBtn.addEventListener('click', selectAllCurrent);
   const selAllBtn = document.getElementById('blm-sel-all');
   if (selAllBtn) selAllBtn.addEventListener('click', selectAllSafe);
-  const dupCleanBtn = document.getElementById('blm-dupclean');
-  if (dupCleanBtn) dupCleanBtn.addEventListener('click', cleanDupEntries);
 
   document.getElementById('blm-stop').addEventListener('click', () => {
     if (!busy) return;
