@@ -1741,7 +1741,7 @@
     // 两个全选按钮是开关：勾选框亮 = 已全选（再点取消）
     const selCurBtn = document.getElementById('blm-sel-cur');
     if (selCurBtn) {
-      const targets = items.filter(it => computeStatus(it).deletable && !it.deleted);
+      const targets = items.filter(it => !it.deleted && (computeStatus(it).deletable || unlocked.has(it.dynId)));
       const all = targets.length > 0 && targets.every(it => selected.has(it.dynId));
       selCurBtn.innerHTML = '<span class="blm-ck' + (all ? ' on' : '') + '"></span>全选';
       selCurBtn.title = all ? '当前筛选结果已全选，点一下取消' : '勾选当前筛选结果里所有可以删的条目';
@@ -2488,7 +2488,13 @@
   // 两个全选按钮都是「开关」：没全选 → 全选；已全选 → 全部取消。
   // 勾选框状态在 renderListInner 里根据当前选中情况刷新。
   function selectAllCurrent() {
-    const targets = curItems.filter(it => computeStatus(it).deletable && !it.deleted);
+    // 状态本身可删的 + 你手动解锁的都算 —— 解锁就是"我决定要操作"，全选不能装看不见
+    // （2026-10-10 用户实测：解锁了未开奖卡片后点全选，提示"没有可以勾选的条目"）
+    const targets = curItems.filter(it => {
+      if (it.deleted) return false;
+      const st = computeStatus(it);
+      return st.deletable || unlocked.has(it.dynId);
+    });
     if (!targets.length) { alert('当前筛选结果里没有可以勾选的条目。'); return; }
     const allSelected = targets.every(it => selected.has(it.dynId));
     targets.forEach(it => { allSelected ? selected.delete(it.dynId) : selected.add(it.dynId); });

@@ -1570,6 +1570,13 @@ S.allowCheckUnverified = false;
     src56.indexOf('setTimeRowOpen(!timeRange.on);') >= 0
       && src56.indexOf("timeRow.style.display !== 'flex'") < 0);
 
+  console.log('\n[57] v1.0.1 全选包含已解锁条目（锁哲学对齐）');
+  const src57 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
+  check('selectAllCurrent 统计范围含 unlocked',
+    src57.indexOf('return st.deletable || unlocked.has(it.dynId);') >= 0);
+  check('全选按钮高亮判断同步含 unlocked',
+    src57.indexOf('!it.deleted && (computeStatus(it).deletable || unlocked.has(it.dynId))') >= 0);
+
   console.log('\n结果: ' + passed + ' 通过, ' + failed + ' 失败');
   process.exit(failed ? 1 : 0);
 })();
