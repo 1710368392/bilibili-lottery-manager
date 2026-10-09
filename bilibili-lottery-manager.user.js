@@ -2141,12 +2141,6 @@
           + '<div class="blm-step"><b>2</b><span>点<b>「核验开奖状态」</b>，逐条查是否已开奖、是否中奖</span></div>'
           + '<div class="blm-step"><b>3</b><span>按状态筛选，勾选想清理的，<b>二次确认</b>后删除</span></div>'
           + '</div></div>';
-      } else if (curFilter === 'dup') {
-        // 这个筛选清空时最容易让人以为"动态被误删了"——实际上删到只剩一条后它就不算重复了
-        body.innerHTML = '<div class="blm-empty">没有重复的动态了。<br><br>'
-          + '<b>提示</b>：同一条抽奖删到只剩一条后，它就不再算重复，'
-          + '会<b>自动从这个筛选里消失</b> —— 这是正常的，不是被误删。<br>'
-          + '想看它的话，切回「全部」，或直接在搜索框里输入 UP 主名字。</div>';
       } else if (curSearch || curUpMid) {
         // II档：搜索 / 只看UP 无命中 → 给一键清空筛选，避免"退不出去"
         body.innerHTML = '<div class="blm-empty">没有匹配'
