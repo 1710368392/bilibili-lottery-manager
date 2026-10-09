@@ -1487,6 +1487,23 @@ S.allowCheckUnverified = false;
   check('锁的悬停提示：唯一转发写明弃权后果但仍可解锁',
     src49.indexOf('删了等于弃权，想清楚再点') >= 0);
 
+  console.log('\n[50] v1.0.1 锁/勾选原地刷新（修复点击卡顿 + 页面跳滚）');
+  const src50 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
+  check('存在原地刷新函数 refreshRowState', /function refreshRowState\(/.test(src50));
+  check('存在共用计数刷新 refreshSelCounts', /function refreshSelCounts\(/.test(src50));
+  check('存在共用锁提示 lockTipFor（渲染与原地刷新单一来源）', /function lockTipFor\(/.test(src50));
+  check('toggleLock 走原地刷新，卡片不在页内才全量重建',
+    /if \(!refreshRowState\(dynId\)\) renderList\(\);/.test(src50));
+  check('toggleSelect 走原地刷新',
+    src50.indexOf('if (selected.has(dynId)) selected.delete(dynId); else selected.add(dynId);\n    if (!refreshRowState(dynId)) renderList();') >= 0);
+  check('原地刷新更新锁图标/勾选框/行样式三处视觉',
+    src50.indexOf("lockEl.innerHTML = lockIcon(open);") >= 0
+      && src50.indexOf("ckEl.className = 'blm-ck'") >= 0
+      && src50.indexOf("row.className = 'blm-item'") >= 0);
+  check('原地刷新后同步顶/底栏计数', src50.indexOf('refreshSelCounts(curItems);') >= 0);
+  check('renderListInner 的计数块改为调用共用函数（无重复实现）',
+    /refreshSelCounts\(items\);/.test(src50));
+
   console.log('\n结果: ' + passed + ' 通过, ' + failed + ' 失败');
   process.exit(failed ? 1 : 0);
 })();

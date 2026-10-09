@@ -1709,12 +1709,106 @@
   function canUnlock(it, st) {
     return !!it && !it.deleted;
   }
+  // 锁图标的悬停提示（渲染与原地刷新共用一份，避免两处文案漂移）
+  function lockTipFor(it, st, open) {
+    if (open) return '已解锁：这条现在可以勾选删除了。点一下重新锁上';
+    if (it.won === true) return '你中奖了 —— 这是领奖凭证，默认锁定。点一下解锁后可删（删了无法领奖，想清楚再点）';
+    if (st.key === 'pending' && groupAliveCount(it, it.dynId) < 1) return '未开奖，而且是这条抽奖唯一的转发 —— 默认锁定。点一下解锁后可删（删了等于弃权，想清楚再点）';
+    if (st.key === 'pending') return '未开奖。同一条抽奖你还有其他转发，点一下解锁后可删（不影响参与资格）';
+    return '这条当前不允许删除，点一下可临时解锁';
+  }
+
+  // 顶/底栏计数刷新（renderListInner 与原地更新共用）：底部条数、删除按钮、全选/可删两个开关
+  function refreshSelCounts(items) {
+    const delBtn = document.getElementById('blm-del');
+    if (delBtn) {
+      delBtn.textContent = '删除选中 (' + selected.size + ')';
+      delBtn.disabled = busy || selected.size === 0;
+    }
+    // 两个全选按钮是开关：勾选框亮 = 已全选（再点取消）
+    const selCurBtn = document.getElementById('blm-sel-cur');
+    if (selCurBtn) {
+      const targets = items.filter(it => computeStatus(it).deletable && !it.deleted);
+      const all = targets.length > 0 && targets.every(it => selected.has(it.dynId));
+      selCurBtn.innerHTML = '<span class="blm-ck' + (all ? ' on' : '') + '"></span>全选';
+      selCurBtn.title = all ? '当前筛选结果已全选，点一下取消' : '勾选当前筛选结果里所有可以删的条目';
+    }
+    const selAllBtn = document.getElementById('blm-sel-all');
+    if (selAllBtn) {
+      if (curFilter === 'dup') {
+        // 「重复」视图：徽标 = 按保底规则可清理的多余条数（每组留 1 条，中奖优先）
+        const groups = {};
+        curItems.forEach(it => {
+          if (it.deleted || !it.origId) return;
+          const k = dupKeyOf(it);
+          (groups[k] = groups[k] || []).push(it);
+        });
+        let extra = 0;
+        Object.values(groups).forEach(arr => {
+          if (arr.length < 2) return;
+          const sorted = arr.slice().sort((a, b) => (a.no || 0) - (b.no || 0));
+          const keep = sorted.find(it => it.won === true) || sorted[0];
+          extra += sorted.filter(it => it !== keep && it.won !== true).length;
+        });
+        const alive = curItems.filter(it => !it.deleted);
+        const all = extra > 0 && alive.length > 0 && alive.every(it => selected.has(it.dynId));
+        selAllBtn.innerHTML = '<span class="blm-ck' + (all ? ' on' : '') + '"></span>可删 '
+          + '<span class="blm-badge">' + extra + '</span>';
+        selAllBtn.title = '在「重复」视图下点此清理：每组自动保留 1 条（中奖的优先），其余 '
+          + extra + ' 条多余转发全部勾选（可含未开奖条目——组内有保底，删除不影响参与资格）';
+      } else {
+        // 徽标只统计**当前筛选结果**里的零风险候选 —— 视图里 0 条时按钮就是 0，不跨视图捞人
+        const targets = items.filter(it => {
+          const st = computeStatus(it);
+          return st.deletable && !st.warn && !it.deleted;
+        });
+        const all = targets.length > 0 && targets.every(it => selected.has(it.dynId));
+        selAllBtn.innerHTML = '<span class="blm-ck' + (all ? ' on' : '') + '"></span>可删 '
+          + '<span class="blm-badge">' + targets.length + '</span>';
+        selAllBtn.title = all
+          ? '「可删」条目已全选，点一下取消'
+          : '一键勾选当前筛选结果里零风险的删除候选（官方已确认未中奖等，当前 ' + targets.length + ' 条）';
+      }
+    }
+  }
+
+  // 原地刷新一张卡片的锁/勾选视觉 + 顶/底栏计数 —— 不走 renderList 全量重建。
+  // 全量重建有两个代价：几百张卡片 innerHTML 重排（点击卡顿）；滚动容器内容被整体替换，
+  // 浏览器滚动锚点失效（页面自动跳滚）。锁/勾选只影响这张卡片自己的样式和全局计数，
+  // 没必要动整个列表。
+  function refreshRowState(dynId) {
+    const body = document.getElementById('blm-body');
+    const anchor = body && body.querySelector('[data-lock="' + dynId + '"],[data-ck="' + dynId + '"]');
+    const it = loadLedger()[dynId];
+    if (!anchor || !it || it.deleted) return false;
+    const row = anchor.closest('.blm-item');
+    if (!row) return false;
+    const st = computeStatus(it);
+    const open = unlocked.has(dynId);
+    const canSel = (st.deletable || open) && !it.deleted;
+    const isSel = selected.has(dynId) && canSel;
+    row.className = 'blm-item' + (canSel ? '' : ' locked') + (/\bhasbm\b/.test(row.className) ? ' hasbm' : '');
+    const lockEl = row.querySelector('[data-lock="' + dynId + '"]');
+    if (lockEl) {
+      lockEl.className = 'blm-lock' + (open ? ' open' : '');
+      lockEl.innerHTML = lockIcon(open);
+      lockEl.title = lockTipFor(it, st, open);
+    }
+    const ckEl = row.querySelector('[data-ck="' + dynId + '"]');
+    if (ckEl) {
+      ckEl.className = 'blm-ck' + (isSel ? ' on' : '') + (canSel ? '' : ' dis');
+      ckEl.title = canSel ? '选定这条' : '上锁了，点左上角的锁解锁后才能选';
+    }
+    refreshSelCounts(curItems);
+    return true;
+  }
+
   function toggleLock(dynId) {
     const it = loadLedger()[dynId];
     if (!it || it.deleted) return;
-    if (unlocked.has(dynId)) { unlocked.delete(dynId); selected.delete(dynId); renderList(); return; }
-    unlocked.add(dynId);
-    renderList();
+    if (unlocked.has(dynId)) { unlocked.delete(dynId); selected.delete(dynId); }
+    else unlocked.add(dynId);
+    if (!refreshRowState(dynId)) renderList();   // 卡片不在当前页（罕见）才全量重建
   }
 
   // 同一个抽奖（原动态+发起者）在台账里还有几条活着的（未删除）
@@ -1739,7 +1833,7 @@
     if (it.won === true) return;
     if (!st.deletable && !unlocked.has(dynId)) return;
     if (selected.has(dynId)) selected.delete(dynId); else selected.add(dynId);
-    renderList();
+    if (!refreshRowState(dynId)) renderList();   // 原地刷新；卡片不在当前页才全量重建
   }
 
   // 列表区事件全部走委托：面板 body 元素不随渲染重建，监听器不会丢
@@ -2092,56 +2186,7 @@
     const prog = document.getElementById('blm-prog');
     if (prog) prog.textContent = '显示 ' + items.length + ' 条，已选 ' + selected.size + ' 条';
     syncSearchClear();   // 搜索词 / 只看 UP 有任一生效时显示「×」退出按钮
-    const delBtn = document.getElementById('blm-del');
-    if (delBtn) {
-      delBtn.textContent = '删除选中 (' + selected.size + ')';
-      delBtn.disabled = busy || selected.size === 0;
-    }
-    // 两个全选按钮是开关：勾选框亮 = 已全选（再点取消）
-    const selCurBtn = document.getElementById('blm-sel-cur');
-    if (selCurBtn) {
-      const targets = items.filter(it => computeStatus(it).deletable && !it.deleted);
-      const all = targets.length > 0 && targets.every(it => selected.has(it.dynId));
-      selCurBtn.innerHTML = '<span class="blm-ck' + (all ? ' on' : '') + '"></span>全选';
-      selCurBtn.title = all ? '当前筛选结果已全选，点一下取消' : '勾选当前筛选结果里所有可以删的条目';
-    }
-    const selAllBtn = document.getElementById('blm-sel-all');
-    if (selAllBtn) {
-      if (curFilter === 'dup') {
-        // 「重复」视图：徽标 = 按保底规则可清理的多余条数（每组留 1 条，中奖优先）
-        const groups = {};
-        curItems.forEach(it => {
-          if (it.deleted || !it.origId) return;
-          const k = dupKeyOf(it);
-          (groups[k] = groups[k] || []).push(it);
-        });
-        let extra = 0;
-        Object.values(groups).forEach(arr => {
-          if (arr.length < 2) return;
-          const sorted = arr.slice().sort((a, b) => (a.no || 0) - (b.no || 0));
-          const keep = sorted.find(it => it.won === true) || sorted[0];
-          extra += sorted.filter(it => it !== keep && it.won !== true).length;
-        });
-        const alive = curItems.filter(it => !it.deleted);
-        const all = extra > 0 && alive.length > 0 && alive.every(it => selected.has(it.dynId));
-        selAllBtn.innerHTML = '<span class="blm-ck' + (all ? ' on' : '') + '"></span>可删 '
-          + '<span class="blm-badge">' + extra + '</span>';
-        selAllBtn.title = '在「重复」视图下点此清理：每组自动保留 1 条（中奖的优先），其余 '
-          + extra + ' 条多余转发全部勾选（可含未开奖条目——组内有保底，删除不影响参与资格）';
-      } else {
-        // 徽标只统计**当前筛选结果**里的零风险候选 —— 视图里 0 条时按钮就是 0，不跨视图捞人
-        const targets = items.filter(it => {
-          const st = computeStatus(it);
-          return st.deletable && !st.warn && !it.deleted;
-        });
-        const all = targets.length > 0 && targets.every(it => selected.has(it.dynId));
-        selAllBtn.innerHTML = '<span class="blm-ck' + (all ? ' on' : '') + '"></span>可删 '
-          + '<span class="blm-badge">' + targets.length + '</span>';
-        selAllBtn.title = all
-          ? '「可删」条目已全选，点一下取消'
-          : '一键勾选当前筛选结果里零风险的删除候选（官方已确认未中奖等，当前 ' + targets.length + ' 条）';
-      }
-    }
+    refreshSelCounts(items);
 
     if (!items.length) {
       if (!allItems.length) {
@@ -2225,15 +2270,9 @@
       if (!it.deleted) {
         const open = unlocked.has(it.dynId);
         if (open || !st.deletable) {
-          let tip;
-          if (open) tip = '已解锁：这条现在可以勾选删除了。点一下重新锁上';
-          else if (it.won === true) tip = '你中奖了 —— 这是领奖凭证，默认锁定。点一下解锁后可删（删了无法领奖，想清楚再点）';
-          else if (st.key === 'pending' && groupAliveCount(it, it.dynId) < 1) tip = '未开奖，而且是这条抽奖唯一的转发 —— 默认锁定。点一下解锁后可删（删了等于弃权，想清楚再点）';
-          else if (st.key === 'pending') tip = '未开奖。同一条抽奖你还有其他转发，点一下解锁后可删（不影响参与资格）';
-          else tip = '这条当前不允许删除，点一下可临时解锁';
           // 统一一种锁、统一解禁路径：所有锁都能解锁，后果写在悬停提示 + 删除二次确认里
           lockHtml = '<span class="blm-lock' + (open ? ' open' : '') + '" data-lock="' + it.dynId
-            + '" title="' + tip + '">' + lockIcon(open) + '</span>';
+            + '" title="' + lockTipFor(it, st, open) + '">' + lockIcon(open) + '</span>';
         }
       }
 
