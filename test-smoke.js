@@ -1440,9 +1440,8 @@ S.allowCheckUnverified = false;
   check('旧 UI 状态兜底：safe/旧单选字符串收进多选集合（safe 回空集 = 全部）',
     src47.indexOf("u.curFilter.forEach(k => { if (VALID.indexOf(k) >= 0) filterSet.add(k); })") >= 0
       && src47.indexOf("u.curFilter !== 'safe'") >= 0);
-  check('safe 状态标签随结果变化：未中奖/建议删除',
-    /key: 'safe', label: it\.won === false \? '未中奖' : '建议删除'/.test(src47)
-      || /key: 'safe', label: '未中奖'/.test(src47));
+  check('safe 状态标签统一「建议删除」（过了缓冲期，单指这一个含义）',
+    /key: 'safe', label: '建议删除'/.test(src47));
   check('selectAllSafe 勾选后给 toast 明细汇总（点明是当前筛选结果）',
     /已勾选当前筛选结果里 ' \+ targets\.length \+ ' 条安全可删的动态/.test(src47));
   check('toast 不再提示带⚠️的候选（已按用户要求精简）',
@@ -1539,14 +1538,19 @@ S.allowCheckUnverified = false;
 
   console.log('\n[53] v1.0.1 状态体系整顿（改名/未中奖标签/状态菜单/核验右上角）');
   const src53 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
-  check('needcheck 卡片标签改为「已开奖 · 结果未定」',
-    src53.indexOf("const lbl = (it.official === true && it.awaitingList) ? '名单待公布' : '已开奖 · 结果未定';") >= 0);
+  check('needcheck 卡片标签改为单词「结果未定」（名单待公布特例保留）',
+    src53.indexOf("(it.official === true && it.awaitingList) ? '名单待公布' : '结果未定'") >= 0);
   check('筛选项「待确认」同步改名「结果未定」',
     src53.indexOf("{ key: 'needcheck', label: '结果未定' }") >= 0
       && src53.indexOf("{ key: 'needcheck', label: '待确认' }") < 0);
   check('won=true 标签改为「已中奖」', src53.indexOf("label: '已中奖', color: '#E24B4A'") >= 0);
-  check('won=false 各分支显示「未中奖」（缓冲期带后缀）',
-    src53.indexOf("'未中奖 · 缓冲期中'") >= 0 && src53.indexOf("? '未中奖' : '建议删除'") >= 0);
+  check('缓冲期/建议删除一律单词（未中奖折进状态菜单，不再挤标签）',
+    src53.indexOf("label: it.won === false ? '未中奖 · 缓冲期中'") < 0
+      && src53.indexOf("'未中奖 · 缓冲期中'") < 0
+      && (src53.match(/label: '建议删除'/g) || []).length >= 3
+      && (src53.match(/label: '缓冲期'/g) || []).length >= 3);
+  check('未开奖不挂顶部状态标签（时间行倒计时已说明）',
+    src53.indexOf("if (st.key === 'pending') return '';") >= 0);
   check('状态菜单三选项齐全且写入 setWonState',
     src53.indexOf("label: '结果未定'") >= 0 && src53.indexOf("label: '已中奖'") >= 0
       && src53.indexOf("label: '未中奖'") >= 0 && /function setWonState\(/.test(src53));
@@ -1555,9 +1559,10 @@ S.allowCheckUnverified = false;
     /function closeStatusMenu\(/.test(src53) && /function ensureStatusMenuOutsideClose\(/.test(src53)
       && src53.indexOf("if (stMenuBound) return;") >= 0
       && src53.indexOf("{ once: true }); }, 0);") < 0);
-  check('refreshRowState 原地更新状态标签（不跳滚，整体替换 outerHTML）',
-    src53.indexOf("const tagEl = row.querySelector('.blm-statustag');") >= 0
-      && src53.indexOf('tagEl.outerHTML = statusTagHtml(it, st);') >= 0);
+  check('refreshRowState 原地更新状态标签（含出现/消失两个方向）',
+    src53.indexOf("const tagHtml = statusTagHtml(it, st);") >= 0
+      && src53.indexOf('tagEl.outerHTML = tagHtml;') >= 0
+      && src53.indexOf('tagEl.remove();') >= 0);
 
   console.log('\n[54] v1.0.1 body 弹窗纳入主题变量作用域（修详情页透明）');
   const src54 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');

@@ -260,18 +260,18 @@
     // 还没过缓冲期则给黄色警告，避免刚开奖就误删还没领奖的。
     // —— 这条规则的存在，是为了让「自发/未判定抽奖」不再永远卡在「待确认」删不动。
     if (it.source === 'user' && it.official !== true) {
-      // 确认过未中奖的把事实亮出来，缓冲信息折进标签后缀
-      if (inBuffer) return { key: 'cooldown', label: it.won === false ? '未中奖 · 缓冲期中' : '缓冲期中', color: '#EF9F27', deletable: true, warn: true };
+      // 标签一律单词：「未中奖」这类事实折进状态菜单（点标签能看到当前勾的哪项），不占卡片版面
+      if (inBuffer) return { key: 'cooldown', label: '缓冲期', color: '#EF9F27', deletable: true, warn: true };
       // 已确认的自发抽奖 + 已过缓冲期：建议删除，但仍带警告 ——
       // 脚本无法替你知道你是否中奖，删除前仍会二次确认
-      return { key: 'safe', label: it.won === false ? '未中奖' : '建议删除', color: '#639922', deletable: true, warn: true };
+      return { key: 'safe', label: '建议删除', color: '#639922', deletable: true, warn: true };
     }
 
     // 中奖结果还没人工/接口确认（官方抽奖未核验、或脚本猜的日期用户没确认过）
     if (it.won === null || it.won === undefined) {
       // 官方抽奖到了开奖时间、但接口名单还是空的：这是「名单还没同步出来」，
       // 不等于「你没中奖」。标签写清楚，免得被当成可以删的条目。
-      const lbl = (it.official === true && it.awaitingList) ? '名单待公布' : '已开奖 · 结果未定';
+      const lbl = (it.official === true && it.awaitingList) ? '名单待公布' : '结果未定';
       return {
         key: 'needcheck', label: lbl, color: '#EF9F27',
         deletable: !!SETTINGS.allowCheckUnverified, warn: true
@@ -286,16 +286,16 @@
     // 而早期版本核验过的旧数据没有 winnersConfirmed 字段，要求它会让旧数据退回 7 天。
     if (it.official === true && it.won === false) {
       const obMs = (Number(SETTINGS.officialBufferDays) || 0) * DAY_MS;
-      if (passed >= obMs) return { key: 'safe', label: '未中奖', color: '#639922', deletable: true };
+      if (passed >= obMs) return { key: 'safe', label: '建议删除', color: '#639922', deletable: true };
       // 填了大于 0 的天数、且还没到 → 走缓冲期（不带警告，官方数据本来就是明确的）
-      return { key: 'cooldown', label: '未中奖 · 缓冲期中', color: '#EF9F27', deletable: true };
+      return { key: 'cooldown', label: '缓冲期', color: '#EF9F27', deletable: true };
     }
 
     // 已开奖且确认未中奖：还要看缓冲期
     if (inBuffer) {
-      return { key: 'cooldown', label: '未中奖 · 缓冲期中', color: '#EF9F27', deletable: true, warn: true };
+      return { key: 'cooldown', label: '缓冲期', color: '#EF9F27', deletable: true, warn: true };
     }
-    return { key: 'safe', label: '未中奖', color: '#639922', deletable: true };
+    return { key: 'safe', label: '建议删除', color: '#639922', deletable: true };
   }
 
   // 转发时间 / 开奖时间用不同颜色的胶囊区分，开奖时间还会按「开奖与否」变色
@@ -1812,6 +1812,8 @@
   // 没显示锁的卡片（本身可删 / 已解锁 / 已删除留档）不受限 —— 锁的语义是「这条先别动」，
   // 没锁就无所谓动不动
   function statusTagHtml(it, st) {
+    // 未开奖不挂状态标签 —— 下面时间行的「开奖 · 倒计时」胶囊已经说明了状态，顶部再挂一个「未开奖」纯属重复
+    if (st.key === 'pending') return '';
     const gateOpen = it.deleted ? true : (st.deletable || unlocked.has(it.dynId));
     const clickable = !it.deleted && gateOpen;
     return '<span class="blm-tag blm-statustag' + (it.won === true ? ' blm-wontag' : '') + '"'
@@ -1877,10 +1879,19 @@
       ckEl.className = 'blm-ck' + (isSel ? ' on' : '') + (canSel ? '' : ' dis');
       ckEl.title = canSel ? '选定这条' : '上锁了，点左上角的锁解锁后才能选';
     }
-    // 状态标签 + 时间行：文字/颜色随新状态走，点击入口随锁状态走
-    // （锁上 → 摘掉 data-stmenu/箭头/edit 入口；解锁 → 恢复。用 outerHTML 整体替换最省心）
+    // 状态标签 + 时间行：文字/颜色随新状态走，点击入口随锁状态走。
+    // 标签可能「出现」（未开奖→已开奖，之前不挂）或「消失」（反向），两种方向都要处理
+    const tagHtml = statusTagHtml(it, st);
     const tagEl = row.querySelector('.blm-statustag');
-    if (tagEl) tagEl.outerHTML = statusTagHtml(it, st);
+    if (tagHtml) {
+      if (tagEl) tagEl.outerHTML = tagHtml;
+      else {
+        const upEl = row.querySelector('.blm-uptag');
+        if (upEl) upEl.insertAdjacentHTML('afterend', tagHtml);
+      }
+    } else if (tagEl) {
+      tagEl.remove();
+    }
     const metaEl = row.querySelector('.blm-meta');
     if (metaEl) metaEl.innerHTML = metaChipsHtml(it, Date.now());
     refreshSelCounts(curItems);
