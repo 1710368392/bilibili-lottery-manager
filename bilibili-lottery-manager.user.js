@@ -1847,8 +1847,11 @@
     extra += timeChip('转发', it.pubTs ? fmtTime(it.pubTs).slice(0, 16) : '未知', 'pub');
     if (it.drawTs) {
       if (it.drawTs <= now) {
+        // 已确认未中奖的结果直接写在结果线上（「未中奖 · 2天前」）——这时「已开奖」是句废话；
+        // 已中奖不在这说（顶部金色标签管结果，这里管时间），结果未定保持「已开奖」
+        const resTxt = it.won === false ? '未中奖' : '已开奖';
         extra += '<span class="blm-chip' + clickCls + '" style="background:var(--blm-ok-bg);color:var(--blm-ok-text)"' + editAttr
-          + ' title="' + fmtTime(it.drawTs) + ' 开奖' + (gateOpen ? '，点击修改开奖时间' : hint) + '">已开奖 · ' + relTime(it.drawTs) + '</span>';
+          + ' title="' + fmtTime(it.drawTs) + ' 开奖' + (gateOpen ? '，点击修改开奖时间' : hint) + '">' + resTxt + ' · ' + relTime(it.drawTs) + '</span>';
       } else {
         extra += '<span class="blm-chip' + clickCls + '" style="background:var(--blm-warn-bg);color:var(--blm-warn-text)"' + editAttr
           + ' title="' + fmtTime(it.drawTs) + ' 开奖' + (gateOpen ? '，点击修改开奖时间' : hint) + '">开奖 · <span class="blm-count" data-ts="' + it.drawTs + '">'
