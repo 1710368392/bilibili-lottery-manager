@@ -1812,6 +1812,10 @@
   // 换状态是「点标签 → 菜单里选」的显式两步操作，误触风险为零，锁管的是勾选删除和改开奖时间
   function statusTagHtml(it, st) {
     if (st.key === 'pending') return '';
+    // 日期不明不再占用结果槽：主标签按结果显示（结果未定/未中奖），日期问题交给
+    // 时间行的「开奖 未录入」胶囊说（筛选「日期不明」仍按没录日期匹配，不受影响）
+    let label = st.label;
+    if (st.key === 'unknown') label = it.won === false ? '未中奖' : '结果未定';
     const clickable = !it.deleted;
     return '<span class="blm-tag blm-statustag' + (it.won === true ? ' blm-wontag' : '') + '"'
       + (clickable ? ' data-stmenu="' + it.dynId + '"' : '')
@@ -1819,7 +1823,7 @@
       + ' title="' + (it.deleted
           ? '这条已从 B 站删除，状态只作留档，不可再改'
           : '点一下选择中奖状态：结果未定 / 已中奖 / 未中奖') + '">'
-      + st.label
+      + label
       + (clickable ? '<svg class="blm-caret" viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>' : '')
       + '</span>';
   }
