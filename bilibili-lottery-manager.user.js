@@ -1808,25 +1808,31 @@
   // 全量重建有两个代价：几百张卡片 innerHTML 重排（点击卡顿）；滚动容器内容被整体替换，
   // 浏览器滚动锚点失效（页面自动跳滚）。锁/勾选只影响这张卡片自己的样式和全局计数，
   // 没必要动整个列表。
-  // 状态标签 HTML：只有「挂着关闭的锁」的卡片摘掉点击入口（data-stmenu + 小箭头）。
-  // 没显示锁的卡片（本身可删 / 已解锁 / 已删除留档）不受限 —— 锁的语义是「这条先别动」，
-  // 没锁就无所谓动不动
+  // 状态标签 HTML：未开奖不挂（时间行倒计时已说明）；抽屉不受锁限制 ——
+  // 换状态是「点标签 → 菜单里选」的显式两步操作，误触风险为零，锁管的是勾选删除和改开奖时间
   function statusTagHtml(it, st) {
-    // 未开奖不挂状态标签 —— 下面时间行的「开奖 · 倒计时」胶囊已经说明了状态，顶部再挂一个「未开奖」纯属重复
     if (st.key === 'pending') return '';
-    const gateOpen = it.deleted ? true : (st.deletable || unlocked.has(it.dynId));
-    const clickable = !it.deleted && gateOpen;
+    const clickable = !it.deleted;
     return '<span class="blm-tag blm-statustag' + (it.won === true ? ' blm-wontag' : '') + '"'
       + (clickable ? ' data-stmenu="' + it.dynId + '"' : '')
       + (it.won === true ? '' : ' style="color:' + st.color + '"')
       + ' title="' + (it.deleted
           ? '这条已从 B 站删除，状态只作留档，不可再改'
-          : clickable
-            ? '点一下选择中奖状态：结果未定 / 已中奖 / 未中奖'
-            : '上锁了：点左上角的锁解锁后才能改状态') + '">'
+          : '点一下选择中奖状态：结果未定 / 已中奖 / 未中奖') + '">'
       + st.label
       + (clickable ? '<svg class="blm-caret" viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>' : '')
       + '</span>';
+  }
+
+  // 锁图标 HTML：可删的卡片不挂锁、挂了锁的都能解。
+  // 抽成公共函数是因为锁会**中途出现/消失**（如手动标成已中奖 → 立即需要保护锁），
+  // 原地刷新必须能同步增删，不能只改已有的（实测踩坑：加不出来 → 提示「上锁中」却没有锁可解）
+  function lockBadgeHtml(it, st) {
+    if (it.deleted) return '';
+    const open = unlocked.has(it.dynId);
+    if (!(open || !st.deletable)) return '';
+    return '<span class="blm-lock' + (open ? ' open' : '') + '" data-lock="' + it.dynId
+      + '" title="' + lockTipFor(it, st, open) + '">' + lockIcon(open) + '</span>';
   }
 
   // 时间行 HTML：转发胶囊永远只读；开奖胶囊只在「挂着关闭的锁」时只读 + 提示
@@ -1868,11 +1874,17 @@
     const canSel = (st.deletable || open) && !it.deleted;
     const isSel = selected.has(dynId) && canSel;
     row.className = 'blm-item' + (canSel ? '' : ' locked') + (/\bhasbm\b/.test(row.className) ? ' hasbm' : '');
-    const lockEl = row.querySelector('[data-lock="' + dynId + '"]');
-    if (lockEl) {
-      lockEl.className = 'blm-lock' + (open ? ' open' : '');
-      lockEl.innerHTML = lockIcon(open);
-      lockEl.title = lockTipFor(it, st, open);
+    // 锁图标同步增删：状态变化会让锁「中途出现」（如标成已中奖 → 需要保护锁）或「消失」
+    const lockHtml = lockBadgeHtml(it, st);
+    let lockEl = row.querySelector('[data-lock="' + dynId + '"]');
+    if (lockHtml) {
+      if (lockEl) lockEl.outerHTML = lockHtml;
+      else {
+        const upEl = row.querySelector('.blm-uptag');
+        if (upEl) upEl.insertAdjacentHTML('beforebegin', lockHtml);
+      }
+    } else if (lockEl) {
+      lockEl.remove();
     }
     const ckEl = row.querySelector('[data-ck="' + dynId + '"]');
     if (ckEl) {
@@ -2389,16 +2401,8 @@
           + '</div>';
       }
 
-      // 左上角保护锁：不能勾选删除的卡片挂一把锁，点一下可临时解锁（红锁点不动）
-      let lockHtml = '';
-      if (!it.deleted) {
-        const open = unlocked.has(it.dynId);
-        if (open || !st.deletable) {
-          // 统一一种锁、统一解禁路径：所有锁都能解锁，后果写在悬停提示 + 删除二次确认里
-          lockHtml = '<span class="blm-lock' + (open ? ' open' : '') + '" data-lock="' + it.dynId
-            + '" title="' + lockTipFor(it, st, open) + '">' + lockIcon(open) + '</span>';
-        }
-      }
+      // 左上角保护锁：不能勾选删除的卡片挂一把锁，点一下可临时解锁（见 lockBadgeHtml）
+      const lockHtml = lockBadgeHtml(it, st);
 
       // 加码抽奖：抽奖发起者（转发文案第一个 @）与源动态作者不同时，显式标出来。
       // 否则你以为在参与源 UP 的抽奖，其实是转发链上游另一位 UP 的加码
