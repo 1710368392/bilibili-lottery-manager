@@ -2,6 +2,16 @@
 nul
 _t.txt
 _css_var_transform.js
+_backup_before_watermark.js
+_probe.js
+_v100.js
+_watermark_b64.txt
+
+# 图标源工程（miora 画布与其中间产物，成品在 icon/）
+*.miora
+*_assets/
+oc-avatar.svg
+水印效果预览.png
 
 # WorkBuddy 项目数据
 .workbuddy/

@@ -8,7 +8,7 @@ let src = fs.readFileSync(file, 'utf8');
 // 把内部函数暴露出来供测试
 src = src.replace(
   "console.log('[抽奖动态管理器] 已启动",
-  "globalThis.__T__ = { guessDrawDate, computeStatus, badgeOf, lotteryTypeBadge, needVerify, needReverify, typeOf, dupMapOf, inTimeRange, sortItems, setSort: (f, d) => { if (f) curSort = f; if (d) curSortDir = d; }, timeRange, findMarks, renderHighlighted, conditionRanges, parseUserDate, allWinnersOf, looksLikeLottery, shouldShowFab, clampPos, assignNumbers, detailHtml, timeChip, lotteryUrl, fetchLottery, detectLotteryMode, verifyLottery, fmtCountdown, deleteDynamic, getDeleteDiag: () => lastDeleteDiag, scanIntoLedger, stop: () => { abortFlag = true; }, resetAbort: () => { abortFlag = false; }, textOpen, SETTINGS, buildBackupData, getModeDetectCache, resetModeDetectCache, setWonState, showStatusMenu, syncDeleted, getScanTruncated, VERSION, pickLotteryText, lotteryScore, lotteryIssuer, dupKeyOf, groupAliveCount, saveLedger, canUnlock, lockIcon };\n  console.log('[抽奖动态管理器] 已启动"
+  "globalThis.__T__ = { guessDrawDate, computeStatus, badgeOf, lotteryTypeBadge, needVerify, needReverify, typeOf, dupMapOf, inTimeRange, sortItems, setSort: (f, d) => { if (f) curSort = f; if (d) curSortDir = d; }, timeRange, findMarks, renderHighlighted, conditionRanges, parseUserDate, allWinnersOf, looksLikeLottery, shouldShowFab, clampPos, assignNumbers, detailHtml, timeChip, lotteryUrl, fetchLottery, detectLotteryMode, verifyLottery, fmtCountdown, deleteDynamic, getDeleteDiag: () => lastDeleteDiag, scanIntoLedger, stop: () => { abortFlag = true; }, resetAbort: () => { abortFlag = false; }, textOpen, SETTINGS, buildBackupData, getModeDetectCache, resetModeDetectCache, setWonState, showStatusMenu, syncDeleted, getScanTruncated, VERSION, pickLotteryText, lotteryScore, lotteryIssuer, dupKeyOf, groupAliveCount, saveLedger, canUnlock, lockIcon, applyLotteryResult, myPrizeLineHtml };\n  console.log('[抽奖动态管理器] 已启动"
 );
 
 /* ---- mock 浏览器环境 ---- */
@@ -1417,21 +1417,22 @@ S.allowCheckUnverified = false;
   check('删除成功给出 5s 撤销 toast', src45.indexOf("撤销") >= 0 && src45.indexOf('duration: 5000') >= 0);
   check('撤销真正恢复台账记录', src45.indexOf('e.deleted = false') >= 0 && src45.indexOf('delete e.deletedAt') >= 0);
   check('非危险提示改走 toast（设置已保存）', src45.indexOf("toast('设置已保存") >= 0);
-  check('危险操作仍走 confirm 二次确认', src45.indexOf('SETTINGS.confirmBeforeDelete && !confirm') >= 0);
+  check('危险操作仍走 confirm 二次确认', src45.indexOf('SETTINGS.confirmBeforeDelete || wonList.length || unverified.length || gaveUp') >= 0);
   check('扫描结果明细仍用 alert（重要信息不丢）', src45.indexOf("alert('扫描完成") >= 0);
   check('核验结果仍用 alert（重要信息不丢）', src45.indexOf("alert('核验成功") >= 0);
 
-  console.log('\n[46] V档 中奖统计页');
+  console.log('\n[46] 中奖统计页已移除，CSV 导出迁入设置页');
   const src46 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
-  check('有「中奖统计」tab', src46.indexOf('data-tab="stats"') >= 0);
-  check('renderStats 函数存在', /function renderStats\(/.test(src46));
-  check('renderListInner 路由到 stats', src46.indexOf("curTab === 'stats'") >= 0);
-  check('统计页有四个数字卡', src46.indexOf('blm-stat-cards') >= 0 && (src46.match(/blm-stat-card/g) || []).length >= 1);
-  check('有 UP 主参与排行', src46.indexOf('UP 主参与排行') >= 0);
-  check('有奖品 Top10', src46.indexOf('中奖奖品 Top 10') >= 0);
-  check('有 CSV 导出按钮', src46.indexOf('id="blm-stats-csv"') >= 0);
+  check('「中奖统计」tab 已删除', src46.indexOf('data-tab="stats"') < 0);
+  check('renderStats 已删除（不留死代码）', !/function renderStats\(/.test(src46)
+    && src46.indexOf("curTab === 'stats'") < 0);
+  check('tab 只剩 动态台账 / 关注管理 / 设置',
+    (src46.match(/data-tab="/g) || []).length === 3
+      && src46.indexOf('data-tab="list"') >= 0 && src46.indexOf('data-tab="follow"') >= 0 && src46.indexOf('data-tab="set"') >= 0);
+  check('CSV 导出按钮迁到设置页（s-woncsv）并接上 exportWonCsv',
+    src46.indexOf('id="s-woncsv"') >= 0
+      && /getElementById\('s-woncsv'\)[\s\S]{0,120}addEventListener\('click', exportWonCsv\)/.test(src46));
   check('exportWonCsv 带 BOM 导出', /function exportWonCsv\(/.test(src46) && src46.indexOf("'﻿' + csv") >= 0);
-  check('统计页隐藏分页条/进度条', src46.indexOf("getElementById('blm-pagebar')") >= 0 && src46.indexOf("getElementById('blm-scanbar')") >= 0);
 
   console.log('\n[47] v1.0.1 移除「建议删除」筛选 + 可删按钮增强');
   const src47 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
@@ -1461,7 +1462,8 @@ S.allowCheckUnverified = false;
   check('selectAllSafe 空态区分：无记录 vs 无零风险条目',
     src47.indexOf('当前筛选条件下没有记录，先调整筛选或点「全部」看看。') >= 0
       && src47.indexOf('当前筛选结果里没有零风险可删的条目。') >= 0);
-  check('版本号已升至 1.0.1', src47.indexOf('@version      1.0.1') >= 0 && src47.indexOf("VERSION = '1.0.1'") >= 0);
+  check('版本号已升至 1.1.1（@version 与 VERSION 两处一致）',
+    src47.indexOf('@version      1.1.1') >= 0 && src47.indexOf("VERSION = '1.1.1'") >= 0);
 
   console.log('\n[48] v1.0.1 「清理重复」按钮并入「可删」（重复视图上下文语义）');
   const src48 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
@@ -1532,7 +1534,7 @@ S.allowCheckUnverified = false;
   console.log('\n[52] v1.0.1 已删除条目状态封存（不再显示可改标记的误导提示）');
   const src52 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
   check('已删除条目不挂 data-stmenu（点击入口摘除，现在统一走 statusTagHtml）',
-    src52.indexOf('const clickable = !it.deleted;') >= 0
+    src52.indexOf('const clickable = !it.deleted && (st.deletable || unlocked.has(it.dynId));') >= 0
       && src52.indexOf("(clickable ? ' data-stmenu=\"' + it.dynId + '\"' : '')") >= 0);
   check('已删除条目悬停提示改为「留档不可改」',
     src52.indexOf('这条已从 B 站删除，状态只作留档，不可再改') >= 0);
@@ -1570,8 +1572,9 @@ S.allowCheckUnverified = false;
   console.log('\n[54] v1.0.1 body 弹窗纳入主题变量作用域（修详情页透明）');
   const src54 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
   check('详情浮窗 #blm-detailbox 挂进亮/暗两套 token 作用域',
-    /#blm-panel,#blm-fab,#blm-float,#blm-detailbox,#blm-diag,#blm-stmenu\{/.test(src54)
-      && src54.indexOf('body.blm-dark #blm-detailbox') >= 0);
+    /#blm-panel,#blm-fab,#blm-float,#blm-detailbox,#blm-diag,#blm-stmenu,#blm-prizebox\{/.test(src54)
+      && src54.indexOf('body.blm-dark #blm-detailbox') >= 0
+      && src54.indexOf('body.blm-dark #blm-prizebox') >= 0);
   check('token 作用域注释说明踩坑原因', src54.indexOf('整个弹窗透明') >= 0);
 
   console.log('\n[55] v1.0.1 OC 水印内嵌（设置页作者栏）');
@@ -1580,6 +1583,20 @@ S.allowCheckUnverified = false;
     /const OC_WATERMARK = 'data:image\/webp;base64,/.test(src55));
   check('设置页渲染水印作者栏并引用常量',
     src55.indexOf("img src=\"' + OC_WATERMARK + '\"") >= 0 && src55.indexOf('作者 <b style="color:var(--blm-text)">糖心月</b>') >= 0);
+  // 油猴脚本列表图标：@icon / @icon64 内嵌 base64（64px PNG，约 9.4KB）
+  // 用内嵌而非外链：油猴列表图标不依赖网络，断网/墙 raw 时也能正常显示
+  check('元数据声明 @icon（内嵌 base64 PNG，油猴列表显示专属图标）',
+    /^\/\/ @icon\s+data:image\/png;base64,[A-Za-z0-9+/=]+$/m.test(src55));
+  check('元数据声明 @icon64（内嵌 base64 PNG）',
+    /^\/\/ @icon64\s+data:image\/png;base64,[A-Za-z0-9+/=]+$/m.test(src55));
+  check('@icon 与 @icon64 指向同一张图（避免两处尺寸不一致）',
+    (() => {
+      const a = src55.match(/^\/\/ @icon\s+(data:image\/png;base64,[A-Za-z0-9+/=]+)$/m);
+      const b = src55.match(/^\/\/ @icon64\s+(data:image\/png;base64,[A-Za-z0-9+/=]+)$/m);
+      return !!a && !!b && a[1] === b[1];
+    })());
+  check('@icon 只出现在元数据块内（正文无残留声明）',
+    src55.split('// @icon').length === 3);
 
   console.log('\n[56] v1.0.1 修时间范围行被工具栏显隐按回去 + 时间按钮读状态');
   const src56 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
@@ -1608,12 +1625,13 @@ S.allowCheckUnverified = false;
   check('过滤为并集：空集不过滤，「重复」「未中奖」维度叠加在状态之外',
     src58.indexOf('if (filterSet.size) {') >= 0
       && src58.indexOf("(filterSet.has('dup') && it.origId && dm[dupKeyOf(it)] > 1)") >= 0
-      && src58.indexOf("(filterSet.has('notwon') && it.won === false && !it.deleted)") >= 0
+      && src58.indexOf("(filterSet.has('notwon') && it.won === false && !it.deleted") >= 0
+      && src58.indexOf('it.drawTs <= Date.now())   // 开奖时间还没到的不算「未中奖」') >= 0
       && src58.indexOf('|| filterSet.has(computeStatus(it).key)') >= 0);
   check('「未中奖」chip 在已中奖之前，计数单独算（横跨缓冲期/建议删除两阶段）',
     src58.indexOf("{ key: 'notwon', label: '未中奖' }") >= 0
       && src58.indexOf("{ key: 'notwon', label: '未中奖' }") < src58.indexOf("{ key: 'won', label: '已中奖' }")
-      && src58.indexOf('if (it.won === false && !it.deleted) counts.notwon++;') >= 0
+      && src58.indexOf('if (it.won === false && !it.deleted && it.drawTs && it.drawTs <= Date.now()) counts.notwon++;') >= 0
       && src58.indexOf("'notwon', 'won'") >= 0);
   check('「全部」chip 在集合为空时点亮，具体 chip 按集合成员点亮',
     src58.indexOf("(f.key === 'all' ? filterSet.size === 0 : filterSet.has(f.key))") >= 0);
@@ -1627,12 +1645,14 @@ S.allowCheckUnverified = false;
   check('状态菜单改完状态：新状态仍 match 筛选才原地刷新，否则全量渲染',
     src58.indexOf('if (!filterSet.size || filterSet.has(nk)) {') >= 0);
 
-  console.log('\n[59] 状态抽屉不受锁限制 + 锁图标中途增删');
+  console.log('\n[59] 状态抽屉与改时间同一把锁 + 锁图标中途增删');
   const src59 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
-  check('statusTagHtml：非删除即可开抽屉（不再受锁限制——换状态是显式两步操作）',
+  // 2026-10-10 用户实测推翻旧决策：锁能拦勾选却拦不住状态菜单 → 状态抽屉改为与改时间同闸
+  check('statusTagHtml：锁着（不可删且未解锁）摘 data-stmenu，提示先解锁',
     /function statusTagHtml\(/.test(src59)
-      && src59.indexOf('const clickable = !it.deleted;') >= 0
-      && src59.indexOf('上锁了：点左上角的锁解锁后才能改状态') < 0);
+      && src59.indexOf('const clickable = !it.deleted && (st.deletable || unlocked.has(it.dynId));') >= 0
+      && src59.indexOf('上锁中：点左上角的锁解锁后才能改状态') >= 0
+      && src59.indexOf('blm-stlocked') >= 0);
   check('metaChipsHtml：锁住时摘 data-act="edit" + 点击样式，提示解锁',
     /function metaChipsHtml\(/.test(src59)
       && src59.indexOf("const editAttr = gateOpen ? ' data-act=\"edit\" data-dyn=\"' + it.dynId + '\"' : '';") >= 0
@@ -1657,6 +1677,376 @@ S.allowCheckUnverified = false;
     src59.indexOf("txt.classList.toggle('open', opening);") >= 0
       && src59.indexOf("more.textContent = opening ? '收起正文 ▲' : '展开正文 ▼';") >= 0
       && /data-more'\];\n[\s\S]*?renderList\(\); return;/.test(src59) === false);
+
+  /* [60] 已删除不再盖掉已中奖（2026-10-10 用户实测：已删除的中奖动态筛不到、统计不到）
+     原则：中奖是事实，删除只是操作状态 —— 筛选/统计/CSV/卡片标签都要把事实带回来 */
+  (() => {
+    const src60 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
+    console.log('\n[60] 已删除 × 已中奖：事实不被操作状态覆盖');
+
+    // chip 计数：deleted 分支同时计入 won
+    check('renderChips：已删除分支单独处理，已删除的中奖同时计入「已中奖」计数',
+      /k === 'deleted'[\s\S]*?counts\.deleted\+\+;[\s\S]*?if \(it\.won === true\) counts\.won\+\+;/.test(src60));
+    // 筛选匹配：勾「已中奖」能捞出已删除的中奖条目
+    check('筛选匹配：勾「已中奖」包含已删除的中奖条目',
+      src60.indexOf("(filterSet.has('won') && it.deleted && it.won === true)") >= 0);
+    // 卡片标签：已删除的中奖拆成两个标签（灰色「已删除」+ 金色「已中奖」）
+    check('statusTagHtml：已删除的中奖拆成「已删除」「已中奖」两个标签',
+      /st\.key === 'deleted' && it\.won === true[\s\S]{0,200}已删除<\/span>[\s\S]{0,200}blm-wontag[\s\S]{0,200}已中奖<\/span>/.test(src60));
+    // CSV：导出含已删除，且新增「状态」列（统计页已移除，导出保留在设置页）含已删除，且新增「状态」列
+    check('CSV 导出：包含已删除的中奖条目，并新增「状态」列',
+      /const won = Object\.values\(ledger\)\.filter\(it => it\.won === true\);[\s\S]*?const header = \['UP主', '奖品', '开奖时间', '动态类型', '状态',/.test(src60));
+    // 关注页：中过奖的 UP 即使动态删了也保留「中过奖」风险标记
+    check('关注页：已删除的中奖动态仍计入「中过奖」取关风险',
+      /if \(it\.won === true\) \{ x\.won\+\+;[\s\S]*?return; \}[\s\S]*?if \(it\.deleted\) return;/.test(src60));
+  })();
+
+  /* [61] 关注管理页升级：决策信息 / 为抽奖关注标记 / 重新关注闭环 */
+  (() => {
+    const src61 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
+    console.log('\n[61] 关注页：信息补全 + 为抽奖关注 + 重新关注');
+
+    // I 决策信息
+    check('关注页统计最近一次转发距今（lastDays）与命中率',
+      /x\.lastDays = x\.last \? Math\.floor\(\(now - x\.last\) \/ DAY_MS\) : -1;/.test(src61)
+        && /x\.rate = \(x\.won \+ x\.lost\)/.test(src61));
+    check('关注页提供昵称/UID 搜索 + 五种排序',
+      /id="blm-uf-search"/.test(src61)
+        && /\['auto', '安全性'\], \['last', '最近转发'\], \['count', '参与次数'\], \['won', '中奖次数'\], \['first', '关注时间'\]/.test(src61));
+    check('关注页四个快捷预设：一次性 / 半年没转 / 中过奖 / 从没中过',
+      /followPreset === 'once' && x\.lots !== 1/.test(src61)
+        && /followPreset === 'stale'/.test(src61)
+        && /followPreset === 'won'/.test(src61)
+        && /followPreset === 'never'/.test(src61));
+    check('关注页 UP 名即主页直达链接（独立「主页」按钮已去掉）',
+      /class="blm-up blm-uplink" title="打开「' \+ escapeHtml\(x\.name/.test(src61)
+        && src61.indexOf("https://space.bilibili.com/' + x.mid + '\"") >= 0
+        && src61.indexOf('打开这位 UP 的主页') < 0
+        && /\.blm-uplink:hover\{color:#FB7299;text-decoration:underline;\}/.test(src61));
+    check('关注页卡片不再显示「从没中过」与「命中率」标签（只保留「中过 N 次」）',
+      /x\.won \? '<span class="blm-tag" style="background:var\(--blm-warn-bg\);color:var\(--blm-warn-text\)"'/.test(src61)
+        && src61.indexOf('>从没中过</span>') < 0
+        && src61.indexOf("'命中率 ' + x.rate + '%</span>'") < 0);
+    check('设置页作者署名只留一行（「你的 OC 看着你清理抽奖动态」已去掉）',
+      src61.indexOf('你的 OC 看着你清理抽奖动态') < 0
+        && /作者 <b style="color:var\(--blm-text\)">糖心月<\/b> · 本脚本用爱发电<\/div>/.test(src61));
+
+    // II 为抽奖关注
+    check('为抽奖关注可整组切换（toggleFollowMark 按 upMid 批量）',
+      /function toggleFollowMark\(mid\)/.test(src61)
+        && /String\(it\.upMid\) !== k/.test(src61));
+    check('智能补标规则：转过 2 条以上 + 半数以上有开奖时间或官方抽奖',
+      /function smartMarkLotteryFollow/.test(src61)
+        && /arr\.length < 2/.test(src61)
+        && /hit \/ arr\.length >= 0\.5/.test(src61)
+        && /手动标过的不动|some\(it => it\.forLotteryFollow\)/.test(src61));
+    check('关注页有「只为抽奖关注」筛选开关',
+      /id="blm-uf-onlylot"/.test(src61) && /followOnlyLottery && !x\.marked/.test(src61));
+    check('中奖标签不重复表达（风险标签不再单独出「中过奖」）',
+      src61.indexOf('中过奖</span>\';') < 0
+        && /中过 ' \+ x\.won \+ ' 次/.test(src61));
+
+    // III 重新关注
+    check('新增 followUser（relation/modify act=1）与取关对称',
+      /async function followUser\(mid\)/.test(src61)
+        && /act=1&re_src=11/.test(src61));
+    check('重新关注走确认 + 限速 + 成功后摘掉已取关标记',
+      /async function refollowOne/.test(src61)
+        && /clearUnfollowedMark\(mid\);/.test(src61));
+    check('已取关卡片的取关入口被摘除（不会重复取关）',
+      /if \(x\.unfollowedAt\) \{\s*\n\s*ops = '<a href="javascript:;" data-ufrefollow/.test(src61));
+  })();
+
+  /* [62] 非官方抽奖的手填「奖品 / 参与需求」区 */
+  (() => {
+    const src62 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
+    console.log('\n[62] 手填奖品 / 参与需求区');
+
+    check('卡片有独立的手填奖品区渲染函数（与官方奖品行分开）',
+      /function myPrizeLineHtml\(it\)/.test(src62)
+        && /prizeLine \+= myPrizeLineHtml\(it\);/.test(src62));
+    check('没填时是空白入口，不是标签（挂 blm-prizeghost 而非 blm-tag）',
+      /blm-prizeghost/.test(src62)
+        && src62.indexOf('没填 · 点这里记') >= 0
+        && /class="blm-prizeline blm-prizeline-my"><span class="blm-prizekey">/.test(src62));
+    check('填了奖品就显示在卡片同一区域（blm-hl-prize，跟官方奖品同款）',
+      /<span class="blm-hl blm-hl-prize">' \+ escapeHtml\(prize\)/.test(src62));
+    check('参与需求不显示在卡片上（卡片模板里不出现 reqNote）',
+      src62.indexOf("escapeHtml(it.reqNote)") >= 0
+        && !/blm-prizeline-my[\s\S]{0,400}reqNote/.test(src62));
+    check('需求只在详情页展示（两行：奖品（我记的）/ 参与需求（我记的））',
+      /rows\.push\(\['奖品（我记的）', escapeHtml\(it\.prizeNote\)\]\)/.test(src62)
+        && /rows\.push\(\['参与需求（我记的）', escapeHtml\(it\.reqNote\)\]\)/.test(src62));
+    check('卡片点击入口（data-act="editprize"）走事件委托',
+      /else if \(a === 'editprize'\) editPrizeNote\(dyn\);/.test(src62));
+    check('详情页也能改（data-db-act="prize" → editPrizeNote）',
+      /data-db-act="prize"/.test(src62)
+        && /else if \(a === 'prize'\) editPrizeNote\(dyn\);/.test(src62));
+    check('弹窗两个字段（奖品 input + 需求 textarea）且值用属性赋值（不拼进 HTML）',
+      /<input id="blm-pz-in"/.test(src62)
+        && /<textarea id="blm-pz-req"/.test(src62)
+        && /if \(pIn\) pIn\.value = it\.prizeNote \|\| '';/.test(src62)
+        && /if \(rIn\) rIn\.value = it\.reqNote \|\| '';/.test(src62));
+    check('保存 / 清空 / 取消三个动作都接上，写盘后原地刷新',
+      /data-pz="clear"/.test(src62) && /data-pz="cancel"/.test(src62) && /data-pz="save"/.test(src62)
+        && /saveLedger\(ledger\);/.test(src62)
+        && /if \(!refreshRowState\(dynId\)\) renderList\(\);/.test(src62));
+    check('已删除动态只留档不再编辑（readonly 返回空）',
+      /const readonly = !!it\.deleted;/.test(src62)
+        && /if \(readonly \|\| hasOfficial\) return '';/.test(src62));
+    check('官方已有接口奖品时不摆空入口（避免每张卡挂虚线）',
+      /const hasOfficial = !!\(it\.prizes && it\.prizes\.length\);/.test(src62)
+        && /keyTxt = hasOfficial \? '补充奖品' : '奖品'/.test(src62));
+    check('原地刷新同步奖品行的出现与消失',
+      /const plHtml = myPrizeLineHtml\(it\);/.test(src62)
+        && /const plEl = row\.querySelector\('\.blm-prizeline-my'\);/.test(src62)
+        && /\} else if \(plEl\) \{\s*\n\s*plEl\.remove\(\);/.test(src62));
+    check('手填奖品接进 CSV 导出兜底（统计页已移除，导出保留在设置页）',
+      /\|\| it\.prizeNote \|\| '（未记录奖品）'/.test(src62));
+    // 纯备注校验：把 computeStatus / 筛选段落的源码切出来单独查，避免全文正则误伤
+    const csBody = (src62.match(/function computeStatus\(it\) \{[\s\S]*?\n  \}\n/) || [''])[0];
+    const fa = src62.indexOf('const ctxSig');
+    const fb = src62.indexOf('if (filterSet.size) {');
+    const flBody = (fa >= 0 && fb > fa) ? src62.slice(fa, fb) : '';
+    check('纯备注：不进筛选、不改状态（computeStatus 与筛选逻辑都不读这两个字段）',
+      csBody.length > 100 && !/prizeNote|reqNote/.test(csBody)
+        && flBody.length > 100 && !/prizeNote|reqNote/.test(flBody));
+  })();
+
+  /* [63] 分期/改期抽奖的矛盾防线（旧名单 × 未来开奖时间） */
+  (() => {
+    const src63 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
+    console.log('\n[63] 分期抽奖矛盾防线：结果存疑');
+
+    // 防线 1：核验写入处 —— 「已开奖」必须时间戳真过去了
+    check('applyLotteryResult 的 drawn 判定要求开奖时间戳已过去',
+      /const tsDrawn = !!info\.drawTs && info\.drawTs <= Date\.now\(\);/.test(src63)
+        && /const drawn = tsDrawn && \(info\.status === 2 \|\| info\.status === undefined\);/.test(src63));
+    // 运行时验证：status=2 + 名单非空 + 时间戳在未来 → 绝不写 won
+    (() => {
+      const it = { dynId: 'f1', official: true, won: null, drawTs: Date.now() + 20 * 86400000 };
+      const info = {
+        status: 2, drawTs: Date.now() + 20 * 86400000,   // 未来（毫秒，fetchLottery 已 ×1000）
+        winners: { first: [], second: [], third: [{ uid: 999, name: '别人' }] }
+      };
+      const r = T.applyLotteryResult(it, info, 12345);
+      check('分期陷阱：status=2 但开奖时间在未来 -> 不写 won（保守等待）',
+        r === null && it.won === null && it.winnersConfirmed === undefined,
+        'won=' + it.won + ' r=' + r);
+      // 对照组：时间戳真过去了才判定
+      const it2 = { dynId: 'f2', official: true, won: null, drawTs: 1 };
+      const info2 = { status: 2, drawTs: Date.now() - 86400000,
+        winners: { first: [], second: [], third: [{ uid: 999, name: '别人' }] } };
+      const r2 = T.applyLotteryResult(it2, info2, 12345);
+      check('对照组：真开奖 + 名单非空没中 -> won=false 照旧',
+        r2 === false && it2.won === false && it2.winnersConfirmed === true);
+    })();
+
+    // 防线 2：状态机对存量矛盾数据兜底
+    check('存量兜底：won=false + 未来开奖 -> needcheck「结果存疑」',
+      /if \(it\.drawTs > now\) \{[\s\S]*?if \(it\.won === false\) \{[\s\S]*?label: '结果存疑'/.test(src63));
+    check('结果存疑默认锁死（未开奖就是不能删，不受 allowCheckUnverified 开关影响）',
+      /label: '结果存疑', color: '#EF9F27',\s*\n\s*deletable: false, warn: true/.test(src63));
+    check('锁提示对存疑态单独说明（分期/旧名单，解锁=可能弃权）',
+      /st\.key === 'needcheck' && it\.drawTs && it\.drawTs > Date\.now\(\)/.test(src63));
+    (() => {
+      const dirty = { dynId: 'f3', won: false, official: true, drawTs: Date.now() + 20 * 86400000, deleted: false };
+      const st63 = T.computeStatus(dirty);
+    check('运行时：蔚蓝档案式矛盾数据 -> 结果存疑 + 锁定',
+      st63.key === 'needcheck' && st63.label === '结果存疑' && st63.deletable === false);
+      const dirty2 = Object.assign({}, dirty, { drawTs: Date.now() - 86400000 });
+      check('运行时：已开奖的 won=false 不受影响（照走 safe/cooldown）',
+        ['safe', 'cooldown'].indexOf(T.computeStatus(dirty2).key) >= 0);
+    })();
+
+    // 防线 3：筛选口径
+    check('「未中奖」筛选与计数都排除未来开奖（口径一致）',
+      src63.indexOf("|| (filterSet.has('notwon') && it.won === false && !it.deleted") >= 0
+        && src63.indexOf('it.drawTs <= Date.now())   // 开奖时间还没到的不算「未中奖」') >= 0
+        && src63.indexOf('if (it.won === false && !it.deleted && it.drawTs && it.drawTs <= Date.now()) counts.notwon++;') >= 0);
+    check('详情页中奖状态行对矛盾数据标注存疑',
+      src63.indexOf('确认未中奖（存疑：开奖时间在未来，多半是上一期名单，等下一期开奖后再核验）') >= 0);
+  })();
+
+  /* [64] 体检 P0 批次 + 移除中奖统计页 */
+  (() => {
+    const src64 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
+    console.log('\n[64] 体检 P0 修复 + 删除中奖统计页');
+
+    // P0-1
+    check('P0-1 结果存疑恒为不可删（deletable:false）',
+      /deletable: false, warn: true/.test(src64)
+        && !/deletable: !!SETTINGS\.allowCheckUnverified, warn: true\s*\n\s*\};\s*\n\s*\}\s*\n\s*return \{ key: 'pending'/.test(src64));
+    // P0-2
+    check('P0-2 删除保底网改按「开奖时间在未来」判定（不再只看 key==="pending"）',
+      src64.indexOf("const pending = list.filter(it => it.drawTs && it.drawTs > Date.now());") >= 0
+        && src64.indexOf("list.filter(it => computeStatus(it).key === 'pending')") < 0);
+    // P0-3
+    check('P0-3 中奖 / 未确认 / 知情弃权 强制二次确认（关掉开关也拦）',
+      /if \(SETTINGS\.confirmBeforeDelete \|\| wonList\.length \|\| unverified\.length \|\| gaveUp\) \{\s*\n\s*if \(!confirm\(msg\)\) return;/.test(src64)
+        && /let gaveUp = false;/.test(src64) && /gaveUp = true;/.test(src64));
+    // P0-4
+    check('P0-4 删除：两道确认后重新载入最新台账再写盘',
+      /if \(unverified\.length && !confirm\([\s\S]*?\n\s*ledger = loadLedger\(\);[\s\S]*?list = Array\.from\(selected\)\.map\(id => ledger\[id\]\)\.filter\(Boolean\)\.filter\(it => !it\.deleted\);/.test(src64));
+    check('P0-4 核验：每条重新取台账 + 立刻落盘，不再整批覆盖',
+      /const snap = loadLedger\(\);\s*\n\s*const it = snap\[todo\[i\]\];/.test(src64)
+        && /saveLedger\(snap\);/.test(src64)
+        && /saveLedger\(loadLedger\(\)\);\s*\/\/ 收尾再对齐一次/.test(src64));
+    check('删除加了 busy 闸（不与核验/取关并发写同一份台账）',
+      /if \(busy\) \{ toast\('还有操作在进行，请稍候或点「中止」。'\); return; \}/.test(src64));
+    // P1-5（我新写的弹窗存盘 bug）
+    check('P1-5 记奖品弹窗：dynId 走 box.dataset，台账每次重新读（不再闭包固化首条）',
+      /const id = box\.dataset\.dyn \|\| '';/.test(src64)
+        && /const lg = loadLedger\(\);\s*\n\s*const cur = lg\[id\];/.test(src64)
+        && /saveLedger\(lg\);/.test(src64)
+        && /box\.dataset\.dyn = dynId;/.test(src64)
+        && !/saveLedger\(ledger\);\s*\n\s*box\.style\.display = 'none';/.test(src64));
+    // 移除统计页
+    check('中奖统计页彻底移除（tab / 函数 / 路由 / 排行 / Top10 全无）',
+      src64.indexOf('data-tab="stats"') < 0 && !/function renderStats\(/.test(src64)
+        && src64.indexOf("curTab === 'stats'") < 0
+        && src64.indexOf('UP 主参与排行') < 0 && src64.indexOf('中奖奖品 Top 10') < 0
+        && src64.indexOf('blm-stats-csv') < 0);
+    check('CSV 导出没丢：入口在设置页备份区',
+      src64.indexOf('id="s-woncsv"') >= 0 && /exportWonCsv/.test(src64));
+  })();
+
+  /* [65] 滚动时自动收起筛选条/分页条 */
+  (() => {
+    const src65 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
+    console.log('\n[65] 滚动自动收起筛选条 / 分页条');
+    check('滚动容器 #blm-body 挂了 scroll 监听（passive，不阻塞滚动）',
+      /bodyEl\.addEventListener\('scroll'[\s\S]*?\{ passive: true \}\);/.test(src65));
+    check('滚动时挂 blm-scrolling，停 300ms 防抖后摘掉',
+      /if \(!panel\.classList\.contains\('blm-scrolling'\)\) panel\.classList\.add\('blm-scrolling'\);/.test(src65)
+        && /hideBarsTimer = setTimeout\(\(\) => panel\.classList\.remove\('blm-scrolling'\), 300\);/.test(src65));
+    check('悬浮层方案：chips/pagebar 绝对定位，面板高度恒定（不重排 = 不跳）',
+      /\.blm-mid\{position:relative;flex:1;min-height:0;display:flex;flex-direction:column;\}/.test(src65)
+        && /\.blm-mid>\.blm-chips\{position:absolute;left:0;right:0;top:0;z-index:6;/.test(src65)
+        && /\.blm-mid>\.blm-pagebar\{position:absolute;left:0;right:0;bottom:0;z-index:6;/.test(src65)
+        && /\.blm-mid>\.blm-chips:empty\{display:none;\}/.test(src65));
+    check('悬浮层四角圆角 + 完整描边（不是只留一条 border-bottom）',
+      /\.blm-mid>\.blm-chips\{position:absolute;left:0;right:0;top:0;z-index:6;\s*\n\s*background:var\(--blm-bg\);border:1px solid var\(--blm-border2\);border-radius:9px;/.test(src65)
+        && /\.blm-mid>\.blm-pagebar\{position:absolute;left:0;right:0;bottom:0;z-index:6;\s*\n\s*border:1px solid var\(--blm-border2\);border-radius:9px;/.test(src65));
+    check('滚动时淡出+禁点（纯视觉，不碰布局）',
+      /#blm-panel\.blm-scrolling \.blm-chips\{opacity:0;transform:translateY\(-8px\);pointer-events:none;\}/.test(src65)
+        && /#blm-panel\.blm-scrolling \.blm-pagebar\{opacity:0;transform:translateY\(8px\);pointer-events:none;\}/.test(src65)
+        && !/barsHiddenH/.test(src65));
+    check('静止 3 秒降透明度 40%：任何操作立即恢复；鼠标停在悬浮层上保持清晰',
+      /idleTimer = setTimeout\(\(\) => \{ if \(!hoverBars\) setIdle\(true\); \}, 3000\);/.test(src65)
+        && /\['mousemove', 'mousedown', 'keydown', 'wheel', 'touchstart', 'input'\]\.forEach\(ev =>/.test(src65)
+        && /midEl\.addEventListener\('mouseenter', \(\) => \{ hoverBars = true; setIdle\(false\); \}\);/.test(src65)
+        && /#blm-panel\.blm-idle:not\(\.blm-scrolling\) \.blm-chips\{opacity:\.4;transform:translateY\(-3px\) scale\(\.985\);\}/.test(src65)
+        && /#blm-panel\.blm-idle:not\(\.blm-scrolling\) \.blm-pagebar\{opacity:\.4;transform:translateY\(3px\) scale\(\.985\);\}/.test(src65));
+    check('静止时给 body 让出上内边距（躲开悬浮条），高度实时量、切走归零',
+      /function syncBodyPadTop\(\)/.test(src65)
+        && /const chips = document\.getElementById\('blm-chips'\);\s*\n\s*if \(chips && chips\.style\.display !== 'none'\) h \+= chips\.offsetHeight;/.test(src65)
+        && /if \(curTab !== 'list'\) \{ bodyEl\.style\.paddingTop = ''; return; \}/.test(src65));
+    check('非台账 tab 收起悬浮条（hideListChrome：关注页/设置页都调）',
+      /function hideListChrome\(\)/.test(src65)
+        && (src65.match(/hideListChrome\(\);[^\n]*\n/g) || []).length >= 2);
+    check('hideListChrome 连分页条一起收（设置页曾漏出「上一页 1 2 3」悬浮条）',
+      /function hideListChrome\(\) \{[\s\S]{0,600}const pagebar = document\.getElementById\('blm-pagebar'\);[\s\S]{0,80}if \(pagebar\) pagebar\.style\.display = 'none';/.test(src65));
+    check('挂 body 的弹窗必须进主题变量作用域（#blm-prizebox 亮/暗两处都在，防透明复踩）',
+      /#blm-panel,#blm-fab,#blm-float,#blm-detailbox,#blm-diag,#blm-stmenu,#blm-prizebox\{/.test(src65)
+        && /body\.blm-dark #blm-panel,[\s\S]*?body\.blm-dark #blm-stmenu, body\.blm-dark #blm-prizebox\{/.test(src65));
+  })();
+
+  /* [66] 关注页整顿（2026-10-11）：勾选持久化 / 抽奖次数口径 / 锁定理由可见 / 工具条收纳 / 范围说明 / 智能补标撤销 */
+  (() => {
+    const src66 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
+    console.log('\n[66] 关注页整顿：勾选持久化 + 口径 + 可用性');
+
+    // 1 勾选态持久化（P2-18）：必须用集合存，不能只写 DOM class
+    check('勾选态存进 followSelected 集合（重渲染不再清空）',
+      /const followSelected = new Set\(\)/.test(src66)
+        && /followSelected\.has\(mid\)/.test(src66)
+        && /followSelected\.add\(mid\)/.test(src66));
+    check('卡片渲染按集合恢复勾选（.on 由 picked 决定）',
+      /const picked = followSelected\.has\(String\(x\.mid\)\)/.test(src66)
+        && /canSel \? \(picked \? ' on' : ''\)/.test(src66));
+    check('执行取关从集合读勾选（不再读 DOM class）',
+      /const mids = Array\.from\(followSelected\)\.filter/.test(src66));
+
+    // 2 后台刷新不再打断关注页（P2-14）
+    check('60s 轮询 / 跨标签页回调在非台账 tab 不重绘关注页',
+      /if \(curTab !== 'list'\) return;\s*\n\s*renderList\(\);/.test(src66)
+        && /if \(curTab === 'list'\) \{\s*\n\s*if \(gotWon\.length\)/.test(src66));
+    check('关注页刷新改由切 tab 触发（renderListInner 里 renderFollow）',
+      /if \(curTab === 'follow'\) \{ renderFollow\(\); return; \}/.test(src66));
+
+    // 3 「抽奖次数」口径（不再拿动态条数冒充）
+    check('按 dupKey 去重出「抽奖次数」lots，重复条数 dups 单独标',
+      /x\.lots = x\._seen \? Object\.keys\(x\._seen\)\.length : 0;/.test(src66)
+        && /x\.dups = Math\.max\(0, x\.count - x\.lots\);/.test(src66)
+        && /const dk = it\.origId \? dupKeyOf\(it\) : \('one:' \+ it\.dynId\);/.test(src66));
+    check('卡片主标签改成「抽过 N 次」，重复另有条数标签',
+      /'">抽过 ' \+ x\.lots \+ ' 次<\/span>'/.test(src66)
+        && /x\.count \+ ' 条（含 ' \+ x\.dups \+ ' 重复）/.test(src66));
+
+    // 4 锁定理由直接可见
+    check('锁旁有 ufLockShort 小字（仅未开奖/缓冲期；中过奖不再重复，空串不挂元素）',
+      /function ufLockShort\(x\)/.test(src66)
+        && /isBlocked && ufLockShort\(x\) \? '<span class="blm-ufwhy">' \+ escapeHtml\(ufLockShort\(x\)\)/.test(src66)
+        && /if \(x\.pending\) return '未开奖';\s*\n\s*if \(x\.cooldown\) return '缓冲期';\s*\n\s*return '';/.test(src66)
+        && /\.blm-ufwhy\{/.test(src66));
+
+    // 5 工具条收纳低频项
+    check('低频筛选收进「更多筛选」折叠区（默认收起、可展开）',
+      /let followMoreOpen = false;/.test(src66)
+        && /id="blm-uf-more"/.test(src66)
+        && /class="blm-ufmore' \+ \(followMoreOpen \? ' open' : ''\)/.test(src66)
+        && /\.blm-ufmore\.open\{display:flex;\}/.test(src66));
+    check('智能补标 / 天数 / 重置都在折叠区里（不再挤在首行）',
+      /class="blm-ufmore[\s\S]*?id="blm-uf-smart"[\s\S]*?id="blm-uf-days"[\s\S]*?id="blm-uf-all"/.test(src66));
+
+    // 6 页面范围说明
+    check('顶部不再堆统计/范围说明两段文字（用户要求去掉，保持清爽）',
+      !/class="blm-ufnote"/.test(src66)
+        && !/转发过抽奖动态的 UP 主共/.test(src66)
+        && /let html = '';/.test(src66));
+    check('工具条重排：第一行搜索+排序+正倒序按钮，第二行全部筛选项',
+      /id="blm-uf-search"[\s\S]{0,400}id="blm-uf-sort"[\s\S]{0,600}id="blm-uf-sortdir"/.test(src66)
+        && /id="blm-uf-sortdir"[\s\S]{0,1600}blm-uf-onlylot[\s\S]{0,700}id="blm-uf-more"[\s\S]{0,700}blm-ufmore/.test(src66));
+    check('关注页正倒序：默认正序(asc)、cmp 写成递增语义、按钮翻转',
+      /let followSortDir = 'asc';/.test(src66)
+        && /const dirK = \(followSortDir === 'desc'\) \? -1 : 1;/.test(src66)
+        && /filtered\.sort\(\(a, b\) => dirK \* cmp\(a, b\)\);/.test(src66)
+        && /const sortDirBtn = document\.getElementById\('blm-uf-sortdir'\);/.test(src66)
+        && /followSortDir = \(followSortDir === 'asc'\) \? 'desc' : 'asc';/.test(src66));
+    check('五个排序项改名为：安全性 / 最近转发 / 参与次数 / 中奖次数 / 关注时间',
+      /\['auto', '安全性'\]/.test(src66) && /\['last', '最近转发'\]/.test(src66)
+        && /\['count', '参与次数'\]/.test(src66) && /\['won', '中奖次数'\]/.test(src66)
+        && /\['first', '关注时间'\]/.test(src66));
+    check('placeholder 统一压淡一档（text4）+ 关注页搜索框 flex:1 拉满宽度',
+      /#blm-search::placeholder,#blm-uf-search::placeholder,#blm-pz-in::placeholder,#blm-pz-req::placeholder,/.test(src66)
+        && /#blm-fl-time::placeholder,#blm-uf-days::placeholder\{color:var\(--blm-text4\);opacity:1;\}/.test(src66)
+        && /id="blm-uf-search"[\s\S]{0,140}flex:1;min-width:120px/.test(src66)
+        && !/id="blm-uf-sortdir" style="margin-left:auto"/.test(src66));
+
+    // 7 智能补标可撤销
+    check('智能补标 toast 带「撤销」一键回滚（记录改动前快照）',
+      /const undoRows = \[\]/.test(src66)
+        && /undoRows\.push\(\{ dynId: it\.dynId, prev: !!it\.forLotteryFollow \}\)/.test(src66)
+        && /undoRows\.forEach\(r => \{ const e = lg\[r\.dynId\]; if \(e\) \{ e\.forLotteryFollow = r\.prev; n\+\+; \} \}\)/.test(src66));
+
+    // 8 关注页不露出台账专属部件（底栏「删除选中」+ 悬浮筛选条）
+    check('关注页收掉底栏（不再露出「删除选中」按钮）',
+      /<div class="blm-foot" id="blm-foot">/.test(src66)
+        && /if \(curTab !== 'list'\) hideListChrome\(\);/.test(src66)
+        && /const foot = document\.getElementById\('blm-foot'\);\s*if \(foot\) foot\.style\.display = 'none';/.test(src66)
+        && /if \(curTab === 'list'\) showListChrome\(\);/.test(src66)
+        && /function showListChrome\(\) \{[\s\S]{0,120}foot\.style\.display = '';/.test(src66));
+
+    // 9 关注页自己的勾选计数（底栏收掉后，勾选必须有可见反馈）
+    check('关注页底部执行条带实时计数（勾选数就地刷新，不整页重渲染）',
+      /id="blm-uf-seln"/.test(src66)
+        && /const selN = filtered\.filter\(x => followSelected\.has\(String\(x\.mid\)\) && !x\.unfollowedAt\)\.length;/.test(src66)
+        && /\(selN \? '' : ' disabled'\)/.test(src66)
+        && /const sel = document\.getElementById\('blm-uf-seln'\);/.test(src66)
+        && /if \(goBtn\) goBtn\.disabled = !n;/.test(src66)
+        && /\.blm-ufseln b\{color:#FB7299/.test(src66));
+  })();
 
   console.log('\n结果: ' + passed + ' 通过, ' + failed + ' 失败');
   process.exit(failed ? 1 : 0);
