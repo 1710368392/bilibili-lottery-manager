@@ -1938,7 +1938,8 @@
     const st = computeStatus(it);
     // 锁着的条目静默拦截 —— 原因已经写在锁图标的提示里，不再弹窗（v3.5.1 之前这里
     // 的 confirm 分支有个真 bug：确认后走到块尾 return，勾选根本没生效）
-    if (it.won === true) return;
+    // 中奖条目也走统一解禁路径：默认锁死，解锁即视为你确认要动它 —— 删除前的二次确认仍会点名中奖风险
+    // （以前这里对 won===true 硬拦截，解锁了也选不上，跟全选按钮的行为对不上——实测踩坑）
     if (!st.deletable && !unlocked.has(dynId)) return;
     if (selected.has(dynId)) selected.delete(dynId); else selected.add(dynId);
     if (!refreshRowState(dynId)) renderList();   // 原地刷新；卡片不在当前页才全量重建

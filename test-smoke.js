@@ -1267,6 +1267,9 @@ S.allowCheckUnverified = false;
     src39.indexOf('delPend[dupKeyOf(it)]') >= 0 && src39.indexOf('delPend[dupKeyOf(it)] || 0) < 1') >= 0);
   check('勾选拦截改为静默（锁图标已说明原因，不再弹窗）',
     src39.indexOf("if (!st.deletable && !unlocked.has(dynId)) return;") >= 0);
+  check('中奖条目解锁后可勾选（toggleSelect 不再对 won===true 硬拦截）',
+    /if \(selected\.has\(dynId\)\) selected\.delete\(dynId\); else selected\.add\(dynId\);/.test(src39)
+      && src39.indexOf('if (it.won === true) return;') < 0);
   check('勾选分支不再残留 confirm', src39.indexOf('确定勾选它吗') < 0);
 
   // groupAliveCount：同组计数
