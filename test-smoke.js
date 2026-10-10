@@ -1605,10 +1605,16 @@ S.allowCheckUnverified = false;
     src58.indexOf("if (k === 'all') filterSet.clear();") >= 0
       && src58.indexOf('else if (filterSet.has(k)) filterSet.delete(k);') >= 0
       && src58.indexOf('else filterSet.add(k);') >= 0);
-  check('过滤为并集：空集不过滤，「重复」维度叠加在状态之外',
+  check('过滤为并集：空集不过滤，「重复」「未中奖」维度叠加在状态之外',
     src58.indexOf('if (filterSet.size) {') >= 0
       && src58.indexOf("(filterSet.has('dup') && it.origId && dm[dupKeyOf(it)] > 1)") >= 0
+      && src58.indexOf("(filterSet.has('notwon') && it.won === false && !it.deleted)") >= 0
       && src58.indexOf('|| filterSet.has(computeStatus(it).key)') >= 0);
+  check('「未中奖」chip 在已中奖之前，计数单独算（横跨缓冲期/建议删除两阶段）',
+    src58.indexOf("{ key: 'notwon', label: '未中奖' }") >= 0
+      && src58.indexOf("{ key: 'notwon', label: '未中奖' }") < src58.indexOf("{ key: 'won', label: '已中奖' }")
+      && src58.indexOf('if (it.won === false && !it.deleted) counts.notwon++;') >= 0
+      && src58.indexOf("'notwon', 'won'") >= 0);
   check('「全部」chip 在集合为空时点亮，具体 chip 按集合成员点亮',
     src58.indexOf("(f.key === 'all' ? filterSet.size === 0 : filterSet.has(f.key))") >= 0);
   check('「重复」独立视图判定 isDupView（可删分流用）',

@@ -1584,7 +1584,7 @@
       const u = GM_getValue(UI_KEY, null) || {};
       // 筛选多选化（存数组）；兼容旧单选字符串：'all'/'safe'（已移除）→ 空集，其余收进集合
       if (Array.isArray(u.curFilter)) {
-        const VALID = ['unknown', 'pending', 'needcheck', 'cooldown', 'won', 'dup', 'deleted'];
+        const VALID = ['unknown', 'pending', 'needcheck', 'cooldown', 'notwon', 'won', 'dup', 'deleted'];
         u.curFilter.forEach(k => { if (VALID.indexOf(k) >= 0) filterSet.add(k); });
       } else if (u.curFilter && u.curFilter !== 'all' && u.curFilter !== 'safe') {
         filterSet.add(u.curFilter);
@@ -2314,12 +2314,13 @@
     updateOnlyBar();
 
     // 再套状态筛选（多选并集）：空集 = 全部不过滤；
-    // 「重复」是状态之外的维度 —— 勾了它，重复条目无论什么状态都放进结果
+    // 「重复」「未中奖」是状态之外的维度 —— 勾了它们，对应条目无论什么状态都放进结果
     let items = base;
     if (filterSet.size) {
       const dm = dupMapOf(base);
       items = items.filter(it =>
         (filterSet.has('dup') && it.origId && dm[dupKeyOf(it)] > 1)
+        || (filterSet.has('notwon') && it.won === false && !it.deleted)
         || filterSet.has(computeStatus(it).key));
     }
     items = sortItems(items.slice());
@@ -2505,6 +2506,9 @@
     { key: 'pending', label: '未开奖' },
     { key: 'needcheck', label: '结果未定' },
     { key: 'cooldown', label: '缓冲期' },
+    // 未中奖不是独立的 computeStatus 状态（横跨「缓冲期」和「建议删除」两个阶段），
+    // 匹配走「中奖结果 = false」的维度叠加（同「重复」），计数也是单独算的
+    { key: 'notwon', label: '未中奖' },
     { key: 'won', label: '已中奖' },
     // 重复：删到只剩一条后，那条就不再重复、会自动从这里消失 —— title 里说清楚，避免误以为被误删
     { key: 'dup', label: '重复', tip: '同一条抽奖你转了多次。注意：删到只剩一条后，它就不再算重复，会自动从这里消失（不是被删掉了），去「全部」里能看到它' },
@@ -2522,6 +2526,7 @@
     base.forEach(it => {
       const k = computeStatus(it).key;
       if (counts[k] !== undefined) counts[k]++;
+      if (it.won === false && !it.deleted) counts.notwon++;
       if (it.origId && dm[dupKeyOf(it)] > 1) dupN++;
     });
     counts.dup = dupN;
