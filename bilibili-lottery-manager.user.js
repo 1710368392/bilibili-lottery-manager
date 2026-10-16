@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         B站转发抽奖动态管理器
 // @namespace    https://github.com/bili-lottery-manager
-// @version      1.1.1
+// @version      1.1.3
 // @description  扫描你转发的抽奖动态，建立台账，自动判定开奖与中奖，按风险分级后手动勾选批量清理；转发时可即时录入开奖信息。删除与取关均不可撤销，脚本绝不自动执行。
 // @author       糖心月
 // @icon         data:image/png;base64,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
@@ -25,7 +25,7 @@
 (function () {
   'use strict';
 
-  const VERSION = '1.1.1';   // 与上方 @version 保持一致；设置页和诊断弹窗会显示，方便确认油猴里跑的是哪版
+  const VERSION = '1.1.3';   // 与上方 @version 保持一致；设置页和诊断弹窗会显示，方便确认油猴里跑的是哪版
 
   // OC 水印（糖心月）：160px WebP 转 base64 内嵌，约 7KB。设在「设置」页底部展示，全离线不请求外部图源
   const OC_WATERMARK = 'data:image/webp;base64,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';
@@ -52,6 +52,7 @@
     confirmBeforeDelete: true, // 删除前是否二次确认（强烈建议保持 true）
     highlightText: true,      // 正文里高亮「参与条件」（青）和「开奖奖品」（紫）
     winNotify: true,          // F7: 自动查到你中奖时发系统桌面通知（页面切后台也能收到）；关掉则完全不弹
+    pressFeedback: true,      // 卡片按压反馈：按住卡片时轻微倾斜 + 光斑跟随（上锁/已取关的卡不参与）
     appearance: 'follow'      // 外观：follow=跟随B站/系统主题，light=永远亮，dark=永远暗
   };
 
@@ -60,6 +61,10 @@
   // 已取关记录：{ upMid: 时间戳 }。取关成功后单独存一份，用来在关注页标「已取关」并默认收起，
   // 免得下次进来又勾一遍。跟台账分开存，因为它不是"某条动态"的属性，而是"某个 UP"的状态。
   const UF_KEY = 'bili_lottery_unfollowed_v1';
+  // 回收站（2026-10-17 起）：已被删除的记录单独归档在这里，不再留在主台账。
+  // 好处：① 台账体积直接减半（删过的越多越明显），面板加载更快；② 平日完全不加载 ——
+  // 只有打开回收站 / 关注页统计 / 导出备份 / 导出中奖CSV / 扫描自愈检查时才按需读取。
+  const TRASH_KEY = 'bili_lottery_trash_v1';
 
   const DAY_MS = 24 * 60 * 60 * 1000;
 
@@ -156,6 +161,17 @@
   // 整对象覆盖写入会把"别的页面在这期间新增的记录"冲掉（真丢数据）。
   // 默认改为**合并写入**：本页快照里没有、但存储里已有的条目补回来。
   // 只有"清空台账""导入备份"这类必须整体替换的操作才传 replace=true。
+  /* ---- 渲染缓存与数据版本（v1.1.3）----
+     ledgerVersion：台账内容的版本号。每次落盘（saveLedger）+1，收到其他页面的写入（watchLedger）也 +1。
+       面板「无变化秒开」靠它判断：版本没变 → 重新打开面板直接复用上一次的 DOM，不再白重建一遍。
+     aliveCountTable：「同一抽奖还有几条活着」的查表（dupKey -> 条数），由 buildAliveCountTable 构建。
+       旧实现每张未开奖卡片都要把整本台账重新反序列化 + 全表扫一遍（平方级），
+       实测 1500 条台账时单这一项就要 0.77 秒（面板"卡几秒"的最大单一来源）；
+       改成建一次表 O(N)、之后每张卡 O(1) 查询。台账一落盘就置空，下次用到时懒重建。 */
+  let ledgerVersion = 0;
+  let aliveCountTable = null;
+  let aliveCountLedger = null;   // 建表时的台账快照（用于精确处理「排除自己」）
+
   function saveLedger(l, replace) {
     try {
       if (!replace) {
@@ -164,9 +180,107 @@
       }
       lastSelfWrite = Date.now();
       GM_setValue(STORE_KEY, l);
+      ledgerVersion++;          // 数据变了（面板「无变化秒开」的判据）
+      aliveCountTable = null;   // 查表作废，下次用到时按新数据重建
+      aliveCountLedger = null;
     } catch (e) { console.error('台账保存失败', e); }
   }
   let lastSelfWrite = 0;   // 自己写入的时刻，用于忽略存储变化回调里的自触发
+
+  /* ---- 回收站（已归档记录）----
+     2026-10-17 用户需求：「已删除」重新定位为「已归档」——删过的记录不再出现在台账页，
+     统一搬到这里。数据独立存在 TRASH_KEY；【平时不加载】：台账渲染/日常操作完全不碰它，
+     只有打开回收站、关注页统计、导出备份、导出中奖CSV、扫描自愈这几个动作按需读一次。
+     恢复 = 记录搬回台账（不豁免：当普通记录对待 —— 若动态其实真没了，后续扫描会照常
+     把它再次归档）；永久抹除 = 从本地彻底删除，不可恢复。 */
+  let trashCache = null;   // 会话缓存：回收站可能几百条，避免每次用到都重读存储
+  function loadTrash() {
+    if (trashCache) return trashCache;
+    try { trashCache = GM_getValue(TRASH_KEY, {}) || {}; } catch (e) { trashCache = {}; }
+    return trashCache;
+  }
+  function saveTrash(t) {
+    trashCache = t || {};
+    try { GM_setValue(TRASH_KEY, trashCache); } catch (e) { console.error('回收站保存失败', e); }
+  }
+  function invalidateTrashCache() { trashCache = null; }
+
+  // 把「归档状态」还原成普通记录（回收站恢复 / 扫描自愈 共用）
+  function unarchiveItem(it) {
+    it.deleted = false;
+    it.missCount = 0;
+    delete it.deletedAt;
+    delete it.deletedTs;
+    delete it.deletedVia;
+  }
+
+  // 台账里所有标记为已删除的记录 → 迁入回收站。
+  // 稳妥三步：先写回收站 → 回读验证 → 再清主台账（任何一步失败：主数据原样不动、返回 0，
+  // 相当于什么都没发生）。幂等：台账里没有已删除记录时零成本返回（连回收站都不读，
+  // 守住「平时不加载」的承诺）。
+  function moveDeletedToTrash() {
+    let ledger;
+    try { ledger = GM_getValue(STORE_KEY, {}) || {}; } catch (e) { return 0; }
+    const ids = Object.keys(ledger).filter(k => ledger[k] && ledger[k].deleted);
+    if (!ids.length) return 0;
+    const trash = loadTrash();
+    ids.forEach(id => { if (!trash[id]) trash[id] = ledger[id]; });
+    try { GM_setValue(TRASH_KEY, trash); } catch (e) { return 0; }
+    let check;
+    try { check = GM_getValue(TRASH_KEY, {}) || {}; } catch (e) { return 0; }
+    if (!ids.every(id => !!check[id])) return 0;   // 没全部到账：不动主台账，下次重试
+    ids.forEach(id => { delete ledger[id]; });
+    saveLedger(ledger, true);   // 显式删条目 → 必须整体替换（合并写会把这批条目从存储里捞回来）
+    return ids.length;
+  }
+
+  // 会话内只查一次「台账里有没有遗留的已删除记录」（老数据兜底）。新产生的归档由
+  // 删除流程 / 扫描流程 / 导入流程自己搬运，不依赖这里。
+  let archiveChecked = false;
+  function maybeArchiveDeleted() {
+    if (archiveChecked) return;
+    archiveChecked = true;
+    const n = moveDeletedToTrash();
+    if (n > 0) toast('已把 ' + n + ' 条已删除记录移入「设置 → 回收站」（B站动态早已删除，这里仅保留记录）。');
+  }
+
+  // 从回收站恢复 N 条回台账（回收站「恢复」按钮 / 删除后的 5 秒撤销 共用）。
+  // 编号策略：保留原编号；若已被台账里的记录占用（扫描重排过就会遇到），清空暂标 #-，
+  // 等下次「扫描建档」统一重排时重新编号。返回 { n, cleared }。
+  function restoreFromTrash(ids) {
+    const lg = loadLedger();
+    const t = loadTrash();
+    const usedNo = new Set(Object.values(lg).map(x => x && x.no).filter(x => typeof x === 'number'));
+    let n = 0, cleared = 0;
+    ids.forEach(id => {
+      const it = t[id];
+      if (!it) return;
+      unarchiveItem(it);
+      if (typeof it.no === 'number') {
+        if (usedNo.has(it.no)) { delete it.no; cleared++; }
+        else usedNo.add(it.no);
+      }
+      lg[id] = it;
+      delete t[id];
+      n++;
+    });
+    if (n) { saveTrash(t); saveLedger(lg); }   // 台账是"加回条目"：合并写即可，不会冲掉别页新增
+    return { n, cleared };
+  }
+
+  // 回收站永久抹除（不可恢复！二次确认由调用方负责）
+  function purgeFromTrash(ids) {
+    const t = loadTrash();
+    let n = 0;
+    ids.forEach(id => { if (t[id]) { delete t[id]; n++; } });
+    if (n) saveTrash(t);
+    return n;
+  }
+
+  // 中奖数据统一来源：台账 + 回收站（「中过就是中过」——归档的中奖记录也要算/导出）
+  function allWonItems() {
+    return Object.values(loadLedger()).concat(Object.values(loadTrash())).filter(it => it.won === true);
+  }
 
   /* ---- 多标签页协作 ---- */
   // 多个网页同时开着面板时，每个页面的内存台账都是各自的快照，容易互相覆盖。
@@ -196,18 +310,22 @@
       GM_addValueChangeListener(STORE_KEY, () => {
         // 自己刚写的不算（回调会晚于写入触发）、正在操作时不打断
         if (Date.now() - lastSelfWrite < 500) return;
+        ledgerVersion++;   // 别的页面写进来的也算「数据变了」——秒开判定不能漏掉这条路
         if (busy) return;
         // 关注页不重建：那边有勾选/搜索输入/滚动位置，被一次后台写入冲掉很烦。
         // 关注页的数据只在切回它时按最新台账重算，期间不动。
         if (curTab !== 'list') return;
         renderList();
       });
+      // 回收站被别的页面改动（迁移/恢复/抹除）→ 本页的回收站会话缓存失效，下次用到时重新读
+      GM_addValueChangeListener(TRASH_KEY, () => { invalidateTrashCache(); });
     } catch (e) { /* 环境不支持就算了，不影响主功能 */ }
   }
 
-  // 给台账记录分配编号：按转发时间从旧到新递增。
-  // 编号一经分配就不再变化，所以筛选、排序、新增记录都不会让它乱跳，
-  // 你可以用「第 38 条」稳定地指代同一条动态。
+  // 给「还没有编号」的记录分配编号（只填空缺、不动已有编号）：
+  // 按转发时间从旧到新，从当前最大编号往后递增。
+  // 日常操作走它 —— 筛选、排序、新增、删除都不会让已有编号乱跳，
+  // 你可以相对稳定地用「第 38 条」指代同一条动态。
   function assignNumbers(ledger) {
     let maxNo = 0;
     Object.values(ledger).forEach(it => {
@@ -218,6 +336,16 @@
       .sort((a, b) => (a.pubTs || 0) - (b.pubTs || 0))
       .forEach(it => { it.no = ++maxNo; });
     return maxNo;
+  }
+
+  // 全量重排编号：按转发时间从旧到新，重编成连续的 1..N（消除删除留下的空号）。
+  // 只在「扫描建档」时调用 —— 2026-10-17 用户约定：删除时不实时重排（避免列表里
+  // 编号突然乱跳），扫描是用户预期会刷新数据的动作，这时统一排号。
+  // 代价：重排后旧编号的引用会失效（用户已知并接受）。
+  function renumberAll(ledger) {
+    Object.values(ledger)
+      .sort((a, b) => (a.pubTs || 0) - (b.pubTs || 0))
+      .forEach((it, i) => { it.no = i + 1; });
   }
   function loadSettings() {
     try {
@@ -398,6 +526,16 @@
           if (h >= 0 && h <= 23) { const d = new Date(res.ts); d.setHours(h, 0, 0, 0); res.ts = d.getTime(); }
         }
       }
+      // 兜底：这段窗口里实在没有时刻时，全文反查「同一天 + 紧跟时刻」的写法 ——
+      // "即日起~10月10日 14:00 关注+评论…… 10月10日开奖"：时刻写在另一个同日期实体后面
+      // （用户实报：应取 14:00，而不是默认 20:00）。只认同一天的时刻，不会拿别的日期的时间。
+      const dt = new Date(res.ts);
+      const sameDay = new RegExp('(?:0?' + (dt.getMonth() + 1) + ')\\s*月\\s*(?:0?' + dt.getDate() + ')\\s*[日号]?\\s*(\\d{1,2})\\s*[:：]\\s*(\\d{2})');
+      const sm = text.match(sameDay);
+      if (sm) {
+        const h2 = +sm[1], m2 = +sm[2];
+        if (h2 >= 0 && h2 <= 23 && m2 >= 0 && m2 <= 59) { const d2 = new Date(res.ts); d2.setHours(h2, m2, 0, 0); res.ts = d2.getTime(); }
+      }
       return res;
     };
 
@@ -449,20 +587,49 @@
         // 加分项
         if (/(开奖时间|开奖日期|开奖日|开奖|开出)\s*[：:是，,]?\s*$/.test(pre)) sc += 100;
         else if (/开奖[^，。；！？\n]{0,8}$/.test(pre)) sc += 85;
+        // "转发抽奖日期截止至X日"：抽奖字样直接挂在日期前，也是明确的开奖线索
+        // （用户实报：精零锻造 WF 那条的"（转发抽奖日期截止至10月30日）"，10月30日才是开奖日）
+        else if (/抽奖[^，。；！？\n]{0,8}$/.test(pre)) sc += 85;
         if (/^\s*[（(]?[^，。；！？\n]{0,4}开奖/.test(post)) sc += 70;
         if (/(将于|将在|定于|会在|于)\s*[：:是为]?\s*$/.test(pre)) sc += 45;
         if (/(抽取|抽出|揪出|揪|抽\s*\d+\s*[位个名]|抽一位|抽1位|锦鲤)/.test(around)) sc += 45;
+        // 日期后紧跟着「抽」（"10月9日抽：…"）—— 这个日期就是抽奖日本身，最强的写法之一。
+        // 真实案例（2026-10-12，#244 TTC 鼠标文案）："鼠标将于9月7日，全球上市……10月9日抽：5位…"，
+        // 旧版被「将于+上市」的干扰日期抢走，真正的开奖日（没有任何加分）反而落选。
+        // 负向前瞻（?!时间|日期|日）：排除"X日 开奖时间：Y日"这种 —— 这里的「开奖时间」是**下一个日期**
+        // 的前缀，不是 X 的动作（竞争用例："活动时间：9月20日-10月5日 开奖时间：10月8日"曾因此翻车）。
+        if (/^\s*[：:，,、]?\s*(抽奖|抽取|抽出|抽[：:\d\s一二两三四五六七八九十]|开奖)(?!时间|日期|日)/.test(post)) sc += 80;
         if (/(公布中奖|公布结果|公布名单|结果公布|开奖直播)/.test(around)) sc += 55;
         if (/^\s*[^，。；！？\n]{0,3}(截止|结束)/.test(post)) sc += 15;
         if (/[月.\/\-]/.test(c.raw)) sc += 10;   // 完整形态（X月X日）优于光秃秃的"8号"
 
         // 减分项：这些通常是干扰日期
-        if (/(活动时间|活动期间|活动日期|参与时间|报名|征集|投稿|开售|售卖)\s*[：:是为]?\s*$/.test(pre)) sc -= 80;
+        if (/(活动时间|活动期间|活动日期|参与时间|报名|征集|投稿|开售|售卖|预定开启时间|预定时间|预售时间|发售时间|预购时间|预售日期|发售日期|预订日期|出货日期|发货日期|开启时间)\s*[：:是为]?\s*$/.test(pre)) sc -= 80;
         if (/(购买|满赠|预售|优惠|发货|下单|折扣)[^，。；！？\n]{0,8}$/.test(pre)) sc -= 90;
-
-        // 处在时间区间里（活动时间、满赠时间那类），前后 25 字内同时出现日期和连接符就算
-        const ctx = text.slice(Math.max(0, c.idx - 25), Math.min(text.length, c.idx + c.len + 25));
-        if (/[日号]\s*[-~至到]/.test(ctx) || /\d\s*[-~至到]\s*\d/.test(ctx)) sc -= 50;
+        // 日期后紧跟「卖货/上线/发布」动作（"9月7日，全球上市"、"9月9日20:00正式开售"、"9月25日登陆三福"、
+        // "9.30 现货开售"、"9月29日19:00发布会见"、"9月29日19点，发布即开售"）——
+        // 它说的是商品/活动不是开奖：直接判死（-200），不给其它线索加分翻盘的机会。
+        // 真实案例 #81："将于9月25日登陆三福"外面还有"揪1位"（+45+45-60 就被翻盘了）。
+        // 这类句式里日期几乎不可能是开奖日，宁可不猜。时刻（20:00 / 10点）和修饰词（全平台/现货/全渠道）都要允许。
+        // "发布"要排除"发布中奖名单"这种其实在说开奖的（负向前瞻）；"直播"不能加（"开奖直播"是开奖）。
+        // 与上面两条的差别：那两条看日期「前面」，这条看日期「后面」（"X日上市"这种倒装）。
+        if (/^\s*[，,、：:•·]?\s*(?:\d{1,2}\s*[:：]\s*\d{2}\s*|\d{1,2}\s*点\s*)?(?:全球|正式|同步|重磅|全面|即将|现货|全平台|各大平台|全网|全渠道)?\s*(上市|发售|开售|开卖|首发|预售|首销|开订|预订|预定|登场|亮相|登陆|发布(?!中奖|名单|结果|获奖)|上线|开播|首播|开唱|公演|演出)/.test(post)) sc = -200;
+        // 日期后紧跟「模型比例 / 尺寸」类词（"1/12 拼装可动模型"、"8.8英寸"、"高约10.5cm"）——
+        // 数字是比例/尺寸不是日期（用户实报：大浸侯那条把 "1/12" 猜成了 1月12日、还挂了 92 天倒计时）。
+        // "比例 1/12"（pre）和"1/12 拼装"（post）两种形态都堵。
+        if (/^\s*(拼装|可动|模型|手办|雕像|公仔|积木|毛绒|挂件|比例|英寸|厘米|cm|mm)/i.test(post) || /(?:比例|scale)\s*[：:]?\s*$/i.test(pre)) sc -= 60;
+        // 日期后 40 字内出现「预定/预售/预订」—— 商品预售语境。真实案例 #APEX："9月20日20:00开启
+        // 【原神 幽夜绮想系列Q版手办 基尼奇款】预定" —— 动作词和「预定」之间隔着产品名，紧邻规则够不着。
+        // 用自切片取 40 字（post 只有 22 字窗口，够不到 28 字处的「预定」，首版就栽在这）。
+        const postLong = text.slice(c.idx + c.len, Math.min(text.length, c.idx + c.len + 40));
+        if (/^\s*[，,、：:•·]?\s*(?:\d{1,2}\s*[:：]\s*\d{2}\s*)?[^。；！？\n]{0,32}?(预定|预售|预订)/.test(postLong)) sc -= 60;
+        // 处在时间区间里（活动时间、满赠时间那类）：只有当候选自己就是区间端点（紧邻连接符）才减分 ——
+        // 旧版看 25 字窗口里出现连接符就减，会把"征集时间 9月1日至9月20日，10月1日公布结果"里的
+        // 10月1日也误伤（它离连接符隔着一整个日期），只剩 15 分被新门槛挡掉（竞争用例#8 回归）。
+        const before12 = text.slice(Math.max(0, c.idx - 12), c.idx);
+        const after12 = text.slice(c.idx + c.len, Math.min(text.length, c.idx + c.len + 12));
+        // 连接符支持破折号变体（— – － ～）；端点判定兼容纯数字形态（"2026.10.03 — 2026.10.04"没有"日"字）
+        if (/(?:\d|[日号])\s*[-~～至到—–－]\s*[^，。；！？\n]{0,6}$/.test(before12) || /^\s*[^，。；！？\n]{0,3}[-~～至到—–－]\s*\d/.test(after12)) sc -= 50;
 
         if (c.idx < text.length * 0.25 && !/开奖|抽取|揪|抽\s*\d/.test(around)) sc -= 20;         // 太靠前又没线索
 
@@ -472,8 +639,10 @@
       // ---- 第 3 步：选最高分；同分取靠后的（开奖信息通常写在文案末尾）----
       cands.sort((a, b) => (b.score - a.score) || (b.idx - a.idx));
       const best = cands[0];
-      // 分数为负 = 明显是干扰日期，宁可不猜
-      if (best.score >= 0) {
+      // 分数门槛（v1.1.3 提高）：拿不到像样的抽奖线索（≥30 分）就宁可不猜 ——
+      // 用户实报的一批「商品/活动日期被误猜」（来三福 / 预定开启 / 全平台开售）全靠
+      // "完整形态 +10" 够到旧门槛（0 分）。低分宁可标「开奖日期不明」，也不挂着错误日期。
+      if (best.score >= 30) {
         const win = text.slice(Math.max(0, best.idx - WIN), Math.min(text.length, best.idx + best.len + WIN));
         return parseTime(win, { ts: best.ts, raw: best.raw });
       }
@@ -485,13 +654,39 @@
     const rel = relativeDrawDate(text, base);
     if (rel) return rel;
     let m = text.match(/([一二三四五六七八九十\d]{1,3})\s*天(?:之后|后)/);
-    if (m) { const n = cn2num(m[1]); if (!isNaN(n)) return { ts: base + n * DAY_MS, raw: m[0] }; }
+    if (m && nearLotteryHint(text, m.index, m[0].length)) { const n = cn2num(m[1]); if (!isNaN(n)) return { ts: base + n * DAY_MS, raw: m[0] }; }
     m = text.match(/(一|1|两|二|2)\s*(?:个)?\s*周(?:之后|后)/);
-    if (m) return { ts: base + cn2num(m[1]) * 7 * DAY_MS, raw: m[0] };
+    if (m && nearLotteryHint(text, m.index, m[0].length)) return { ts: base + cn2num(m[1]) * 7 * DAY_MS, raw: m[0] };
     m = text.match(/(一|1|两|二|2|三|3)\s*个?\s*月(?:之后|后)/);
-    if (m) { const d = new Date(base); d.setMonth(d.getMonth() + cn2num(m[1])); return { ts: d.getTime(), raw: m[0] }; }
+    if (m && nearLotteryHint(text, m.index, m[0].length)) { const d = new Date(base); d.setMonth(d.getMonth() + cn2num(m[1])); return { ts: d.getTime(), raw: m[0] }; }
 
     return null;
+  }
+
+  // 猜日期用的基准时刻（相对日期"一周后"要拿谁做基准）：
+  //   ① 普通情况 → 源动态发布时间（origPubTs）："一周后"是对发起方说的，与用户何时转发无关（#108：
+  //      "一周后抽"被算成了"转发时间+7天"，晚转几天就晚几天）；
+  //   ② 加码抽奖 → 退回用户自己的转发时间（pubTs）：发起者是中途加码的那位 UP，
+  //      拿不到他的发布时间，用用户转发时间近似 —— 用户通常看到就转了，误差最小。
+  function guessBaseTs(it) {
+    if (!it) return 0;
+    if (isBoostLottery(it)) return it.pubTs;
+    return it.origPubTs || it.pubTs;
+  }
+
+  // 相对日期（明天/后天/今晚/下周五/N天后…）只在这些线索词旁边才认 ——
+  // "今晚19:00震撼发布""今晚19:00，见证口袋里的电竞新物种"这类活动/商品表述不能被当成开奖时间
+  // （用户实报：iQOO 连发的一批动态全被猜成了"今晚"）。
+  // 线索窗口：词前 6 字 + 词后 14 字；词表比 looksLikeLottery 更严（去掉"送出/福利"这类商品文案也常有的词）。
+  function nearLotteryHint(text, i, len) {
+    const win = text.slice(Math.max(0, i - 6), Math.min(text.length, i + len + 14));
+    return /(开奖|抽奖|抽取|抽出|抽中|揪|锦鲤|中奖|名单|奖品|抽\s*\d|抽一位)/.test(win);
+  }
+  // "月底"类表述用宽松一点的线索检查："预计十一月底抽"里只有一个裸"抽"字（严格词表会漏），
+  // 而"10月底结束""月底截止"这类没有抽奖字样的干扰仍然挡得住。
+  function looseLotteryHint(text, i, len) {
+    const win = text.slice(Math.max(0, i - 6), Math.min(text.length, i + len + 14));
+    return /(抽|开奖|揪|锦鲤|中奖|名单|奖品)/.test(win);
   }
 
   // 相对开奖日期：明天 / 后天 / 大后天 / 今晚 / 明晚 / 下周X / 本周X
@@ -506,21 +701,21 @@
 
     // 明晚 / 明天晚上（须在「明天」之前判断，避免被「明天」截走）
     let m = text.match(/明晚|明天晚上/);
-    if (m) { const d = new Date(base); d.setDate(d.getDate() + 1); return { ts: at2000(d.getFullYear(), d.getMonth(), d.getDate()), raw: m[0] }; }
+    if (m && nearLotteryHint(text, m.index, m[0].length)) { const d = new Date(base); d.setDate(d.getDate() + 1); return { ts: at2000(d.getFullYear(), d.getMonth(), d.getDate()), raw: m[0] }; }
     // 大后天（须在「后天」之前判断，避免被「后天」截走）
     m = text.match(/大后天/);
-    if (m) { const d = new Date(base); d.setDate(d.getDate() + 3); return { ts: at2000(d.getFullYear(), d.getMonth(), d.getDate()), raw: m[0] }; }
+    if (m && nearLotteryHint(text, m.index, m[0].length)) { const d = new Date(base); d.setDate(d.getDate() + 3); return { ts: at2000(d.getFullYear(), d.getMonth(), d.getDate()), raw: m[0] }; }
     m = text.match(/后天/);
-    if (m) { const d = new Date(base); d.setDate(d.getDate() + 2); return { ts: at2000(d.getFullYear(), d.getMonth(), d.getDate()), raw: m[0] }; }
+    if (m && nearLotteryHint(text, m.index, m[0].length)) { const d = new Date(base); d.setDate(d.getDate() + 2); return { ts: at2000(d.getFullYear(), d.getMonth(), d.getDate()), raw: m[0] }; }
     m = text.match(/明天/);
-    if (m) { const d = new Date(base); d.setDate(d.getDate() + 1); return { ts: at2000(d.getFullYear(), d.getMonth(), d.getDate()), raw: m[0] }; }
+    if (m && nearLotteryHint(text, m.index, m[0].length)) { const d = new Date(base); d.setDate(d.getDate() + 1); return { ts: at2000(d.getFullYear(), d.getMonth(), d.getDate()), raw: m[0] }; }
     // 今晚 / 今天晚上
     m = text.match(/今晚|今天晚上/);
-    if (m) { return { ts: at2000(base.getFullYear(), base.getMonth(), base.getDate()), raw: m[0] }; }
+    if (m && nearLotteryHint(text, m.index, m[0].length)) { return { ts: at2000(base.getFullYear(), base.getMonth(), base.getDate()), raw: m[0] }; }
 
     // 下周X / 本周X：以「本周一」为基准推算
     m = text.match(/(本|下)周([一二三四五六日天])/);
-    if (m && wkMap[m[2]] != null) {
+    if (m && wkMap[m[2]] != null && nearLotteryHint(text, m.index, m[0].length)) {
       const target = wkMap[m[2]];
       const dow = base.getDay();                 // 0=周日
       const mondayBased = (dow + 6) % 7;          // 周一=0 … 周日=6
@@ -530,6 +725,24 @@
       else if (delta < 0) delta += 7;             // 本周X已过去 → 视作下周，避免给出过去的时间
       const d = new Date(base); d.setDate(d.getDate() + delta);
       return { ts: at2000(d.getFullYear(), d.getMonth(), d.getDate()), raw: m[0] };
+    }
+
+    // X月底 / 月底（用户实报："下次开奖会在10月底"、"预计十一月底抽"）：
+    // 取该月最后一天 —— 10月底 → 10月31日；2月底 → 28/29 日、4月底 → 30 日，
+    // 大月小月闰年全交给 Date 自动算（new Date(y, mon+1, 0) 就是"下个月的第 0 天"= 本月最后一天），
+    // 不用逐个写死数字。裸"月底"取「原动态发起月」的月底；跨年规则与显式日期一致（早于 base 30 天以上 → 顺延一年）。
+    m = text.match(/(\d{1,2}|[一二三四五六七八九十]{1,3})\s*月\s*底/);
+    if (m && looseLotteryHint(text, m.index, m[0].length)) {
+      const mon = cnNum(m[1]) - 1;
+      if (!isNaN(mon) && mon >= 0 && mon <= 11) {
+        let d = new Date(base.getFullYear(), mon + 1, 0, 20, 0, 0);
+        if (d.getTime() < base.getTime() - 30 * DAY_MS) d = new Date(base.getFullYear() + 1, mon + 1, 0, 20, 0, 0);
+        return { ts: d.getTime(), raw: m[0] };
+      }
+    }
+    m = text.match(/月底/);
+    if (m && looseLotteryHint(text, m.index, m[0].length)) {
+      return { ts: new Date(base.getFullYear(), base.getMonth() + 1, 0, 20, 0, 0).getTime(), raw: m[0] };
     }
     return null;
   }
@@ -962,6 +1175,10 @@
       const upMid = author.mid;
       const upName = author.name || ('UP' + upMid);
       const pubTs = ((it.modules && it.modules.module_author && it.modules.module_author.pub_ts) || 0) * 1000;
+      // 源动态的发布时间：相对日期（"一周后开奖"）要拿它做基准 —— 那是对发起方而言的"一周后"，
+      // 与用户何时转发无关（用户晚转发几天，开奖日不会跟着挪，真实案例 #108）。
+      // 老版本没存这个字段，扫描时顺带补上。
+      const origPubTs = ((orig.modules && orig.modules.module_author && orig.modules.module_author.pub_ts) || 0) * 1000;
       // 加码抽奖：你自己的转发文案里可能才有真正的抽奖信息，所以两段都取、择优
       const origText = extractText(orig);
       const selfText = extractText(it);
@@ -979,7 +1196,7 @@
       const exist = ledger[dynId];
       if (!exist) {
         ledger[dynId] = {
-          dynId, origId, upMid, upName, pubTs, text,
+          dynId, origId, upMid, upName, pubTs, origPubTs, text,
           // 两段文案存全量：加码抽奖的日期常在转发文案末尾，截断会导致日期识别失准
           origText: origText || '',
           selfText: selfText || '',
@@ -999,6 +1216,7 @@
         if (!exist.upName) exist.upName = upName;
         if (!exist.pubTs) exist.pubTs = pubTs;
         if (!exist.origId) exist.origId = origId;
+        if (!exist.origPubTs && origPubTs) exist.origPubTs = origPubTs;   // 老记录补「源动态发布时间」
         // 转发数会随时间涨，每次扫描都刷新一下（老版本记录没这个字段，也会在这里补上）
         if (origForwards && exist.origForwards !== origForwards) { exist.origForwards = origForwards; fwdFixed++; }
         // 两段文案：补齐 + 用完整版重算择优。
@@ -1014,11 +1232,22 @@
       // 只对没有日期、且不是你手动确认/接口核验过的条目猜（安全：source='guess' 永不自动进删除候选）
       const rec = ledger[dynId];
       if (!rec.drawTs && rec.source !== 'user' && rec.source !== 'api' && !rec.drawUnknown) {
-        const g = guessDrawDate(rec.text, rec.pubTs);
+        const g = guessDrawDate(rec.text, guessBaseTs(rec));
         if (g) { rec.drawTs = g.ts; rec.source = 'guess'; rec.guessRaw = g.raw; }
+      } else if (rec.source === 'guess' && !rec.drawUnknown) {
+        // v1.1.3：对「脚本猜的」日期每次扫描重猜一遍 —— 识别算法在持续改进，
+        // 老记录不该一直背着旧算法的错（真实案例：把"9月7日全球上市"错猜成了开奖日）。
+        // 重猜以新算法为准：猜出日期就更新；新算法判定「不该猜」（整段没有抽奖线索、
+        // 只有商品上市日之类）就把旧的错误日期清掉，回到「开奖日期不明」，而不是继续挂着错值。
+        // 也覆盖「此前猜不出来」（drawTs 为空）的情形 —— text 后来更新了，有可能这次能猜出来。
+        // 手动填的（source='user'）永远不动。
+        // 基准用源动态发布时间（origPubTs）：「一周后开奖」是对发起方而言的一周后（#108）。
+        const g2 = guessDrawDate(rec.text, guessBaseTs(rec));
+        if (g2) { rec.drawTs = g2.ts; rec.guessRaw = g2.raw; }
+        else if (rec.drawTs) { rec.drawTs = null; rec.guessRaw = null; }
       }
     }
-    assignNumbers(ledger);   // 新扫描进来的记录在这里拿到编号
+    renumberAll(ledger);   // 扫描建档 = 统一重排编号的时机（删除留下的空号在这里消掉，重编 1..N）
     saveLedger(ledger);
 
     // 删除状态同步：你在 B 站网页手动删掉的动态不会再出现在列表里，
@@ -1075,18 +1304,27 @@
         results.push(id6 + ':比列表最旧的动态还老，需再扫描一次确认');
       }
     }
-    // 自愈：sync 标删的条目这次又出现在列表里 → 撤销删除标记（手动删的真删条目不会出现，不受影响）
+    // 自愈：sync 标删的条目这次又出现在列表里 → 撤销删除标记（手动删的真删条目不会出现，不受影响）。
+    // 2026-10-17 起这些条目可能已被搬进回收站 —— 一并检查，重新出现就从回收站搬回台账。
     let revived = 0;
-    Object.values(ledger).forEach(it => {
+    const t = loadTrash();
+    let trashDirty = false;
+    Object.values(ledger).concat(Object.values(t)).forEach(it => {
       if (it.deleted && it.deletedVia === 'sync' && it.dynId && seenIds.has(it.dynId)) {
-        it.deleted = false;
-        it.missCount = 0;
-        delete it.deletedTs;
+        unarchiveItem(it);
+        if (t[it.dynId] === it) {   // 它在回收站里 → 搬回台账
+          ledger[it.dynId] = it;
+          delete t[it.dynId];
+          trashDirty = true;
+        }
         revived++;
         results.push((it.dynId || '').slice(-6) + ':重新出现，已恢复');
       }
     });
+    if (trashDirty) saveTrash(t);
     saveLedger(ledger);
+    // 本次判定删除的条目搬进回收站 —— 台账页不再出现「已删除」，它们统一去回收站候着
+    moveDeletedToTrash();
     return { missing: missing.length, confirmed, pending, revived, results, skipped: null };
   }
 
@@ -1191,7 +1429,7 @@
         it.official = false;
         // 用户没手动确认过时，才用文案猜测补一个预估值
         if (it.source !== 'user') {
-          const g = guessDrawDate(it.text, it.pubTs);
+          const g = guessDrawDate(it.text, guessBaseTs(it));   // 相对日期以源动态发布时刻为基准（#108）
           if (g) { it.drawTs = g.ts; it.source = 'guess'; it.guessRaw = g.raw; }
         }
         fail++;
@@ -1212,8 +1450,8 @@
     /* ============ 主题 token：亮色（默认） ============ */
     /* #blm-detailbox / #blm-diag 是挂在 body 上的弹窗，不在面板里，必须一并进变量作用域，
        否则 background:var(--blm-bg) 取不到值 → 整个弹窗透明（2026-10-10 用户实测踩坑）。
-       #blm-prizebox 同理 —— 新增挂 body 的弹窗时必须一并加进这两行选择器（2026-10-11 记奖品弹窗透明复踩） */
-    #blm-panel,#blm-fab,#blm-float,#blm-detailbox,#blm-diag,#blm-stmenu,#blm-prizebox{
+       #blm-prizebox / #blm-trashbox 同理 —— 新增挂 body 的弹窗时必须一并加进这两行选择器（2026-10-11 记奖品弹窗透明复踩） */
+    #blm-panel,#blm-fab,#blm-float,#blm-detailbox,#blm-diag,#blm-stmenu,#blm-prizebox,#blm-trashbox{
       --blm-bg:#ffffff; --blm-bg2:#f6f7f8; --blm-bg3:#fafbfc;
       --blm-text:#18191c; --blm-text2:#61666d; --blm-text3:#9499a0; --blm-text4:#c9ccd0;
       --blm-border:#e3e5e7; --blm-border2:#f1f2f3; --blm-shadow:rgba(0,0,0,.18);
@@ -1226,9 +1464,12 @@
       --blm-dup-bg:#FBEAF0; --blm-dup-text:#993556;
       --blm-amber-bg:#FFF0BF; --blm-amber:#FFD97D; --blm-amber-text:#8A6100; --blm-amber-bg-hover:#FFE9A8;
       --blm-amber-conf-bg:#FFE2D1; --blm-amber-conf2:#FFC09E; --blm-amber-conf-text:#8C4A22;
+      --blm-press-glow:rgba(251,114,153,.16);   /* 按压光斑（亮色：淡粉） */
+      --blm-tilt:3.2;                           /* 按压倾斜上限（度）—— 封顶保证文字不糊 */
+      --blm-skel-sweep:rgba(255,255,255,.75);   /* 骨架屏扫光（亮色：白亮条） */
     }
     /* ============ 主题 token：暗色（body.blm-dark 时生效） ============ */
-    body.blm-dark #blm-panel, body.blm-dark #blm-fab, body.blm-dark #blm-float, body.blm-dark #blm-detailbox, body.blm-dark #blm-diag, body.blm-dark #blm-stmenu, body.blm-dark #blm-prizebox{
+    body.blm-dark #blm-panel, body.blm-dark #blm-fab, body.blm-dark #blm-float, body.blm-dark #blm-detailbox, body.blm-dark #blm-diag, body.blm-dark #blm-stmenu, body.blm-dark #blm-prizebox, body.blm-dark #blm-trashbox{
       --blm-bg:#18191c; --blm-bg2:#1e2022; --blm-bg3:#232428;
       --blm-text:#e3e5e7; --blm-text2:#9499a0; --blm-text3:#6b7075; --blm-text4:#565a5f;
       --blm-border:#2f3235; --blm-border2:#26282b; --blm-shadow:rgba(0,0,0,.5);
@@ -1241,12 +1482,50 @@
       --blm-dup-bg:#3a1d2e; --blm-dup-text:#ff9ec4;
       --blm-amber-bg:#4a3a17; --blm-amber:#6b4f1f; --blm-amber-text:#ffd97d; --blm-amber-bg-hover:#5c4a1f;
       --blm-amber-conf-bg:#4a2a1f; --blm-amber-conf2:#6b3f2f; --blm-amber-conf-text:#ffc09e;
+      --blm-press-glow:rgba(251,114,153,.18);   /* 按压光斑（暗色：亮一点的粉，暗背景上才看得见） */
+      --blm-skel-sweep:rgba(255,255,255,.07);   /* 骨架屏扫光（暗色：只留一点点微光，别刺眼） */
     }
 
     #blm-fab{position:fixed;right:24px;bottom:24px;z-index:2147483000;width:52px;height:52px;
       border-radius:26px;background:#FB7299;color:#fff;border:none;cursor:pointer;
       font-size:13px;line-height:52px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.22);
       font-family:-apple-system,"Microsoft YaHei",sans-serif;}
+    /* ===== 打开面板的加载反馈（v1.1.3）=====
+       点击小圆球到内容渲染出来之间有一段同步重活（读台账、重建几百张卡），
+       这段时间里要有可见的「在加载」信号：① FAB 外圈转一个进度环；② 面板里先铺骨架卡。
+       两个动画都只用 transform / opacity —— 会被浏览器提到合成层，
+       主线程忙着渲染时它们也照常动（这是「还活着」的关键信号）。
+       prefers-reduced-motion 下全部禁用。 */
+    #blm-fab .blm-fabring{position:absolute;left:50%;top:50%;width:66px;height:66px;margin:-33px 0 0 -33px;
+      pointer-events:none;opacity:0;transition:opacity .18s ease;}
+    #blm-fab.blm-loading .blm-fabring{opacity:1;animation:blm-ringspin .9s linear infinite;will-change:transform;}
+    .blm-fabring svg{display:block;width:100%;height:100%;}
+    .blm-fabring .trk{fill:none;stroke:rgba(251,114,153,.28);stroke-width:3;}
+    .blm-fabring .arc{fill:none;stroke:#FB7299;stroke-width:3;stroke-linecap:round;stroke-dasharray:47 142;}
+    @keyframes blm-ringspin{to{transform:rotate(360deg);}}
+    /* 骨架屏：点开后立刻铺几行「占位卡」，形状像真卡片但不刺眼。
+       淡入很轻（.16s）—— 渲染快时骨架还没透出来就被真内容替换，几乎无感，不会「白闪一下」。 */
+    .blm-skel{padding:2px 0;animation:blm-skel-in .16s ease-out;}
+    @keyframes blm-skel-in{from{opacity:0;}to{opacity:1;}}
+    .blm-skel-card{border:1px solid var(--blm-border);border-radius:8px;padding:13px 12px 5px;margin-bottom:8px;
+      background:var(--blm-bg);}
+    .blm-skel-line{height:11px;border-radius:6px;background:var(--blm-bg3);margin-bottom:9px;
+      position:relative;overflow:hidden;}
+    .blm-skel-line::after,.blm-skel-chip::after{content:'';position:absolute;top:0;bottom:0;left:0;width:70%;
+      background:linear-gradient(90deg,transparent,var(--blm-skel-sweep,rgba(255,255,255,.75)),transparent);
+      transform:translateX(-100%);animation:blm-skel-sweep 1.3s ease-in-out infinite;}
+    @keyframes blm-skel-sweep{to{transform:translateX(230%);}}
+    .blm-skel-line.w1{width:46%;}
+    .blm-skel-line.w2{width:92%;}
+    .blm-skel-line.w3{width:71%;}
+    .blm-skel-chips{display:flex;gap:6px;margin-bottom:9px;}
+    .blm-skel-chip{width:52px;height:17px;border-radius:5px;background:var(--blm-bg3);
+      position:relative;overflow:hidden;}
+    @media (prefers-reduced-motion: reduce){
+      #blm-fab.blm-loading .blm-fabring{animation:none;}
+      .blm-skel{animation:none;}
+      .blm-skel-line::after,.blm-skel-chip::after{animation:none;opacity:.3;}
+    }
     #blm-panel{position:fixed;right:20px;top:80px;bottom:40px;width:460px;z-index:2147483001;
       background:var(--blm-bg);border:1px solid var(--blm-border);border-radius:12px;display:none;flex-direction:column;
       box-shadow:0 8px 32px rgba(0,0,0,.18);font-family:-apple-system,"Microsoft YaHei",sans-serif;
@@ -1267,8 +1546,43 @@
     .blm-btn:disabled{opacity:.45;cursor:not-allowed;}
     .blm-btn.danger{background:#E24B4A;color:#fff;border-color:#E24B4A;}
     .blm-item{border:1px solid var(--blm-border);border-radius:8px;padding:9px 46px 9px 10px;margin-bottom:8px;
-      display:flex;gap:9px;background:var(--blm-bg);position:relative;overflow:hidden;}
+      display:flex;gap:9px;background:var(--blm-bg);position:relative;overflow:hidden;transform-style:preserve-3d;}
     .blm-item.locked{background:var(--blm-bg3);}
+    /* ===== 按压反馈（v1.0.2）：按住卡片时按触点位置轻微倾斜 + 光斑跟随 =====
+       做对的几个点：
+       1) 卡片是平面，用 perspective(600px) 给「镜头距离」，rotateX/Y 就有纵深；不需要给子元素单独抬 3D 层
+          （单独抬层反而会让文字边缘发虚）。
+       2) 文字清晰：倾斜幅度封顶（--blm-tilt ≤5°），不用 blur / 不用 scale 拉伸。
+       3) overflow:hidden 已在外层，光斑（伪元素）会被自动裁进圆角内，不用额外 mask。
+       「弹性复原」用 cubic-bezier 的回弹曲线（松手时 transform 回到 identity + 轻微过冲）。
+       will-change 只在按下期间挂（.blm-press），平时不挂 —— 避免几十张卡长期占合成层。 */
+    /* 光斑：跟随触点的柔和径向渐变。--px/--py 由 JS 打点（百分比）。 */
+    .blm-item::after{content:'';position:absolute;inset:0;pointer-events:none;opacity:0;
+      background:radial-gradient(circle 120px at var(--px,50%) var(--py,50%),
+        var(--blm-press-glow, rgba(251,114,153,.16)), transparent 70%);
+      transition:opacity .22s ease;}
+    /* 按下态：透视 + 倾斜 + 光斑显出。过渡快（跟手），松开时才走回弹曲线。 */
+    .blm-item.blm-press{will-change:transform;
+      transform:perspective(600px)
+        rotateX(calc(var(--ty,0) * 1deg)) rotateY(calc(var(--tx,0) * 1deg));
+      transition:transform .09s ease-out;
+    }
+    .blm-item.blm-press::after{opacity:1;transition:opacity .12s ease;}
+    /* 松手 / 取消：弹性复原（回弹曲线带来「弹回去」的手感） */
+    .blm-item.blm-release{transition:transform .42s cubic-bezier(.34,1.4,.64,1);}
+    .blm-item.blm-release::after{opacity:0;transition:opacity .3s ease;}
+    /* 上锁 / 已取关的卡片不参与按压反馈 —— 不可交互的卡给动效 = 假可点，误导。
+       JS 侧也会跳过这两个状态（见 bindCardPressFeedback），这里是 CSS 侧的兜底。 */
+    .blm-item.locked,.blm-item.blm-nopress{transform:none !important;}
+    .blm-item.locked::after,.blm-item.blm-nopress::after{opacity:0 !important;}
+    /* 按住期间禁掉文本选择（否则拖动时会顺手选中一片正文，又花又留选区） */
+    #blm-panel.blm-pressing .blm-body{user-select:none;-webkit-user-select:none;}
+    /* 尊重系统「减弱动态效果」偏好：直接不做，别硬塞动画 */
+    @media (prefers-reduced-motion: reduce){
+      .blm-item,.blm-item::after{transition:none !important;}
+      .blm-item.blm-press{transform:none !important;}
+      .blm-item.blm-press::after{opacity:0 !important;}
+    }
     /* 抽奖书签：卡在卡片左下角的双层折角，直角朝左下。文字必须抬到伪元素之上，否则会被盖住 */
     .blm-bm{position:absolute;left:0;bottom:0;width:52px;height:52px;pointer-events:none;
       background:var(--blm-amber-bg);clip-path:polygon(0 0, 0 100%, 100% 100%);}
@@ -1366,18 +1680,26 @@
       width:18px;height:18px;border:none;border-radius:50%;background:var(--blm-border);color:var(--blm-text2);
       font-size:12px;line-height:1;cursor:pointer;padding:0;flex:none;}
     #blm-sclear:hover{background:#FB7299;color:#fff;}
-    .blm-bar2{display:flex;gap:6px;align-items:center;padding:7px 12px;border-bottom:1px solid var(--blm-border2);flex-wrap:wrap;}
-    /* 工具栏里的按钮更紧凑，好让「全选」两个按钮塞得下 */
-    .blm-bar2 .blm-btn{padding:4px 8px;font-size:11px;}
+    /* 排序行布局（2026-10-17 用户反馈「排序按钮有时被挤换行」后重构）：
+       实测 460px 面板里整行元素需求宽 453px、可用仅 436px —— 旧写法把 5 个元素平铺 + wrap，
+       放不下时行末的排序方向按钮就被挤进第二行。现在分两区：
+       左区 .blm-bar2-tools 装筛选控件（照旧自由换行），排序按钮用 flex:none 钉在行右侧，
+       左区再怎么换行都影响不到它。 */
+    .blm-bar2{display:flex;gap:6px;align-items:center;padding:7px 12px;border-bottom:1px solid var(--blm-border2);}
+    .blm-bar2-tools{flex:1;min-width:0;display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+    #blm-sortdir{flex:none;}
+    /* 工具栏里的按钮更紧凑（内边距各收 2px）：把整行需求宽压到 ~425px，
+       给「全选 / 可删」留出余量，不让整行贴着换行临界线走 */
+    .blm-bar2 .blm-btn{padding:4px 6px;font-size:11px;}
     /* 按钮内的勾选框（「全选/可删」的状态指示） */
     .blm-bar2 .blm-btn{display:inline-flex;align-items:center;gap:4px;}
     .blm-bar2 .blm-btn .blm-ck{width:12px;height:12px;}
     .blm-bar2 .blm-btn .blm-ck.on::after{left:3px;top:1px;width:2px;height:6px;}
     /* 「可删」按钮上的数字徽标：主色 = 零风险候选数；灰 = 带⚠️候选数 */
     .blm-bar2 .blm-badge{min-width:14px;padding:1px 5px;border-radius:8px;background:var(--blm-primary,#FB7299);color:#fff;font-size:10px;font-weight:700;line-height:1.4;text-align:center;}
-    #blm-sort{padding:4px 6px;border:1px solid var(--blm-border);border-radius:6px;font-size:12px;color:var(--blm-text2);background:var(--blm-bg);font-family:inherit;}
+    #blm-sort{padding:4px 4px;border:1px solid var(--blm-border);border-radius:6px;font-size:12px;color:var(--blm-text2);background:var(--blm-bg);font-family:inherit;}
     .blm-seg{display:flex;border:1px solid var(--blm-border);border-radius:6px;overflow:hidden;}
-    .blm-seg button{border:none;background:var(--blm-bg);padding:4px 9px;font-size:11px;color:var(--blm-text2);cursor:pointer;
+    .blm-seg button{border:none;background:var(--blm-bg);padding:4px 7px;font-size:11px;color:var(--blm-text2);cursor:pointer;
       border-right:1px solid var(--blm-border2);font-family:inherit;}
     .blm-seg button:last-child{border-right:none;}
     .blm-seg button:hover{color:#FB7299;}
@@ -1562,8 +1884,16 @@
 
   const fab = document.createElement('button');
   fab.id = 'blm-fab';
-  fab.textContent = '抽奖';
   fab.title = 'B站转发抽奖动态管理器';
+  // 环绕进度环（打开面板的加载反馈）：外层 span 负责旋转（HTML 元素上的 transform 动画
+  // 会被提到合成层，主线程忙着渲染时也照转），里层 SVG 只负责画「轨道 + 四分之一弧」。
+  // 用 innerHTML 一次注入（不用 createElementNS —— 顺带让测试的 mock 环境也能跑）。
+  fab.innerHTML = '抽奖'
+    + '<span class="blm-fabring" aria-hidden="true">'
+    + '<svg viewBox="0 0 66 66">'
+    + '<circle class="trk" cx="33" cy="33" r="30"></circle>'
+    + '<circle class="arc" cx="33" cy="33" r="30"></circle>'
+    + '</svg></span>';
   document.body.appendChild(fab);
   applyFabVisibility();
 
@@ -1580,21 +1910,23 @@
       <button data-tab="set">设置</button>
     </div>
     <div class="blm-bar" id="blm-bar">
-      <button class="blm-btn" id="blm-scan">扫描建档</button>
+      <button class="blm-btn" id="blm-scan" title="读取你全部的转发动态，建立台账（已有记录会按转发时间统一重排编号）">扫描建档</button>
       <button class="blm-btn" id="blm-verify">核验开奖状态</button>
       <span class="blm-searchwrap"><input id="blm-search" placeholder="搜 UP 主 / 正文关键词" autocomplete="off"><button id="blm-sclear" title="退出检索：清空搜索词 + 取消「只看 UP」（也可在搜索框里按 Esc）" style="display:none">×</button></span>
     </div>
     <div class="blm-bar2" id="blm-bar2">
-      <select id="blm-sort" title="排序方式">
-        <option value="pub">按转发时间</option>
-        <option value="draw">按开奖时间</option>
-      </select>
-      <span class="blm-seg" id="blm-types">
-        <button data-type="all" class="on">全部</button><button data-type="official">官方</button><button data-type="self">自发</button><button data-type="other" title="类型还没核验判定过的 + 加码抽奖（转发链上游另一位 UP 加码开的奖）">其他</button>
-      </span>
-      <button class="blm-btn" id="blm-sel-cur" title="勾选当前筛选结果里所有可以删的条目"><span class="blm-ck"></span>全选</button>
-      <button class="blm-btn" id="blm-sel-all" title="一键勾选当前筛选结果里零风险的删除候选（官方已确认未中奖等）；在「重复」筛选下则按保底规则勾选每组多余条目"><span class="blm-ck"></span>可删</button>
-      <button class="blm-iconbtn" id="blm-sortdir" title="切换正序 / 倒序" style="margin-left:auto">
+      <div class="blm-bar2-tools">
+        <select id="blm-sort" title="排序方式">
+          <option value="pub">按转发时间</option>
+          <option value="draw">按开奖时间</option>
+        </select>
+        <span class="blm-seg" id="blm-types">
+          <button data-type="all" class="on">全部</button><button data-type="official">官方</button><button data-type="self">自发</button><button data-type="other" title="类型还没核验判定过的 + 加码抽奖（转发链上游另一位 UP 加码开的奖）">其他</button>
+        </span>
+        <button class="blm-btn" id="blm-sel-cur" title="勾选当前筛选结果里所有可以删的条目"><span class="blm-ck"></span>全选</button>
+        <button class="blm-btn" id="blm-sel-all" title="一键勾选当前筛选结果里零风险的删除候选（官方已确认未中奖等）；在「重复」筛选下则按保底规则勾选每组多余条目"><span class="blm-ck"></span>可删</button>
+      </div>
+      <button class="blm-iconbtn" id="blm-sortdir" title="切换正序 / 倒序">
         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4v16"/><path d="M4 17l3 3 3-3"/><path d="M17 20V4"/><path d="M14 7l3-3 3 3"/></svg>
       </button>
     </div>
@@ -1641,6 +1973,11 @@
   let curPage = 0;                // 当前页码（从 0 开始）
   let lastListCtx = '';           // 上次渲染的筛选上下文签名，变了就跳回第 1 页
   let resetScroll = false;        // 翻页后把列表滚回顶部
+  // 程序化设置 scrollTop（渲染后恢复位置 / 翻页回顶）会派发 scroll 事件，
+  // 而那个监听器负责「滚动时淡出筛选条/分页条」—— 于是点筛选器或翻页时：
+  // 卡片重建 → scrollTop 被程序化写回 → 误判为"用户在滚动" → chips/pagebar 收起 → 300ms 后又复位。
+  // 这就是用户实测的「卡顿一下、收起又复位」。用它把这一小段程序化滚动标记出来，滚动监听里跳过。
+  let programmaticScroll = false;
   let followDaysFilter = '';
   let followShowUnfollowed = false;   // 关注页：是否把「已取关」的 UP 也列出来（默认收起）
   let followSearch = '';              // 关注页：昵称 / UID 搜索
@@ -1672,7 +2009,7 @@
       const u = GM_getValue(UI_KEY, null) || {};
       // 筛选多选化（存数组）；兼容旧单选字符串：'all'/'safe'（已移除）→ 空集，其余收进集合
       if (Array.isArray(u.curFilter)) {
-        const VALID = ['unknown', 'pending', 'needcheck', 'cooldown', 'notwon', 'won', 'dup', 'deleted'];
+        const VALID = ['unknown', 'pending', 'needcheck', 'cooldown', 'notwon', 'won', 'dup'];
         u.curFilter.forEach(k => { if (VALID.indexOf(k) >= 0) filterSet.add(k); });
       } else if (u.curFilter && u.curFilter !== 'all' && u.curFilter !== 'safe') {
         filterSet.add(u.curFilter);
@@ -1858,6 +2195,56 @@
     return '这条当前不允许删除，点一下可临时解锁';
   }
 
+  // 「已选 N 条」里有多少条不在当前筛选结果里（跨筛选勾选 / 操作后被踢出视图的）。
+  // 数字不为 0 时在底栏披露出来 —— 用户报过"勾着卡改了开奖日期，卡片从筛选里消失、
+  // 勾选却看不见也取消不掉"的困惑；至少让"有 X 条在别处"这件事可见。
+  function countHiddenSelection(items) {
+    if (!selected.size) return 0;
+    const vis = new Set();
+    items.forEach(x => vis.add(x.dynId));
+    let n = 0;
+    selected.forEach(id => { if (!vis.has(id)) n++; });
+    return n;
+  }
+  // 底栏文案统一在这里拼：显示条数 + 已选数（附带"不在当前筛选"的披露）
+  function updateProgText(items) {
+    const prog = document.getElementById('blm-prog');
+    if (!prog) return;
+    const hidden = countHiddenSelection(items);
+    prog.textContent = '显示 ' + items.length + ' 条，已选 ' + selected.size + ' 条'
+      + (hidden ? '（' + hidden + ' 条不在当前筛选）' : '');
+  }
+  // 操作（改开奖日期 / 改状态）把一条动态「踢出当前筛选视图」时，把它的勾选也摘掉 ——
+  // 否则它会占着「已选 N 条」的坑：看不见、也取消不掉，还可能被「删除选中」连带删掉（用户实测）。
+  // 判定直接用刚重渲染完的 curItems（"当前筛选结果"本身），任何筛选维度（状态/时间/搜索/重复）都自然覆盖。
+  // 只作用于「刚被操作的那一条」—— 用户主动跨筛选勾选的条目不受影响。
+  function dropSelectionIfGone(dynId) {
+    if (!selected.has(dynId)) return false;
+    if (curItems.some(x => x.dynId === dynId)) return false;
+    selected.delete(dynId);
+    refreshSelCounts(curItems);   // 底部计数 / 删除按钮 / 文案跟着更新
+    toast('这条已不在当前筛选里，勾选已自动取消');
+    return true;
+  }
+
+  // 「行消失补偿」：改日期 / 改状态让一张卡片离开列表时，把滚动位置回退它的一格高度 ——
+  // 否则它下方的内容会整体上移，用户会觉得"页面莫名往下跳了一段"（用户实测）。
+  // 用法：操作前 captureRowAnchor(dynId) 记下卡片高度，渲染后 compensateRowGone(dynId, anchor)。
+  // 卡片还在（原地刷新 / 仍在筛选里）就不动 —— 那是排序变化或内容微调，不补偿更自然。
+  function captureRowAnchor(dynId) {
+    const bodyEl = document.getElementById('blm-body');
+    const row = bodyEl && bodyEl.querySelector ? bodyEl.querySelector('.blm-item[data-dyn="' + dynId + '"]') : null;
+    if (!row || typeof row.getBoundingClientRect !== 'function') return null;   // mock / 罕见环境：定位不了就不补偿
+    return { h: row.getBoundingClientRect().height + 8 };   // +8 = 卡片间距（.blm-item margin-bottom）
+  }
+  function compensateRowGone(dynId, anchor) {
+    if (!anchor) return;
+    const bodyEl = document.getElementById('blm-body');
+    if (!bodyEl || !bodyEl.querySelector) return;
+    if (bodyEl.querySelector('.blm-item[data-dyn="' + dynId + '"]')) return;   // 卡片还在：不补偿
+    bodyEl.scrollTop = Math.max(0, bodyEl.scrollTop - anchor.h);
+  }
+
   // 顶/底栏计数刷新（renderListInner 与原地更新共用）：底部条数、删除按钮、全选/可删两个开关
   function refreshSelCounts(items) {
     const delBtn = document.getElementById('blm-del');
@@ -1910,6 +2297,7 @@
           : '一键勾选当前筛选结果里零风险的删除候选（官方已确认未中奖等，当前 ' + targets.length + ' 条）';
       }
     }
+    updateProgText(items);   // 底栏「显示 X 条，已选 N 条（含 X 条不在当前筛选）」统一在这里刷新
   }
 
   // 原地刷新一张卡片的锁/勾选视觉 + 顶/底栏计数 —— 不走 renderList 全量重建。
@@ -1976,9 +2364,13 @@
         extra += '<span class="blm-chip' + clickCls + '" style="background:var(--blm-ok-bg);color:var(--blm-ok-text)"' + editAttr
           + ' title="' + fmtTime(it.drawTs) + ' 开奖' + (gateOpen ? '，点击修改开奖时间' : hint) + '">' + resTxt + ' · ' + relTime(it.drawTs) + '</span>';
       } else {
+        // 已删除的条目不会再开奖，倒计时没有意义 —— 不挂 data-ts、不进每秒刷新队列
+        // （用户实报：清理重复删掉的条目还在跑 92 天倒计时）。数字停在渲染时刻即可。
+        const cd = it.deleted
+          ? fmtCountdown(it.drawTs - now)
+          : '<span class="blm-count" data-ts="' + it.drawTs + '">' + fmtCountdown(it.drawTs - now) + '</span>';
         extra += '<span class="blm-chip' + clickCls + '" style="background:var(--blm-warn-bg);color:var(--blm-warn-text)"' + editAttr
-          + ' title="' + fmtTime(it.drawTs) + ' 开奖' + (gateOpen ? '，点击修改开奖时间' : hint) + '">开奖 · <span class="blm-count" data-ts="' + it.drawTs + '">'
-          + fmtCountdown(it.drawTs - now) + '</span></span>';
+          + ' title="' + fmtTime(it.drawTs) + ' 开奖' + (gateOpen ? '，点击修改开奖时间' : hint) + '">开奖 · ' + cd + '</span>';
       }
     } else {
       extra += '<span class="blm-chip' + clickCls + '" style="background:var(--blm-grey-bg);color:var(--blm-grey-text)"' + editAttr
@@ -2082,15 +2474,27 @@
     if (!refreshRowState(dynId)) renderList();   // 卡片不在当前页（罕见）才全量重建
   }
 
-  // 同一个抽奖（原动态+发起者）在台账里还有几条活着的（未删除）
-  function groupAliveCount(it, excludeId) {
-    const k = dupKeyOf(it);
-    let n = 0;
-    Object.values(loadLedger()).forEach(o => {
+  // 同一个抽奖（原动态+发起者）在台账里还有几条活着的（未删除）。
+  // v1.1.3：从「每问一次就整表重扫」改成查表 —— 动机与数据结构见 aliveCountTable 的声明注释。
+  function buildAliveCountTable(ledger) {
+    const lg = (aliveCountLedger = ledger || loadLedger());
+    const t = (aliveCountTable = {});
+    Object.values(lg).forEach(o => {
       if (o.deleted || !o.origId) return;
-      if (excludeId && o.dynId === excludeId) return;
-      if (dupKeyOf(o) === k) n++;
+      const k = dupKeyOf(o);
+      t[k] = (t[k] || 0) + 1;
     });
+  }
+  function groupAliveCount(it, excludeId) {
+    if (!aliveCountTable) buildAliveCountTable();
+    const k = dupKeyOf(it);
+    let n = aliveCountTable[k] || 0;
+    // 排除某条（调用方固定传「它自己」）：该条若在表里（未删除 + 有源头 + 同组），计数减 1。
+    // 优先按台账键查（台账以 dynId 为键）；键对不上时退回用 it 自身判断，避免多算一条。
+    if (excludeId) {
+      const ex = aliveCountLedger[excludeId] || (it && it.dynId === excludeId ? it : null);
+      if (ex && !ex.deleted && ex.origId && dupKeyOf(ex) === k) n--;
+    }
     return n;
   }
 
@@ -2217,6 +2621,117 @@
       const di = e.target.closest('#blm-uf-days');
       if (di) { followDaysFilter = di.value; renderList(); }
     });
+  }
+
+  /* ---- 卡片按压反馈（v1.0.2）：按住时轻微倾斜 + 光斑跟随，松开弹性复原 ----
+     设计取舍：
+     - 只在「按下」期间给动效（不是 hover）—— 鼠标划过时卡片完全静止，不和阅读 / 滚动抢注意力。
+     - 倾斜方向和幅度由触点在卡片内的相对位置决定，离中心越远倾斜越大（封顶 --blm-tilt 度）。
+     - 上锁 / 已取关的卡片跳过：它们不可交互，给动效会让人误以为能点。
+     - 大面积委托到 body 一次绑定，卡片全量重建也不用重挂。
+     - 节流用 requestAnimationFrame：pointermove 触发频率远高于帧率，不节流会让几十张卡疯狂写样式。 */
+  let pressCard = null;         // 当前被按住的卡片
+  let pressRaf = 0;             // rAF 句柄
+  let pressPoint = null;        // 最近一次触点（页面坐标），rAF 里消费
+  // 设置保存后的回调钩子（按压反馈等需要「改完即时生效」的功能挂在这）
+  const settingsChangedHooks = [];
+  // 是不是「不可按压」的卡片：上锁的（.locked）/ 显式标了 .blm-nopress 的（已取关等）
+  function isNoPressCard(card) {
+    return !card || card.classList.contains('locked') || card.classList.contains('blm-nopress');
+  }
+  // 根据触点算倾斜角：把卡片中心当原点，(x,y) 相对中心的比值 → 角度参考。
+  // 上限读 CSS 变量 --blm-tilt（默认 3.2），保证文字清晰不糊。
+  function applyPressTilt() {
+    pressRaf = 0;
+    if (!pressCard || !pressPoint) return;
+    const r = pressCard.getBoundingClientRect();
+    if (!r.width || !r.height) return;
+    const nx = (pressPoint.x - r.left) / r.width - 0.5;    // -0.5 ~ 0.5
+    const ny = (pressPoint.y - r.top) / r.height - 0.5;
+    const max = parseFloat(getComputedStyle(pressCard).getPropertyValue('--blm-tilt')) || 3.2;
+    // 光斑位置（百分比，给 radial-gradient 的 --px/--py）
+    pressCard.style.setProperty('--px', ((nx + 0.5) * 100).toFixed(1) + '%');
+    pressCard.style.setProperty('--py', ((ny + 0.5) * 100).toFixed(1) + '%');
+    // 倾斜：鼠标在右下 → 卡片右下「沉」下去（rotateY 正、rotateX 负）
+    pressCard.style.setProperty('--tx', (nx * 2 * max).toFixed(2));
+    pressCard.style.setProperty('--ty', (-ny * 2 * max).toFixed(2));
+  }
+  function schedulePressTilt(e) {
+    pressPoint = { x: e.clientX, y: e.clientY };
+    if (!pressRaf) pressRaf = requestAnimationFrame(applyPressTilt);
+  }
+  function endPress(animate) {
+    if (!pressCard) return;
+    if (pressRaf) { cancelAnimationFrame(pressRaf); pressRaf = 0; }
+    panel.classList.remove('blm-pressing');   // 恢复文本选择
+    const card = pressCard;
+    pressCard = null; pressPoint = null;
+    if (animate === false) {   // 卡片即将被重建，不用等动画，直接清干净
+      card.classList.remove('blm-press', 'blm-release');
+      card.style.removeProperty('--tx'); card.style.removeProperty('--ty');
+      card.style.removeProperty('--px'); card.style.removeProperty('--py');
+      return;
+    }
+    // 松手：先摘 .blm-press（去掉倾斜），再挂 .blm-release 走回弹曲线复位的过渡
+    card.classList.remove('blm-press');
+    card.classList.add('blm-release');
+    card.style.removeProperty('--tx'); card.style.removeProperty('--ty');
+    // 过渡结束后把 release 也摘掉，避免下次按下时残留 transition 拖慢响应
+    setTimeout(() => {
+      card.classList.remove('blm-release');
+      card.style.removeProperty('--px'); card.style.removeProperty('--py');
+    }, 460);
+  }
+  function bindCardPressFeedback() {
+    const body = document.getElementById('blm-body');
+    if (!body) return;
+    // 这里只做「一次性绑定」，开关状态在每个事件里实时判断 ——
+    // 否则用户在设置页打开开关后，不重开面板就不生效（绑定发生在初始化时）。
+    // 系统「减弱动态效果」同理，每次事件都查，用户中途改系统设置也能跟上。
+    function pressEnabled() {
+      if (!SETTINGS.pressFeedback) return false;
+      try {
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
+      } catch (e) {}
+      return true;
+    }
+
+    body.addEventListener('pointerdown', e => {
+      // 只响应主键（左键 / 触摸 / 笔），右键、多键不掺和
+      if (e.button !== 0) return;
+      if (!pressEnabled()) return;
+      const card = e.target.closest('.blm-item');
+      if (isNoPressCard(card)) return;
+      // 按下的「意图」已经成立，先把卡片记下，让第一次移动立即生效
+      endPress(false);
+      pressCard = card;
+      card.classList.add('blm-press');
+      // 按住期间禁掉文本选择：鼠标按住拖动时，卡片跟着倾斜的同时还会把
+      // 正文里的字选中一片 —— 又花又乱，而且松手后选区还留着。松手/复位时还原。
+      panel.classList.add('blm-pressing');
+      schedulePressTilt(e);
+    }, true);
+    body.addEventListener('pointermove', e => {
+      if (!pressCard) return;
+      if (!pressEnabled()) { endPress(true); return; }
+      // 指针滑出原卡片 → 换目标（卡片换一张继续跟，别僵在旧的上面）
+      const card = e.target.closest ? e.target.closest('.blm-item') : null;
+      if (card && card !== pressCard && !isNoPressCard(card)) {
+        endPress(false);
+        pressCard = card;
+        card.classList.add('blm-press');
+      }
+      schedulePressTilt(e);
+    }, true);
+    body.addEventListener('pointerup', () => endPress(true), true);
+    body.addEventListener('pointercancel', () => endPress(true), true);
+    // 指针离开整个面板 / 页面失焦：兜底复位，别让卡片卡在倾斜态
+    body.addEventListener('pointerleave', () => endPress(true), true);
+    window.addEventListener('blur', () => endPress(true));
+    // 滚动时立刻复位 —— 一边滚一边卡着倾斜很怪（滚动条拖拽也会走到这）
+    body.addEventListener('scroll', () => endPress(true), { passive: true });
+    // 设置页改开关 → 立刻生效：关掉时把正在按着的卡片复位
+    settingsChangedHooks.push(() => { if (!SETTINGS.pressFeedback) endPress(true); });
   }
 
   // 筛选 chips 也走委托（chips 容器不重建）
@@ -2457,16 +2972,129 @@
     while (wrap.children.length > 3) wrap.firstChild.remove();   // 最多叠 3 条，旧的自动让位
   }
 
-  // 重新渲染时保住滚动位置，否则每展开一条都会被弹回列表顶部
-  function renderList() {
+  /* ===== 打开面板的加载反馈（v1.1.3）=====
+     点开面板后要跑一段同步重活（读台账、算状态、重建最多 200 张卡）。主线程被占住的窗口里：
+     ① FAB 环 + 面板骨架先上屏 —— 让用户看到「点了、在加载」，而不是干等以为没反应；
+     ② 这期间点出来的 click 不会丢，会攒在队列里等重活干完再补发（面板被乱开乱合、按钮被莫名点到）。
+        用 panelLoading（挡「让帧窗口」里的新点击）+ 事件时间戳（吞「阻塞期间攒下的」补发点击）
+        两道闸，让连点彻底无害；
+     ③ 秒开：什么都没变过（ledgerVersion 一致）时重新打开面板直接复用旧 DOM，不再白重建一遍。 */
+  let everRendered = false;          // 是否已完整渲染过（防止首帧走「秒开」拿到空 DOM）
+  let lastRenderedVersion = -1;      // 上次完整渲染对应的台账版本
+  let lastRenderedAt = 0;            // 上次完整渲染的时刻（秒开加时间上限，别让「N天前」等文案太旧）
+  let panelLoading = false;          // 加载窗口（骨架亮起到渲染完成）
+  let suppressClickBefore = 0;       // 早于这个时间戳的 click 视为「加载窗口里攒下的」，吞掉
+  const SKIP_RENDER_MAX_MS = 5 * 60 * 1000;   // 秒开的最长有效期：超过就正常重渲染一次
+
+  // 单调时间戳：与事件 e.timeStamp 同基准（timeOrigin），两者可直接比较。
+  // performance 拿不到时返回 0 → 各时间戳判断都不吞点击（安全方向：宁可放过）。
+  function nowTs() {
+    try { return performance.now(); } catch (e) { return 0; }
+  }
+  // 是否是「主线程忙时用户点出来的、补发的 click」——判定：事件产生时刻早于重活结束时刻。
+  function isStaleClick(e) {
+    return suppressClickBefore > 0
+      && typeof e.timeStamp === 'number' && e.timeStamp > 0
+      && e.timeStamp < suppressClickBefore;
+  }
+
+  // 面板里铺骨架 + FAB 转环（渲染完成后的真内容会自然覆盖骨架，不用手动清理）
+  function showSkeleton() {
     const body = document.getElementById('blm-body');
-    const keep = body ? body.scrollTop : 0;
+    if (body) {
+      let html = '<div class="blm-skel" aria-hidden="true">';
+      for (let i = 0; i < 4; i++) {
+        html += '<div class="blm-skel-card">'
+          + '<div class="blm-skel-line w1"></div>'
+          + '<div class="blm-skel-line w2"></div>'
+          + '<div class="blm-skel-line w3"></div>'
+          + '<div class="blm-skel-chips"><span class="blm-skel-chip"></span><span class="blm-skel-chip"></span></div>'
+          + '</div>';
+      }
+      // 骨架顶替列表会让 scrollTop 归 0 → 派发 scroll 事件 —— 那不是「用户在滚」，
+      // 包进「程序化滚动」窗口，别让筛选条/分页条白白淡出（清理由随后的 renderList 统一负责）。
+      programmaticScroll = true;
+      body.innerHTML = html + '</div>';
+    }
+    try { fab.classList.add('blm-loading'); } catch (e) {}
+  }
+  function endLoadingState() {
+    try { fab.classList.remove('blm-loading'); } catch (e) {}
+  }
+
+  // 带反馈的渲染：先铺骨架 + 亮环，再让两帧后跑重活。
+  // 为什么是「两帧」：重活会把主线程占死，如果和铺骨架挤在同一帧，浏览器根本来不及画骨架 ——
+  // 用户看到的还是「点了没反应」。让过两帧（第一帧把骨架画出来、第二帧才开跑）骨架才真上屏。
+  function renderListWithFeedback() {
+    const body = document.getElementById('blm-body');
+    // 骨架会顶替列表内容（scrollTop 归 0）——先把当前滚动位置记下来，渲染完还给用户
+    const keepPos = body && typeof body.scrollTop === 'number' ? body.scrollTop : null;
+    showSkeleton();
+    panelLoading = true;
+    const run = () => {
+      try {
+        renderList(keepPos);
+      } finally {
+        panelLoading = false;
+        suppressClickBefore = nowTs();   // 记下「重活干完」时刻：比它早的补发 click 都会被吞
+        endLoadingState();
+        // 兜底解除「程序化滚动」标记：renderList 正常走完会自己清，
+        // 万一中途异常也不能让它卡住（幂等，多清一次无害）
+        if (typeof requestAnimationFrame === 'function') {
+          requestAnimationFrame(() => { programmaticScroll = false; });
+        } else {
+          setTimeout(() => { programmaticScroll = false; }, 0);
+        }
+      }
+    };
+    if (typeof requestAnimationFrame === 'function') {
+      requestAnimationFrame(() => requestAnimationFrame(run));
+    } else {
+      setTimeout(run, 34);   // 无 rAF 的沙箱/老环境：用近似两帧的延时兜底
+    }
+  }
+
+  // 打开面板时的渲染决策。三种情况：
+  //   ① 版本没变 + 距上次渲染在有效期内 → 复用旧 DOM（秒开），只把倒计时 timer 接回来；
+  //   ② 设置页本来就轻 → 直接同步渲染，不用骨架（也避免设置表单闪骨架的违和）；
+  //   ③ 其余 → 走「骨架 + 环」的带反馈渲染。
+  function openPanelWithRender() {
+    maybeArchiveDeleted();   // 老数据兜底：台账里遗留的已删除记录迁进回收站（幂等，会话内只查一次）
+    if (everRendered && ledgerVersion === lastRenderedVersion
+        && (Date.now() - lastRenderedAt) < SKIP_RENDER_MAX_MS) {
+      if (curTab === 'list') startCountdown();
+      return;
+    }
+    if (curTab === 'set') { renderList(); return; }
+    renderListWithFeedback();
+  }
+
+  // 重新渲染时保住滚动位置，否则每展开一条都会被弹回列表顶部。
+  // keepOverride：数字时以此作为渲染后恢复的滚动位置 —— 骨架路径专用：
+  // 骨架顶替内容后 body.scrollTop 已归 0，原位置必须由调用方在铺骨架前记下传入。
+  function renderList(keepOverride) {
+    const body = document.getElementById('blm-body');
+    const keep = (typeof keepOverride === 'number') ? keepOverride : (body ? body.scrollTop : 0);
     if (curTab === 'list') showListChrome();   // 台账页：底栏放回来（其余 tab 由 renderListInner 收掉）
+    // 下面这段会对 body.scrollTop 赋值 → 触发 scroll 事件 → 被误认为用户滚动 → 多余的淡出/复位。
+    // 用一个「程序化滚动」窗口包住：赋值前打开，赋完值后延迟一帧关闭
+    // （scroll 事件是异步派发的，必须活过这次事件循环才能拦住它）。
+    programmaticScroll = true;
     renderListInner();
     if (body) {
       if (resetScroll) { body.scrollTop = 0; resetScroll = false; }
       else if (keep) body.scrollTop = keep;
     }
+    // 延迟到下一帧再解除标记：确保渲染过程中派发的 scroll 事件都被吞掉，之后恢复正常的滚动淡出
+    if (typeof requestAnimationFrame === 'function') {
+      requestAnimationFrame(() => { programmaticScroll = false; });
+    } else {
+      setTimeout(() => { programmaticScroll = false; }, 0);
+    }
+    // 记下「已按当前数据与界面状态渲染完成」——重新打开面板时若版本没变，直接复用这份 DOM（秒开）
+    lastRenderedVersion = ledgerVersion;
+    lastRenderedAt = Date.now();
+    everRendered = true;
   }
 
   // 筛选/操作工具栏（扫描核验搜索行、排序筛选行、时间范围、状态 chips、只看UP 条）
@@ -2505,7 +3133,10 @@
     if (ctxSig !== lastListCtx) { curPage = 0; lastListCtx = ctxSig; }
 
     const ledger = loadLedger();
-    const allItems = Object.values(ledger);
+    // 已删除的记录归回收站管（见 moveDeletedToTrash）——这里再兜一道：即使迁移失败/还没跑到，
+    // 台账页也永远不显示它们，界面行为不受存储状态影响
+    const allItems = Object.values(ledger).filter(it => !it.deleted);
+    buildAliveCountTable(ledger);   // 渲染前一次算好「同组还活着几条」（旧版每张卡重扫全表，平方级）
     const dupMapAll = dupMapOf(allItems);   // 全量的重复表，用于卡片上打标记
 
     // 先用「除状态以外」的条件过滤出 base —— chips 的计数基于它，
@@ -2536,8 +3167,6 @@
         (filterSet.has('dup') && it.origId && dm[dupKeyOf(it)] > 1)
         || (filterSet.has('notwon') && it.won === false && !it.deleted
           && it.drawTs && it.drawTs <= Date.now())   // 开奖时间还没到的不算「未中奖」（分期抽奖的旧名单不算数）
-        // 已删除的中奖动态：勾「已中奖」也要能筛出来（计数处同理，见 renderChips）
-        || (filterSet.has('won') && it.deleted && it.won === true)
         || filterSet.has(computeStatus(it).key));
     }
     items = sortItems(items.slice());
@@ -2550,8 +3179,7 @@
     const pagebar = document.getElementById('blm-pagebar');
     if (pagebar) pagebar.style.display = (items.length > PAGE_SIZE) ? '' : 'none';
 
-    const prog = document.getElementById('blm-prog');
-    if (prog) prog.textContent = '显示 ' + items.length + ' 条，已选 ' + selected.size + ' 条';
+    // 底栏「显示 X 条，已选 N 条」由 refreshSelCounts → updateProgText 统一拼（含"不在当前筛选"披露）
     syncSearchClear();   // 搜索词 / 只看 UP 有任一生效时显示「×」退出按钮
     refreshSelCounts(items);
 
@@ -2589,6 +3217,7 @@
       const tbm = lotteryTypeBadge(it);   // 左下角书签（无则空串）
       const row = document.createElement('div');
       row.className = 'blm-item' + (canSel ? '' : ' locked') + (tbm ? ' hasbm' : '');
+      row.setAttribute('data-dyn', it.dynId);   // 供「行消失补偿」定位卡片（改日期/改状态后列表别莫名跳滚）
 
       // C 时间行：转发胶囊只读；开奖胶囊解锁时可点击改时间、锁住时只读（见 metaChipsHtml）。
       // 开奖胶囊精简为「状态 · 相对时间」，完整日期收进悬停提示 —— 长版文案会让
@@ -2730,8 +3359,8 @@
     { key: 'notwon', label: '未中奖' },
     { key: 'won', label: '已中奖' },
     // 重复：删到只剩一条后，那条就不再重复、会自动从这里消失 —— title 里说清楚，避免误以为被误删
-    { key: 'dup', label: '重复', tip: '同一条抽奖你转了多次。注意：删到只剩一条后，它就不再算重复，会自动从这里消失（不是被删掉了），去「全部」里能看到它' },
-    { key: 'deleted', label: '已删除' }
+    { key: 'dup', label: '重复', tip: '同一条抽奖你转了多次。注意：删到只剩一条后，它就不再算重复，会自动从这里消失（不是被删掉了），去「全部」里能看到它' }
+    // 2026-10-17 起不再有「已删除」筛选：已删除记录归档进「设置 → 回收站」，不在台账页出现
   ];
 
   function renderChips(base) {
@@ -2744,12 +3373,8 @@
     let dupN = 0;
     base.forEach(it => {
       const k = computeStatus(it).key;
-      // 「已删除」盖掉「已中奖」的修复：中奖是事实，删除只是操作状态。
-      // 已删除的中奖动态要同时计入两个筛选（多选并集本来就允许维度重叠，同 notwon/dup）
-      if (k === 'deleted') {
-        counts.deleted++;
-        if (it.won === true) counts.won++;
-      } else if (counts[k] !== undefined) counts[k]++;
+      // 注：已归档（已删除）的条目已被上游过滤，这里 k 不会是 'deleted'
+      if (counts[k] !== undefined) counts[k]++;
       if (it.won === false && !it.deleted && it.drawTs && it.drawTs <= Date.now()) counts.notwon++;
       if (it.origId && dm[dupKeyOf(it)] > 1) dupN++;
     });
@@ -2972,7 +3597,10 @@
     const ufMap = loadUnfollowed();
     const now = Date.now();
     const map = {};
-    Object.values(ledger).forEach(it => {
+    // 已归档（回收站）的记录也参与统计 —— 「中过奖是事实，动态删了也算」等原口径保持不变：
+    // 原实现里已删除条目本就参与 条数/时间范围/去重/won·lost 计数（只是被挡在状态分类之外），
+    // 迁移后按同一口径合并两个数据源即可。回收站只在打开本页时读一次（会话内缓存）。
+    Object.values(ledger).concat(Object.values(loadTrash())).forEach(it => {
       if (!it.upMid || it.upMid === Number(myUid())) return;
       const mk = String(it.upMid);   // 统一用字符串键 —— 勾选集合 / lastFollowMap 都按字符串 mid 取
       if (!map[mk]) map[mk] = {
@@ -3131,7 +3759,8 @@
       if (x.dups) countTag += '<span class="blm-tag" style="background:var(--blm-grey-bg);color:var(--blm-grey-text)"'
         + ' title="同一次抽奖你转了不止一条（比如又转了官方加码那条）—— 这些不影响抽奖次数，只是动态条数多">'
         + x.count + ' 条（含 ' + x.dups + ' 重复）</span>';
-      html += '<div class="blm-item" style="padding-right:12px' + (x.unfollowedAt ? ';opacity:.55' : '') + '"><div class="blm-main">' +
+      // 已取关的卡片挂 .blm-nopress：不可交互（只能「重新关注」），不给按压动效
+      html += '<div class="blm-item' + (x.unfollowedAt ? ' blm-nopress' : '') + '" style="padding-right:12px' + (x.unfollowedAt ? ';opacity:.55' : '') + '"><div class="blm-main">' +
         '<div class="blm-line1">' +
         (isBlocked ? '<span class="blm-lock' + (open ? ' open' : '') + '" data-uflock="' + x.mid
             + '" title="' + ufLockTip(x, open) + '">' + lockIcon(open) + '</span>' : '') +
@@ -3287,7 +3916,8 @@
       app: 'bili-lottery-manager',
       exportedAt: new Date().toISOString(),
       settings: JSON.parse(JSON.stringify(SETTINGS)),
-      ledger: loadLedger()
+      ledger: loadLedger(),
+      trash: loadTrash()   // 回收站也一并备份（导出是一次性动作，读它不违反「平时不加载」）
     };
   }
   function exportLedger() {
@@ -3316,9 +3946,21 @@
         if (!data || typeof data.ledger !== 'object' || data.ledger === null) {
           throw new Error('文件格式不对（缺少 ledger）');
         }
+        // 兼容旧备份：旧版没有 trash 字段、且已删除记录混在 ledger 里 —— 先分流进回收站再落盘
+        const trashIn = (data.trash && typeof data.trash === 'object') ? data.trash : {};
+        Object.keys(data.ledger).forEach(k => {
+          const it = data.ledger[k];
+          if (it && it.deleted) {
+            if (!trashIn[k]) trashIn[k] = it;
+            delete data.ledger[k];
+          }
+        });
         const count = Object.keys(data.ledger).length;
-        if (!confirm('导入会用这份备份覆盖当前台账（共 ' + count + ' 条记录）。\n\n'
+        const trashCount = Object.keys(trashIn).length;
+        if (!confirm('导入会用这份备份覆盖当前台账和回收站（台账 ' + count + ' 条'
+          + (trashCount ? ' + 回收站 ' + trashCount + ' 条' : '') + '）。\n\n'
           + '建议先点「导出备份」保存当前数据再继续。确定导入吗？')) return;
+        saveTrash(trashIn);              // 先落回收站，再落台账
         saveLedger(data.ledger, true);   // 导入是整体替换，不做多标签页合并
         if (data.settings && typeof data.settings === 'object') {
           SETTINGS = Object.assign(loadSettings(), data.settings);
@@ -3328,7 +3970,9 @@
         selected.clear();
         saveUiState();
         renderList();
-        toast('导入成功，共恢复 ' + count + ' 条记录' + (data.settings ? '，并已套用备份里的设置。' : '。'));
+        toast('导入成功：台账 ' + count + ' 条'
+          + (trashCount ? '，回收站 ' + trashCount + ' 条' : '')
+          + (data.settings ? '，并已套用备份里的设置。' : '。'));
       } catch (e) {
         alert('导入失败：' + e.message);
       }
@@ -3340,8 +3984,7 @@
   // V档：把中奖条目导出成 CSV（带 UTF-8 BOM），用浏览器下载。
   // 已删除的中奖条目也导出 —— 中过就是中过，删了动态不代表奖没中过。
   function exportWonCsv() {
-    const ledger = loadLedger();
-    const won = Object.values(ledger).filter(it => it.won === true);
+    const won = allWonItems();   // 台账 + 回收站（已归档的中奖记录也算 —— 中过就是中过）
     if (!won.length) { toast('没有中奖记录可导出。'); return; }
     const header = ['UP主', '奖品', '开奖时间', '动态类型', '状态', '动态链接', '录入时间'];
     const rows = won.map(it => [
@@ -3365,6 +4008,147 @@
     a.remove();
     setTimeout(() => URL.revokeObjectURL(a.href), 1000);
     toast('已导出 ' + won.length + ' 条中奖记录为 CSV。');
+  }
+
+  /* ---- 回收站弹窗 ----
+     懒加载：只有打开这个弹窗才读 TRASH_KEY。台账、日常操作完全不碰回收站数据。
+     列表支持：勾选 → 恢复（记录搬回台账）/ 永久抹除（本地彻底删除，二次确认兜底）。 */
+  let trashSel = new Set();       // 弹窗内勾选（不持久化，关闭即清）
+  let trashPage = 0;
+  let trashPageIds = [];          // 当前页的 dynId（供「全选本页」）
+  const TRASH_PAGE = 100;
+
+  function openTrashBox() {
+    let box = document.getElementById('blm-trashbox');
+    if (!box) {
+      box = document.createElement('div');
+      box.id = 'blm-trashbox';
+      box.style.cssText = 'position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);'
+        + 'z-index:2147483007;background:var(--blm-bg);border:1px solid var(--blm-border);border-radius:10px;'
+        + 'padding:14px 16px;width:660px;max-width:94vw;max-height:78vh;'
+        + 'box-shadow:0 8px 32px rgba(0,0,0,.28);font-family:-apple-system,"Microsoft YaHei",sans-serif;'
+        + 'font-size:13px;color:var(--blm-text);display:none;box-sizing:border-box;flex-direction:column;';
+      document.body.appendChild(box);
+      box.addEventListener('click', onTrashBoxClick);
+      box.addEventListener('change', onTrashBoxChange);
+      // Esc = 关闭（点过弹窗内任何控件后焦点在弹窗里，Esc 都能冒泡到这里）
+      box.addEventListener('keydown', e => { if (e.key === 'Escape') box.style.display = 'none'; });
+    }
+    trashSel.clear();
+    trashPage = 0;
+    renderTrashBox();
+    box.style.display = 'flex';
+  }
+
+  function onTrashBoxChange(e) {
+    const box = document.getElementById('blm-trashbox');
+    if (!box) return;
+    const ck = e.target.closest ? e.target.closest('[data-tb-ck]') : null;
+    if (ck) {
+      if (ck.checked) trashSel.add(ck.getAttribute('data-tb-ck'));
+      else trashSel.delete(ck.getAttribute('data-tb-ck'));
+      const n = box.querySelector('#tb-sel-n');
+      if (n) n.textContent = trashSel.size;
+      return;
+    }
+    const sa = e.target.closest ? e.target.closest('[data-tb="selall"]') : null;
+    if (sa) {
+      if (sa.checked) trashPageIds.forEach(id => trashSel.add(id));
+      else trashPageIds.forEach(id => trashSel.delete(id));
+      renderTrashBox();   // 重绘以更新每一行的勾选
+    }
+  }
+
+  function onTrashBoxClick(e) {
+    const box = document.getElementById('blm-trashbox');
+    if (!box) return;
+    const b = e.target.closest ? e.target.closest('[data-tb]') : null;
+    if (!b) return;
+    const a = b.getAttribute('data-tb');
+    const id = b.getAttribute('data-id') || '';
+    if (a === 'close') { box.style.display = 'none'; return; }
+    if (a === 'page') {
+      const p = parseInt(b.getAttribute('data-p'), 10);
+      if (!isNaN(p) && p >= 0) { trashPage = p; renderTrashBox(); }
+      return;
+    }
+    if (a === 'restore' || a === 'restore-sel') {
+      const ids = a === 'restore' ? [id] : [...trashSel];
+      if (!ids.length) { toast('先勾选要恢复的记录'); return; }
+      const r = restoreFromTrash(ids);
+      ids.forEach(x => trashSel.delete(x));
+      renderTrashBox();
+      renderList();   // 恢复的条目要回到台账页（当前在设置页时内部会走 renderSettings，无副作用）
+      toast('已恢复 ' + r.n + ' 条到台账（动态已从B站删除、无法找回，这里恢复的是记录）'
+        + (r.cleared ? '；其中 ' + r.cleared + ' 条原编号已被占用、暂标 #-，点「扫描建档」可统一重排编号' : ''));
+      return;
+    }
+    if (a === 'purge' || a === 'purge-sel') {
+      const ids = a === 'purge' ? [id] : [...trashSel];
+      if (!ids.length) { toast('先勾选要抹除的记录'); return; }
+      if (!confirm('确定永久抹除 ' + ids.length + ' 条记录吗？\n\n此操作不可恢复：这些记录会从本地彻底删除，以后找不回来了。')) return;
+      const n = purgeFromTrash(ids);
+      ids.forEach(x => trashSel.delete(x));
+      renderTrashBox();
+      toast('已永久抹除 ' + n + ' 条记录');
+    }
+  }
+
+  function renderTrashBox() {
+    const box = document.getElementById('blm-trashbox');
+    if (!box) return;
+    const t = loadTrash();
+    const all = Object.values(t).sort((x, y) =>
+      ((y.deletedAt || y.deletedTs || 0) - (x.deletedAt || x.deletedTs || 0)));   // 最近归档的在前
+    const totalPages = Math.max(1, Math.ceil(all.length / TRASH_PAGE));
+    if (trashPage > totalPages - 1) trashPage = totalPages - 1;
+    const pageItems = all.slice(trashPage * TRASH_PAGE, (trashPage + 1) * TRASH_PAGE);
+    trashPageIds = pageItems.map(it => it.dynId);
+
+    let html = '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">'
+      + '<span style="flex:1;font-size:14px;font-weight:600">回收站（' + all.length + ' 条）</span>'
+      + '<button class="blm-btn" data-tb="close">关闭</button></div>'
+      + '<div class="blm-tip" style="margin:0 0 8px">这里存放已删除的动态记录：B站上的动态已被真正删除、无法找回，回收站只保留台账记录（信息留档）。'
+      + '「恢复」= 记录放回「动态台账」继续管理；「永久抹除」= 从本地彻底删除，不可恢复。</div>';
+
+    if (!all.length) {
+      html += '<div style="padding:30px 0;text-align:center;color:var(--blm-text3)">回收站是空的</div>';
+      box.innerHTML = html;
+      return;
+    }
+
+    const pageAllSel = trashPageIds.length > 0 && trashPageIds.every(x => trashSel.has(x));
+    html += '<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-top:1px solid var(--blm-border2);border-bottom:1px solid var(--blm-border2)">'
+      + '<label style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--blm-text2)"><input type="checkbox" data-tb="selall"' + (pageAllSel ? ' checked' : '') + ' style="width:auto">全选本页</label>'
+      + '<span style="flex:1;font-size:12px;color:var(--blm-text3)">已选 <b id="tb-sel-n">' + trashSel.size + '</b> 条</span>'
+      + '<button class="blm-btn" data-tb="restore-sel">恢复选中</button>'
+      + '<button class="blm-btn danger" data-tb="purge-sel">永久抹除选中</button></div>';
+
+    html += '<div style="flex:1;overflow-y:auto;min-height:150px;margin:2px 0">'
+      + pageItems.map(it => {
+        const ts = it.deletedAt || it.deletedTs || 0;
+        const txt = String(it.text || '').replace(/\s+/g, ' ').slice(0, 80);
+        return '<div style="display:flex;align-items:center;gap:8px;padding:6px 2px;border-bottom:1px solid var(--blm-border2)">'
+          + '<input type="checkbox" data-tb-ck="' + it.dynId + '"' + (trashSel.has(it.dynId) ? ' checked' : '') + ' style="width:auto;flex:none">'
+          + '<span style="flex:none;min-width:36px;font-size:11px;color:var(--blm-text3)">#' + (it.no || '-') + '</span>'
+          + '<span style="flex:none;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px" title="' + escapeHtml(it.upName || '') + '">' + escapeHtml(it.upName || '未知UP') + '</span>'
+          + (it.won === true ? '<span style="flex:none;font-size:10px;font-weight:700;color:#E24B4A;border:1px solid rgba(226,75,74,.45);border-radius:8px;padding:1px 5px">已中奖</span>' : '')
+          + '<span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:var(--blm-text2)" title="' + escapeHtml(txt) + '">' + escapeHtml(txt || '（无正文）') + '</span>'
+          + '<span style="flex:none;font-size:11px;color:var(--blm-text3)" title="' + (it.deletedVia === 'sync' ? 'B站侧删除（扫描判定）' : '脚本删除') + '">' + (ts ? fmtTime(ts) : '') + '</span>'
+          + '<button class="blm-btn" data-tb="restore" data-id="' + it.dynId + '" style="flex:none;padding:2px 8px;font-size:11px">恢复</button>'
+          + '<button class="blm-btn" data-tb="purge" data-id="' + it.dynId + '" style="flex:none;padding:2px 8px;font-size:11px;color:#E24B4A">抹除</button>'
+          + '</div>';
+      }).join('')
+      + '</div>';
+
+    if (totalPages > 1) {
+      html += '<div style="display:flex;gap:8px;align-items:center;justify-content:center;padding-top:8px">'
+        + '<button class="blm-btn" data-tb="page" data-p="' + (trashPage - 1) + '"' + (trashPage <= 0 ? ' disabled' : '') + '>上一页</button>'
+        + '<span style="font-size:12px;color:var(--blm-text3)">第 ' + (trashPage + 1) + ' / ' + totalPages + ' 页</span>'
+        + '<button class="blm-btn" data-tb="page" data-p="' + (trashPage + 1) + '"' + (trashPage >= totalPages - 1 ? ' disabled' : '') + '>下一页</button>'
+        + '</div>';
+    }
+    box.innerHTML = html;
   }
 
   function renderSettings() {
@@ -3392,6 +4176,7 @@
       '<div class="blm-set"><label>允许勾选「结果未定」条目<div class="blm-tip">默认关闭：开奖结果还没确认的动态一律不许删。打开后也能勾选，但删除时会再警告一次。新手扫描完发现全都选不动，就是因为这个开关</div></label><input type="checkbox" id="s-allowunverified"' + (SETTINGS.allowCheckUnverified ? ' checked' : '') + ' style="width:auto"></div>' +
       '<div class="blm-set"><label>中奖系统通知<div class="blm-tip">开奖后自动查到你中奖时，发一条系统桌面通知（页面切到后台也能收到，点通知可回到本页）。关掉则完全不弹，中奖只会标记在列表里</div></label><span style="display:flex;align-items:center;gap:6px"><input type="checkbox" id="s-winnotify"' + (SETTINGS.winNotify ? ' checked' : '') + ' style="width:auto"><button class="blm-btn" id="s-testnotify" style="padding:3px 8px;font-size:11px">测试</button></span></div>' +
       '<div class="blm-set"><label>正文高亮<div class="blm-tip">把「参与条件」标青、「开奖奖品」标紫，一眼扫到关键信息。单字简写（转/评/关）只在识别出条件块时才标，避免误伤</div></label><input type="checkbox" id="s-hl"' + (SETTINGS.highlightText ? ' checked' : '') + ' style="width:auto"></div>' +
+      '<div class="blm-set"><label>卡片按压反馈<div class="blm-tip">鼠标按住卡片时，卡片朝触点方向轻微倾斜、一圈柔光跟随手指。只对「当前能操作」的卡片生效（上锁 / 已取关的不响应）。若系统开了「减弱动态效果」，会自动禁用</div></label><input type="checkbox" id="s-press"' + (SETTINGS.pressFeedback ? ' checked' : '') + ' style="width:auto"></div>' +
       '<div class="blm-set"><label>转发后自动弹录入浮条</label><input type="checkbox" id="s-auto"' + (SETTINGS.autoFloatOnRepost ? ' checked' : '') + ' style="width:auto"></div>' +
       '<div class="blm-set"><label>删除前二次确认</label><input type="checkbox" id="s-confirm"' + (SETTINGS.confirmBeforeDelete ? ' checked' : '') + ' style="width:auto"></div>' +
       '<div style="padding:12px 0 0;display:flex;gap:8px">' +
@@ -3406,6 +4191,10 @@
         '<button class="blm-btn" id="s-import">导入恢复</button>' +
         '<button class="blm-btn" id="s-woncsv" title="只导出中奖条目（含已删除的中奖记录）；带 BOM，双击用 Excel 打开中文不乱码">导出中奖 CSV</button>' +
         '<input type="file" id="s-import-file" accept="application/json,.json" style="display:none">' +
+      '</div>' +
+      '<div style="padding:8px 0 0;display:flex;gap:8px;align-items:center">' +
+        '<button class="blm-btn" id="s-trash" title="删除过的记录归档在这里（不再占台账列表）；可以找回记录，也可以永久抹除">回收站</button>' +
+        '<span class="blm-tip" style="margin:0">已删除的记录归档在这里：可找回，或永久抹除（B站动态本身已删、无法找回）</span>' +
       '</div>' +
       '<div class="blm-tip">导出会把台账和设置存成一个 JSON 文件（不含任何账号密码）；导入会用备份覆盖当前台账。建议先导出再导入。「导出中奖 CSV」只导出中奖条目，方便留档核对奖品。</div>' +
       '<div style="margin-top:14px;padding-top:12px;border-top:1px dashed var(--blm-border);display:flex;align-items:center;gap:12px">'
@@ -3426,6 +4215,8 @@
       if (wn) SETTINGS.winNotify = wn.checked;
       const hl = document.getElementById('s-hl');
       if (hl) SETTINGS.highlightText = hl.checked;
+      const pf = document.getElementById('s-press');
+      if (pf) SETTINGS.pressFeedback = pf.checked;
       SETTINGS.autoFloatOnRepost = document.getElementById('s-auto').checked;
       SETTINGS.confirmBeforeDelete = document.getElementById('s-confirm').checked;
       const fs = document.getElementById('s-fabScope');
@@ -3434,6 +4225,7 @@
       if (ap) SETTINGS.appearance = ap.value;
       applyTheme();   // 外观切换即时生效，无需重开面板
       saveSettings(SETTINGS);
+      settingsChangedHooks.forEach(fn => { try { fn(); } catch (e) {} });   // 让需要即时生效的功能跟上
       applyFabVisibility();
       if (SETTINGS.fabScope === 'hidden') toast('设置已保存。按钮已隐藏，之后点浏览器右上角的油猴图标，选「打开抽奖动态管理面板」唤出。');
       else toast('设置已保存');
@@ -3455,6 +4247,8 @@
     if (ex) ex.addEventListener('click', exportLedger);
     const wonCsv = document.getElementById('s-woncsv');
     if (wonCsv) wonCsv.addEventListener('click', exportWonCsv);
+    const trashBtn = document.getElementById('s-trash');
+    if (trashBtn) trashBtn.addEventListener('click', openTrashBox);
     const im = document.getElementById('s-import');
     if (im) im.addEventListener('click', () => { const f = document.getElementById('s-import-file'); if (f) f.click(); });
     const imf = document.getElementById('s-import-file');
@@ -3682,7 +4476,10 @@
         it.drawUnknown = true;
         it.source = 'user';
         saveLedger(ledger);
+        const anchor = captureRowAnchor(dynId);
         renderList();
+        compensateRowGone(dynId, anchor);   // 卡片若离开列表，滚动位置回退它的一格（防"莫名跳滚"）
+        dropSelectionIfGone(dynId);   // 状态变了可能被踢出当前筛选 → 勾选跟着摘（防"看不见也取消不掉"）
       }
       return;
     }
@@ -3693,7 +4490,10 @@
     it.source = 'user';       // 你亲手填的，标记为"你已确认"
     saveLedger(ledger);
     toast('已保存，标记为「你已确认」');
+    const anchor = captureRowAnchor(dynId);
     renderList();
+    compensateRowGone(dynId, anchor);   // 同上：卡片离开列表时滚动位置回退一格
+    dropSelectionIfGone(dynId);   // 改完日期可能不再匹配当前筛选（卡片会消失）→ 勾选一起摘掉
   }
 
   /* 手填「奖品 / 参与需求」的小弹窗（两个字段，原生 prompt 放不下）
@@ -3775,6 +4575,7 @@
     const it = ledger[dynId];
     // 已删除条目状态封存：标签只是留档，不可再改（渲染层已摘掉点击入口，这里兜底）
     if (!it || it.deleted) return;
+    const anchor = captureRowAnchor(dynId);   // 记下卡片高度：若状态变化让它离开列表，好补偿滚动位置
     it.won = val;   // null=结果未定 / true=已中奖 / false=未中奖
     if (val === true) selected.delete(dynId);   // 标记中奖后从选中集合里剔除，避免误删
     saveLedger(ledger);
@@ -3786,6 +4587,10 @@
     } else {
       renderList();
     }
+    compensateRowGone(dynId, anchor);   // 卡片被踢出列表时把滚动位置回退一格（防"莫名跳滚"）
+    // 状态变化可能把它踢出当前筛选视图（卡片从列表里消失）→ 勾选跟着摘，
+    // 否则会占着「已选 N 条」的坑：看不见也取消不掉（用户实测的同类问题）
+    dropSelectionIfGone(dynId);
   }
 
   // 中奖状态选择菜单：点状态标签或右侧小箭头展开，三个状态单选
@@ -4063,12 +4868,21 @@
     const risky = list.filter(it => computeStatus(it).warn);
     const names = list.slice(0, 12).map(it => '· ' + (it.upName || '?') + '（' + (it.text || '').slice(0, 24) + '）').join('\n');
 
-    let msg = '即将删除 ' + list.length + ' 条转发动态，此操作不可撤销。\n\n' + names +
-      (list.length > 12 ? '\n…等共 ' + list.length + ' 条' : '');
+    let msg = '即将删除 ' + list.length + ' 条转发动态。\n\n' + names +
+      (list.length > 12 ? '\n…等共 ' + list.length + ' 条' : '') +
+      '\n\n说明：B站上的动态会被真正删除（无法恢复）；台账记录会自动归档到「设置 → 回收站」，'
+      + '之后需要时可以去那里找回（仅保留记录、动态找不回）或彻底抹除。';
+    // 已选里有"不在当前筛选视图里"的（跨筛选勾选是允许的）——删除前点名，
+    // 防止"这条我什么时候勾的？"的惊讶（名单里能看到它们，别再往下找）
+    const hiddenN = countHiddenSelection(curItems);
+    if (hiddenN) msg += '\n\n提示：其中 ' + hiddenN + ' 条已选动态不在当前筛选视图里（在上方名单中，留意核对）。';
     if (risky.length) msg += '\n\n注意：其中 ' + risky.length + ' 条还在缓冲期（开奖不足 ' + SETTINGS.bufferDays + ' 天），建议再等等。';
     // 开奖状态没弄清楚的（含"缺日期"）都要额外警告
     const unverified = list.filter(it => {
       const k = computeStatus(it).key;
+      // 日期不明但结果已标记（如手动确认「未中奖」）→ 结果层面用户已经人工核对过，不算"未确认"
+      // （用户实测：把日期不明的卡片标记未中奖再删，弹"开奖状态未确认"很困惑）
+      if (k === 'unknown' && it.won !== null) return false;
       // 开奖日期不明（unknown）同样算"没弄清楚"，删除前必须警告
       return k === 'needcheck' || k === 'unknown';
     });
@@ -4116,23 +4930,22 @@
       await sleep(SETTINGS.deleteInterval);
     }
     saveLedger(ledger);
+    moveDeletedToTrash();   // 本次删掉的记录搬进回收站（台账页从此不再有「已删除」条目）
     selected.clear();
     setBusy(false, '完成：成功 ' + ok + ' 条，失败 ' + fail + ' 条');
     renderList();
-    // IV档：删除成功给 5 秒撤销 —— 只恢复本地台账记录（B站上的动态已真删，无法找回），
-    // 避免用户手滑确认后连"这条曾参与过"的痕迹都没了。
+    // IV档：删除成功给 5 秒撤销 —— 撤销 = 把记录从回收站取回台账（B站上的动态已真删、无法找回，
+    // 但"这条曾参与过"的记录可以整体救回），避免用户手滑确认后连痕迹都没了。
     if (ok > 0) {
       const undoIds = list.filter(it => it.deleted).map(it => it.dynId);
-      toast('已删除 ' + ok + ' 条（B站动态已删；台账记录 5 秒内可撤销）', {
+      toast('已删除 ' + ok + ' 条（B站动态已删；记录已归档到回收站，5 秒内可撤销）', {
         duration: 5000,
         action: {
           text: '撤销',
           onClick: () => {
-            const lg = loadLedger();
-            let n = 0;
-            undoIds.forEach(id => { const e = lg[id]; if (e) { e.deleted = false; delete e.deletedAt; n++; } });
-            if (n) { saveLedger(lg); selected.clear(); renderList(); }
-            toast('已恢复 ' + n + ' 条台账记录（动态已从B站删除，无法找回）');
+            const r = restoreFromTrash(undoIds);
+            if (r.n) { selected.clear(); renderList(); }
+            toast('已恢复 ' + r.n + ' 条台账记录（已从回收站取回；动态已从B站删除，无法找回）');
           }
         }
       });
@@ -4369,11 +5182,20 @@
      第十一部分：事件绑定与启动
      ========================================================================== */
 
-  fab.addEventListener('click', () => {
+  // 面板内部也要吞「加载窗口攒下的 click」：用捕获阶段统一拦截，
+  // 抢在按钮自己的处理（冒泡阶段）之前 stopPropagation；加载完成后的真实点击不受影响。
+  // （点击目标是已被替换掉的旧卡片时，事件本来就不会冒泡到 panel —— 那种情况天然无害。）
+  panel.addEventListener('click', e => {
+    if (isStaleClick(e)) { e.stopPropagation(); e.preventDefault(); }
+  }, true);
+
+  fab.addEventListener('click', e => {
+    if (panelLoading) return;        // 加载窗口（含让帧空档）里的点击：忽略
+    if (isStaleClick(e)) return;     // 加载窗口里攒下的点击，补发到这里：吞掉（防面板乱开合）
     if (!panel.classList.contains('blm-show')) applyPanelPos();
     panel.classList.toggle('blm-show');
     applyTheme();
-    if (panel.classList.contains('blm-show')) renderList();
+    if (panel.classList.contains('blm-show')) openPanelWithRender();
     else stopCountdown();
   });
   document.getElementById('blm-close').addEventListener('click', () => {
@@ -4419,6 +5241,9 @@
   let hideBarsTimer = null;
   const bodyEl = document.getElementById('blm-body');
   if (bodyEl) bodyEl.addEventListener('scroll', () => {
+    // 程序化滚动（渲染后恢复位置 / 翻页回顶）不算「用户在滚」——
+    // 否则点一次筛选器就会让筛选条/分页条白白淡出又复位（用户实测的卡顿感）。
+    if (programmaticScroll) return;
     if (!panel.classList.contains('blm-scrolling')) panel.classList.add('blm-scrolling');
     clearTimeout(hideBarsTimer);
     hideBarsTimer = setTimeout(() => panel.classList.remove('blm-scrolling'), 300);
@@ -4544,6 +5369,7 @@
   bindChipEvents();                 // 放最后：内部会用到 timeRow / setTimeRowOpen
 
   bindListEvents();
+  bindCardPressFeedback();   // 卡片按压反馈（倾斜 + 光斑），受设置开关 / prefers-reduced-motion 控制
   document.getElementById('blm-del').addEventListener('click', doDelete);
   const selCurBtn = document.getElementById('blm-sel-cur');
   if (selCurBtn) selCurBtn.addEventListener('click', selectAllCurrent);
@@ -4580,7 +5406,7 @@
       if (!abortFlag && r.sync && (r.sync.missing || r.sync.confirmed || r.sync.revived)) {
         const s = r.sync;
         let msg = '脚本 v' + VERSION + ' 删除状态同步：\n\n';
-        if (s.confirmed) msg += '· ' + s.confirmed + ' 条连续两次扫描都未出现，已标记为「已删除」（多半是你手动删过）\n';
+        if (s.confirmed) msg += '· ' + s.confirmed + ' 条连续两次扫描都未出现，已归档到「设置 → 回收站」（多半是你手动删过；需要时可在那里找回记录）\n';
         if (s.pending) msg += '· ' + s.pending + " 条比本次列表里最旧的动态还老 —— 可能是列表没翻到那么深，"
           + '先不判断，**再扫描一次**确认（若下次出现了会自动恢复）\n';
         if (s.revived) msg += '· ' + s.revived + ' 条之前被标记删除、这次重新出现了，已自动恢复\n';

@@ -8,7 +8,7 @@ let src = fs.readFileSync(file, 'utf8');
 // 把内部函数暴露出来供测试
 src = src.replace(
   "console.log('[抽奖动态管理器] 已启动",
-  "globalThis.__T__ = { guessDrawDate, computeStatus, badgeOf, lotteryTypeBadge, needVerify, needReverify, typeOf, dupMapOf, inTimeRange, sortItems, setSort: (f, d) => { if (f) curSort = f; if (d) curSortDir = d; }, timeRange, findMarks, renderHighlighted, conditionRanges, parseUserDate, allWinnersOf, looksLikeLottery, shouldShowFab, clampPos, assignNumbers, detailHtml, timeChip, lotteryUrl, fetchLottery, detectLotteryMode, verifyLottery, fmtCountdown, deleteDynamic, getDeleteDiag: () => lastDeleteDiag, scanIntoLedger, stop: () => { abortFlag = true; }, resetAbort: () => { abortFlag = false; }, textOpen, SETTINGS, buildBackupData, getModeDetectCache, resetModeDetectCache, setWonState, showStatusMenu, syncDeleted, getScanTruncated, VERSION, pickLotteryText, lotteryScore, lotteryIssuer, dupKeyOf, groupAliveCount, saveLedger, canUnlock, lockIcon, applyLotteryResult, myPrizeLineHtml };\n  console.log('[抽奖动态管理器] 已启动"
+  "globalThis.__T__ = { guessDrawDate, computeStatus, badgeOf, lotteryTypeBadge, needVerify, needReverify, typeOf, dupMapOf, inTimeRange, sortItems, setSort: (f, d) => { if (f) curSort = f; if (d) curSortDir = d; }, timeRange, findMarks, renderHighlighted, conditionRanges, parseUserDate, allWinnersOf, looksLikeLottery, shouldShowFab, clampPos, assignNumbers, detailHtml, timeChip, lotteryUrl, fetchLottery, detectLotteryMode, verifyLottery, fmtCountdown, deleteDynamic, getDeleteDiag: () => lastDeleteDiag, scanIntoLedger, stop: () => { abortFlag = true; }, resetAbort: () => { abortFlag = false; }, textOpen, SETTINGS, buildBackupData, getModeDetectCache, resetModeDetectCache, setWonState, showStatusMenu, syncDeleted, getScanTruncated, VERSION, pickLotteryText, lotteryScore, lotteryIssuer, dupKeyOf, groupAliveCount, saveLedger, loadTrash, saveTrash, invalidateTrashCache, moveDeletedToTrash, renumberAll, restoreFromTrash, purgeFromTrash, unarchiveItem, allWonItems, canUnlock, lockIcon, applyLotteryResult, myPrizeLineHtml, guessBaseTs };\n  console.log('[抽奖动态管理器] 已启动"
 );
 
 /* ---- mock 浏览器环境 ---- */
@@ -116,6 +116,122 @@ check('相对日期不抢显式日期（10月15日优先于本周五）', (() =>
   return g && fmt(g.ts) === '2026-10-15 20:00';
 })());
 check('普通动态不误判为开奖', T.guessDrawDate('今天吃了火锅真好吃', BASE) === null);
+
+// 真实案例（2026-10-12，#244）：商品上市文案里夹着开奖日 —— 旧版把"9月7日全球上市"当成了开奖日
+const TTC_TEXT = 'pulsar PRO Series Susanto-X 2.0鼠标搭载TTC金轮编码器，'
+  + '将精密内核隐匿于鼠标之内，轮转之间，恒定如一。鼠标将于9月7日，全球上市！'
+  + '感兴趣的小伙伴可以期待一下咯~@派世pulsar 关&转&赞&评本动态，'
+  + '10月9日抽：5位粉丝朋友赠送【TTC随机轴体体验装】*1份 '
+  + '5位粉丝朋友赠送【TTC定制鼠标垫】*1个 5位粉丝朋友赠送【TTC定制手提袋】*1个 '
+  + '选键盘看轴体 好轴 TTC。在此，特别感谢粉丝朋友们与品牌的支持与认可。';
+const ttcBase = new Date(2026, 9, 1, 2, 13).getTime();   // 截图里的转发时间 2026-10-01 02:13
+const g244 = T.guessDrawDate(TTC_TEXT, ttcBase);
+check('真实案例 #244：商品上市日不抢开奖日（9月7日上市 vs 10月9日抽）',
+  g244 && fmt(g244.ts) === '2026-10-09 20:00',
+  g244 ? '得到 ' + fmt(g244.ts) + '（' + g244.raw + '）' : '未识别');
+check('只有商品上市日期的文案不乱猜（宁可不猜）',
+  T.guessDrawDate('新品将于9月7日，全球上市！敬请期待', BASE) === null);
+check('「将于X日开奖」不被上市减分误伤（正常识别）', (() => {
+  const g = T.guessDrawDate('本次抽奖将于10月20日开奖，请大家关注', BASE);
+  return g && fmt(g.ts) === '2026-10-20 20:00';
+})());
+check('「X日抽三位」中文数字写法也能选中（首发词同样不抢）', (() => {
+  const g = T.guessDrawDate('新品将于9月7日全球首发，10月9日抽三位赠送', BASE);
+  return g && fmt(g.ts) === '2026-10-09 20:00';
+})());
+// 存量更新路径：扫描时对 source='guess' 的日期用新算法重猜（老记录自动跟上，不必手动改）
+const srcScan = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
+check('扫描对「脚本猜的」日期每次重猜（老记录不背旧算法的错）',
+  srcScan.indexOf("} else if (rec.source === 'guess' && !rec.drawUnknown) {") >= 0
+    && srcScan.indexOf('v1.1.3：对「脚本猜的」日期每次扫描重猜一遍') >= 0);
+check('重猜判定「不该猜」时清掉旧错值（回到开奖日期不明，不挂错值）',
+  srcScan.indexOf("else if (rec.drawTs) { rec.drawTs = null; rec.guessRaw = null; }") >= 0);
+
+// 真实案例（2026-10-12 用户批量反馈 #243 / #52 / #160 / #140）
+// #243：纯商品介绍（通篇没有抽奖内容），"9月7日，全球上市" 曾被错猜为开奖日 → 应不猜
+const PULSAR2_TEXT = 'PRO Series Susanto-X 2.0 & 土星Pro Susanto Brothers 特别版 除Medium尺寸外，'
+  + '新增全新Large尺寸 · 全新XS-2传感器 · 最高42K DPI · Nordic 54L15 主控 · TTC 金轮编码器 · LINK 2 接收器 '
+  + '*幻影紫配色全球限量2000只 土星Pro Susanto Brothers 特别版：· XL尺寸 Soft软度 黑色表面 · 全新粉色包边 '
+  + '9月7日，全球上市';
+check('真实案例 #243：纯商品文案不猜开奖日期（9月7日全球上市，全篇无抽奖）',
+  T.guessDrawDate(PULSAR2_TEXT, new Date(2026, 9, 1, 2, 13).getTime()) === null);
+// #52：有抽奖内容但没有开奖日期，"9月9日20:00正式开售" 曾被错猜 → 应不猜
+const ATK_TEXT = '参与方式：关注 @ATK科技，转赞评此条动态并带话题 #ATK烈空幻影# 即可参与！'
+  + '活动奖品：抽1人得【ATK 烈空 幻影鼠标 *1，颜色随机】注意事项：中奖的宝子如果在七个自然日内未私信填写地址，将视为逾期作废！！'
+  + '活动最终解释权归 @ATK科技 所有 与其属性 4K 烈空 幻影 PHANTOM 鼠标，正式登场！'
+  + '机身采用复合碳纤维材质，几亿错位镂空外壳 以出色的重量强度比，兼顾轻盈机身与稳固支撑 在轻与强之间找到更理想的平衡 '
+  + '44g 轻量设计，中小手轻松选配对称鼠标 专为电竞设计 保留掌心空间，灵活微调更从容 均匀收腰，稳定握持，大幅提升转向灵活，用枪跟手不拖沓 '
+  + 'ATK 烈空 VISION 鼠标，首发到手价439.45元 9月9日20:00正式开售，首发赠ATK专业电竞冰袖+ATK X83鼠标垫';
+check('真实案例 #52：开售日期不猜成开奖（9月9日20:00正式开售，文案里没有开奖日期）',
+  T.guessDrawDate(ATK_TEXT, new Date(2026, 8, 16, 22, 14).getTime()) === null);
+// #160：音乐会时间（9月12日）曾被错猜，真抽奖日是 "10月12日竞妹抽1位" → 应选 10月12日
+const HECATE_TEXT = '漫步者30年 绽帆音乐会来啦~ 张鑫｜王以诺｜郁一凡现场开唱 还有炸鸡天团惊喜空降，'
+  + '带来特别首跳舞台 漫步者电竞实力声装，共同诠释好声音的魅力 - ⏰时间：9月12日（周六）17:00 '
+  + '📍地点：京东MALL（广州海珠店） 🎁福利：免票入场！直接来现场感受声浪！🎁看到这里的有福啦~ '
+  + '关转评，留言分享：你最喜欢哪款漫步者电竞的产品？ 10月12日竞妹抽1位宝子送出G4M PRO鼠标！'
+  + ' #漫步者30年绽帆机音 #漫步者30年超OK# #livehouse# #音乐演出# #张鑫# #王以诺# #郁一凡# #广州live# #HECATE漫步者电竞# #免费送#';
+check('真实案例 #160：活动时间（9月12日音乐会）不抢抽奖日（10月12日竞妹抽1位）', (() => {
+  const g = T.guessDrawDate(HECATE_TEXT, new Date(2026, 8, 26, 6, 5).getTime());
+  return g && fmt(g.ts) === '2026-10-12 20:00';
+})());
+// #140：明明写着 "开奖时间：2026年10月7号 20:00"，曾被正文开头的 "9月12日破万粉" 抢走 → 应选 10月7号
+const HAM_TEXT = '9月12日我们的账号顺利破万粉，胶眼间现在已经突破1.2万粉丝了！非常开心，也衷心感谢大家一路以来的支持与陪伴。'
+  + '废话不多说，直接来看本次抽奖的奖品与抽奖规则：奖品列表：1. "你的胆子真是肥喷喷的" 玩偶（共3名）50 厘米大小'
+  + '2.【赣南HAM网】一万粉丝纪念卡片（共50名）3.谐音科技明星卡片定制服务或 B站大会员月卡二选一（共3名）'
+  + '*最后对高木同学粉丝准备的神秘奖品（获取方式见下方专属福利）参与规则和开奖时间：参与方式：关注我们 转发本条动态 '
+  + '评论区任意留言（可以说说最喜欢我们哪期视频，或者接下来想看什么内容）即可参与抽奖。'
+  + '开奖时间：2026年10月7号 20:00 开奖 活动说明与注意事项：1.抽奖方式：我们将使用第三方在线抽奖工具（抽签箱）进行抽取，'
+  + '全程保证本次活动的公平公正。2.奖品细则：1、谐音科技明星卡片定制服务：定制规格为320克碉版纸100张。';
+check('真实案例 #140：明确写出的「开奖时间：2026年10月7号」不被正文开头的日期抢走', (() => {
+  const g = T.guessDrawDate(HAM_TEXT, new Date(2026, 9, 6, 4, 24).getTime());
+  return g && fmt(g.ts) === '2026-10-07 20:00';
+})());
+// 真实案例（2026-10-12 第二批用户反馈）：以下 4 条都是「商品日期」但不是开奖日期 → 应不猜
+// #APEX：手办预定开启（9月20日20:00开启…预定），有抽奖内容但没写开奖日期
+const APEX_TEXT = '#APEX-TOYS##原神##转发抽奖##基尼奇##原神周边# 转发+关注 @APEX-TOYS，抽1位旅行者出游后送出【基尼奇】Q版手办1体。'
+  + '亲爱的旅行者，APEX INNOVATION官方旗舰店将于9月20日 20:00开启【原神 幽夜绮想系列Q版手办 基尼奇款】预定，'
+  + '预售期间付定金还将获赠基尼奇特色色纸。袋中装满甜蜜的糖果，棒棒糖南瓜点缀，可爱帅气的造型，搭配专属场景立牌，氛围感拉满。'
+  + '基尼奇新品手办现已开放预览，欢迎旅行者前往店内查看详情~ '
+  + '◆产品名称：原神 幽夜绮想系列Q版手办 基尼奇款◆产品出处：《原神》◆产品售价：299元◆预定开启时间：2026年9月20日20:00◆发售时间：2027年7月'
+  + '◆产品材质：PVC、ABS、亚克力◆产品尺寸：高约10.6cm◆版权所有：©miHoYo';
+check('真实案例 #APEX：手办预定/发售日期不猜成开奖（文案没写开奖日期）',
+  T.guessDrawDate(APEX_TEXT, new Date(2026, 8, 20, 1, 44).getTime()) === null);
+// #LAMZU：全平台开售 9月24日（有"揪一位"抽奖但没写开奖日期）
+const LAMZU_TEXT = '搬极地冰川，凝一身绝色；澄澈，治愈，恍若北境冰雪渐渐融化—— Maya X V2 冰川蓝，全新登场！ '
+  + '9月24日 10:00 全平台开售！注：【四色可选】冰川蓝、杏花粉、玛雅紫夜、玛雅白 【关转评赞有福利】'
+  + '关注@LAMZU兰族，评论区随机揪一位粉丝送 兰族 Maya X V2 新品鼠标x1（颜色随机）！'
+  + ' #兰族 MayaXV2##兰族##LAMZU##电竞鼠标##无畏契约#';
+check('真实案例 #LAMZU：全平台开售日期不猜成开奖（文案没写开奖日期）',
+  T.guessDrawDate(LAMZU_TEXT, new Date(2026, 9, 1, 7, 43).getTime()) === null);
+// #82 三福："9月25日，来三福"场景日期（有"揪2个宝"抽奖但没写开奖日期）
+const SANFU82_TEXT = '十载光阴忽然而过 属于景喻的悸动依旧滚烫 关注我！转评赞揪2个宝song同款 新品情报【放驾等我】拾年系列 '
+  + '【放驾等我】心动音律系列 【放驾等我】虎牙系列 9月25日，来三福，共赴景喻心动之约 查看制品清单和更多活动详情 '
+  + '*受物流影响，制品预计9月25日起陆续到店，请大家到店前咨询店员，以免跑空~ #放驾等我##陈景深##喻繁##三福##三福潮趣好搭子#';
+check('真实案例 #82：线下活动日期不猜成开奖（文案没写开奖日期）',
+  T.guessDrawDate(SANFU82_TEXT, new Date(2026, 8, 20, 2, 1).getTime()) === null);
+// #81 三福：《一人之下》匠韵长系列登陆三福（有"揪1位"抽奖但没写开奖日期）
+const SANFU81_TEXT = '笔墨绘华服，古韵凝风骨 @阅文好物 授权，@画糖HUATANG 出品 《一人之下》匠韵长系列，将于9月25日登陆三福 '
+  + '关注+ 揪1位随机周边 【新品信息】 徽章盲盒｜拍立得盲盒｜立牌盲盒｜色纸盲盒 【线下满赠】'
+  + '购买《一人之下》匠韵长系列实付满69元，赠随机透卡*1张（单笔订单可叠加）'
+  + '购买《一人之下》匠韵长系列实付满99元，赠纸袋*1个（单笔订单不可叠加） '
+  + '【首发门店】24省开启线下门店首发，详见首发门店海报 ps：受物流影响，产品预计9月25日起陆续到店，请大家到店前咨询店员，以免跑空~'
+  + ' #一人之下匠韵长系列# #三福##三福潮趣好搭子#';
+check('真实案例 #81：商品登陆日期不猜成开奖（文案没写开奖日期）',
+  T.guessDrawDate(SANFU81_TEXT, new Date(2026, 8, 20, 2, 0).getTime()) === null);
+// #108 佚名科技："一周后"是相对「源动态发布」的时间，不能用转发时间做基准
+const YIMIN_TEXT = '又来给大家抽奖了！ 关注@佚名科技 +转发+评论，一周后通过初音社抽奖工具随机抽取一个小伙伴送出倍思45w充电器一个！';
+check('#108：「一周后」以给定基准 +7 天（相对日期解析本身正确）', (() => {
+  const base = new Date(2026, 8, 20, 12, 0).getTime();   // 假设源动态 9月20日 12:00 发布
+  const g = T.guessDrawDate(YIMIN_TEXT, base);
+  return g && fmt(g.ts) === '2026-09-27 12:00';
+})());
+check('#108：扫描猜日期以「源动态发布时间」为基准（不是转发时间）',
+  srcScan.indexOf('guessDrawDate(rec.text, guessBaseTs(rec))') >= 0
+    && srcScan.indexOf('function guessBaseTs(it)') >= 0);
+check('#108：基准选择真跑——普通记录用源发布时间、加码记录退回转发时间（拿不到加码者发布时间）',
+  T.guessBaseTs({ pubTs: 200, origPubTs: 100, upName: 'U', selfText: '' }) === 100
+    && T.guessBaseTs({ pubTs: 200, origPubTs: 100, upName: 'U', selfText: '//@TTC正牌科电:参与了抽奖' }) === 200
+    && T.guessBaseTs({ pubTs: 200, origPubTs: 100, upName: '歪设长', selfText: '//@歪设长:参加了' }) === 100);
 
 console.log('\n[3] 风险分级（核心安全逻辑）');
 const mk = o => Object.assign({ won: null, source: null, drawTs: null, deleted: false, official: null }, o);
@@ -816,7 +932,10 @@ S.allowCheckUnverified = false;
   console.log('\n[28] 排序方向按钮：位置右移 + 双箭头图标');
   const srcSortBtn = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
   check('用内联 SVG 双箭头图标（不依赖外链）', srcSortBtn.indexOf('<path d="M7 4v16"/>') >= 0 && srcSortBtn.indexOf('<path d="M17 20V4"/>') >= 0);
-  check('按钮靠右对齐', srcSortBtn.indexOf('id="blm-sortdir" title="切换正序 / 倒序" style="margin-left:auto"') >= 0);
+  check('排序按钮固定在行右侧：移到 blm-bar2-tools 容器外 + flex:none（不再被挤换行）',
+    srcSortBtn.indexOf('</div>\n      <button class="blm-iconbtn" id="blm-sortdir" title="切换正序 / 倒序">') >= 0
+    && srcSortBtn.indexOf('.blm-bar2-tools{') >= 0
+    && srcSortBtn.indexOf('#blm-sortdir{flex:none;}') >= 0);
   check('时间范围按钮已移到筛选 chips 末尾', srcSortBtn.indexOf("id=\"blm-timebtn\"") > srcSortBtn.indexOf('const FILTERS'));
   check('全选按钮排在类型筛选之后', srcSortBtn.indexOf('id="blm-types"') < srcSortBtn.indexOf('id="blm-sel-cur"'));
   check('全选按钮改用圆角矩形样式（blm-btn）', srcSortBtn.indexOf('class="blm-btn" id="blm-sel-cur"') >= 0 && srcSortBtn.indexOf('class="blm-btn" id="blm-sel-all"') >= 0);
@@ -1104,8 +1223,9 @@ S.allowCheckUnverified = false;
   const scanB = await T.scanIntoLedger(() => {});
   check('连续两次缺失后标记删除（confirmed=2）', scanB.sync.confirmed === 2, JSON.stringify(scanB.sync));
   const l2 = globalThis.GM_getValue('bili_lottery_ledger_v1', {});
-  check('d2 已标删除且来源为 sync', l2.d2.deleted === true && l2.d2.deletedVia === 'sync');
-  check('d3 已标删除', l2.d3.deleted === true);
+  const t2 = globalThis.GM_getValue('bili_lottery_trash_v1', {});
+  check('d2/d3 已归档进回收站（台账不再持有已删除条目）', !l2.d2 && !l2.d3 && !!t2.d2 && !!t2.d3, JSON.stringify({ l2: Object.keys(l2), t2: Object.keys(t2) }));
+  check('回收站里的 d2 保留来源为 sync', t2.d2.deleted === true && t2.d2.deletedVia === 'sync');
   check('每次都出现的 d1 不受影响', l2.d1.deleted === false && !l2.d1.missCount);
 
   // 误标自愈：sync 标删的条目重新出现在列表里 -> 自动恢复
@@ -1125,8 +1245,9 @@ S.allowCheckUnverified = false;
   const scanC = await T.scanIntoLedger(() => {});
   check('重新出现的 sync 误标条目自动恢复（revived=1）', scanC.sync.revived === 1, JSON.stringify(scanC.sync));
   const l3 = globalThis.GM_getValue('bili_lottery_ledger_v1', {});
+  const t3 = globalThis.GM_getValue('bili_lottery_trash_v1', {});
   check('r1 已复活且清除删除标记', l3.r1.deleted === false && !l3.r1.deletedTs);
-  check('脚本自己删的 r2 不会被复活', l3.r2.deleted === true);
+  check('脚本自己删的 r2 不会被复活、且被归档进回收站', !l3.r2 && !!t3.r2 && t3.r2.deleted === true);
 
   // dupMapOf 排除已删除（换回 d1 场景的 mock，扫两次完成确认）
   globalThis.GM_setValue('bili_lottery_ledger_v1', mk36());
@@ -1196,11 +1317,13 @@ S.allowCheckUnverified = false;
   });
   const scanX = await T.scanIntoLedger(() => {});
   const lx = globalThis.GM_getValue('bili_lottery_ledger_v1', {});
-  check('列表已覆盖到该时间点 -> 一次判定即删除', lx.x1.deleted === true && scanX.sync.confirmed === 1, JSON.stringify(scanX.sync));
+  const tx = globalThis.GM_getValue('bili_lottery_trash_v1', {});
+  check('列表已覆盖到该时间点 -> 一次判定即删除（并归档进回收站）', !lx.x1 && !!tx.x1 && tx.x1.deleted === true && scanX.sync.confirmed === 1, JSON.stringify(scanX.sync));
   check('比列表最旧的动态还老 -> 保守，等下一次', lx.x2.deleted === false && scanX.sync.pending === 1, JSON.stringify(scanX.sync));
   const scanX2 = await T.scanIntoLedger(() => {});
   const lx2 = globalThis.GM_getValue('bili_lottery_ledger_v1', {});
-  check('老条目在第二次扫描后确认删除', lx2.x2.deleted === true && scanX2.sync.confirmed === 1, JSON.stringify(scanX2.sync));
+  const tx2 = globalThis.GM_getValue('bili_lottery_trash_v1', {});
+  check('老条目在第二次扫描后确认删除（并归档进回收站）', !lx2.x2 && !!tx2.x2 && scanX2.sync.confirmed === 1, JSON.stringify(scanX2.sync));
 
 
   /* ---- [37] 加码抽奖：正文择优（源动态内容 vs 你自己的转发文案） ---- */
@@ -1415,7 +1538,7 @@ S.allowCheckUnverified = false;
   check('toast 样式已定义', src45.indexOf('.blm-toast{') >= 0);
   check('toast 支持操作按钮（撤销）', src45.indexOf("className = 'blm-toast-act'") >= 0);
   check('删除成功给出 5s 撤销 toast', src45.indexOf("撤销") >= 0 && src45.indexOf('duration: 5000') >= 0);
-  check('撤销真正恢复台账记录', src45.indexOf('e.deleted = false') >= 0 && src45.indexOf('delete e.deletedAt') >= 0);
+  check('撤销 = 从回收站取回记录（restoreFromTrash）', src45.indexOf('const r = restoreFromTrash(undoIds);') >= 0 && src45.indexOf('function unarchiveItem') >= 0);
   check('非危险提示改走 toast（设置已保存）', src45.indexOf("toast('设置已保存") >= 0);
   check('危险操作仍走 confirm 二次确认', src45.indexOf('SETTINGS.confirmBeforeDelete || wonList.length || unverified.length || gaveUp') >= 0);
   check('扫描结果明细仍用 alert（重要信息不丢）', src45.indexOf("alert('扫描完成") >= 0);
@@ -1462,8 +1585,8 @@ S.allowCheckUnverified = false;
   check('selectAllSafe 空态区分：无记录 vs 无零风险条目',
     src47.indexOf('当前筛选条件下没有记录，先调整筛选或点「全部」看看。') >= 0
       && src47.indexOf('当前筛选结果里没有零风险可删的条目。') >= 0);
-  check('版本号已升至 1.1.1（@version 与 VERSION 两处一致）',
-    src47.indexOf('@version      1.1.1') >= 0 && src47.indexOf("VERSION = '1.1.1'") >= 0);
+  check('版本号已升至 1.1.3（@version 与 VERSION 两处一致）',
+    src47.indexOf('@version      1.1.3') >= 0 && src47.indexOf("VERSION = '1.1.3'") >= 0);
 
   console.log('\n[48] v1.0.1 「清理重复」按钮并入「可删」（重复视图上下文语义）');
   const src48 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
@@ -1572,9 +1695,10 @@ S.allowCheckUnverified = false;
   console.log('\n[54] v1.0.1 body 弹窗纳入主题变量作用域（修详情页透明）');
   const src54 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
   check('详情浮窗 #blm-detailbox 挂进亮/暗两套 token 作用域',
-    /#blm-panel,#blm-fab,#blm-float,#blm-detailbox,#blm-diag,#blm-stmenu,#blm-prizebox\{/.test(src54)
+    /#blm-panel,#blm-fab,#blm-float,#blm-detailbox,#blm-diag,#blm-stmenu,#blm-prizebox,#blm-trashbox\{/.test(src54)
       && src54.indexOf('body.blm-dark #blm-detailbox') >= 0
-      && src54.indexOf('body.blm-dark #blm-prizebox') >= 0);
+      && src54.indexOf('body.blm-dark #blm-prizebox') >= 0
+      && src54.indexOf('body.blm-dark #blm-trashbox') >= 0);
   check('token 作用域注释说明踩坑原因', src54.indexOf('整个弹窗透明') >= 0);
 
   console.log('\n[55] v1.0.1 OC 水印内嵌（设置页作者栏）');
@@ -1678,24 +1802,24 @@ S.allowCheckUnverified = false;
       && src59.indexOf("more.textContent = opening ? '收起正文 ▲' : '展开正文 ▼';") >= 0
       && /data-more'\];\n[\s\S]*?renderList\(\); return;/.test(src59) === false);
 
-  /* [60] 已删除不再盖掉已中奖（2026-10-10 用户实测：已删除的中奖动态筛不到、统计不到）
-     原则：中奖是事实，删除只是操作状态 —— 筛选/统计/CSV/卡片标签都要把事实带回来 */
+  /* [60] 已删除 × 已中奖（2026-10-17 收编）：已删除条目归档进回收站、不再出现在台账，
+     但「中奖是事实」的口径保留在：卡片双标签 / CSV 导出（allWonItems）/ 关注页统计 */
   (() => {
     const src60 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
     console.log('\n[60] 已删除 × 已中奖：事实不被操作状态覆盖');
 
-    // chip 计数：deleted 分支同时计入 won
-    check('renderChips：已删除分支单独处理，已删除的中奖同时计入「已中奖」计数',
-      /k === 'deleted'[\s\S]*?counts\.deleted\+\+;[\s\S]*?if \(it\.won === true\) counts\.won\+\+;/.test(src60));
-    // 筛选匹配：勾「已中奖」能捞出已删除的中奖条目
-    check('筛选匹配：勾「已中奖」包含已删除的中奖条目',
-      src60.indexOf("(filterSet.has('won') && it.deleted && it.won === true)") >= 0);
+    // 台账渲染：已归档条目过滤（已删除不再出现在台账页）
+    check('台账渲染过滤已归档（已删除不再出现）',
+      src60.indexOf('const allItems = Object.values(ledger).filter(it => !it.deleted);') >= 0);
+    // FILTERS：不再有「已删除」筛选（归档统一走「设置 → 回收站」）
+    check('FILTERS 已无「已删除」筛选项',
+      src60.indexOf("{ key: 'deleted', label: '已删除' }") < 0);
     // 卡片标签：已删除的中奖拆成两个标签（灰色「已删除」+ 金色「已中奖」）
     check('statusTagHtml：已删除的中奖拆成「已删除」「已中奖」两个标签',
       /st\.key === 'deleted' && it\.won === true[\s\S]{0,200}已删除<\/span>[\s\S]{0,200}blm-wontag[\s\S]{0,200}已中奖<\/span>/.test(src60));
-    // CSV：导出含已删除，且新增「状态」列（统计页已移除，导出保留在设置页）含已删除，且新增「状态」列
-    check('CSV 导出：包含已删除的中奖条目，并新增「状态」列',
-      /const won = Object\.values\(ledger\)\.filter\(it => it\.won === true\);[\s\S]*?const header = \['UP主', '奖品', '开奖时间', '动态类型', '状态',/.test(src60));
+    // CSV：数据源 = 台账 + 回收站（中过就是中过），保留「状态」列
+    check('CSV 导出：中奖条目含回收站（allWonItems），保留「状态」列',
+      /const won = allWonItems\(\);[\s\S]{0,600}const header = \['UP主', '奖品', '开奖时间', '动态类型', '状态',/.test(src60));
     // 关注页：中过奖的 UP 即使动态删了也保留「中过奖」风险标记
     check('关注页：已删除的中奖动态仍计入「中过奖」取关风险',
       /if \(it\.won === true\) \{ x\.won\+\+;[\s\S]*?return; \}[\s\S]*?if \(it\.deleted\) return;/.test(src60));
@@ -1920,6 +2044,11 @@ S.allowCheckUnverified = false;
     check('滚动时挂 blm-scrolling，停 300ms 防抖后摘掉',
       /if \(!panel\.classList\.contains\('blm-scrolling'\)\) panel\.classList\.add\('blm-scrolling'\);/.test(src65)
         && /hideBarsTimer = setTimeout\(\(\) => panel\.classList\.remove\('blm-scrolling'\), 300\);/.test(src65));
+    check('程序化滚动不触发淡出（点筛选器/翻页时 chips 白闪一下的修复）',
+      /let programmaticScroll = false;/.test(src65)
+        && /if \(programmaticScroll\) return;/.test(src65)
+        && /programmaticScroll = true;[\s\S]{0,200}renderListInner\(\);/.test(src65)
+        && /requestAnimationFrame\(\(\) => \{ programmaticScroll = false; \}\);/.test(src65));
     check('悬浮层方案：chips/pagebar 绝对定位，面板高度恒定（不重排 = 不跳）',
       /\.blm-mid\{position:relative;flex:1;min-height:0;display:flex;flex-direction:column;\}/.test(src65)
         && /\.blm-mid>\.blm-chips\{position:absolute;left:0;right:0;top:0;z-index:6;/.test(src65)
@@ -1947,9 +2076,9 @@ S.allowCheckUnverified = false;
         && (src65.match(/hideListChrome\(\);[^\n]*\n/g) || []).length >= 2);
     check('hideListChrome 连分页条一起收（设置页曾漏出「上一页 1 2 3」悬浮条）',
       /function hideListChrome\(\) \{[\s\S]{0,600}const pagebar = document\.getElementById\('blm-pagebar'\);[\s\S]{0,80}if \(pagebar\) pagebar\.style\.display = 'none';/.test(src65));
-    check('挂 body 的弹窗必须进主题变量作用域（#blm-prizebox 亮/暗两处都在，防透明复踩）',
-      /#blm-panel,#blm-fab,#blm-float,#blm-detailbox,#blm-diag,#blm-stmenu,#blm-prizebox\{/.test(src65)
-        && /body\.blm-dark #blm-panel,[\s\S]*?body\.blm-dark #blm-stmenu, body\.blm-dark #blm-prizebox\{/.test(src65));
+    check('挂 body 的弹窗必须进主题变量作用域（#blm-prizebox / #blm-trashbox 亮/暗两处都在，防透明复踩）',
+      /#blm-panel,#blm-fab,#blm-float,#blm-detailbox,#blm-diag,#blm-stmenu,#blm-prizebox,#blm-trashbox\{/.test(src65)
+        && /body\.blm-dark #blm-panel,[\s\S]*?body\.blm-dark #blm-stmenu, body\.blm-dark #blm-prizebox, body\.blm-dark #blm-trashbox\{/.test(src65));
   })();
 
   /* [66] 关注页整顿（2026-10-11）：勾选持久化 / 抽奖次数口径 / 锁定理由可见 / 工具条收纳 / 范围说明 / 智能补标撤销 */
@@ -2047,6 +2176,502 @@ S.allowCheckUnverified = false;
         && /if \(goBtn\) goBtn\.disabled = !n;/.test(src66)
         && /\.blm-ufseln b\{color:#FB7299/.test(src66));
   })();
+
+  /* ===================== [67] 卡片按压反馈（v1.0.2） ===================== */
+  (() => {
+    const src67 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
+    console.log('\n[67] 卡片按压反馈：倾斜 + 光斑 + 弹性复原');
+
+    // 1 CSS：按下态倾斜（perspective + rotateX/Y），幅度读 --blm-tilt 封顶
+    check('CSS 按下态用 perspective + rotateX/Y 倾斜，角度走 --tx/--ty',
+      /\.blm-item\{[^}]*transform-style:preserve-3d;/.test(src67)
+        && /\.blm-item\.blm-press\{[\s\S]{0,220}transform:perspective\(600px\)[\s\S]{0,160}rotateX\(calc\(var\(--ty,0\) \* 1deg\)\) rotateY\(calc\(var\(--tx,0\) \* 1deg\)\)/.test(src67));
+    check('CSS 光斑：radial-gradient 跟随 --px/--py，默认透明，按下才显',
+      /\.blm-item::after\{[\s\S]{0,260}radial-gradient\(circle 120px at var\(--px,50%\) var\(--py,50%\)/.test(src67)
+        && /\.blm-item\.blm-press::after\{opacity:1;/.test(src67));
+    check('CSS 弹性复原：.blm-release 走回弹曲线 cubic-bezier',
+      /\.blm-item\.blm-release\{transition:transform \.42s cubic-bezier\(\.34,1\.4,\.64,1\);/.test(src67));
+    check('倾斜幅度封顶（--blm-tilt，亮/暗两套主题都有）',
+      (src67.match(/--blm-tilt:3\.2;/g) || []).length >= 1
+        && /--blm-press-glow:rgba\(251,114,153,\.16\)/.test(src67)
+        && /--blm-press-glow:rgba\(251,114,153,\.18\)/.test(src67));
+    check('上锁 / 已取关的卡片不参与（CSS !important 兜底 + .blm-nopress）',
+      /\.blm-item\.locked,\.blm-item\.blm-nopress\{transform:none !important;\}/.test(src67)
+        && /\.blm-item\.locked::after,\.blm-item\.blm-nopress::after\{opacity:0 !important;\}/.test(src67));
+    check('尊重 prefers-reduced-motion：媒体查询里禁掉倾斜与光斑',
+      /@media \(prefers-reduced-motion: reduce\)\{[\s\S]{0,240}\.blm-item\.blm-press\{transform:none !important;\}/.test(src67));
+
+    // 2 JS：委托 + 状态跳过 + rAF 节流 + 复位兜底
+    check('JS 委托 pointerdown/move/up/cancel 到 body，仅主键触发',
+      /function bindCardPressFeedback\(\)/.test(src67)
+        && /body\.addEventListener\('pointerdown'/.test(src67)
+        && /body\.addEventListener\('pointermove'/.test(src67)
+        && /body\.addEventListener\('pointerup'/.test(src67)
+        && /body\.addEventListener\('pointercancel'/.test(src67)
+        && /if \(e\.button !== 0\) return;/.test(src67));
+    check('JS 跳过不可按压卡片（locked / blm-nopress）',
+      /function isNoPressCard\(card\)/.test(src67)
+        && /card\.classList\.contains\('locked'\) \|\| card\.classList\.contains\('blm-nopress'\)/.test(src67)
+        && /if \(isNoPressCard\(card\)\) return;/.test(src67));
+    check('JS 用 rAF 节流（pointermove 不直接写样式）',
+      /pressRaf = requestAnimationFrame\(applyPressTilt\);/.test(src67)
+        && /if \(!pressRaf\) pressRaf = requestAnimationFrame\(applyPressTilt\);/.test(src67));
+    check('JS 复位兜底：pointerleave / blur / scroll 都调用 endPress',
+      /body\.addEventListener\('pointerleave', \(\) => endPress\(true\), true\);/.test(src67)
+        && /window\.addEventListener\('blur', \(\) => endPress\(true\)\);/.test(src67)
+        && /body\.addEventListener\('scroll', \(\) => endPress\(true\), \{ passive: true \}\);/.test(src67));
+    check('JS 倾斜上限读 CSS 变量 --blm-tilt（不硬编码）',
+      /const max = parseFloat\(getComputedStyle\(pressCard\)\.getPropertyValue\('--blm-tilt'\)\) \|\| 3\.2;/.test(src67));
+
+    // 3 设置开关 + 即时生效
+    check('CONFIG 新增 pressFeedback（默认 true）',
+      /pressFeedback: true,/.test(src67) && /SETTINGS\.pressFeedback \? ' checked' : ''/.test(src67));
+    check('开关实时判断（pressEnabled 每次事件都查，改完即时生效不等重开面板）',
+      /function pressEnabled\(\)/.test(src67)
+        && /if \(!SETTINGS\.pressFeedback\) return false;/.test(src67)
+        && /settingsChangedHooks\.push\(\(\) => \{ if \(!SETTINGS\.pressFeedback\) endPress\(true\); \}\);/.test(src67));
+    check('关注页已取关卡片挂 .blm-nopress',
+      /class="blm-item' \+ \(x\.unfollowedAt \? ' blm-nopress' : ''\)/.test(src67));
+    check('按住期间禁文本选择（避免拖动时选中正文），复位时还原',
+      /#blm-panel\.blm-pressing \.blm-body\{user-select:none;-webkit-user-select:none;\}/.test(src67)
+        && /panel\.classList\.add\('blm-pressing'\);/.test(src67)
+        && /panel\.classList\.remove\('blm-pressing'\);/.test(src67));
+  })();
+
+  /* ---- [68] 打开面板的加载反馈与提速（v1.1.3）：骨架 / 环 / 吞点击 / 秒开 / 查表 ---- */
+  console.log('\n[68] 打开面板的加载反馈与提速');
+  const src68 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
+
+  // 1 FAB 环形进度
+  check('FAB 环：SVG 画轨道 + 四分之一弧两圈',
+    src68.indexOf('<circle class="trk"') >= 0 && src68.indexOf('<circle class="arc"') >= 0
+      && src68.indexOf('stroke-dasharray:47 142;') >= 0);
+  check('FAB 环：只在加载态显形并旋转（.blm-loading 控制）',
+    /#blm-fab\.blm-loading \.blm-fabring\{opacity:1;animation:blm-ringspin/.test(src68));
+  check('FAB 环：旋转动画走 transform（合成层，主线程忙时照转）',
+    src68.indexOf('@keyframes blm-ringspin{to{transform:rotate(360deg);}}') >= 0
+      && src68.indexOf('will-change:transform;') >= 0);
+  check('FAB 环：reduced-motion 下不转', /#blm-fab\.blm-loading \.blm-fabring\{animation:none;\}/.test(src68));
+  check('FAB 环：pointer-events:none 不挡点击',
+    /\.blm-fabring\{position:absolute;[\s\S]{0,160}pointer-events:none;/.test(src68));
+
+  // 2 骨架屏
+  check('骨架：showSkeleton 铺 4 张占位卡',
+    /function showSkeleton\(\)[\s\S]{0,420}for \(let i = 0; i < 4; i\+\+\)/.test(src68));
+  check('骨架：扫光用 translateX（合成友好）+ 主题变量配色',
+    src68.indexOf('transform:translateX(-100%);animation:blm-skel-sweep') >= 0
+      && src68.indexOf('--blm-skel-sweep') >= 0);
+  check('骨架：淡入 .16s（渲染快时几乎无感，不白闪）', src68.indexOf('animation:blm-skel-in .16s ease-out') >= 0);
+  check('骨架：reduced-motion 下停扫光', /\.blm-skel-line::after,\.blm-skel-chip::after\{animation:none;opacity:\.3;\}/.test(src68));
+  check('骨架：渲染完成的真内容自然覆盖骨架（不手动清理）',
+    /渲染完成后的真内容会自然覆盖骨架/.test(src68));
+  check('骨架顶替内容也包「程序化滚动」窗口（不让筛选条误淡出）',
+    /骨架顶替列表会让 scrollTop 归 0[\s\S]{0,160}programmaticScroll = true;/.test(src68));
+  check('骨架路径渲染后恢复滚动位置（铺骨架前先记 keepPos、渲染时传入）',
+    src68.indexOf("const keepPos = body && typeof body.scrollTop === 'number' ? body.scrollTop : null;") >= 0
+      && src68.indexOf('renderList(keepPos);') >= 0
+      && src68.indexOf("const keep = (typeof keepOverride === 'number') ? keepOverride : (body ? body.scrollTop : 0);") >= 0);
+
+  // 3 让帧 + 吞点击
+  check('渲染前先让两帧（骨架先上屏再跑重活）',
+    src68.indexOf('requestAnimationFrame(() => requestAnimationFrame(run));') >= 0);
+  check('无 rAF 环境退回 setTimeout 近似两帧', /setTimeout\(run, 34\)/.test(src68));
+  check('加载窗口：panelLoading 挡点击', /if \(panelLoading\) return;/.test(src68));
+  check('加载窗口：时间戳吞「补发的点击」（isStaleClick + suppressClickBefore）',
+    src68.indexOf('function isStaleClick(e)') >= 0 && src68.indexOf('e.timeStamp < suppressClickBefore') >= 0);
+  check('重活干完记录时间戳（比它早的补发点击都会被吞）', src68.indexOf('suppressClickBefore = nowTs();') >= 0);
+  check('nowTs 与事件时间戳同基准（performance.now）', src68.indexOf('return performance.now();') >= 0);
+  check('面板内捕获阶段统一拦截补发点击（抢在按钮处理之前）',
+    /panel\.addEventListener\('click', e => \{\s*if \(isStaleClick\(e\)\) \{ e\.stopPropagation\(\); e\.preventDefault\(\); \}\s*\}, true\);/.test(src68));
+  check('FAB 点击也吞补发点击（防面板乱开合）',
+    /fab\.addEventListener\('click', e => \{\s*if \(panelLoading\) return;[\s\S]{0,120}if \(isStaleClick\(e\)\) return;/.test(src68));
+
+  // 4 无变化秒开
+  check('renderList 记录版本与渲染时刻',
+    src68.indexOf('lastRenderedVersion = ledgerVersion;') >= 0
+      && src68.indexOf('lastRenderedAt = Date.now();') >= 0
+      && src68.indexOf('everRendered = true;') >= 0);
+  check('秒开条件：版本一致 + 5 分钟有效期内',
+    src68.indexOf('ledgerVersion === lastRenderedVersion') >= 0
+      && src68.indexOf('SKIP_RENDER_MAX_MS = 5 * 60 * 1000') >= 0);
+  check('秒开时只把倒计时 timer 接回来（时间系 UI 不能晾着）',
+    /if \(everRendered && ledgerVersion === lastRenderedVersion[\s\S]{0,200}startCountdown\(\)/.test(src68));
+  check('设置页轻量不铺骨架（避免表单闪骨架违和）',
+    /if \(curTab === 'set'\) \{ renderList\(\); return; \}/.test(src68));
+  check('saveLedger 里版本自增（数据变了就不能秒开）',
+    /GM_setValue\(STORE_KEY, l\);[\s\S]{0,200}ledgerVersion\+\+;/.test(src68));
+  check('watchLedger 里版本自增（别的页面写入也算数据变了）',
+    /if \(Date\.now\(\) - lastSelfWrite < 500\) return;\s*ledgerVersion\+\+;/.test(src68));
+
+  // 5 groupAliveCount 查表化（O(N²) → O(N)）
+  check('查表：一次构建 + O(1) 查询（不再每卡 loadLedger）',
+    src68.indexOf('function buildAliveCountTable(ledger)') >= 0
+      && src68.indexOf('if (!aliveCountTable) buildAliveCountTable();') >= 0);
+  check('查表：saveLedger 落盘后作废、下次用时重建',
+    /GM_setValue\(STORE_KEY, l\);[\s\S]{0,240}aliveCountTable = null;/.test(src68)
+      && /GM_setValue\(STORE_KEY, l\);[\s\S]{0,300}aliveCountLedger = null;/.test(src68));
+  check('查表：renderListInner 渲染前主动建表（复用同一份快照）',
+    src68.indexOf('buildAliveCountTable(ledger);') >= 0);
+  // 真跑：查表版行为与旧版一致
+  globalThis.GM_setValue('bili_lottery_ledger_v1', {
+    a1: { dynId: 'a1', origId: 'OA', upName: 'U', text: 'x', deleted: false },
+    a2: { dynId: 'a2', origId: 'OA', upName: 'U', text: 'x', deleted: false },
+    a3: { dynId: 'a3', origId: 'OA', upName: 'U', text: 'x', deleted: true },
+    b1: { dynId: 'b1', origId: 'OB', upName: 'V', text: 'x', deleted: false }
+  });
+  const a1it = globalThis.GM_getValue('bili_lottery_ledger_v1', {}).a1;
+  check('查表真跑：同组 2 条活口、排除自己 → 1', T.groupAliveCount(a1it, 'a1') === 1,
+    '实际 ' + T.groupAliveCount(a1it, 'a1'));
+  check('查表真跑：不传 excludeId（含自己）→ 2', T.groupAliveCount(a1it) === 2,
+    '实际 ' + T.groupAliveCount(a1it));
+  // 落盘后表作废 → 删掉同组另一条（a2），重新计数应为 0
+  const a2new = Object.assign({}, globalThis.GM_getValue('bili_lottery_ledger_v1', {}).a2, { deleted: true });
+  T.saveLedger({ a2: a2new });
+  check('查表真跑：落盘后自动重建（同组另一条被删 → 0）', T.groupAliveCount(a1it, 'a1') === 0,
+    '实际 ' + T.groupAliveCount(a1it, 'a1'));
+
+  /* ---- [69] 幽灵勾选治理：勾着的卡片被踢出筛选后不残留（v1.1.3） ---- */
+  console.log('\n[69] 幽灵勾选治理');
+  const src69 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
+  check('dropSelectionIfGone：用「当前筛选结果」(curItems) 判定 + 摘勾选 + 提示',
+    /function dropSelectionIfGone\(dynId\)/.test(src69)
+      && src69.indexOf('if (curItems.some(x => x.dynId === dynId)) return false;') >= 0
+      && src69.indexOf("toast('这条已不在当前筛选里，勾选已自动取消');") >= 0);
+  check('摘选后同步刷新底栏计数（删除按钮 / 全选按钮 / 文案）',
+    src69.indexOf('refreshSelCounts(curItems);   // 底部计数 / 删除按钮 / 文案跟着更新') >= 0);
+  check('三个操作入口都接上：改开奖日期（填值 + 标记不明 两个分支）+ 改状态菜单',
+    (src69.match(/dropSelectionIfGone\(dynId\);/g) || []).length >= 3);
+  check('底栏披露「N 条不在当前筛选」（勾选不再是黑盒）',
+    /function countHiddenSelection\(items\)/.test(src69)
+      && /function updateProgText\(items\)/.test(src69)
+      && src69.indexOf("'（' + hidden + ' 条不在当前筛选）'") >= 0);
+  check('底栏文案由 refreshSelCounts → updateProgText 统一出（渲染与原地刷新一致）',
+    src69.indexOf('updateProgText(items);   // 底栏') >= 0);
+  check('删除确认点名「不在当前筛选视图里」的已选条目',
+    /const hiddenN = countHiddenSelection\(curItems\);/.test(src69)
+      && src69.indexOf('条已选动态不在当前筛选视图里') >= 0);
+
+  /* ---- [70] 第四批真实案例（用户批量反馈）：商品/活动日期不猜、抽奖截止日、14:00 时刻、1/12 比例 ---- */
+  console.log('\n[70] 第四批真实案例（开奖日期识别）');
+  const src70 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
+  // #520 一加：9月5日14:00 是「冠军加冕之战」（比赛时间），不是开奖
+  const YIJIA_TEXT = '【转 + 评】抽送航海家小欧数据线 1 个！ #一加杯#全国电竞总决赛，十万电竞少年的终极战场，即将点燃！'
+    + ' 速来围观枪神表演赛，有机会拿下枪神同款装备！ 亲临决赛现场，沉浸式感受 PEL 同款职业赛事氛围！'
+    + ' 线上观赛参与互动，更多惊喜好礼等你解锁！ 9月5日 14:00，冠军加冕之战一触即发！#一起玩赢赢#';
+  check('真实案例 #520：比赛时间不猜成开奖（9月5日14:00 冠军加冕之战）',
+    T.guessDrawDate(YIJIA_TEXT, new Date(2026, 9, 8, 5, 42).getTime()) === null);
+  // 斗战者：9.30 现货开售
+  const DOUZHAN_TEXT = '百元价位电竞屏上新 斗战者 战 24E / 27E 高刷流畅 护眼好色彩 9.30 现货开售，敬请期待！ '
+    + '<转发+关注>抽一个【斗战者游戏鼠标】 #斗战者电竞显示器# #斗战者2026# #斗战者战24E#斗战者战27E#';
+  check('真实案例 斗战者：现货开售日期不猜成开奖（9.30）',
+    T.guessDrawDate(DOUZHAN_TEXT, new Date(2026, 9, 4, 15, 4).getTime()) === null);
+  // 特步：10月8日10点 正式发售
+  const TEBU_TEXT = '工位上新，快乐+3！小步的桌面上多了三个新搭子： 罗小黑毛绒挂件——Q版比例，软萌可爱，下班跑步也带着，就等它陪你出门跑起来 '
+    + '运动水杯——杯身印着小黑，跑步补水一口，工位喝水一口，小黑全程陪着 运动肌贴——猫爪印图案，一贴，#带小黑去跑步 瞬间具象化 '
+    + '小步认证：跑步这件事，有喵搭子真的会上瘾。特步X罗小黑联名 10月8日10点 正式发售！ 评论区说说你最想要哪款周边，抽1名送出你想要的周边~ #特步x罗小黑##罗小黑##跑步搭子#';
+  check('真实案例 特步：正式发售日期不猜成开奖（10月8日10点）',
+    T.guessDrawDate(TEBU_TEXT, new Date(2026, 9, 4, 6, 13).getTime()) === null);
+  // iQOO：今晚19:00 是发布会（"今晚"不能当相对开奖时间）
+  const IQOO_TEXT = '发布会倒计时2小时！ 小到装进口袋，强到掌控全场。8.8英寸机身一手可握，298g久玩不累。电竞新物种，小身材也有满血战力。'
+    + '#iQOO Pad Ultra#已陆续登陆各大vivo/iQOO门店，欢迎各位体验！ 今晚19:00，见证口袋里的电竞新物种！ 【关+转】随机抽送1个iQOO定制周边。';
+  check('真实案例 iQOO：发布会时间（今晚19:00）不猜成开奖',
+    T.guessDrawDate(IQOO_TEXT, new Date(2026, 9, 1, 3, 0).getTime()) === null);
+  // iQOO #272：10月5日全渠道开售
+  const IQOO272_TEXT = 'iQOO Pad Ultra 五大购买理由，总有一条让你心动！小尺寸装下旗舰性能，8.8英寸165Hz极屏，高帧高画质游戏更沉浸！'
+    + 'FPS操控敏锐跟手，轻薄长续航随时开一局。#iQOO Pad Ultra#10月5日全渠道开售，现在下单还有超多惊喜！ 【关+转】随机抽送1个iQOO定制周边。';
+  check('真实案例 #272：全渠道开售日期不猜成开奖（10月5日）',
+    T.guessDrawDate(IQOO272_TEXT, new Date(2026, 9, 1, 3, 2).getTime()) === null);
+  // APEX #320：手办预售（有抽奖、没有开奖日期；"9月30日预售开启" + "预售/发售时间"）
+  const APEX320_TEXT = '#明日方舟终末地##APEX-TOYS##山团团##转发抽奖# 转发+关注@APEX-TOYS，抽1位管理员送出「管理员（女）」、「佩丽卡」各1只。'
+    + ' 出自热门游戏《明日方舟：终末地》中的「管理员（女）」和「佩丽卡」 手办化登场！'
+    + ' 【明日方舟：终末地 Cuties系列Q版手办 管理员（女）】、【明日方舟：终末地 Cuties系列Q版手办 佩丽卡】9月30日预售开启！'
+    + ' 置身塔卫二上的经典场景，可爱的管理员与佩丽卡，携管团团、佩团团、陈团团齐聚于此。 一起来开拓探索吧~'
+    + ' ◆产品名称：明日方舟：终末地 Cuties系列Q版手办 管理员（女） 明日方舟：终末地 Cuties系列Q版手办 佩丽卡'
+    + ' ◆产品出处：《明日方舟：终末地》 ◆产品售价：158元/款 ◆预售时间：2026年9月30日 ◆发售时间：2027年6月 '
+    + '◆产品材质：PVC、ABS、亚克力 ◆产品尺寸：管理员（女）：高约10.5cm（到最高处，含地台）佩丽卡：高约10.7cm（到最高处，含地台） ◆版权所有：鹰角网络';
+  check('真实案例 #320：手办预售/发售时间不猜成开奖（无开奖日期）',
+    T.guessDrawDate(APEX320_TEXT, new Date(2026, 9, 1, 7, 11).getTime()) === null);
+  // 精零锻造：「转发抽奖日期截止至10月30日」→ 10月30日 才是开奖日（不是展会日 10.03/10.04）
+  const JINGLING_TEXT = '参展确认！ 精零锻造Wonder Festival 2026 上海展攻略指引！ 📍摊位信息：W1馆 G6-08 展位 转发抽奖！关注@精零锻造 点赞+评论+转发本动态！'
+    + '锻造骑士将会在评论区中抽选5位天选之子！获得精零锻造WF新品套装*1！（转发抽奖日期截止至10月30日） 展品说明 本次不仅带来了热门产品，还有未公布的新品展示哦！'
+    + ' 本次展会现场参与打卡活动，发帖带上话题 #精零锻造# #wf2026# 现场可领取惊喜礼品一份！ 数量有限，先到先得！ '
+    + '✏展会信息 展出时间：2026.10.03 —2026.10.04 展出地点：上海新国际博览中心';
+  check('真实案例 精零锻造：「抽奖日期截止至10月30日」应选 10月30日（不是展会日）', (() => {
+    const g = T.guessDrawDate(JINGLING_TEXT, new Date(2026, 9, 1, 23, 58).getTime());
+    return g && fmt(g.ts) === '2026-10-30 20:00';
+  })());
+  // 三星：「即日起~10月10日 14:00 …… 10月10日开奖」→ 时刻应取同日 14:00
+  const SAMSUNG1_TEXT = '重塑强悍生产力！三星 Galaxy Tab S12 Ultra | S12+全新发布。纤薄机身，蕴藏硬核实力；鲜活大屏，续航持久出众。'
+    + 'IP68等级防尘防水，S Pen落笔灵感迸发，办公创作，时刻得心应手！#三星TabS12Ultra# #GalaxyAI# #三星TabS12+# '
+    + '即日起~10月10日 14:00 关注+评论本条动态，抽2位送【哈根达斯兑换券35元*1】 10月10日开奖，我们会在评论区公布获奖名单，并私信获奖用户 #互动抽奖#';
+  check('真实案例 三星：开奖时刻应取同日的 14:00（不是默认 20:00）', (() => {
+    const g = T.guessDrawDate(SAMSUNG1_TEXT, new Date(2026, 9, 1, 3, 55).getTime());
+    return g && fmt(g.ts) === '2026-10-10 14:00';
+  })());
+  const SAMSUNG2_TEXT = '智能收藏来啦！一键拖入、自动分类、内容解析……把之前收藏的旅行攻略轻松调出来，谁说收藏只能吃灰的~'
+    + ' #三星 ZFold8Ultra# #假期# #旅行# 即日起~10月9日 14:00 关注+评论本条动态，抽2位送【哈根达斯兑换券35元*1】 '
+    + '10月9日开奖，我们会在评论区公布获奖名单，并私信获奖用户 #互动抽奖#';
+  check('真实案例 三星2：开奖时刻应取同日的 14:00', (() => {
+    const g = T.guessDrawDate(SAMSUNG2_TEXT, new Date(2026, 9, 1, 3, 55).getTime());
+    return g && fmt(g.ts) === '2026-10-09 14:00';
+  })());
+  // 大浸侯：手办比例「1/12」不能被当成日期（1月12日）
+  const DAJINHOU_TEXT = '⭐转发+关注，10月22日抽一位送出『紫微星·烬』1/12 拼装可动模型（出货后发出）！ 核金重构 WF2026 展会限定《紫微星·烬》1/12 拼装可动模型 全新配色，重磅登场！'
+    + ' WF现场限量 199 体 | 售完即止 场贩定价：268 元 没法到场的玩家看看这里 大浸侯 onlinestore 微信小程序 线上限量开售 '
+    + '10月3日 上午 10:00 准时开抢 线上仅释放 30 套！手慢无！'
+    + ' WF2026 日期：10月3日—10月4日 地址：上海新国际博览中心 展位：W3-A03 更多消息请留意后续官方动态~ #核金重构# #机娘# #WF2026# #拼装模型# @WF官方';
+  check('真实案例 大浸侯：手办比例「1/12」不猜成 1月12日（应选 10月22日）', (() => {
+    const g = T.guessDrawDate(DAJINHOU_TEXT, new Date(2026, 9, 1, 7, 4).getTime());
+    return g && fmt(g.ts) === '2026-10-22 20:00';
+  })());
+  // 静态：已删除条目的倒计时不再每秒刷新
+  check('已删除条目退出每秒倒计时（静态显示，不再空跑）',
+    /const cd = it\.deleted\s*\?\s*fmtCountdown\(it\.drawTs - now\)/.test(src70));
+  // 静态：删除警告排除「日期不明但结果已标记」（#518）
+  check('删除警告排除「日期不明但已标记结果」的条目（#518 未中奖却弹"未确认"）',
+    src70.indexOf("if (k === 'unknown' && it.won !== null) return false;") >= 0);
+  // 静态：行消失补偿（改日期/改状态后列表不莫名跳滚）
+  check('行消失补偿：data-dyn + captureRowAnchor + compensateRowGone 三件套',
+    src70.indexOf("row.setAttribute('data-dyn', it.dynId);") >= 0
+      && src70.indexOf('function captureRowAnchor(dynId)') >= 0
+      && src70.indexOf('function compensateRowGone(dynId, anchor)') >= 0
+      && (src70.match(/compensateRowGone\(dynId, anchor\);/g) || []).length >= 3);
+
+  /* ---- [71] 第五批真实案例：X月底 相对日期 + 商品/活动词表加固 ---- */
+  console.log('\n[71] 第五批真实案例（X月底 / 词表加固）');
+  const src71 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
+  // 大会员：活动时间 9月30日~10月31日23:59（活动期不是开奖）
+  const BILIHAM_TEXT = '国庆长假不想出门人挤人，那就来游戏里躺平放松一下吧~ 《闪耀吧！喵咪》携手哔哩哔哩大会员送上专属福利'
+    + ' 大会员们参与本次活动，即可领取【专属建筑·大会员观影院】 活动期间累计签到解锁更多奖励，国庆七天，福利天天在线！'
+    + ' 活动时间：9月30日~10月31日23:59 活动链接：https://game.bilibili.com/lumi/2026dyhz @闪耀吧喵咪'
+    + ' 快来露米娅大陆打造你的专属观影院吧 转发+评论本动态，抽取 5 位小伙伴获得大会员上海限定吧唧！祝大家都能欧气爆棚，国庆玩得开心~';
+  check('真实案例 大会员：活动期（9月30日~10月31日23:59）不猜成开奖',
+    T.guessDrawDate(BILIHAM_TEXT, new Date(2026, 9, 1, 2, 26).getTime()) === null);
+  // iQOO #218：9月29日19:00 发布会见
+  const IQOO218_TEXT = '小尺寸轻巧机身，续航依然拉满！#iQOO Pad Ultra#8.8英寸机身轻至298g，搭载9020mAh蓝海大电池，轻薄与持久，从容兼顾！'
+    + ' iQOO Pad Ultra已陆续登陆各大vivo/iQOO门店，欢迎大家到门店体验！ 9月29日19:00发布会见！ 【关+转】随机抽送1个vivoLife轻便大容量双肩包。';
+  check('真实案例 #218：发布会时间不猜成开奖（9月29日19:00发布会见）',
+    T.guessDrawDate(IQOO218_TEXT, new Date(2026, 8, 28, 17, 8).getTime()) === null);
+  // iQOO #110：9月29日19点，发布即开售
+  const IQOO110_TEXT = '随心跨端，随处可玩！ #iQOO头戴电竞耳机#支持超低延迟四模连接，PC、平板、手机、多款游戏主机随心切换，2.4G超低延迟，锁敌快人一步。'
+    + ' 9月29日19点，发布即开售！ 【关+转】随机抽送1个vivoLife轻便大容量双肩包。';
+  check('真实案例 #110：发布即开售不猜成开奖（9月29日19点）',
+    T.guessDrawDate(IQOO110_TEXT, new Date(2026, 8, 22, 3, 38).getTime()) === null);
+  // APEX #71：1/7 比例手办（不该猜成 1月7日）
+  const APEX71_TEXT = '#蔚蓝档案##APEX-TOYS# #转发抽奖##日富美# 转发并关注@APEX-TOYS 抽1位老师送出「日富美」手办1体！'
+    + ' 出自热门游戏《蔚蓝档案》的「日富美」手办化登场~ 【蔚蓝档案 日富美】9月27日开启预售！'
+    + ' 日富美正背着可爱的佩洛洛书包，开心地望向你。整洁的校园制服、休闲运动鞋、随风飘起的双马尾，连同武器构件、裙摆花边褶皱也被细致还原。'
+    + ' 老师快来和日富美一起，让大家也变得幸福起来吧~ "啊哈哈……我还有很多不足，请多多指教。" @蔚蓝档案'
+    + ' ————————————————◆商品名称：蔚蓝档案 日富美 1/7 比例手办 ◆产品出处：《蔚蓝档案》 ◆商品售价：799元 '
+    + '◆预售日期：2026年9月27日 ◆发售日期：2027年8月 ◆产品规格：高约27cm（含光环） ◆产品材质：PVC&ABS ◆版权所有：NEXON Games/Yostar';
+  check('真实案例 #71：手办比例「1/7」不猜成 1月7日（预售/发售日都不猜）',
+    T.guessDrawDate(APEX71_TEXT, new Date(2026, 8, 20, 1, 43).getTime()) === null);
+  // ATK #53：2.4G 连接（不该猜成 2月4日）
+  const ATK53_TEXT = '关注 @ATK科技，转赞评此条动态并带话题#ATKYOGO75#即可参与！ 活动奖品：抽1人得【ATK YOGO 75 PRO *1，颜色随机】'
+    + ' 注意事项：中奖的宝子如果在七个自然日内未私信填写地址，将视为逾期作废！！活动最终解释权归 @ATK科技 所有'
+    + ' 恰到好处，更见不凡 ATK YOGO 75系列三模矮轴机械键盘 正式发布 不止办公高效，更有趣味相伴 ◆极简外观，玩法不止一种'
+    + ' 全铝CNC外壳，以简约设计呈现扎实质感 YOGO 75 PRO 更搭载像素点阵列、音量调节旋钮及多功能媒体键 前往ATK HUB还可进行自定义按键设置'
+    + ' ◆手感对了，尽享愉悦生产力 Gasket结构配合五层填充，软弹恰到好处，按压一气呵成 两款高质量矮轴可选，搭配耐磨抗油PBT热升华键帽'
+    + ' 5000mAh大容量电池，灵感全天在线，触感刚刚好，效率自然来 ◆懂你所想，还用得更效率 附带磁吸脚撑，恰到好处的倾斜角由你选择'
+    + ' 蓝牙/2.4G/有线 三模连接，更能轻松秒切Mac/Win系统 贴合不同职业人群的输入习惯，畅享多场景办公'
+    + ' ATK YOGO 75系列三模矮轴机械键盘，到手价 ¥599.25起，9月20日20:00全平台开售，首发赠YOGO 75系列键盘皮套'
+    + ' ATKYOGO75矮轴机械键盘 三模客制化75配列电竞游戏办公机械键盘 YOGO75银色流云轴 ATKYOGO75PRO机械键盘';
+  check('真实案例 #53：2.4G 连接不猜成 2月4日（开售日也不猜）',
+    T.guessDrawDate(ATK53_TEXT, new Date(2026, 8, 16, 22, 14).getTime()) === null);
+  // 西伯利亚 #173：9月29日，敬请期待
+  const XIBOLIYA_TEXT = 'TA 是少年天才枪男，驰骋多个 FPS 赛场，风格敢打敢冲，是无数玩家心中的传奇选手！ 西伯利亚 T10 有线版职业明星联名款来袭'
+    + ' 专属配色，赛事级满血性能 9月29日，敬请期待！ ——猜猜这次，谁和西伯利亚T10一起携手？ 关转评赞，带话题#西伯利亚T10# ，评论区猜猜TA是谁？'
+    + ' 揪一位宝送出传奇选手同款T10耳机x1（颜色版本随机）！ #西伯利亚T10# #打洲就用西伯利亚# #三角洲行动# #无畏契约# #游戏耳机#';
+  check('真实案例 #173：新品尝鲜预告（9月29日敬请期待）不猜成开奖',
+    T.guessDrawDate(XIBOLIYA_TEXT, new Date(2026, 8, 27, 6, 49).getTime()) === null);
+  // APEX #175：12.3cm 尺寸（不该猜成 12月3日）
+  const APEX175_TEXT = '#鸣潮##APEX-TOYS##转发抽奖# 转发并关注@APEX-TOYS 抽1位漂泊者送出「卡提希娅」、「守岸人」手办各1体！'
+    + ' 出自热门游戏《鸣潮》中的「卡提希娅」、「守岸人」Q版手办化登场~ 【鸣潮 寻迹系列Q版手办 卡提希娅】、【鸣潮 寻迹系列Q版手办 守岸人】9月28日开启预售！'
+    + ' @鸣潮 @库洛游戏周边 ———————————————— ◆商品名称：鸣潮 寻迹系列Q版手办 卡提希娅 鸣潮 寻迹系列Q版手办 守岸人'
+    + ' ◆产品出处：《鸣潮》 ◆商品售价：230元/款 ◆预售日期：2026年9月28日 ◆预计出货日期：2027年7月'
+    + ' ◆产品规格：卡提希娅：高约10.5cm（含地台） 守岸人：高约12.3cm（含地台） ◆产品材质：PVC&ABS ◆版权所有：©KURO GAMES ALL RIGHTS RESERVED';
+  check('真实案例 #175：尺寸「12.3cm/10.5cm」不猜成日期（预售日也不猜）',
+    T.guessDrawDate(APEX175_TEXT, new Date(2026, 8, 27, 6, 51).getTime()) === null);
+  // HOBBYWON #198：预售时间区间（2026/9/24 — 2026/10/24）
+  const HOBBYWON_TEXT = '【🎊#互动抽奖#】转发+关注，抽随机款式徽章*5 《银河特急》× HOBBYWON 正版周边预售即将开启！'
+    + ' 🛒预售时间 2026/9/24 18:00 — 2026/10/24 23:59 🛒上架店铺 🍊/🛍 🍑【HOBBYWON旗舰店】'
+    + ' 🍑预售优惠 🎨原画徽章盲盒 预售¥16 / 抽 → 现货¥18 / 抽 🎨Q 版星形徽章 预售¥15 / 款 → 现货¥18 / 款'
+    + ' 🎨档案袋套组 预售¥45 / 套 → 现货¥49 / 套 更多商品实拍/详情尽情锁定@HOBBYWON';
+  check('真实案例 #198：预售时间区间端点不猜成开奖（2026/9/24 — 2026/10/24）',
+    T.guessDrawDate(HOBBYWON_TEXT, new Date(2026, 8, 27, 23, 45).getTime()) === null);
+  // 英伟达 #200 / #199：DLSS 4.5（不该猜成 4月5日）
+  const NVIDIA200_TEXT = '月圆之夜，整座城都被上银白的光。羽翼掠过满月，谜题悬于夜色深处。 提问：图片中的场景出自哪一款游戏？'
+    + ' 提示：该游戏上线将支持光线追踪 + DLSS 4.5 【参与方式】 关注@英伟达GeForce，在评论区留下你的答案，并转发此动态。'
+    + ' 我们将抽取 3 位回答正确的小伙伴获得【100 元京东 E 卡】！ *创意投稿来自 Bilibili 玩家@不是汉汉酱';
+  check('真实案例 #200：DLSS 4.5 不猜成 4月5日', 
+    T.guessDrawDate(NVIDIA200_TEXT, new Date(2026, 8, 27, 23, 48).getTime()) === null);
+  const NVIDIA199_TEXT = '月亮爬上屋脊的那一刻，风从北方来。风起时月正圆——听风的人，今夜不赶路。 提问：图片中的场景出自哪一款游戏？'
+    + ' 提示：该游戏技术支持 DLSS 4.5 多帧生成 【参与方式】 关注@英伟达GeForce，在评论区留下你的答案，并转发此动态。'
+    + ' 我们将抽取 3 位回答正确的小伙伴获得【100 元京东 E 卡】！';
+  check('真实案例 #199：DLSS 4.5 多帧生成 不猜成 4月5日',
+    T.guessDrawDate(NVIDIA199_TEXT, new Date(2026, 8, 27, 23, 48).getTime()) === null);
+  // 牢妹手柄：「下次开奖会在10月底」→ 该月最后一天（10月31日），月大月小自动算
+  const LAOMEI_TEXT = '关注@牢妹Rush 转+评论此条动态参与抽奖 这次礼品是墨将家的2000hz烈风2手柄 牢妹准备每月抽奖，非常感谢大家的支持'
+    + ' 下次开奖会在10月底，期待你的参与';
+  check('真实案例 牢妹：「开奖会在10月底」→ 10月31日（月底=该月最后一天）', (() => {
+    const g = T.guessDrawDate(LAOMEI_TEXT, new Date(2026, 8, 27, 6, 55).getTime());
+    return g && fmt(g.ts) === '2026-10-31 20:00';
+  })());
+  // 初音手办：「预计十一月中旬或十一月底抽」→ 11月30日
+  const HATSUNE_TEXT = '转+评 这条动态~抽1位粉丝送出下面视频测评用的眼镜厂初音未来GAME景品手办！'
+    + '【评论内容要有评论当天的日期数字防机器人的验证码，例如2月31日，就是231】祝大家好运 预计十一月中旬或十一月底抽，谢谢大家支持';
+  check('真实案例 初音手办：「十一月底抽」→ 11月30日（中文月份也认）', (() => {
+    const g = T.guessDrawDate(HATSUNE_TEXT, new Date(2026, 8, 16, 17, 6).getTime());
+    return g && fmt(g.ts) === '2026-11-30 20:00';
+  })());
+  // 静态：月底解析 / 发布词 / 预售日期词
+  check('月底解析：X月底取该月最后一天（Date 自动处理大小月）+ 裸「月底」取发起月',
+    src71.indexOf("text.match(/(\\d{1,2}|[一二三四五六七八九十]{1,3})\\s*月\\s*底/)") >= 0
+      && src71.indexOf('new Date(base.getFullYear(), mon + 1, 0, 20, 0, 0)') >= 0
+      && src71.indexOf('new Date(base.getFullYear(), base.getMonth() + 1, 0, 20, 0, 0)') >= 0
+      && src71.indexOf('function looseLotteryHint(text, i, len)') >= 0);
+  check('商品动作词扩展：发布（排除"发布中奖名单"）/上线/开播/首播/开唱/演出',
+    src71.indexOf('发布(?!中奖|名单|结果|获奖)|上线|开播|首播|开唱|公演|演出') >= 0);
+  check('预售/发售日期词进 pre 减分词表（"◆预售日期：2026年9月27日"）',
+    src71.indexOf('预售日期|发售日期|预订日期|出货日期|发货日期') >= 0);
+
+  /* ---- [72] 回收站（2026-10-17）：已删除归档 / 恢复 / 永久抹除 / 统计口径 ---- */
+  console.log('\n[72] 回收站：归档 / 恢复 / 永久抹除 / 统计口径');
+  const src72 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
+
+  // ① 迁移：台账里的已删除条目 → 回收站（先写回收站、回读验证、再清台账）
+  globalThis.GM_setValue('bili_lottery_ledger_v1', {
+    m1: { dynId: 'm1', upName: 'A', text: 'x', won: null, deleted: false, createdAt: 1 },
+    m2: { dynId: 'm2', upName: 'A', text: 'x', won: null, deleted: true, deletedAt: 111, createdAt: 2 },
+    m3: { dynId: 'm3', upName: 'B', text: 'x', won: true, deleted: true, deletedVia: 'sync', deletedTs: 222, createdAt: 3 }
+  });
+  globalThis.GM_setValue('bili_lottery_trash_v1', {});
+  T.invalidateTrashCache();
+  check('迁移：返回 2 条', T.moveDeletedToTrash() === 2);
+  let lg72 = globalThis.GM_getValue('bili_lottery_ledger_v1', {});
+  let tg72 = globalThis.GM_getValue('bili_lottery_trash_v1', {});
+  check('台账只剩未删除的 1 条', Object.keys(lg72).length === 1 && !!lg72.m1 && !lg72.m2 && !lg72.m3);
+  check('回收站持有 2 条且删除标记/时间原样保留',
+    !!tg72.m2 && tg72.m2.deletedAt === 111 && !!tg72.m3 && tg72.m3.deletedVia === 'sync' && tg72.m3.deletedTs === 222);
+  check('迁移幂等：没有已删除条目时返回 0', T.moveDeletedToTrash() === 0);
+
+  // ② 恢复：从回收站取回台账（标记清除 → 重新纳入正常管理）
+  T.invalidateTrashCache();
+  check('恢复 1 条', T.restoreFromTrash(['m2']).n === 1);
+  lg72 = globalThis.GM_getValue('bili_lottery_ledger_v1', {});
+  tg72 = globalThis.GM_getValue('bili_lottery_trash_v1', {});
+  check('m2 回台账且删除标记全清', !!lg72.m2 && lg72.m2.deleted === false && lg72.m2.deletedAt === undefined && lg72.m2.missCount === 0);
+  check('回收站里 m2 已移除（m3 还在）', !tg72.m2 && !!tg72.m3);
+  check('恢复不存在的 id 返回 0', T.restoreFromTrash(['nope']).n === 0);
+
+  // ③ 永久抹除（不可恢复）
+  check('永久抹除 1 条', T.purgeFromTrash(['m3']) === 1 && !globalThis.GM_getValue('bili_lottery_trash_v1', {}).m3);
+  check('抹除不存在的 id 返回 0', T.purgeFromTrash(['nope']) === 0);
+
+  // ④ 自愈扩展到回收站：扫描判定删除（sync）的条目重新出现 → 自动从回收站搬回台账。
+  //    先把 lastScanTruncated 复位（前序测试可能残留截断状态）：跑一次「空台账 + 空列表」的完整扫描。
+  globalThis.GM_setValue('bili_lottery_ledger_v1', {});
+  globalThis.GM_setValue('bili_lottery_trash_v1', {});
+  T.invalidateTrashCache();
+  globalThis.GM_xmlhttpRequest = o => {
+    setTimeout(() => o.onload({ status: 200, responseText: JSON.stringify({ code: 0, data: { has_more: false, offset: '', items: [] } }) }), 0);
+  };
+  await T.scanIntoLedger(() => {});
+  globalThis.GM_setValue('bili_lottery_ledger_v1', { keep1: { dynId: 'keep1', upName: 'K', text: 'x', won: null, deleted: false, createdAt: 1 } });
+  globalThis.GM_setValue('bili_lottery_trash_v1', { s1: { dynId: 's1', upName: 'S', text: 'x', won: null, deleted: true, deletedVia: 'sync', deletedTs: 333, createdAt: 2 } });
+  T.invalidateTrashCache();
+  const r72 = T.syncDeleted(new Set(['s1', 'keep1']), 0);
+  check('回收站里的 sync 条目重新出现 → 自动搬回台账（revived=1）', r72.revived === 1, JSON.stringify(r72));
+  lg72 = globalThis.GM_getValue('bili_lottery_ledger_v1', {});
+  tg72 = globalThis.GM_getValue('bili_lottery_trash_v1', {});
+  check('s1 回台账且标记清除', !!lg72.s1 && lg72.s1.deleted === false && !lg72.s1.deletedVia);
+  check('回收站里 s1 已移除', !tg72.s1);
+
+  // ⑤ 统计口径：中奖数据 = 台账 + 回收站（「中过就是中过」）
+  globalThis.GM_setValue('bili_lottery_ledger_v1', {
+    w1: { dynId: 'w1', upName: 'W1', won: true, deleted: false },
+    w2: { dynId: 'w2', upName: 'W2', won: false, deleted: false }
+  });
+  globalThis.GM_setValue('bili_lottery_trash_v1', { w3: { dynId: 'w3', upName: 'W3', won: true, deleted: true, deletedAt: 1 } });
+  T.invalidateTrashCache();
+  const wonAll = T.allWonItems();
+  check('allWonItems = 台账中奖 + 回收站中奖（共 2）',
+    wonAll.length === 2 && wonAll.some(x => x.dynId === 'w3') && wonAll.some(x => x.dynId === 'w1'));
+  const bk72 = T.buildBackupData();
+  check('导出备份包含回收站数据（trash 字段）', !!bk72.trash && !!bk72.trash.w3 && !!bk72.ledger.w1);
+
+  // ⑥ 静态接线：弹窗 / 入口 / 各流程的归档调用 / 兼容导入
+  check('回收站弹窗存在（openTrashBox / renderTrashBox）',
+    src72.indexOf('function openTrashBox()') >= 0 && src72.indexOf('function renderTrashBox()') >= 0
+      && src72.indexOf("box.id = 'blm-trashbox';") >= 0);
+  check('恢复 / 抹除按钮接线到 restoreFromTrash / purgeFromTrash',
+    src72.indexOf('const r = restoreFromTrash(ids);') >= 0 && src72.indexOf('const n = purgeFromTrash(ids);') >= 0);
+  check('设置页有回收站入口且已绑定',
+    src72.indexOf('id="s-trash"') >= 0 && src72.indexOf("trashBtn.addEventListener('click', openTrashBox)") >= 0);
+  check('删除流程 / 扫描流程 / 兜底检查都会执行归档（moveDeletedToTrash 调用 ≥3 处）',
+    (src72.match(/moveDeletedToTrash\(\)/g) || []).length >= 3);
+  check('老数据兜底挂在打开面板路径上',
+    src72.indexOf('maybeArchiveDeleted();   // 老数据兜底') >= 0);
+  check('导入兼容旧备份：已删除条目分流进回收站',
+    src72.indexOf("const trashIn = (data.trash && typeof data.trash === 'object') ? data.trash : {};") >= 0
+      && src72.indexOf('if (!trashIn[k]) trashIn[k] = it;') >= 0);
+  check('关注页统计合并回收站（口径不变）',
+    src72.indexOf('Object.values(ledger).concat(Object.values(loadTrash())).forEach(it => {') >= 0);
+  check('回收站弹窗进了主题变量作用域（防透明复踩）', /#[^\n]*#blm-trashbox\{/.test(src72));
+
+  // ⑦ 编号策略（2026-10-17 用户约定）：归档不动编号 → 扫描建档时全量重排；恢复遇占用清空
+  const Lnum1 = {
+    n1: { dynId: 'n1', pubTs: 100, no: 1 },
+    n2: { dynId: 'n2', pubTs: 300, no: 3 },
+    n3: { dynId: 'n3', pubTs: 900, no: 9 }
+  };
+  T.renumberAll(Lnum1);
+  check('renumberAll：按转发时间重编 1..N（消除空号）', Lnum1.n1.no === 1 && Lnum1.n2.no === 2 && Lnum1.n3.no === 3);
+
+  // 归档不动剩余编号（空号留到下次扫描重排）
+  globalThis.GM_setValue('bili_lottery_ledger_v1', {
+    da: { dynId: 'da', pubTs: 100, no: 1, deleted: false },
+    db: { dynId: 'db', pubTs: 200, no: 2, deleted: true, deletedAt: 1 },
+    dc: { dynId: 'dc', pubTs: 300, no: 3, deleted: false }
+  });
+  globalThis.GM_setValue('bili_lottery_trash_v1', {});
+  T.invalidateTrashCache();
+  T.moveDeletedToTrash();
+  const ld72 = globalThis.GM_getValue('bili_lottery_ledger_v1', {});
+  check('归档不重排：剩余条目编号原样（1 和 3，空号留到下次扫描）', ld72.da.no === 1 && ld72.dc.no === 3);
+
+  // 扫描建档 → 集成验证：空号重排成连续
+  globalThis.GM_xmlhttpRequest = o => {
+    setTimeout(() => o.onload({ status: 200, responseText: JSON.stringify({
+      code: 0, data: { has_more: false, offset: '', items: [
+        { id_str: 'da', type: 'DYNAMIC_TYPE_FORWARD',
+          orig: { id_str: 'oda', modules: { module_author: { mid: 9, name: 'A' } } },
+          modules: { module_author: { pub_ts: 100 }, module_dynamic: { desc: { text: '转发抽奖' } } } },
+        { id_str: 'dc', type: 'DYNAMIC_TYPE_FORWARD',
+          orig: { id_str: 'odc', modules: { module_author: { mid: 9, name: 'A' } } },
+          modules: { module_author: { pub_ts: 300 }, module_dynamic: { desc: { text: '转发抽奖' } } } }
+      ] }
+    }) }), 0);
+  };
+  await T.scanIntoLedger(() => {});
+  const ls72 = globalThis.GM_getValue('bili_lottery_ledger_v1', {});
+  check('扫描建档后编号重排为连续（1、2）', ls72.da.no === 1 && ls72.dc.no === 2, JSON.stringify({ da: ls72.da && ls72.da.no, dc: ls72.dc && ls72.dc.no }));
+
+  // 恢复的编号策略：占用则清空、空闲则保留
+  globalThis.GM_setValue('bili_lottery_trash_v1', {
+    rn: { dynId: 'rn', pubTs: 50, no: 2, deleted: true, deletedAt: 2 },
+    rk: { dynId: 'rk', pubTs: 10, no: 99, deleted: true, deletedAt: 3 }
+  });
+  T.invalidateTrashCache();
+  const rr72 = T.restoreFromTrash(['rn', 'rk']);
+  const lr72 = globalThis.GM_getValue('bili_lottery_ledger_v1', {});
+  check('恢复：原编号被占用 → 清空暂标 #-', rr72.n === 2 && rr72.cleared === 1 && lr72.rn.no === undefined);
+  check('恢复：原编号空闲 → 保留', lr72.rk.no === 99);
+
+  // 静态：扫描建档替换为全量重排（旧 assignNumbers 仅保留给「转发时新增」用：定义 1 + 调用 2）
+  check('扫描建档走 renumberAll（占位注释已更新）',
+    src72.indexOf('renumberAll(ledger);   // 扫描建档 = 统一重排编号的时机') >= 0
+      && (src72.match(/assignNumbers\(ledger\)/g) || []).length === 3);
 
   console.log('\n结果: ' + passed + ' 通过, ' + failed + ' 失败');
   process.exit(failed ? 1 : 0);
