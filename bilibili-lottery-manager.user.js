@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         B站转发抽奖动态管理器
 // @namespace    https://github.com/bili-lottery-manager
-// @version      1.1.3
+// @version      1.2.0
 // @description  扫描你转发的抽奖动态，建立台账，自动判定开奖与中奖，按风险分级后手动勾选批量清理；转发时可即时录入开奖信息。删除与取关均不可撤销，脚本绝不自动执行。
 // @author       糖心月
 // @icon         data:image/png;base64,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
@@ -17,6 +17,7 @@
 // @grant        GM_registerMenuCommand
 // @grant        GM_addValueChangeListener
 // @grant        GM_notification
+// @grant        unsafeWindow
 // @connect      api.bilibili.com
 // @connect      api.vc.bilibili.com
 // @run-at       document-idle
@@ -25,7 +26,7 @@
 (function () {
   'use strict';
 
-  const VERSION = '1.1.3';   // 与上方 @version 保持一致；设置页和诊断弹窗会显示，方便确认油猴里跑的是哪版
+  const VERSION = '1.2.0';   // 与上方 @version 保持一致；设置页和诊断弹窗会显示，方便确认油猴里跑的是哪版
 
   // OC 水印（糖心月）：160px WebP 转 base64 内嵌，约 7KB。设在「设置」页底部展示，全离线不请求外部图源
   const OC_WATERMARK = 'data:image/webp;base64,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';
@@ -50,9 +51,12 @@
     autoFloatOnRepost: true,  // 转发成功后是否自动弹出录入浮条
     floatAutoHide: 8000,      // 浮条多少毫秒后自动收起
     confirmBeforeDelete: true, // 删除前是否二次确认（强烈建议保持 true）
-    highlightText: true,      // 正文里高亮「参与条件」（青）和「开奖奖品」（紫）
+    highlightText: true,      // 正文里高亮「参与条件」（绿色下划线）和「开奖奖品」（琥珀芯片）
     winNotify: true,          // F7: 自动查到你中奖时发系统桌面通知（页面切后台也能收到）；关掉则完全不弹
-    pressFeedback: true,      // 卡片按压反馈：按住卡片时轻微倾斜 + 光斑跟随（上锁/已取关的卡不参与）
+    pressFeedback: true,      // 卡片按压反馈：按住卡片时轻微倾斜 + 光斑跟随（上锁/已取关的卡不参与；触摸端只缩放不倾斜）
+    hapticFeedback: true,     // 触觉反馈：删除/取关等不可逆操作执行时震动确认（iPhone 震不了→自动静默跳过）
+    gestureNav: true,         // 滑动手势：触摸端卡片左滑露出「详情/原动态」、长按 0.55s 呼出快捷菜单（只含只读动作）
+    autoUnfollowPurged: true, // 自动取关：标了「为抽奖关注」的 UP，名下动态全部删除后自动取关（中过奖的永不触发）
     appearance: 'follow'      // 外观：follow=跟随B站/系统主题，light=永远亮，dark=永远暗
   };
 
@@ -369,7 +373,7 @@
      ========================================================================== */
   function computeStatus(it) {
     if (it.deleted) return { key: 'deleted', label: '已删除', color: '#888780', deletable: false };
-    if (it.won === true) return { key: 'won', label: '已中奖', color: '#E24B4A', deletable: false };
+    if (it.won === true) return { key: 'won', label: '已中奖', color: '#C4624E', deletable: false };
 
     const now = Date.now();
 
@@ -396,7 +400,7 @@
           deletable: false, warn: true
         };
       }
-      return { key: 'pending', label: '未开奖', color: '#E24B4A', deletable: false };
+      return { key: 'pending', label: '未开奖', color: '#C4624E', deletable: false };
     }
 
     const passed = now - it.drawTs;
@@ -445,34 +449,43 @@
     return { key: 'safe', label: '建议删除', color: '#639922', deletable: true };
   }
 
-  // 转发时间 / 开奖时间用不同颜色的胶囊区分，开奖时间还会按「开奖与否」变色
+  // 转发时间胶囊（2026-10-18 方案一「主次分化」）：转发是历史事实 → 中性弱化
+  // （bg3 底 + 时钟图标 + text2 字），把彩色让给开奖胶囊。
+  // 原硬编码蓝（#E6F1FB/#185FA5）是卡片唯一非 token 色、暗色不跟随 —— 顺手修掉；
+  // 颜色表里 pend/drawn/none 三个值是死代码（metaChipsHtml 早已手工拼 token span），一并清掉。
+  // 开奖胶囊由 metaChipsHtml 按状态拼（pend/ok/grey 三态，样式见 .t-draw）。
+  const CLOCK_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
   function timeChip(label, text, kind) {
-    const colors = {
-      pub:   { bg: '#E6F1FB', fg: '#185FA5' },   // 转发时间：蓝
-      pend:  { bg: '#FCEBEB', fg: '#A32D2D' },   // 尚未开奖：红
-      drawn: { bg: '#EAF3DE', fg: '#3B6D11' },   // 已经开奖：绿
-      none:  { bg: '#F1EFE8', fg: '#5F5E5A' }    // 未录入：灰
-    };
-    const c = colors[kind] || colors.none;
-    return '<span class="blm-chip" style="background:' + c.bg + ';color:' + c.fg + '">'
-      + label + ' ' + escapeHtml(text) + '</span>';
+    if (kind !== 'pub') return '';   // 只服务转发胶囊；开奖三态见 metaChipsHtml
+    return '<span class="blm-chip t-pub">' + CLOCK_SVG
+      + '<i class="t-lab">' + label + '</i><span class="t-num">' + escapeHtml(text) + '</span></span>';
   }
 
-  // 抽奖书签：卡在卡片左下角的双层折角。只有两种情况挂书签——
-  // 已确认（你亲手核实过）> 官方（接口查到）；脚本猜的、没核验过的都不挂，避免视觉噪音
+  // 抽奖书签 → 极简圆点（2026-10-17 用户选定方案 C，样式见 CSS .blm-bm）：
+  // 常驻 20px 彩色圆点（礼物 / 对勾图标），悬停展开成胶囊显出文字，点击打开详情。
+  // 只有两种情况挂书签——已确认（你亲手核实过）> 官方（接口查到）；脚本猜的、没核验过的都不挂。
   function lotteryTypeBadge(it) {
-    if (it.source === 'user') return '<div class="blm-bm conf"><em>已确认</em></div>';
-    if (it.official === true) return '<div class="blm-bm"><em>官方</em></div>';
+    if (it.source === 'user') return '<div class="blm-bm conf" data-detail="' + it.dynId + '" role="img"'
+      + ' title="已确认 · 你亲手核实过开奖信息（点开详情）" aria-label="已确认：你亲手核实过开奖信息">'
+      + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>'
+      + '<span>已确认</span></div>';
+    if (it.official === true) return '<div class="blm-bm" data-detail="' + it.dynId + '" role="img"'
+      + ' title="官方抽奖 · 开奖信息来自 B 站接口（点开详情）" aria-label="官方抽奖：开奖信息来自 B 站接口">'
+      + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M5 12v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg>'
+      + '<span>官方抽奖</span></div>';
     return '';
   }
 
-  // 是否需要「核验」入口：你手动覆盖过日期（source==='user'）、且这条**没有被判死为自发**
-  // （official !== false）时给入口。official 有三种值：true=官方 / false=自发 / null=还没判定
-  // （浮条新建、老版本台账记录、没跑过类型判定的条目都是 null）——
-  // 以前只认 true，导致"看起来是官方抽奖"但 official 还没判定的条目手填日期后永远没有核验按钮（实测踩坑）。
+  // 是否需要「核验」入口：只在「明确判定为官方抽奖（official === true）+ 你手动确认过日期
+  // （source === 'user'）」时给。
+  // 2026-10-17 用户实测反馈改判：浮条录入（相当于"非官方识别 + 用户确认日期"）不该出现核验按钮；
+  // 类型未判定（null/undefined）的也不给 —— 老版本曾把 null 也算显示（当时实测是"漏了按钮"），
+  // 现在实测是"多了按钮"，以最新为准。
+  // 未判定类型的记录不丢核验机会：批量核验（needReverify）仍会查它们并补上 official 判定，
+  // 判定为官方且日期被手填过时，核验按钮会自然出现。
   // 纯自发（false）核验也查不到官方数据，所以不给这个入口，免得白点。
   function needVerify(it) {
-    return it.source === 'user' && it.official !== false;
+    return it.source === 'user' && it.official === true;
   }
 
   // 角标：这条记录的开奖信息是哪儿来的
@@ -1120,6 +1133,97 @@
     return r && r.code === 0;
   }
 
+  // 同步「关注状态」（2026-10-17 用户需求：抹平"手动取关、脚本不知情"的静态信息差）：
+  // 拉全自己的关注列表，与关注页里的 UP（台账 + 回收站出现过的）对照 ——
+  //   · 不在关注列表里的 → 标「已取关」（与脚本取关共用同一份标记，展示上统一默认收起）
+  //   · 又重新出现在关注列表里的 → 自动摘掉「已取关」标记
+  // 安全约束：必须【拉全】关注列表才做对照 —— 中途任何一页失败、拉不全、或列表异常，
+  // 都整体放弃（宁可不同步，绝不误标）；「中止」按钮同样生效。
+  async function syncFollowStatus(onProgress) {
+    const uid = myUid();
+    if (!uid) return { ok: false, reason: 'no-login' };
+    const PAGE = 50;         // 接口每页上限 50
+    const MAX_PAGES = 200;   // 安全上限（10000 关注），防异常死循环
+    const all = new Set();
+    let total = 0;
+    for (let pn = 1; pn <= MAX_PAGES; pn++) {
+      if (abortFlag) return { ok: false, reason: 'aborted' };
+      const url = 'https://api.bilibili.com/x/relation/followings?vmid=' + encodeURIComponent(uid)
+        + '&pn=' + pn + '&ps=' + PAGE + '&order=desc';
+      let r = null;
+      try { r = await req({ method: 'GET', url: url }); } catch (e) { r = null; }
+      if (!r || r.code !== 0 || !r.data) return { ok: false, reason: 'api', code: r && r.code };
+      if (pn === 1) total = Number(r.data.total) || 0;
+      const arr = r.data.list || [];
+      arr.forEach(x => { if (x && x.mid) all.add(Number(x.mid)); });
+      if (onProgress) onProgress(all.size, total || all.size);
+      if (!arr.length || (total && all.size >= total)) break;
+      await sleep(SETTINGS.queryInterval);   // 翻页限速，避免触发风控
+    }
+    if (!total || all.size < total) return { ok: false, reason: 'partial', got: all.size, total: total };
+    // 对照（关注页口径：台账 + 回收站里出现过的 UP 全算）
+    const uf = loadUnfollowed();
+    const ledger = loadLedger();
+    const trash = loadTrash();
+    const mids = new Set();
+    Object.values(ledger).concat(Object.values(trash)).forEach(it => {
+      if (it.upMid && String(it.upMid) !== String(myUid())) mids.add(String(it.upMid));
+    });
+    let marked = 0, revived = 0;
+    mids.forEach(mk => {
+      if (!all.has(Number(mk))) {
+        if (!uf[mk]) { uf[mk] = Date.now(); marked++; }
+      } else if (uf[mk]) {
+        delete uf[mk]; revived++;
+      }
+    });
+    if (marked || revived) { try { GM_setValue(UF_KEY, uf); } catch (e) {} }
+    return { ok: true, total: total, scanned: mids.size, marked: marked, revived: revived };
+  }
+
+  // 自动取关（2026-10-17 用户需求）：标了「为抽奖关注」的 UP，名下所有动态都被删除后自动取关。
+  // 触发时机：扫描建档的删除同步后、手动批量删除后（「B 站上动态消失」= 你自己删的，取关是顺理成章的收尾）。
+  // 三重保护：① 只动带「为抽奖关注」标记的 UP；② 名下任何记录（含回收站里的）有过 won=true 的
+  //          永不自动取关（中奖保护，防领奖凭证丢失）；③ 设置开关 autoUnfollowPurged。
+  // 已取关过的（UF_KEY 有标记）不重复执行；全抹除（一条记录不剩）的 UP 不动——标记在记录上，无从确认。
+  function pickAutoUnfollowTargets(ups, uf) {
+    return Object.keys(ups).filter(k => {
+      const u = ups[k];
+      return u.marked && u.total > 0 && u.deleted === u.total && !u.hasWon && !uf[k];
+    });
+  }
+  async function autoUnfollowDeletedUps() {
+    if (!SETTINGS.autoUnfollowPurged) return { skipped: 'off', unfollowed: 0, names: [] };
+    if (!myCsrf()) return { skipped: 'no-login', unfollowed: 0, names: [] };
+    const ledger = loadLedger();
+    const trash = loadTrash();
+    const uf = loadUnfollowed();
+    const ups = {};
+    Object.values(ledger).concat(Object.values(trash)).forEach(it => {
+      if (!it.upMid || String(it.upMid) === String(myUid())) return;
+      const k = String(it.upMid);
+      if (!ups[k]) ups[k] = { name: it.upName || ('UP' + k), marked: false, total: 0, deleted: 0, hasWon: false };
+      const u = ups[k];
+      u.total++;
+      if (it.deleted) u.deleted++;
+      if (it.forLotteryFollow) u.marked = true;
+      if (it.won === true) u.hasWon = true;
+    });
+    const targets = pickAutoUnfollowTargets(ups, uf);
+    if (!targets.length) return { unfollowed: 0, names: [] };
+    let ok = 0, fail = 0;
+    const names = [];
+    for (let i = 0; i < targets.length; i++) {
+      if (abortFlag) break;
+      const mid = targets[i];
+      let done = false;
+      try { done = await unfollowUser(mid); } catch (e) {}
+      if (done) { ok++; markUnfollowed(mid); names.push(ups[mid].name); } else fail++;
+      await sleep(SETTINGS.deleteInterval);
+    }
+    return { unfollowed: ok, failed: fail, names: names, aborted: abortFlag };
+  }
+
   /* ==========================================================================
      第七部分：扫描建档
      ========================================================================== */
@@ -1451,63 +1555,237 @@
     /* #blm-detailbox / #blm-diag 是挂在 body 上的弹窗，不在面板里，必须一并进变量作用域，
        否则 background:var(--blm-bg) 取不到值 → 整个弹窗透明（2026-10-10 用户实测踩坑）。
        #blm-prizebox / #blm-trashbox 同理 —— 新增挂 body 的弹窗时必须一并加进这两行选择器（2026-10-11 记奖品弹窗透明复踩） */
-    #blm-panel,#blm-fab,#blm-float,#blm-detailbox,#blm-diag,#blm-stmenu,#blm-prizebox,#blm-trashbox{
-      --blm-bg:#ffffff; --blm-bg2:#f6f7f8; --blm-bg3:#fafbfc;
+    #blm-panel,#blm-fab,.blm-float,#blm-detailbox,#blm-diag,#blm-stmenu,#blm-prizebox,#blm-trashbox{
+      --blm-bg:#f6efe6; --blm-bg2:#efe7db; --blm-bg3:#ede2d2;
       --blm-text:#18191c; --blm-text2:#61666d; --blm-text3:#9499a0; --blm-text4:#c9ccd0;
-      --blm-border:#e3e5e7; --blm-border2:#f1f2f3; --blm-shadow:rgba(0,0,0,.18);
-      --blm-ok-bg:#EAF3DE; --blm-ok-text:#3B6D11;
-      --blm-warn-bg:#FCEBEB; --blm-warn-text:#A32D2D;
+      --blm-border:#e6dac8; --blm-border2:#efe6d8; --blm-shadow:rgba(150,120,80,.18);
+      --blm-danger:#C4624E;   /* 危险色（陶土红）：toast danger / 状态机 error / 触摸端危险动作 */
+      --blm-ok-bg:#E9F0E2; --blm-ok-text:#5C7A50;   /* 辅助色：鼠尾草绿 */
+      --blm-warn-bg:#F6E8E2; --blm-warn-text:#B05A48;   /* 点缀色：陶土红 */
       --blm-info-bg:#E6F1FB; --blm-info-text:#185FA5;
       --blm-grey-bg:#F1EFE8; --blm-grey-text:#5F5E5A;
-      --blm-hl-cond-bg:#E1F5EE; --blm-hl-cond-text:#0F6E56;
-      --blm-hl-prize-bg:#EEEDFE; --blm-hl-prize-text:#534AB7;
+      /* 正文高亮（2026-10-18 方案 A+ 暖化归族）：条件=鼠尾草绿下划线（无底，线色兼用 ok-text）；
+         奖品=琥珀实底芯片（amber 对，1px 同族深边）。零新增 token。 */
+      --blm-hl-cond-line:#5C7A50;
+      --blm-hl-prize-bg:#FFF0BF; --blm-hl-prize-text:#8A6100;
       --blm-dup-bg:#FBEAF0; --blm-dup-text:#993556;
       --blm-amber-bg:#FFF0BF; --blm-amber:#FFD97D; --blm-amber-text:#8A6100; --blm-amber-bg-hover:#FFE9A8;
       --blm-amber-conf-bg:#FFE2D1; --blm-amber-conf2:#FFC09E; --blm-amber-conf-text:#8C4A22;
       --blm-press-glow:rgba(251,114,153,.16);   /* 按压光斑（亮色：淡粉） */
       --blm-tilt:3.2;                           /* 按压倾斜上限（度）—— 封顶保证文字不糊 */
       --blm-skel-sweep:rgba(255,255,255,.75);   /* 骨架屏扫光（亮色：白亮条） */
+      --nm-raised:4px 4px 10px rgba(178,148,110,.34), -2px -2px 7px rgba(255,252,245,.92);
+      --nm-raised-sm:2px 2px 6px rgba(178,148,110,.3), -1px -1px 4px rgba(255,252,245,.88);
+      --nm-inset:inset 2px 2px 5px rgba(178,148,110,.3), inset -1px -1px 4px rgba(255,252,245,.85);
+      --nm-panel:10px 10px 28px rgba(150,120,80,.24), -6px -6px 18px rgba(255,252,245,.85);
+      --blm-primary:#D98E3B; --blm-on-primary:#ffffff;   /* 亮色主色：琥珀（奶油杏三色系） */
     }
     /* ============ 主题 token：暗色（body.blm-dark 时生效） ============ */
-    body.blm-dark #blm-panel, body.blm-dark #blm-fab, body.blm-dark #blm-float, body.blm-dark #blm-detailbox, body.blm-dark #blm-diag, body.blm-dark #blm-stmenu, body.blm-dark #blm-prizebox, body.blm-dark #blm-trashbox{
-      --blm-bg:#18191c; --blm-bg2:#1e2022; --blm-bg3:#232428;
+    body.blm-dark #blm-panel, body.blm-dark #blm-fab, body.blm-dark .blm-float, body.blm-dark #blm-detailbox, body.blm-dark #blm-diag, body.blm-dark #blm-stmenu, body.blm-dark #blm-prizebox, body.blm-dark #blm-trashbox{
+      --blm-bg:#16121e; --blm-bg2:#1c1726; --blm-bg3:#241d31;
       --blm-text:#e3e5e7; --blm-text2:#9499a0; --blm-text3:#6b7075; --blm-text4:#565a5f;
-      --blm-border:#2f3235; --blm-border2:#26282b; --blm-shadow:rgba(0,0,0,.5);
-      --blm-ok-bg:#1d2b16; --blm-ok-text:#9bd45a;
-      --blm-warn-bg:#3a1d1d; --blm-warn-text:#ff8d8d;
-      --blm-info-bg:#16283a; --blm-info-text:#7db4e8;
+      --blm-border:#2e2740; --blm-border2:#221d30; --blm-shadow:rgba(0,0,0,.5);
+      --blm-danger:#C9657F;   /* 暗色危险色（玫瑰）*/
+      --blm-ok-bg:#123229; --blm-ok-text:#4FD1B5;   /* 状态族：薄荷青（成功） */
+      --blm-warn-bg:#33221d; --blm-warn-text:#E8A588;   /* 状态族：杏橙（注意） */
+      --blm-info-bg:#1c2333; --blm-info-text:#8FB8E8;   /* 状态族：雾蓝（提示） */
       --blm-grey-bg:#2a2a26; --blm-grey-text:#b8b5a8;
-      --blm-hl-cond-bg:#11322a; --blm-hl-cond-text:#5fd6b0;
-      --blm-hl-prize-bg:#2a2740; --blm-hl-prize-text:#b3a8ff;
-      --blm-dup-bg:#3a1d2e; --blm-dup-text:#ff9ec4;
+      --blm-hl-cond-line:#4FD1B5;
+      --blm-hl-prize-bg:#4a3a17; --blm-hl-prize-text:#ffd97d;
+      --blm-dup-bg:#33203d; --blm-dup-text:#f0a8d8;   /* 状态族：香芋粉（重复） */
       --blm-amber-bg:#4a3a17; --blm-amber:#6b4f1f; --blm-amber-text:#ffd97d; --blm-amber-bg-hover:#5c4a1f;
       --blm-amber-conf-bg:#4a2a1f; --blm-amber-conf2:#6b3f2f; --blm-amber-conf-text:#ffc09e;
-      --blm-press-glow:rgba(251,114,153,.18);   /* 按压光斑（暗色：亮一点的粉，暗背景上才看得见） */
-      --blm-skel-sweep:rgba(255,255,255,.07);   /* 骨架屏扫光（暗色：只留一点点微光，别刺眼） */
+      --blm-press-glow:rgba(157,143,224,.2);   /* 按压光斑（暗色：香芋星云紫光斑） */
+      --blm-skel-sweep:rgba(226,216,255,.06);   /* 骨架屏扫光（暗色：微紫高光） */
+      --nm-raised:3px 3px 8px rgba(0,0,0,.55), -1px -1px 4px rgba(255,255,255,.035), inset 1px 1px 1px rgba(255,255,255,.04);
+      --nm-raised-sm:2px 2px 5px rgba(0,0,0,.5), -1px -1px 3px rgba(255,255,255,.03);
+      --nm-inset:inset 2px 2px 4px rgba(0,0,0,.5), inset -1px -1px 2px rgba(255,255,255,.03);
+      --nm-panel:8px 8px 22px rgba(0,0,0,.65), inset 1px 1px 1px rgba(255,255,255,.04);
+      --blm-primary:#B890DC; --blm-on-primary:#1a1024;   /* 暗色主色：香芋星云（2026-10-17） */
     }
 
-    #blm-fab{position:fixed;right:24px;bottom:24px;z-index:2147483000;width:52px;height:52px;
-      border-radius:26px;background:#FB7299;color:#fff;border:none;cursor:pointer;
-      font-size:13px;line-height:52px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.22);
-      font-family:-apple-system,"Microsoft YaHei",sans-serif;}
+    /* ===== 交互反馈 token（2026-10-17 交互反馈升级方案 P0）：时长 / 缓动统一收口 =====
+       亮暗共用。组件里一律 var(--blm-dur-*) / var(--blm-ease-*)，不再散落魔法数；
+       触觉 / 手势的开关在 CONFIG（hapticFeedback / gestureNav）。 */
+    #blm-panel,#blm-fab,.blm-float,#blm-detailbox,#blm-diag,#blm-stmenu,#blm-prizebox,#blm-trashbox{
+      --blm-dur-micro:.1s;   /* 微反馈：按压 / 选中（≤150ms，超出就不跟手） */
+      --blm-dur-state:.18s;  /* 状态转换：展开 / 收起 / 筛选切换 */
+      --blm-dur-enter:.24s;  /* 入场：toast / 浮条 / 弹窗 */
+      --blm-dur-exit:.18s;   /* 退场：比入场快 25%，不挽留用户 */
+      --blm-dur-spring:.42s; /* 弹性回弹：只用于「回弹」不用于「前进」 */
+      --blm-ease-enter:cubic-bezier(.2,0,0,1);        /* 快出慢停（入场） */
+      --blm-ease-exit:cubic-bezier(.4,0,1,1);         /* 慢出快走（退场） */
+      --blm-ease-spring:cubic-bezier(.34,1.56,.64,1); /* 轻微过冲（脉冲/回弹） */
+      --blm-ease-std:cubic-bezier(.4,0,.2,1);         /* 标准过渡（色变/阴影） */
+    }
+
+    /* ===== 香芋星云（暗色专属）：渐变主按钮 + 玫瑰危险钮（2026-10-17） ===== */
+    body.blm-dark .blm-btn.pri{background:linear-gradient(135deg,#9D8FE0 20%,#E89BB8);
+      box-shadow:var(--nm-raised-sm),0 2px 12px rgba(232,155,184,.28);}
+    body.blm-dark #blm-fab{background:linear-gradient(135deg,#9D8FE0 20%,#E89BB8);
+      box-shadow:var(--nm-raised),0 4px 18px rgba(232,155,184,.3);}
+    body.blm-dark .blm-btn.danger{background:#C9657F;}
+
+    /* ===== 唤起按钮（2026-10-18 用户选定：票根 + 书签吸附 + 待开奖角标）=====
+       形状：竖版票根 —— 两侧用 mask 打半圆孔（不依赖页面底色）、中间一道虚线撕口；
+       位置：贴在视口右边缘（right:0），bottom 24 与原来的角位一致（面板打开时下沿仍露 16px 可点）；
+       交互：平时只露 26px（书签态，只有图标 + 角标），鼠标移上去横向展开到 56px 显出「抽奖」；
+       信息：顶部角标 = 待开奖条数，0 条时隐藏。
+       触屏没有 hover → pointer:coarse 下常驻展开，否则永远只能看到窄条。 */
+    /* 票根两侧打孔的位置做成可动画变量：贴边时把朝外那一侧的孔挪出元素外（约 13px），
+       悬停/拖出来时再滑回来 —— 贴墙的一侧不该留半圆缺口（用户 2026-10-18 指出）。
+       @property 注册后百分比才能过渡；不支持的浏览器退化成瞬时切换，不影响功能。 */
+    @property --blm-lh { syntax: '<percentage>'; inherits: false; initial-value: 0%; }
+    @property --blm-rh { syntax: '<percentage>'; inherits: false; initial-value: 100%; }
+    /* ⚠️ mask 会把元素自己的 box-shadow 一起裁掉（阴影属于画出来的内容），
+       所以位置/层级/阴影都交给外层 #blm-fab-wrap，用 filter:drop-shadow 让阴影沿着
+       打孔后的票根轮廓走 —— 比原来的 box-shadow 更贴合形状。
+       wrap 的位置由 JS 按「吸附 / 自由」两种形态写 left / right + top（见 applyFabPos）。 */
+    #blm-fab-wrap{position:fixed;z-index:2147483000;pointer-events:auto;
+      filter:drop-shadow(0 3px 8px rgba(0,0,0,.22));
+      transition:left .2s var(--blm-ease-std,cubic-bezier(.4,0,.2,1)),top .2s var(--blm-ease-std,cubic-bezier(.4,0,.2,1));}
+    #blm-fab-wrap.blm-fab-dragging{transition:none;}
+    #blm-fab{position:relative;pointer-events:auto;width:26px;height:78px;
+      border-radius:12px 0 0 12px;background:var(--blm-primary);color:var(--blm-on-primary);
+      border:none;cursor:grab;padding:0;font-size:13px;
+      font-family:-apple-system,"Microsoft YaHei",sans-serif;
+      display:flex;align-items:center;justify-content:center;
+      touch-action:none;user-select:none;-webkit-user-select:none;
+      transition:width .2s var(--blm-ease-enter,cubic-bezier(.2,0,0,1)),border-radius .2s,
+        --blm-lh .24s var(--blm-ease-std,cubic-bezier(.4,0,.2,1)),--blm-rh .24s var(--blm-ease-std,cubic-bezier(.4,0,.2,1));
+      --blm-lh:0%; --blm-rh:100%;
+      -webkit-mask:
+        radial-gradient(circle 5px at var(--blm-lh) 50%, transparent 98%, #000) left/51% 100% no-repeat,
+        radial-gradient(circle 5px at var(--blm-rh) 50%, transparent 98%, #000) right/51% 100% no-repeat;
+      mask:
+        radial-gradient(circle 5px at var(--blm-lh) 50%, transparent 98%, #000) left/51% 100% no-repeat,
+        radial-gradient(circle 5px at var(--blm-rh) 50%, transparent 98%, #000) right/51% 100% no-repeat;}
+    #blm-fab:hover{width:56px;}
+    /* 左吸附：圆角镜像 */
+    #blm-fab-wrap.blm-fab-dock-left #blm-fab{border-radius:0 12px 12px 0;}
+    /* 贴边的那一侧不留打孔（孔挪到元素外 13px ≈ 100% 的层宽） */
+    #blm-fab-wrap.blm-fab-dock-right #blm-fab{--blm-rh:200%;}
+    #blm-fab-wrap.blm-fab-dock-left #blm-fab{--blm-lh:-100%;}
+    /* 拖离边缘时两个孔都回来；贴边预览再按方向藏起来（顺序在后，覆盖上面） */
+    #blm-fab-wrap.blm-fab-dragging #blm-fab{--blm-lh:0%;--blm-rh:100%;}
+    #blm-fab-wrap.blm-fab-armed.blm-fab-arm-right #blm-fab{--blm-rh:200%;}
+    #blm-fab-wrap.blm-fab-armed.blm-fab-arm-left #blm-fab{--blm-lh:-100%;}
+    /* 拖动中：先展开成完整票根，方便抓 */
+    #blm-fab-wrap.blm-fab-dragging #blm-fab{width:56px;cursor:grabbing;}
+    /* 自由摆放：恒展开、四角圆 */
+    #blm-fab-wrap.blm-fab-float #blm-fab{width:56px;border-radius:14px;}
+    /* 贴边预览（2026-10-18 改）：不再把票根推出屏幕（那会只剩一条被圆角+打孔吃光的边，看着像消失了），
+       而是当场缩成「吸附后的 26px 书签」贴在边缘，并加一圈暖光 —— 松手是什么样，拖的时候就什么样。 */
+    #blm-fab-wrap.blm-fab-armed{transition:left .16s var(--blm-ease-std,cubic-bezier(.4,0,.2,1)),top .16s var(--blm-ease-std,cubic-bezier(.4,0,.2,1));}
+    #blm-fab-wrap.blm-fab-armed #blm-fab{width:26px;
+      box-shadow:0 0 0 2px color-mix(in srgb, var(--blm-primary) 55%, transparent);}
+    #blm-fab-wrap.blm-fab-armed #blm-fab .word{max-width:0;opacity:0;}
+    #blm-fab-wrap.blm-fab-armed.blm-fab-arm-left #blm-fab{border-radius:0 12px 12px 0;}
+    #blm-fab-wrap.blm-fab-armed.blm-fab-arm-right #blm-fab{border-radius:12px 0 0 12px;}
+    /* 角标：待开奖条数。白底 + 主色字，在琥珀底上才读得清（暗色是紫底，同样成立） */
+    /* 角标（2026-10-18 用户定稿位置：挂【票根角】，不是图标角）：
+       收起的书签态 → 票根左上角，向左上出 6px；
+       展开态（hover / 自由摆放 / 拖动中）→ 票根右上角，向右上出 6px，弹性过渡过去。
+       它是 #blm-fab 的兄弟节点（挂在 wrap 上）：票根本体有 mask，放在里面会被裁掉。 */
+    /* 角标 = 圆球气泡（2026-10-18 用户：位置对了，但要圆球、配色别那么素）：
+       22px 正圆 + 白描边托出来 + 蜜糖渐变（高光在左上，底部收进陶土红）+ 一点点文字投影。
+       位置按上一版定稿：收起态压票根左上角，展开态滑到右上角。 */
+    .blm-fabbadge{position:absolute;left:0;top:-10px;z-index:2;
+      width:22px;height:22px;box-sizing:border-box;border-radius:50%;padding:0;
+      background:
+        radial-gradient(circle at 34% 26%, rgba(255,255,255,.92) 0%, rgba(255,255,255,0) 40%),
+        linear-gradient(155deg, #FF9A86 0%, #E04B5A 50%, #8E2B45 100%);
+      color:#fff;font-size:9.5px;font-weight:700;line-height:22px;text-align:center;
+      font-variant-numeric:tabular-nums;letter-spacing:-.2px;
+      text-shadow:0 1px 1px rgba(112,30,52,.55);
+      box-shadow:0 0 0 2px #fff, 0 2px 6px rgba(122,38,58,.4);
+      white-space:nowrap;pointer-events:none;
+      transform:translateX(-5px);
+      transition:left .34s cubic-bezier(.34,1.56,.54,1),transform .34s cubic-bezier(.34,1.56,.54,1);
+      will-change:left,transform;}
+    /* ⚠️ 气泡是 wrap 的子节点（不是按钮的子节点），所以 hover 必须挂在 wrap 上 ——
+       v1.2.6 把气泡挪出来时漏了这条，导致「悬停不滑了」（v1.2.8 修）。 */
+    #blm-fab-wrap:hover .blm-fabbadge,
+    #blm-fab:hover .blm-fabbadge,
+    #blm-fab-wrap.blm-fab-float .blm-fabbadge,
+    #blm-fab-wrap.blm-fab-dragging .blm-fabbadge{
+      left:100%;transform:translateX(calc(-100% + 5px)) scale(1.08);}
+    /* 贴边预览是收起态 → 角标回到左上角 */
+    #blm-fab-wrap.blm-fab-armed .blm-fabbadge{left:0;transform:translateX(-5px);}
+    /* 成功 / 失败态：本体在显示 ✓ ✗，角标让位 */
+    #blm-fab-wrap[data-st="success"] .blm-fabbadge,
+    #blm-fab-wrap[data-st="error"] .blm-fabbadge{opacity:0;}
+    /* 文字只在展开时出现（max-width 过渡，不撑高布局） */
+    #blm-fab .word{max-width:0;opacity:0;overflow:hidden;white-space:nowrap;
+      font-size:11px;font-weight:600;letter-spacing:.5px;
+      transition:max-width .2s var(--blm-ease-enter,cubic-bezier(.2,0,0,1)),opacity .14s;}
+    #blm-fab:hover .word{max-width:44px;opacity:1;}
+    /* ⚠️ .fci 必须固定成图标大小（15×15）+ align-self:center：
+       它在 .st-idle 这个 column flex 里，默认 align-items:stretch 会被拉成整个票根宽，
+       角标 absolute left:-5 就会挂到票根边缘而不是图标角上（用户实测两态都错位）。 */
+    #blm-fab .fci{position:relative;display:flex;align-items:center;justify-content:center;
+      flex:none;align-self:center;width:15px;height:15px;}
+    /* 票根撕口（2026-10-18 用户选方案 A）：图标与「抽奖」之间一条横向虚线。
+       放在 .st-idle 里 → 成功/失败态（st-idle 隐藏）自动消失，不跟 ✓ ✗ 打架。 */
+    #blm-fab .perf{position:absolute;left:5px;right:5px;top:54%;
+      border-top:1.5px dashed rgba(255,255,255,.62);pointer-events:none;}
+    /* ===== 加载：一道光沿票根【外轮廓】转 + 呼吸脉动（用户 2026-10-18 定稿·第二版）=====
+       内环方案不行（光在票根里面、贴的是内边）。改成 SVG 描边：
+       路径就是票根的外形（圆角矩形 + 左右两个 5px 半圆打孔），stroke 4px 居中 →
+       外侧 2px 露在票根外面形成「包裹」，内侧 2px 被票根自身盖住；
+       打孔是「缺口」，那一段描边正好从孔里绕过去 —— 形状完全贴合，也不会有浮在外面的圆环。
+       走光用 stroke-dasharray + dashoffset，长度由 JS 按 getTotalLength() 写进 --blm-len。 */
+    .ld-svg{position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible;pointer-events:none;
+      opacity:0;transition:opacity .18s;}
+    .ld-svg svg{display:block;width:100%;height:100%;overflow:visible;}
+    /* 走光用白色（用户 2026-10-18 定）。注意：白线落在白页面上本身不可见，
+       所以真正让它「看得见」的是外圈那层暖光晕 —— 白芯 + 暖辉光，浅色/暗色页面都能读。 */
+    .ld-svg path{fill:none;stroke:#fff;stroke-width:5;stroke-linecap:round;vector-effect:non-scaling-stroke;
+      filter:drop-shadow(0 0 3px rgba(255,255,255,.95)) drop-shadow(0 0 8px rgba(255,180,90,.85));
+      animation:blm-edge-run 1.5s linear infinite;}
+    @keyframes blm-edge-run{to{stroke-dashoffset:var(--blm-len,300px);}}
+    #blm-fab-wrap.blm-fab-loading .ld-svg{opacity:1;}
+    /* 呼吸：整块轻微提亮 + 撕口明暗呼吸（和转光叠加） */
+    #blm-fab.blm-loading{width:56px;animation:blm-breathe 1.6s ease-in-out infinite;}
+    #blm-fab.blm-loading .perf{animation:blm-perf-pulse 1.6s ease-in-out infinite;}
+    @keyframes blm-breathe{0%,100%{filter:brightness(1)}50%{filter:brightness(1.14)}}
+    @keyframes blm-perf-pulse{0%,100%{opacity:.5}50%{opacity:1}}
+    @media (pointer:coarse){
+      /* 触屏展开不了：直接常驻完整态 */
+      #blm-fab{width:56px;}
+      #blm-fab .word{max-width:44px;opacity:1;}
+    }
+    /* ===== FAB 状态机（2026-10-17 P0）：idle（文案）/ success / error =====
+       loading 沿用 .blm-loading 转环（开面板时挂）；success / error 由 blmFx.setFabState 切换，
+       1.4s 后自动回 idle。成功脉冲 + 失败抖动都只动 transform。 */
+    #blm-fab .st{display:none;align-items:center;justify-content:center;}
+    #blm-fab .st-idle{display:flex;flex-direction:column;gap:3px;}
+    #blm-fab[data-st="success"] .st-idle,#blm-fab[data-st="error"] .st-idle{display:none;}
+    #blm-fab[data-st="success"] .st-ok{display:flex;}
+    #blm-fab[data-st="error"] .st-err{display:flex;}
+    #blm-fab[data-st="success"]{background:var(--blm-ok-text);color:var(--blm-ok-bg);}
+    #blm-fab[data-st="error"]{background:var(--blm-danger,#C4624E);color:#fff;}
+    #blm-fab[data-st="success"]{animation:blm-fab-pulse .5s var(--blm-ease-spring,cubic-bezier(.34,1.56,.64,1));}
+    #blm-fab[data-st="error"]{animation:blm-fab-shake .4s var(--blm-ease-std,cubic-bezier(.4,0,.2,1));}
+    @keyframes blm-fab-pulse{0%{transform:scale(1)}40%{transform:scale(1.14)}100%{transform:scale(1)}}
+    @keyframes blm-fab-shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+    /* 状态脉冲：.blm-btn 与 #blm-fab 共用（扫描 / 核验完成后在按钮上闪一下成功 / 失败） */
+    .blm-btn[data-st="success"]{background:var(--blm-ok-text);color:var(--blm-ok-bg);
+      animation:blm-fab-pulse .5s var(--blm-ease-spring,cubic-bezier(.34,1.56,.64,1));}
+    .blm-btn[data-st="error"]{background:var(--blm-danger,#C4624E);color:#fff;
+      animation:blm-fab-shake .4s var(--blm-ease-std,cubic-bezier(.4,0,.2,1));}
     /* ===== 打开面板的加载反馈（v1.1.3）=====
        点击小圆球到内容渲染出来之间有一段同步重活（读台账、重建几百张卡），
        这段时间里要有可见的「在加载」信号：① FAB 外圈转一个进度环；② 面板里先铺骨架卡。
        两个动画都只用 transform / opacity —— 会被浏览器提到合成层，
        主线程忙着渲染时它们也照常动（这是「还活着」的关键信号）。
        prefers-reduced-motion 下全部禁用。 */
-    #blm-fab .blm-fabring{position:absolute;left:50%;top:50%;width:66px;height:66px;margin:-33px 0 0 -33px;
-      pointer-events:none;opacity:0;transition:opacity .18s ease;}
-    #blm-fab.blm-loading .blm-fabring{opacity:1;animation:blm-ringspin .9s linear infinite;will-change:transform;}
-    .blm-fabring svg{display:block;width:100%;height:100%;}
-    .blm-fabring .trk{fill:none;stroke:rgba(251,114,153,.28);stroke-width:3;}
-    .blm-fabring .arc{fill:none;stroke:#FB7299;stroke-width:3;stroke-linecap:round;stroke-dasharray:47 142;}
-    @keyframes blm-ringspin{to{transform:rotate(360deg);}}
+
     /* 骨架屏：点开后立刻铺几行「占位卡」，形状像真卡片但不刺眼。
        淡入很轻（.16s）—— 渲染快时骨架还没透出来就被真内容替换，几乎无感，不会「白闪一下」。 */
     .blm-skel{padding:2px 0;animation:blm-skel-in .16s ease-out;}
     @keyframes blm-skel-in{from{opacity:0;}to{opacity:1;}}
-    .blm-skel-card{border:1px solid var(--blm-border);border-radius:8px;padding:13px 12px 5px;margin-bottom:8px;
+    .blm-skel-card{border:none;border-radius:16px;box-shadow:var(--nm-raised-sm);padding:13px 12px 5px;margin-bottom:10px;
       background:var(--blm-bg);}
     .blm-skel-line{height:11px;border-radius:6px;background:var(--blm-bg3);margin-bottom:9px;
       position:relative;overflow:hidden;}
@@ -1522,31 +1800,114 @@
     .blm-skel-chip{width:52px;height:17px;border-radius:5px;background:var(--blm-bg3);
       position:relative;overflow:hidden;}
     @media (prefers-reduced-motion: reduce){
-      #blm-fab.blm-loading .blm-fabring{animation:none;}
+      #blm-fab.blm-loading,#blm-fab.blm-loading .perf,.ld-svg path{animation:none;}
+      #blm-fab.blm-loading .perf{opacity:.62;}
       .blm-skel{animation:none;}
       .blm-skel-line::after,.blm-skel-chip::after{animation:none;opacity:.3;}
     }
+    /* ===== 减弱动态效果（2026-10-17 P0 补全）：新增反馈一律在此降级 =====
+       手势本身保留（那是功能不是装饰），但过渡 / 动画 / 错峰全部关掉。 */
+    @media (prefers-reduced-motion: reduce){
+      .blm-toast-item{animation:none;}
+      .blm-toast-item.out{transition:none;}
+      .blm-ripple{display:none;}
+      .blm-bm{transition:none;}
+      .blm-cardinner{transition:none;}
+      .blm-lpmenu{animation:none;}
+      .blm-item.blm-in{animation:none;}
+      #blm-fab[data-st="success"],#blm-fab[data-st="error"],
+      .blm-btn[data-st="success"],.blm-btn[data-st="error"]{animation:none;}
+      #blm-fab,#blm-fab .word{transition:none;}
+    }
     #blm-panel{position:fixed;right:20px;top:80px;bottom:40px;width:460px;z-index:2147483001;
-      background:var(--blm-bg);border:1px solid var(--blm-border);border-radius:12px;display:none;flex-direction:column;
-      box-shadow:0 8px 32px rgba(0,0,0,.18);font-family:-apple-system,"Microsoft YaHei",sans-serif;
+      background:var(--blm-bg);border:none;border-radius:22px;display:none;flex-direction:column;
+      box-shadow:var(--nm-panel);font-family:-apple-system,"Microsoft YaHei",sans-serif;
       font-size:13px;color:var(--blm-text);}
     #blm-panel.blm-show{display:flex;}
-    .blm-head{padding:12px 14px;border-bottom:1px solid var(--blm-border);display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+    /* 顶部栏精简（v1.1.5：去掉标题 + 「收起」改 ×）
+       不再显示标题：面板顶部只留一条 12px 高的隐形拖拽带（整条都能拖面板，零视觉占用）；
+       「收起」降级成 tab 行右侧一枚 × 图标 —— 位置随之下移，与 tab 同一行。 */
+    .blm-head{height:12px;flex:0 0 12px;padding:0;border:none;border-radius:22px 22px 0 0;
       cursor:move;user-select:none;}
-    .blm-head h3{margin:0;font-size:15px;font-weight:600;flex:1;}
-    .blm-tabs{display:flex;border-bottom:1px solid var(--blm-border);}
-    .blm-tabs button{flex:1;padding:9px 0;border:none;background:var(--blm-bg);cursor:pointer;font-size:13px;color:var(--blm-text2);border-bottom:2px solid transparent;}
-    .blm-tabs button.on{color:#FB7299;border-bottom-color:#FB7299;font-weight:600;}
+    /* 右侧留 36px 给 ×（26px 按钮 + 上下各 8.6px 的内缩），tab 不再铺到它下面 */
+    .blm-top{display:flex;align-items:flex-start;padding-right:36px;border-bottom:1px solid var(--blm-border2);}
+    .blm-tabs{display:flex;flex:1;min-width:0;border-bottom:none;padding:4px 6px 0;}
+    /* × 贴右上圆角（2026-10-18）：让按钮的【右上角】正对 22px 圆弧的 45° 顶点，沿对角线相距 3px。
+       顶点 = (W-22+22cos45, 22-22sin45) = (W-15.56, 6.44)；45° 向内 3px 拆到两轴 = 3/√2 ≈ 2.12，
+       所以距上边、右边各 8.56px —— 这两个值必须相等，否则连线就不是正 45°。
+       面板圆角固定 22px，不随宽高变化，所以这里可以写死；拖动/缩放面板时关系不变。 */
+    .blm-xbtn{position:absolute;top:8.6px;right:8.6px;width:26px;height:26px;padding:0;border:none;
+      display:flex;align-items:center;justify-content:center;border-radius:9px;z-index:3;
+      background:var(--blm-bg);color:var(--blm-text3);cursor:pointer;box-shadow:var(--nm-raised-sm);}
+    .blm-xbtn:hover{color:var(--blm-danger);box-shadow:var(--nm-raised);}
+    /* 触摸端不给 × 扩 44px 命中区：它离「设置」tab 只有 4px、下方就是搜索框，
+       外扩会盖住邻居造成误触（关面板这种可逆动作不值得冒误点别的控件的风险）。 */
+    .blm-xbtn:active{box-shadow:var(--nm-inset);}
+    .blm-tabs button{flex:1;padding:8px 0;border:none;background:transparent;cursor:pointer;font-size:13px;color:var(--blm-text2);border-radius:10px;}
+    .blm-tabs button.on{color:var(--blm-primary);font-weight:600;background:var(--blm-bg);box-shadow:var(--nm-raised-sm);}
     .blm-body{flex:1;overflow-y:auto;padding:10px 12px;}
     .blm-bar{display:flex;gap:6px;flex-wrap:wrap;padding:8px 12px;border-bottom:1px solid var(--blm-border2);align-items:center;}
-    .blm-btn{padding:5px 11px;border:1px solid var(--blm-border);background:var(--blm-bg);border-radius:6px;cursor:pointer;font-size:12px;color:var(--blm-text);}
-    .blm-btn:hover{border-color:#FB7299;color:#FB7299;}
-    .blm-btn.pri{background:#FB7299;color:#fff;border-color:#FB7299;}
-    .blm-btn.pri:hover{opacity:.88;color:#fff;}
+    .blm-btn{padding:5px 12px;border:none;background:var(--blm-bg);border-radius:12px;cursor:pointer;font-size:12px;color:var(--blm-text);box-shadow:var(--nm-raised-sm);}
+    .blm-btn:hover{color:var(--blm-primary);box-shadow:var(--nm-raised);}
+    .blm-btn:active{box-shadow:var(--nm-inset);transform:translateY(1px);}
+    /* ===== 涟漪（2026-10-17 P1）：按钮 / 分段器 / 翻页钮按下时从触点扩散 ===== */
+    .blm-btn,.blm-seg button,.blm-pg{position:relative;overflow:hidden;}
+    .blm-ripple{position:absolute;border-radius:50%;background:currentColor;opacity:.25;transform:scale(0);
+      pointer-events:none;z-index:0;animation:blm-ripple-out .5s var(--blm-ease-std,cubic-bezier(.4,0,.2,1)) forwards;}
+    @keyframes blm-ripple-out{to{transform:scale(2.4);opacity:0;}}
+    /* ===== 触摸适配 + 键盘焦点（2026-10-17 P1）=====
+       manipulation：禁双击缩放（快速连点不再触发页面放大）；卡片用 pan-y（纵向滚动留给页面、横向留给滑动态）。
+       小图标按钮的命中区外扩到 44px（视觉尺寸不变，只扩可点区域）。 */
+    .blm-btn,.blm-seg button,.blm-pg,.blm-ck,.blm-chip,.blm-bm,.blm-swipeact{touch-action:manipulation;}
+    @media (pointer:coarse){
+      .blm-iconbtn,.blm-lock{position:relative;}
+      .blm-iconbtn::after,.blm-lock::after{content:'';position:absolute;left:50%;top:50%;
+        width:44px;height:44px;transform:translate(-50%,-50%);}
+    }
+    #blm-panel .blm-btn:focus-visible,#blm-panel .blm-seg button:focus-visible,#blm-panel .blm-pg:focus-visible,
+    #blm-panel .blm-chip:focus-visible,#blm-panel .blm-xbtn:focus-visible,#blm-fab:focus-visible,.blm-float .blm-btn:focus-visible,.blm-bm:focus-visible{
+      outline:2px solid var(--blm-primary);outline-offset:2px;}
+    .blm-btn.pri{background:var(--blm-primary);color:var(--blm-on-primary);box-shadow:var(--nm-raised-sm);}
+    .blm-btn.pri:hover{opacity:.88;color:var(--blm-on-primary);}
     .blm-btn:disabled{opacity:.45;cursor:not-allowed;}
-    .blm-btn.danger{background:#E24B4A;color:#fff;border-color:#E24B4A;}
-    .blm-item{border:1px solid var(--blm-border);border-radius:8px;padding:9px 46px 9px 10px;margin-bottom:8px;
-      display:flex;gap:9px;background:var(--blm-bg);position:relative;overflow:hidden;transform-style:preserve-3d;}
+    .blm-btn.danger{background:#C4624E;color:#fff;box-shadow:var(--nm-raised-sm);}
+    /* 台账两个主力按钮的固有色（2026-10-18 用户点名要保留这两个颜色：建档=鼠尾草绿、核验=陶土红）。
+       说明：它们原本是「上次操作成功 / 失败」的状态色被 setState 留在按钮上的（绿=上次建档成功，
+       红=上次核验失败），看着像设计色。现在把它提成常态色，状态反馈仍走 .blm-btn[data-st]（浅一级的
+       选择器故意不写 .blm-btn 前缀，好让 data-st 的状态色能盖上来），并给 setState 补了时长自动回落。 */
+    .btn-scan{background:var(--blm-ok-text);color:var(--blm-ok-bg);}
+    .btn-scan:hover{color:#fff;box-shadow:var(--nm-raised);}
+    .btn-verify{background:var(--blm-danger);color:#fff;}
+    .btn-verify:hover{color:#fff;opacity:.9;box-shadow:var(--nm-raised);}
+    .blm-item{border:none;border-radius:16px;box-shadow:var(--nm-raised-sm);padding:0;margin-bottom:10px;
+      display:block;background:var(--blm-bg);position:relative;overflow:hidden;transform-style:preserve-3d;
+      touch-action:pan-y;}
+    /* 卡片内层（2026-10-17 P2 滑动态）：内容整体平移露出右侧操作条。
+       原来的 padding / gap 移到内层 —— 内层要带背景色整体移动，露出后面的操作按钮。 */
+    .blm-cardinner{position:relative;z-index:2;display:flex;gap:9px;min-width:0;
+      padding:10px 46px 10px 12px;background:var(--blm-bg);border-radius:16px;
+      transition:transform .22s var(--blm-ease-std,cubic-bezier(.4,0,.2,1));}
+    .blm-item.locked .blm-cardinner{background:var(--blm-bg3);}
+    .blm-cardinner.dragging{transition:none;}
+    /* 滑动态操作条：只有「详情 / 原动态」两个只读动作。
+       删除不可逆，必须走「勾选 → 二次确认 → 执行」主流程，绝不进滑动条（安全红线）。 */
+    .blm-swipeacts{position:absolute;right:0;top:0;bottom:0;display:flex;z-index:1;}
+    .blm-swipeact{width:76px;border:none;font-family:inherit;font-size:12px;color:#fff;cursor:pointer;padding:0;
+      display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:center;}
+    .blm-swipeact.detail{background:var(--blm-primary);}
+    .blm-swipeact.open{background:var(--blm-danger,#C4624E);}
+    .blm-swipeact svg{width:16px;height:16px;}
+    /* 长按快捷菜单（P2）：只读 / 低风险动作，删除不进菜单 */
+    .blm-lpmenu{position:absolute;z-index:80;background:var(--blm-bg);border-radius:14px;
+      box-shadow:var(--nm-raised);padding:6px;display:none;flex-direction:column;gap:2px;min-width:132px;
+      transform-origin:top right;animation:blm-lp-in .18s var(--blm-ease-enter,cubic-bezier(.2,0,0,1));}
+    @keyframes blm-lp-in{from{opacity:0;transform:scale(.92);}to{opacity:1;transform:scale(1);}}
+    .blm-lpmenu button{border:none;background:transparent;font-family:inherit;font-size:12px;color:var(--blm-text2);
+      padding:7px 14px;border-radius:9px;cursor:pointer;text-align:left;white-space:nowrap;}
+    .blm-lpmenu button:hover{background:var(--blm-bg3);color:var(--blm-text);}
+    /* 骨架 → 内容错峰淡入（P2）：前 12 张卡 30ms 错峰，给出「内容到达」的完成感 */
+    .blm-item.blm-in{animation:blm-card-in .24s var(--blm-ease-enter,cubic-bezier(.2,0,0,1)) backwards;}
+    @keyframes blm-card-in{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
     .blm-item.locked{background:var(--blm-bg3);}
     /* ===== 按压反馈（v1.0.2）：按住卡片时按触点位置轻微倾斜 + 光斑跟随 =====
        做对的几个点：
@@ -1567,6 +1928,8 @@
         rotateX(calc(var(--ty,0) * 1deg)) rotateY(calc(var(--tx,0) * 1deg));
       transition:transform .09s ease-out;
     }
+    /* 触摸端按压（2026-10-17 P1 双端分化）：不倾斜（防误触抖动），只留光斑 + 轻微缩放 */
+    .blm-item.blm-press.blm-press-mob{transform:scale(.985);}
     .blm-item.blm-press::after{opacity:1;transition:opacity .12s ease;}
     /* 松手 / 取消：弹性复原（回弹曲线带来「弹回去」的手感） */
     .blm-item.blm-release{transition:transform .42s cubic-bezier(.34,1.4,.64,1);}
@@ -1583,23 +1946,32 @@
       .blm-item.blm-press{transform:none !important;}
       .blm-item.blm-press::after{opacity:0 !important;}
     }
-    /* 抽奖书签：卡在卡片左下角的双层折角，直角朝左下。文字必须抬到伪元素之上，否则会被盖住 */
-    .blm-bm{position:absolute;left:0;bottom:0;width:52px;height:52px;pointer-events:none;
-      background:var(--blm-amber-bg);clip-path:polygon(0 0, 0 100%, 100% 100%);}
-    .blm-bm::after{content:'';position:absolute;left:0;bottom:0;width:44px;height:44px;
-      background:var(--blm-amber);clip-path:polygon(0 0, 0 100%, 100% 100%);}
-    /* 文字顺时针转 45° 顺着折角斜边排，加粗黑体更醒目；位置留了安全边距，
-       否则会被 clip-path 裁掉（clip-path 会裁剪所有后代，包括这行字） */
-    .blm-bm em{position:absolute;left:7px;bottom:21px;font-size:10px;font-style:normal;
-      font-family:"SimHei","Heiti SC","Microsoft YaHei",sans-serif;font-weight:700;
-      color:var(--blm-amber-text);line-height:1;white-space:nowrap;z-index:1;
-      transform:rotate(45deg);transform-origin:left bottom;}
-    .blm-bm.conf{background:var(--blm-amber-conf-bg);}
-    .blm-bm.conf::after{background:var(--blm-amber-conf2);}
-    .blm-bm.conf em{color:var(--blm-amber-conf-text);}
-    /* 带书签的卡片，时间行和操作行整体右移，给左下角的书签腾地方 */
-    .blm-item.hasbm .blm-meta{padding-left:58px;}
-    .blm-item.hasbm .blm-ops{padding-left:58px;}
+    /* 抽奖书签 → 极简圆点（2026-10-17 用户选定方案 C）：
+       常驻只有一个 20px 彩色圆点（礼物 / 对勾图标），悬停横向展开成胶囊显出文字 ——
+       取代原先 52×52 双层折角 + 10px 斜排文字（可读性差、视觉噪音大）。
+       只有两种情况挂书签——已确认（你亲手核实过）> 官方（接口查到）；脚本猜的、没核验过的都不挂。
+       点击圆点 = 打开详情（data-detail 走既有委托）。 */
+    .blm-bm{position:absolute;left:10px;bottom:9px;height:20px;width:20px;border-radius:10px;
+      background:var(--db);color:var(--di);display:flex;align-items:center;cursor:pointer;
+      overflow:hidden;white-space:nowrap;box-shadow:var(--nm-raised-sm);z-index:3;
+      transition:width .18s var(--blm-ease-std,cubic-bezier(.4,0,.2,1)),transform .12s;}
+    .blm-bm svg{width:12px;height:12px;margin:0 4px;flex:none;}
+    .blm-bm span{font-size:11.5px;font-weight:600;opacity:0;transition:opacity .14s;}
+    .blm-bm:hover,.blm-bm:focus-visible{width:80px;}
+    .blm-bm.conf:hover,.blm-bm.conf:focus-visible{width:68px;}   /* 「已确认」只三字，胶囊更窄 → 遮得更少 */
+    .blm-bm:hover span,.blm-bm:focus-visible span{opacity:1;}
+    .blm-bm:active{transform:scale(.94);}
+    /* 配色：官方 = 主题主色（亮琥珀 / 暗香芋，随外观切换）；已确认 = 鼠尾草绿（与「你已确认」角标同族） */
+    #blm-panel .blm-bm{--db:var(--blm-primary);--di:var(--blm-on-primary);}
+    #blm-panel .blm-bm.conf{--db:#5C7A50;--di:#fff;}
+    body.blm-dark #blm-panel .blm-bm.conf{--db:#4FD1B5;--di:#123229;}
+    /* 收起态给时间行 / 操作行留 36px（圆点占左起 10~30px）。
+       ⚠️ 悬停展开【绝不推移这两行】（2026-10-17 用户实测 bug 修复，根因记录）：
+       旧版用 :has 把两行右移让位，但时间 chips 一长就换行 → 卡片变高 → 圆点（底锚）被推下去 →
+       离开鼠标 → 收起 → 不换行了又回来 → 鼠标还在原处 → 再次展开 → 死循环抖个没完。
+       展开的胶囊改为【浮在信息行之上】：圆点自身 z-index:3 + 实底 + 柔影，零布局变化、零位移，
+       悬停状态因而绝对稳定。代价：悬停瞬间遮住操作行左侧一两个字，松开即复原 —— 可接受。 */
+    .blm-item.hasbm .blm-meta,.blm-item.hasbm .blm-ops{padding-left:36px;}
     .blm-dot{width:9px;height:9px;border-radius:50%;margin-top:5px;flex:none;}
     .blm-main{flex:1;min-width:0;}
     .blm-line1{display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0;}
@@ -1607,79 +1979,188 @@
     .blm-lock{display:inline-flex;align-items:center;flex:none;cursor:pointer;color:var(--blm-text3);
       line-height:0;padding:1px;border-radius:3px;transition:color .12s;}
     .blm-lock svg{display:block;}
-    .blm-lock:hover{color:#FB7299;}
+    .blm-lock:hover{color:var(--blm-primary);}
     .blm-lock.open{color:var(--blm-text2);}    /* 已解锁：形状本身就是开锁的，颜色保持一致 */
-    .blm-lock.open:hover{color:#FB7299;}
+    .blm-lock.open:hover{color:var(--blm-primary);}
     .blm-up{font-weight:600;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
     /* 关注页：UP 名即主页链接（去掉独立「主页」按钮后）—— 悬停变色 + 下划线，明确可点 */
     .blm-uplink{color:inherit;text-decoration:none;cursor:pointer;}
-    .blm-uplink:hover{color:#FB7299;text-decoration:underline;}
+    .blm-uplink:hover{color:var(--blm-primary);text-decoration:underline;}
     .blm-uplink:visited{color:inherit;}
     .blm-txtwrap{margin:3px 0 4px;}
     .blm-txt{color:var(--blm-text2);font-size:12px;line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
     .blm-txt.open{display:block;-webkit-line-clamp:unset;white-space:pre-wrap;word-break:break-word;}
-    .blm-more{display:none;font-size:11px;color:#FB7299;cursor:pointer;user-select:none;margin-top:2px;}
+    .blm-more{display:none;font-size:11px;color:var(--blm-primary);cursor:pointer;user-select:none;margin-top:2px;}
     .blm-more:hover{text-decoration:underline;}
     .blm-drow{display:flex;gap:8px;font-size:12px;color:var(--blm-text2);line-height:1.9;min-width:0;}
     .blm-drow b{font-weight:400;color:var(--blm-text3);flex:none;width:74px;}
     .blm-drow span{flex:1;min-width:0;word-break:break-word;}
-    .blm-chip{font-size:11px;padding:2px 7px;border-radius:4px;white-space:nowrap;}
-    .blm-count{font-variant-numeric:tabular-nums;font-weight:500;}
+    /* 时间胶囊（2026-10-18 方案一「主次分化」）：转发=历史事实 → 中性弱化（bg3+时钟+text2）；
+       开奖=活的截止时间 → 状态色独占彩色 + 数字加重；倒计时态左侧脉动点（全卡唯一会「呼吸」的元素）。
+       顺带修：转发胶囊原硬编码蓝（#E6F1FB/#185FA5）是卡片唯一非 token 色、暗色不跟随。 */
+    .blm-chip{font-size:11px;padding:2px 8px;border-radius:6px;white-space:nowrap;
+      display:inline-flex;align-items:center;gap:4px;}
+    .t-pub{background:var(--blm-bg3);color:var(--blm-text2);}
+    .t-pub svg{width:12px;height:12px;flex:none;}
+    .t-pub .t-lab{color:var(--blm-text3);}
+    .t-lab{font-style:normal;flex:none;}
+    .t-num{font-weight:600;font-variant-numeric:tabular-nums;}
+    .t-draw.pend{background:var(--blm-warn-bg);color:var(--blm-warn-text);}
+    .t-draw.ok{background:var(--blm-ok-bg);color:var(--blm-ok-text);}
+    .t-draw.grey{background:var(--blm-grey-bg);color:var(--blm-grey-text);}
+    .t-draw.pend::before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor;
+      flex:none;animation:blm-tpulse 1.6s ease-in-out infinite;}
+    @keyframes blm-tpulse{0%,100%{opacity:.28}50%{opacity:1}}
+    @media (prefers-reduced-motion: reduce){
+      .t-draw.pend::before{animation:none;opacity:.75;}
+    }
+    .blm-count{font-variant-numeric:tabular-nums;font-weight:600;}
     /* 卡片右下角：参与热度/重复标记 + 编号，从右往左排 */
     .blm-footright{position:absolute;right:12px;bottom:6px;display:flex;align-items:center;gap:5px;flex-wrap:nowrap;}
     .blm-no{font-size:12px;color:var(--blm-text4);letter-spacing:.3px;font-variant-numeric:tabular-nums;flex:none;}
     .blm-meta{font-size:11px;color:var(--blm-text3);display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
     .blm-ops{margin-top:7px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
     .blm-ops a{color:var(--blm-text2);text-decoration:none;font-size:12px;}
-    .blm-ops a:hover{color:#FB7299;}
+    .blm-ops a:hover{color:var(--blm-primary);}
+    /* 原生复选框（设置页/浮条的勾选项）：accent-color 跟随主色——
+       亮色琥珀 / 暗色（香芋星云）自动切换；不用 appearance:none 全自绘，
+       原生控件的键盘可达性和触屏手感都保留（2026-10-17 用户实测：设置页勾选框没跟上拟态） */
+    #blm-panel input[type=checkbox],#blm-panel input[type=radio],.blm-float input[type=checkbox]{
+      accent-color:var(--blm-primary);cursor:pointer;}
     /* 自定义复选框：不受 B 站全局样式和原生控件行为影响。没有文字标签，所以尺寸放大一点保证好点 */
-    .blm-ck{display:inline-block;width:16px;height:16px;border:1px solid var(--blm-text4);border-radius:3px;
-      background:var(--blm-bg);cursor:pointer;position:relative;flex:none;vertical-align:-2px;transition:background .12s;box-sizing:border-box;}
-    .blm-ck:hover{border-color:#FB7299;}
-    .blm-ck.on{background:#FB7299;border-color:#FB7299;}
-    .blm-ck.on::after{content:'';position:absolute;left:5px;top:2px;width:3px;height:7px;
-      border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg);}
+    .blm-ck{display:inline-block;width:16px;height:16px;border:none;border-radius:5px;
+      background:var(--blm-bg3);cursor:pointer;position:relative;flex:none;vertical-align:-2px;box-sizing:border-box;box-shadow:var(--nm-inset);transition:background .12s,box-shadow .12s;}
+    .blm-ck:hover{box-shadow:var(--nm-inset),0 0 0 2px color-mix(in srgb, var(--blm-primary) 30%, transparent);}
+    .blm-ck.on{background:var(--blm-primary);box-shadow:var(--nm-raised-sm);}
+    .blm-ck.on::after{content:'';position:absolute;left:6px;top:4px;width:3px;height:7px;
+      border:solid var(--blm-on-primary);border-width:0 2px 2px 0;transform:rotate(45deg);}
     .blm-ck.dis{opacity:.35;cursor:not-allowed;}
     .blm-ck.dis:hover{border-color:var(--blm-text4);}
     /* 关注页右侧操作区：取关勾选 / 标记 / 重新关注，纵向两行，右对齐 */
-    .blm-ufops{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px;flex:none;align-self:center;}
-    .blm-ufrow{display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--blm-text2);}
+    .blm-ufops{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:7px;flex:none;align-self:center;}
     .blm-ufact{font-size:11px;color:var(--blm-text2);text-decoration:none;white-space:nowrap;}
     .blm-ufact:hover{text-decoration:underline;}
+    /* 关注页右列重排（2026-10-18）：上 = 多选勾选框，下 = 单条取关/关注按钮。
+       两件事物理分开 —— 勾选框只负责"进批量"，那颗按钮才是真动手（点了先弹确认气泡）。 */
+    .blm-ckbox{display:inline-flex;align-items:center;justify-content:center;width:26px;height:18px;
+      border-radius:6px;cursor:pointer;}
+    .blm-ckbox:hover{background:var(--blm-bg3);}
+    .blm-uftake{padding:2px 9px;border:none;border-radius:8px;background:var(--blm-bg);font-family:inherit;
+      font-size:11px;color:var(--blm-text2);cursor:pointer;white-space:nowrap;box-shadow:var(--nm-raised-sm);}
+    .blm-uftake:hover{color:var(--blm-danger);box-shadow:var(--nm-raised);}
+    .blm-uftake:active{box-shadow:var(--nm-inset);}
+    .blm-uftake.dis{opacity:.5;}
+    .blm-uftake.follow{color:var(--blm-ok-text);}
+    .blm-uftake.follow:hover{color:var(--blm-ok-text);opacity:.86;}
+    /* 「为抽奖关注」的心形标记：虚 = 只是关注；裂开实心 = 为抽奖而来（抽完就该走） */
+    .blm-heart{width:22px;height:22px;padding:0;border:none;background:transparent;cursor:pointer;flex:none;
+      display:inline-flex;align-items:center;justify-content:center;color:var(--blm-text4);border-radius:7px;}
+    .blm-heart:hover{color:var(--blm-warn-text);background:var(--blm-bg3);}
+    .blm-heart.on{color:var(--blm-warn-text);}
+    /* 关注页卡片（2026-10-18 用户定稿）：右列改成**绝对定位的竖列 + 垂直居中** ——
+       它不再参与高度计算，卡片高度只由名字/时间行决定（原来它在流里会把卡片撑高、上下空出一截）。
+       左边 12px、右边留 70px，文字离四个圆角都够远：16px 圆角在 5px 处的内缩约 4.4px，
+       内容距边 12px / 10px 都在安全区内，不会被 overflow:hidden 裁掉。 */
+    .blm-item.ufcard .blm-main{padding:8px 12px;padding-right:70px;}
+    .blm-item.ufcard .blm-ufops{position:absolute;right:10px;top:50%;transform:translateY(-50%);
+      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;flex:none;}
+    /* 底部批量工具栏：只在勾选了东西时从底部浮起（挂在 #blm-panel 上，不随列表滚动） */
+    .blm-ufbar{position:absolute;left:12px;right:12px;bottom:14px;z-index:7;display:flex;align-items:center;gap:8px;
+      padding:9px 11px;border-radius:16px;background:var(--blm-bg);box-shadow:var(--nm-raised);
+      opacity:0;transform:translateY(18px) scale(.98);pointer-events:none;
+      transition:opacity .18s var(--blm-ease-std,cubic-bezier(.4,0,.2,1)),transform .22s var(--blm-ease-enter,cubic-bezier(.2,0,0,1));}
+    .blm-ufbar.show{opacity:1;transform:none;pointer-events:auto;}
+    .blm-ufbar .n{font-size:12px;color:var(--blm-text2);white-space:nowrap;}
+    .blm-ufbar .n b{color:var(--blm-primary);font-weight:600;font-variant-numeric:tabular-nums;}
+    .blm-ufbar .sp{flex:1;}
+    /* 确认气泡（挂面板内，沿用面板 token；点气泡外面任意处 = 取消） */
+    .blm-tipbox{position:absolute;z-index:9;width:210px;padding:10px 12px;border-radius:14px;
+      background:var(--blm-bg);box-shadow:var(--nm-raised);font-size:12px;
+      animation:blm-tip-in .14s var(--blm-ease-enter,cubic-bezier(.2,0,0,1));}
+    @keyframes blm-tip-in{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+    .blm-tipbox .th{font-weight:600;margin-bottom:3px;line-height:1.5;}
+    .blm-tipbox .tb{color:var(--blm-text2);font-size:11.5px;line-height:1.7;}
+    .blm-tipbox .tr{display:flex;gap:6px;justify-content:flex-end;margin-top:10px;}
+    .blm-tipbox .tr .blm-btn{font-size:11.5px;padding:4px 10px;border-radius:9px;}
+    /* 关注页输入控件：与台账同一套 inset 拟态（替换掉原来的 1px #E3E5E7 扁框） */
+    .blm-uffield{padding:6px 10px;border:none;border-radius:10px;background:var(--blm-bg3);
+      box-shadow:var(--nm-inset);font-size:12px;font-family:inherit;color:var(--blm-text);box-sizing:border-box;}
+    .blm-uffield::placeholder{color:var(--blm-text4);opacity:1;}
+    .blm-uffield.sel{padding:5px 6px;color:var(--blm-text2);cursor:pointer;}
+    .blm-uffield:focus{outline:none;box-shadow:var(--nm-inset),0 0 0 2px color-mix(in srgb, var(--blm-primary) 30%, transparent);}
+    /* ===== 关注页筛选区（2026-10-18 改版 · 方案 A 胶囊）=====
+       4 个多选胶囊 + 更多筛选展开两条自定义条件；已取关那颗红一号，且是单选独立视图。 */
+    .blm-frow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:12px;color:var(--blm-text2);}
+    .blm-frow+.blm-frow{margin-top:7px;}
+    .blm-fsp{flex:1;}
+    /* 当前筛选出多少位：夹在「更多筛选」左边的空白处（用户 2026-10-18 点名要这个位置） */
+    .blm-fcount{font-size:11px;color:var(--blm-text3);white-space:nowrap;font-variant-numeric:tabular-nums;
+      margin-right:2px;flex:none;}
+    .blm-fchip{padding:4px 10px;border:none;border-radius:12px;background:var(--blm-bg);font-family:inherit;
+      font-size:11.5px;color:var(--blm-text2);cursor:pointer;white-space:nowrap;box-shadow:var(--nm-raised-sm);}
+    .blm-fchip:hover{color:var(--blm-primary);}
+    .blm-fchip.on{background:var(--blm-primary);color:#fff;font-weight:600;}
+    .blm-fchip.on:hover{color:#fff;}
+    .blm-fchip.red{color:var(--blm-warn-text);}
+    .blm-fchip.red.on{background:var(--blm-warn-text);color:#fff;}
+    .blm-fchip[disabled]{opacity:.4;cursor:not-allowed;}
+    .blm-fmore{padding:4px 9px;border:none;border-radius:11px;background:transparent;font-family:inherit;
+      font-size:11.5px;color:var(--blm-text2);cursor:pointer;}
+    .blm-fmore:hover{color:var(--blm-primary);}
+    .blm-fmore.on{color:var(--blm-primary);background:var(--blm-amber-bg);}
+    .blm-fnote{font-size:11px;color:var(--blm-text3);line-height:1.6;margin:0 0 8px;}
+    .blm-fnote b{color:var(--blm-warn-text);font-weight:600;}
+    .blm-fx{display:none;flex-direction:column;gap:7px;margin:0 0 9px;padding:9px 10px;border-radius:12px;
+      background:var(--blm-bg3);box-shadow:var(--nm-inset);}
+    .blm-fx.open{display:flex;}
+    .blm-cond{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--blm-text2);flex-wrap:nowrap;}
+    .blm-cl{white-space:nowrap;}
+    .blm-cl.dim{opacity:.45;}
+    .blm-cond .blm-ci{width:46px;padding:3px 6px;text-align:center;font-variant-numeric:tabular-nums;}
+    .blm-cond input:disabled{opacity:.45;}
+    .blm-cond select{padding:3px 4px;border:none;border-radius:8px;background:var(--blm-bg3);color:var(--blm-text2);
+      font-family:inherit;font-size:11.5px;box-shadow:var(--nm-inset);cursor:pointer;}
+    .blm-sw{width:30px;height:17px;border-radius:9px;border:none;background:var(--blm-border);position:relative;
+      cursor:pointer;flex:none;margin-left:auto;padding:0;transition:background .15s;}
+    .blm-sw::after{content:'';position:absolute;left:2px;top:2px;width:13px;height:13px;border-radius:50%;
+      background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.18);transition:transform .15s;}
+    .blm-sw.on{background:var(--blm-primary);}
+    .blm-sw.on::after{transform:translateX(13px);}
+    .blm-fxfoot{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--blm-text3);}
+    .blm-fxfoot a{margin-left:auto;color:var(--blm-text3);}
+    .blm-fxfoot a:hover{color:var(--blm-primary);}
+    body.blm-dark .blm-sw{background:#3a3348;}
     /* 关注页：锁旁边直接写"为什么锁"，不用悬停也能看见（触屏也能读） */
     .blm-ufwhy{font-size:11px;color:var(--blm-warn-text);white-space:nowrap;}
-    /* 关注页底部执行条：实时报数（勾了几位）—— 底栏是台账页专属，关注页得自己说清楚 */
-    .blm-ufseln{font-size:12px;color:var(--blm-text2);}
-    .blm-ufseln b{color:#FB7299;font-weight:600;}
     /* 关注页：低频控件收纳区（默认收起，点「更多筛选」展开） */
     .blm-ufmore{display:none;align-items:center;gap:6px;margin-bottom:10px;font-size:12px;color:var(--blm-text2);flex-wrap:wrap;
-      padding:7px 9px;border:1px dashed var(--blm-border);border-radius:7px;background:var(--blm-bg3);}
+      padding:8px 10px;border:none;border-radius:12px;background:var(--blm-bg3);box-shadow:var(--nm-inset);}
     .blm-ufmore.open{display:flex;}
     /* 头部行的迷你按钮（核验）：暖黄系，和书签呼应 */
-    .blm-mini{font-size:11px;color:var(--blm-amber-text);text-decoration:none;padding:1px 7px;border:1px solid var(--blm-amber);
-      border-radius:4px;white-space:nowrap;background:var(--blm-amber-bg);}
+    .blm-mini{font-size:11px;color:var(--blm-amber-text);text-decoration:none;padding:2px 8px;border:none;
+      border-radius:9px;white-space:nowrap;background:var(--blm-amber-bg);box-shadow:var(--nm-raised-sm);}
     .blm-mini:hover{background:var(--blm-amber-bg-hover);}
     /* 时间胶囊可点击（点开改开奖时间） */
     .blm-chip-click{cursor:pointer;}
     .blm-chip-click:hover{text-decoration:underline;}
     .blm-chips{display:flex;gap:5px;flex-wrap:wrap;padding:8px 12px;border-bottom:1px solid var(--blm-border2);}
-    .blm-chipbtn{padding:3px 9px;border-radius:12px;border:1px solid var(--blm-border);background:var(--blm-bg);
-      font-size:11px;cursor:pointer;color:var(--blm-text2);}
-    .blm-chipbtn:hover{border-color:#FB7299;color:#FB7299;}
-    .blm-chipbtn.on{background:#FB7299;color:#fff;border-color:#FB7299;}
-    #blm-search{flex:1;min-width:110px;padding:5px 9px;border:1px solid var(--blm-border);border-radius:6px;
-      font-size:12px;box-sizing:border-box;font-family:inherit;}
-    #blm-search:focus{outline:none;border-color:#FB7299;}
+    .blm-chipbtn{padding:4px 10px;border-radius:14px;border:none;background:var(--blm-bg);
+      font-size:11px;cursor:pointer;color:var(--blm-text2);box-shadow:var(--nm-raised-sm);}
+    .blm-chipbtn:hover{color:var(--blm-primary);box-shadow:var(--nm-raised);}
+    .blm-chipbtn.on{background:var(--blm-primary);color:var(--blm-on-primary);box-shadow:var(--nm-raised-sm);}
+    #blm-search{flex:1;min-width:110px;padding:6px 10px;border:none;border-radius:10px;background:var(--blm-bg3);
+      font-size:12px;box-sizing:border-box;font-family:inherit;box-shadow:var(--nm-inset);}
+    #blm-search:focus,#blm-uf-search:focus,#blm-pz-in:focus,#blm-pz-req:focus,.blm-fl-time:focus{outline:none;box-shadow:var(--nm-inset),0 0 0 2px color-mix(in srgb, var(--blm-primary) 30%, transparent);}
     /* 占位提示统一压淡一档（text4），和真实输入内容拉开层次，看着更有质感 */
     #blm-search::placeholder,#blm-uf-search::placeholder,#blm-pz-in::placeholder,#blm-pz-req::placeholder,
-    #blm-fl-time::placeholder,#blm-uf-days::placeholder{color:var(--blm-text4);opacity:1;}
+    .blm-fl-time::placeholder{color:var(--blm-text4);opacity:1;}
     /* 「退出检索」×按钮：叠在搜索框右侧，有搜索词或只看 UP 时才显示 */
     .blm-searchwrap{position:relative;flex:1;min-width:110px;display:flex;}
     .blm-searchwrap #blm-search{flex:1;padding-right:26px;}
     #blm-sclear{position:absolute;right:5px;top:50%;transform:translateY(-50%);
-      width:18px;height:18px;border:none;border-radius:50%;background:var(--blm-border);color:var(--blm-text2);
+      width:18px;height:18px;border:none;border-radius:50%;background:var(--blm-bg3);color:var(--blm-text2);box-shadow:var(--nm-inset);
       font-size:12px;line-height:1;cursor:pointer;padding:0;flex:none;}
-    #blm-sclear:hover{background:#FB7299;color:#fff;}
+    #blm-sclear:hover{background:var(--blm-primary);color:var(--blm-on-primary);}
     /* 排序行布局（2026-10-17 用户反馈「排序按钮有时被挤换行」后重构）：
        实测 460px 面板里整行元素需求宽 453px、可用仅 436px —— 旧写法把 5 个元素平铺 + wrap，
        放不下时行末的排序方向按钮就被挤进第二行。现在分两区：
@@ -1694,27 +2175,35 @@
     /* 按钮内的勾选框（「全选/可删」的状态指示） */
     .blm-bar2 .blm-btn{display:inline-flex;align-items:center;gap:4px;}
     .blm-bar2 .blm-btn .blm-ck{width:12px;height:12px;}
-    .blm-bar2 .blm-btn .blm-ck.on::after{left:3px;top:1px;width:2px;height:6px;}
+    .blm-bar2 .blm-btn .blm-ck.on::after{left:4px;top:2px;width:2px;height:6px;}
     /* 「可删」按钮上的数字徽标：主色 = 零风险候选数；灰 = 带⚠️候选数 */
-    .blm-bar2 .blm-badge{min-width:14px;padding:1px 5px;border-radius:8px;background:var(--blm-primary,#FB7299);color:#fff;font-size:10px;font-weight:700;line-height:1.4;text-align:center;}
-    #blm-sort{padding:4px 4px;border:1px solid var(--blm-border);border-radius:6px;font-size:12px;color:var(--blm-text2);background:var(--blm-bg);font-family:inherit;}
-    .blm-seg{display:flex;border:1px solid var(--blm-border);border-radius:6px;overflow:hidden;}
-    .blm-seg button{border:none;background:var(--blm-bg);padding:4px 7px;font-size:11px;color:var(--blm-text2);cursor:pointer;
-      border-right:1px solid var(--blm-border2);font-family:inherit;}
+    .blm-bar2 .blm-badge{min-width:14px;padding:1px 5px;border-radius:8px;background:var(--blm-primary);color:var(--blm-on-primary);font-size:10px;font-weight:700;line-height:1.4;text-align:center;}
+    #blm-sort{padding:4px 6px;border:none;border-radius:9px;font-size:12px;color:var(--blm-text2);background:var(--blm-bg3);box-shadow:var(--nm-inset);font-family:inherit;}
+    .blm-seg{display:flex;border:none;border-radius:12px;overflow:hidden;background:var(--blm-bg3);box-shadow:var(--nm-inset);padding:2px;}
+    .blm-seg button{border:none;background:transparent;padding:4px 8px;font-size:11px;color:var(--blm-text2);cursor:pointer;
+      border-radius:9px;font-family:inherit;}
     .blm-seg button:last-child{border-right:none;}
-    .blm-seg button:hover{color:#FB7299;}
-    .blm-seg button.on{background:#FB7299;color:#fff;}
+    .blm-seg button:hover{color:var(--blm-primary);}
+    .blm-seg button.on{background:var(--blm-primary);color:var(--blm-on-primary);box-shadow:0 1px 3px rgba(0,0,0,.12);}
     .blm-timerow{display:none;gap:6px;align-items:center;padding:7px 12px;border-bottom:1px solid var(--blm-border2);
       font-size:12px;color:var(--blm-text2);flex-wrap:wrap;}
-    .blm-timerow input[type=datetime-local]{padding:3px 5px;border:1px solid var(--blm-border);border-radius:5px;
+    .blm-timerow input[type=datetime-local]{padding:3px 6px;border:none;border-radius:7px;background:var(--blm-bg3);box-shadow:var(--nm-inset);
       font-size:11px;font-family:inherit;color:var(--blm-text2);}
-    .blm-timerow select{padding:3px 5px;border:1px solid var(--blm-border);border-radius:5px;font-size:11px;
-      background:var(--blm-bg);font-family:inherit;color:var(--blm-text2);}
+    .blm-timerow select{padding:3px 6px;border:none;border-radius:7px;font-size:11px;
+      background:var(--blm-bg3);box-shadow:var(--nm-inset);font-family:inherit;color:var(--blm-text2);}
     .blm-only{display:none;gap:6px;align-items:center;padding:7px 12px;border-bottom:1px solid var(--blm-border2);
       font-size:12px;color:var(--blm-text2);}
-    .blm-hl{padding:0 1px;border-radius:2px;font-weight:500;}
-    .blm-hl-cond{background:var(--blm-hl-cond-bg);color:var(--blm-hl-cond-text);}
-    .blm-hl-prize{background:var(--blm-hl-prize-bg);color:var(--blm-hl-prize-text);}
+    /* 正文高亮（2026-10-18 方案 A+）：条件=鼠尾草绿 2px 下划线（无底、字色继承），
+       奖品=琥珀实底芯片（1px 同族深边 + 字重 600）。形状升级：padding 1px 3px / 圆角 4px /
+       box-decoration-break:clone（两行截断的跨行片段各自带圆角，现行未设）。
+       ⚠️ .blm-hl-cond 的 background:none 必须显式写 —— mark 元素有浏览器默认黄底，
+       不显式消除会露黄。 */
+    .blm-hl{padding:1px 3px;border-radius:4px;font-weight:500;
+      -webkit-box-decoration-break:clone;box-decoration-break:clone;}
+    .blm-hl-cond{background:none;color:inherit;padding:0 0 1px;border-radius:0;
+      border-bottom:2px solid var(--blm-hl-cond-line);}
+    .blm-hl-prize{background:var(--blm-hl-prize-bg);color:var(--blm-hl-prize-text);
+      font-weight:600;border:1px solid var(--blm-hl-prize-text);}
     /* 官方抽奖的奖品行：这类奖品不在正文里（在抽奖弹窗里），所以单开一行，数据来自接口 */
     .blm-prizeline{margin:4px 0 0;display:flex;gap:5px;flex-wrap:wrap;align-items:center;}
     .blm-prizekey{font-size:11px;color:var(--blm-text3);flex:none;}
@@ -1723,16 +2212,16 @@
     .blm-prizeline-my{margin-top:3px;}
     .blm-prizeghost{font-size:11px;padding:0 6px;border:1px dashed var(--blm-border);border-radius:4px;
       color:var(--blm-text3);cursor:pointer;white-space:nowrap;}
-    .blm-prizeghost:hover{color:#FB7299;border-color:#FB7299;}
+    .blm-prizeghost:hover{color:var(--blm-primary);border-color:var(--blm-primary);}
     .blm-prizeedit{font-size:11px;color:var(--blm-text3);cursor:pointer;white-space:nowrap;}
-    .blm-prizeedit:hover{color:#FB7299;}
+    .blm-prizeedit:hover{color:var(--blm-primary);}
     /* 手填弹窗：奖品 + 参与需求两个字段 */
     #blm-prizebox input,#blm-prizebox textarea{width:100%;box-sizing:border-box;font-family:inherit;
-      font-size:12px;padding:5px 7px;border:1px solid var(--blm-border);border-radius:6px;
-      background:var(--blm-bg2);color:var(--blm-text);resize:vertical;}
+      font-size:12px;padding:6px 8px;border:none;border-radius:9px;
+      background:var(--blm-bg3);color:var(--blm-text);resize:vertical;box-shadow:var(--nm-inset);}
     .blm-dup-tag{font-size:11px;padding:1px 6px;border-radius:4px;background:var(--blm-dup-bg);color:var(--blm-dup-text);white-space:nowrap;}
     .blm-uptag{cursor:pointer;}
-    .blm-uptag:hover{color:#FB7299;text-decoration:underline;}
+    .blm-uptag:hover{color:var(--blm-primary);text-decoration:underline;}
     /* 状态标签 = 中奖状态选择入口（点标签或右侧小箭头弹出菜单） */
     .blm-statustag{cursor:pointer;}
     .blm-statustag:hover{text-decoration:underline;}
@@ -1742,9 +2231,8 @@
     .blm-statustag.blm-stopen .blm-caret{transform:rotate(180deg);opacity:.95;}
     /* 核验入口：挂在卡片右上角的凸起胶囊（纯文字链接太隐蔽，胶囊 + 微投影让它像颗「待办按钮」） */
     .blm-vfy{position:absolute;top:8px;right:12px;font-size:11px;line-height:1;cursor:pointer;
-      color:var(--blm-info-text);background:var(--blm-bg);padding:4px 10px;border-radius:999px;
-      border:1px solid var(--blm-border);
-      box-shadow:0 1px 2px var(--blm-shadow);transition:transform .12s, box-shadow .12s;}
+      color:var(--blm-info-text);background:var(--blm-bg);padding:4px 11px;border-radius:999px;
+      border:none;box-shadow:var(--nm-raised-sm);transition:transform .12s, box-shadow .12s;}
     .blm-vfy:hover{transform:translateY(-1px);box-shadow:0 3px 6px var(--blm-shadow);text-decoration:none;}
     /* 按压时「按下去」：抬升取消 + 投影收紧，松开（松开鼠标 active 结束）自然弹回悬浮态再回落 */
     .blm-vfy:active{transform:translateY(0);box-shadow:0 1px 1px var(--blm-shadow);}
@@ -1755,24 +2243,24 @@
       padding:2px 10px;
       border-radius:999px;
       color:#fff;
-      background:#E24B4A;
+      background:#C4624E;
       border:2px solid var(--blm-amber);
-      box-shadow:0 0 0 2px var(--blm-warn-bg), 0 1px 3px rgba(226,75,74,.3);
+      box-shadow:0 0 0 2px var(--blm-warn-bg), 0 1px 3px rgba(196,98,78,.3);
       letter-spacing:.5px;
     }
     .blm-wontag:hover{text-decoration:none;opacity:.9;}
-    .blm-iconbtn{padding:4px 7px;border:1px solid var(--blm-border);border-radius:6px;background:var(--blm-bg);cursor:pointer;
-      color:var(--blm-text2);display:inline-flex;align-items:center;justify-content:center;font-family:inherit;}
-    .blm-iconbtn:hover{border-color:#FB7299;color:#FB7299;}
+    .blm-iconbtn{padding:4px 7px;border:none;border-radius:10px;background:var(--blm-bg);cursor:pointer;
+      color:var(--blm-text2);display:inline-flex;align-items:center;justify-content:center;font-family:inherit;box-shadow:var(--nm-raised-sm);}
+    .blm-iconbtn:hover{color:var(--blm-primary);box-shadow:var(--nm-raised);}
     .blm-badge{font-size:11px;padding:1px 6px;border-radius:4px;white-space:nowrap;}
     .blm-tag{font-size:11px;padding:1px 6px;border-radius:4px;background:var(--blm-border2);color:var(--blm-text2);white-space:nowrap;}
-    .blm-foot{padding:9px 12px;border-top:1px solid var(--blm-border);display:flex;gap:8px;align-items:center;position:relative;}
+    .blm-foot{padding:9px 12px;border-top:1px solid var(--blm-border2);display:flex;gap:8px;align-items:center;position:relative;}
     /* 进度条悬浮在底栏上缘 —— 若留在 flex 流里，display:block 后会占一行宽度，
        把旁边 flex:1 的进度文字挤成一列竖排字（2026-10-10 用户实测） */
-    .blm-scanbar{position:absolute;left:0;right:0;top:-2px;height:4px;border-radius:3px;background:var(--blm-border2);overflow:hidden;margin:0;}
+    .blm-scanbar{position:absolute;left:0;right:0;top:-2px;height:5px;border-radius:3px;background:var(--blm-bg3);box-shadow:var(--nm-inset);overflow:hidden;margin:0;}
     .blm-prog{font-size:12px;color:var(--blm-text2);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
     /* II档：扫描/核验/删除进行中的加载态 —— 不确定进度条（我们拿不到总页数，用流动动画表示"在忙"） */
-    .blm-scanbar i{display:block;height:100%;width:38%;border-radius:3px;background:#FB7299;animation:blm-indet 1.1s ease-in-out infinite;}
+    .blm-scanbar i{display:block;height:100%;width:38%;border-radius:3px;background:var(--blm-primary);animation:blm-indet 1.1s ease-in-out infinite;}
     @keyframes blm-indet{0%{transform:translateX(-110%)}100%{transform:translateX(360%)}}
     /* II档：长列表分页条（仅在条目超过 PAGE_SIZE 时出现） */
     .blm-pagebar{display:flex;flex-wrap:wrap;gap:5px;align-items:center;justify-content:center;padding:8px 10px;border-top:1px solid var(--blm-border);background:var(--blm-bg3);}
@@ -1781,10 +2269,10 @@
        代价：静止时这两条会盖住最上面/最下面各一两张卡 —— 滚动时自动让开。 */
     .blm-mid{position:relative;flex:1;min-height:0;display:flex;flex-direction:column;}
     .blm-mid>.blm-chips{position:absolute;left:0;right:0;top:0;z-index:6;
-      background:var(--blm-bg);border:1px solid var(--blm-border2);border-radius:9px;
-      box-shadow:0 4px 10px var(--blm-shadow);}
+      background:var(--blm-bg);border:none;border-radius:16px;
+      box-shadow:var(--nm-raised);}
     .blm-mid>.blm-pagebar{position:absolute;left:0;right:0;bottom:0;z-index:6;
-      border:1px solid var(--blm-border2);border-radius:9px;box-shadow:0 -4px 10px var(--blm-shadow);}
+      border:none;border-radius:16px;box-shadow:var(--nm-raised);background:var(--blm-bg);}
     .blm-mid>.blm-chips:empty{display:none;}   /* 没内容时不留一条空杠盖住卡片 */
     .blm-mid>.blm-chips,.blm-mid>.blm-pagebar{transition:opacity .18s ease,transform .18s ease;}
     #blm-panel.blm-scrolling .blm-chips{opacity:0;transform:translateY(-8px);pointer-events:none;}
@@ -1792,34 +2280,132 @@
     /* 静止 3 秒 → 两条降到 40% 透明度并略微回缩（往各自贴边方向缩 3px，像"退后一步"） */
     #blm-panel.blm-idle:not(.blm-scrolling) .blm-chips{opacity:.4;transform:translateY(-3px) scale(.985);}
     #blm-panel.blm-idle:not(.blm-scrolling) .blm-pagebar{opacity:.4;transform:translateY(3px) scale(.985);}
-    .blm-pg{font-size:12px;padding:3px 9px;border:1px solid var(--blm-border);border-radius:5px;background:var(--blm-bg);color:var(--blm-text2);cursor:pointer;font-family:inherit;}
-    .blm-pg:hover:not([disabled]):not(.on){border-color:var(--blm-text3);}
-    .blm-pg.on{background:var(--blm-primary,#FB7299);border-color:var(--blm-primary,#FB7299);color:#fff;font-weight:600;}
+    .blm-pg{font-size:12px;padding:3px 10px;border:none;border-radius:9px;background:var(--blm-bg);color:var(--blm-text2);cursor:pointer;font-family:inherit;box-shadow:var(--nm-raised-sm);}
+    .blm-pg:hover:not([disabled]):not(.on){color:var(--blm-primary);box-shadow:var(--nm-raised);}
+    .blm-pg.on{background:var(--blm-primary);color:var(--blm-on-primary);font-weight:600;box-shadow:var(--nm-inset);}
     .blm-pg[disabled]{opacity:.4;cursor:default;}
     .blm-pg-ell{color:var(--blm-text3);padding:0 2px;font-size:12px;}
     .blm-pg-info{font-size:11px;color:var(--blm-text3);margin-left:6px;}
     /* IV档：toast 轻提示（替代大部分非危险 alert），自动消失，可带一个操作按钮（如撤销） */
     .blm-toast{position:absolute;left:0;right:0;bottom:10px;display:flex;flex-direction:column;gap:6px;align-items:center;pointer-events:none;z-index:60;padding:0 10px;}
-    .blm-toast-item{pointer-events:auto;max-width:94%;background:var(--blm-text);color:var(--blm-bg);font-size:12px;line-height:1.5;padding:8px 12px;border-radius:8px;box-shadow:0 4px 16px var(--blm-shadow);white-space:pre-line;display:flex;align-items:center;gap:10px;animation:blm-toast-in .18s ease-out;}
+    /* 四型分级（2026-10-17 P0）：ok=成功(鼠尾草绿) / warn=注意(杏橙) / danger=危险·不可逆(陶土红) / info=提示(主色)。
+       配色全部复用现有 token，不引入新色；入场 .24s / 退场 .18s（比入场快 25%）。 */
+    .blm-toast-item{pointer-events:auto;max-width:94%;background:var(--blm-text);color:var(--blm-bg);font-size:12px;line-height:1.5;padding:9px 13px;border-radius:14px;box-shadow:0 6px 18px var(--blm-shadow);white-space:pre-line;display:flex;align-items:center;gap:10px;
+      animation:blm-toast-in var(--blm-dur-enter,.24s) var(--blm-ease-enter,cubic-bezier(.2,0,0,1));}
+    .blm-toast-item.out{opacity:0;transform:translateY(6px) scale(.96);
+      transition:opacity var(--blm-dur-exit,.18s) var(--blm-ease-exit,cubic-bezier(.4,0,1,1)),transform var(--blm-dur-exit,.18s) var(--blm-ease-exit,cubic-bezier(.4,0,1,1));}
+    .blm-toast-item.ok{background:var(--blm-ok-text);color:var(--blm-ok-bg);}
+    .blm-toast-item.warn{background:var(--blm-warn-text);color:var(--blm-warn-bg);}
+    .blm-toast-item.danger{background:var(--blm-danger,#C4624E);color:#fff;}
+    .blm-toast-item.info{background:var(--blm-primary);color:var(--blm-on-primary);}
+    .blm-toast-ic{display:inline-flex;flex:none;}
+    .blm-toast-ic svg{width:14px;height:14px;display:block;}
+    /* 彩色 toast 上的操作按钮用白色药丸（主色按钮压在上面会脏） */
+    .blm-toast-item.ok .blm-toast-act,.blm-toast-item.warn .blm-toast-act,
+    .blm-toast-item.danger .blm-toast-act,.blm-toast-item.info .blm-toast-act{background:rgba(255,255,255,.94);color:#18191c;}
     @keyframes blm-toast-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-    .blm-toast-act{flex:none;background:var(--blm-primary,#FB7299);color:#fff;border:none;border-radius:6px;padding:4px 10px;font-size:12px;cursor:pointer;font-family:inherit;font-weight:600;}
+    .blm-toast-act{flex:none;background:var(--blm-primary);color:var(--blm-on-primary);border:none;border-radius:6px;padding:4px 10px;font-size:12px;cursor:pointer;font-family:inherit;font-weight:600;}
     .blm-toast-act:hover{filter:brightness(1.06);}
     .blm-empty{text-align:center;color:var(--blm-text3);padding:36px 10px;line-height:1.8;}
     .blm-empty-title{font-size:14px;color:var(--blm-text);font-weight:600;margin-bottom:14px;}
     .blm-steps{display:flex;flex-direction:column;gap:10px;max-width:260px;margin:0 auto;text-align:left;}
     .blm-step{display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--blm-text2);}
-    .blm-step b:first-child{flex:none;width:20px;height:20px;border-radius:50%;background:var(--blm-primary,#FB7299);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;}
+    .blm-step b:first-child{flex:none;width:20px;height:20px;border-radius:50%;background:var(--blm-primary);color:var(--blm-on-primary);display:flex;align-items:center;justify-content:center;font-size:12px;}
     .blm-step b{color:var(--blm-text);}
     .blm-set{display:flex;align-items:center;justify-content:space-between;padding:9px 2px;border-bottom:1px solid var(--blm-border2);}
-    .blm-set input{width:78px;padding:4px 6px;border:1px solid var(--blm-border);border-radius:5px;text-align:right;font-size:12px;}
+    .blm-set input{width:78px;padding:4px 7px;border:none;border-radius:8px;background:var(--blm-bg3);box-shadow:var(--nm-inset);text-align:right;font-size:12px;}
     .blm-set label{font-size:12px;color:var(--blm-text2);}
-    #blm-float{position:fixed;right:24px;bottom:88px;z-index:2147483002;width:330px;background:var(--blm-bg);
-      border:1px solid var(--blm-border);border-radius:10px;padding:12px 14px;box-shadow:0 6px 24px rgba(0,0,0,.2);
-      font-family:-apple-system,"Microsoft YaHei",sans-serif;font-size:13px;color:var(--blm-text);display:none;}
-    .blm-fl-title{font-weight:600;margin-bottom:8px;}
+    /* ===== 设置页（2026-10-18 方案 A）：分组卡 + 吸底保存条 + 危险区 ===== */
+    .blm-setgrp{margin-bottom:12px;}
+    .blm-setgh{display:flex;align-items:center;gap:7px;margin:2px 0 7px;}
+    .blm-setgh i{width:7px;height:7px;border-radius:50%;background:var(--blm-primary);flex:none;}
+    .blm-setgh h4{margin:0;font-size:11.5px;color:var(--blm-text2);font-weight:600;letter-spacing:.5px;}
+    .blm-setgh span{flex:1;height:1px;background:var(--blm-border2);}
+    .blm-setcard{border-radius:14px;box-shadow:var(--nm-raised-sm);padding:2px 12px;background:var(--blm-bg);}
+    .blm-srow{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-top:1px dashed var(--blm-border2);}
+    .blm-srow:first-child{border-top:none;}
+    .blm-sm{flex:1;min-width:0;}
+    .blm-sn{font-size:12.5px;color:var(--blm-text);line-height:1.5;}
+    .blm-sn .dt{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--blm-primary);
+      margin-left:5px;vertical-align:middle;opacity:0;transition:opacity .2s;}
+    .blm-srow.chg .dt{opacity:1;}
+    .blm-stip{font-size:11px;color:var(--blm-text3);line-height:1.6;margin-top:2px;}
+    .blm-stip.one{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    .blm-more{font-size:10.5px;color:var(--blm-primary);cursor:pointer;margin-left:4px;white-space:nowrap;}
+    .blm-sctl{flex:none;display:flex;align-items:center;gap:6px;padding-top:1px;}
+    .blm-unit{font-size:11px;color:var(--blm-text3);}
+    .blm-num{width:66px;padding:4px 8px;border:none;border-radius:9px;background:var(--blm-bg3);
+      box-shadow:var(--nm-inset);font-size:12px;font-family:inherit;color:var(--blm-text);text-align:right;
+      font-variant-numeric:tabular-nums;}
+    .blm-num:focus{outline:none;box-shadow:var(--nm-inset),0 0 0 2px color-mix(in srgb,var(--blm-primary) 30%,transparent);}
+    .blm-sel{padding:4px 7px;border:none;border-radius:9px;background:var(--blm-bg3);box-shadow:var(--nm-inset);
+      font-size:12px;font-family:inherit;color:var(--blm-text2);cursor:pointer;}
+    /* 开关：原生 checkbox 自绘（保留 .checked 语义，保存逻辑不用改） */
+    .blm-swtch{appearance:none;-webkit-appearance:none;width:38px;height:22px;border-radius:12px;border:none;
+      background:var(--blm-border);position:relative;cursor:pointer;flex:none;margin:0;padding:0;
+      transition:background .15s;box-shadow:none;}
+    .blm-swtch::after{content:'';position:absolute;left:2px;top:2px;width:18px;height:18px;border-radius:50%;
+      background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2);transition:transform .16s;}
+    .blm-swtch:checked{background:var(--blm-primary);}
+    .blm-swtch:checked::after{transform:translateX(16px);}
+    /* 吸底保存条 */
+    .blm-setbar{position:absolute;left:12px;right:12px;bottom:12px;z-index:7;display:flex;align-items:center;gap:9px;
+      padding:9px 11px;border-radius:14px;background:var(--blm-bg);box-shadow:var(--nm-raised);
+      opacity:0;transform:translateY(16px);pointer-events:none;
+      transition:opacity .18s,transform .22s var(--blm-ease-enter,cubic-bezier(.2,0,0,1));}
+    .blm-setbar.show{opacity:1;transform:none;pointer-events:auto;}
+    .blm-setbar .n{font-size:12px;color:var(--blm-text2);flex:1;}
+    .blm-setbar .n b{color:var(--blm-primary);font-variant-numeric:tabular-nums;}
+    .blm-setbar .no{border:none;background:transparent;font-family:inherit;font-size:12px;color:var(--blm-text3);
+      cursor:pointer;padding:5px 6px;}
+    .blm-setbar .no:hover{color:var(--blm-text);}
+    /* 危险区 */
+    .blm-dangerbox{margin-top:8px;border-radius:14px;padding:10px 12px;
+      background:color-mix(in srgb,var(--blm-danger) 7%,var(--blm-bg));
+      box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--blm-danger) 26%,transparent);}
+    .blm-dangerbox .dh{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--blm-danger);
+      font-weight:600;margin-bottom:7px;}
+    .blm-btn.danger-ghost{color:var(--blm-danger);background:color-mix(in srgb,var(--blm-danger) 10%,var(--blm-bg));}
+    /* 浮条（2026-10-17 增强 + 多实例化）：每条转发一个独立浮条；弹性动画 + 固定(pin) + 悬停/编辑暂停读秒
+       + 保存成功态；头部为拖动手柄（按住可拖到任意位置） */
+    .blm-float{position:fixed;right:24px;bottom:88px;z-index:2147483002;width:330px;background:var(--blm-bg);
+      border:none;border-radius:20px;padding:14px 16px;box-shadow:var(--nm-panel);
+      font-family:-apple-system,"Microsoft YaHei",sans-serif;font-size:13px;color:var(--blm-text);display:none;
+      opacity:0;transform:translateY(14px) scale(.96);
+      transition:opacity .2s ease,transform .3s cubic-bezier(.34,1.56,.64,1);}
+    .blm-float.blm-fl-in{opacity:1;transform:none;}
+    @media (prefers-reduced-motion: reduce){ .blm-float{transition:none;} }
+    .blm-fl-head{display:flex;align-items:center;gap:6px;margin-bottom:8px;
+      cursor:move;user-select:none;-webkit-user-select:none;}
+    .blm-fl-head .blm-fl-title{flex:1;font-weight:600;margin:0;}
+    .blm-fl-pin{flex:none;display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;
+      border:none;border-radius:6px;background:transparent;color:var(--blm-text3);cursor:pointer;padding:0;}
+    .blm-fl-pin:hover{background:var(--blm-border2);color:var(--blm-text);}
+    .blm-fl-pin.on{color:var(--blm-primary);background:color-mix(in srgb, var(--blm-primary) 14%, transparent);}
+    .blm-fl-recap{margin:0 0 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .blm-fl-saved{text-align:center;padding:14px 0 8px;font-weight:600;color:var(--blm-ok-text);}
     .blm-fl-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
-    .blm-fl-row input[type=text]{flex:1;padding:5px 8px;border:1px solid var(--blm-border);border-radius:6px;font-size:12px;}
+    .blm-fl-row input[type=text]{flex:1;padding:5px 9px;border:none;border-radius:9px;background:var(--blm-bg3);box-shadow:var(--nm-inset);font-size:12px;}
     .blm-tip{font-size:11px;color:var(--blm-text3);line-height:1.6;margin-top:6px;}
+    /* 拟态滚动条（2026-10-17）：只作用于脚本自己的容器（不碰 B 站页面）。
+       轨道透明、滑块为底色深一档的圆角胶囊（内嵌微阴影），悬停染主色；
+       颜色全部走 token，亮/暗自动跟随。 */
+    #blm-body,.blm-float,#blm-detailbox,#blm-prizebox,#blm-trashbox,#blm-diag,#blm-stmenu{
+      scrollbar-width:thin;scrollbar-color:var(--blm-bg3) transparent;}
+    #blm-body::-webkit-scrollbar,.blm-float::-webkit-scrollbar,#blm-detailbox::-webkit-scrollbar,
+    #blm-prizebox::-webkit-scrollbar,#blm-trashbox::-webkit-scrollbar,#blm-diag::-webkit-scrollbar,
+    #blm-stmenu::-webkit-scrollbar{width:10px;height:10px;}
+    #blm-body::-webkit-scrollbar-track,.blm-float::-webkit-scrollbar-track,#blm-detailbox::-webkit-scrollbar-track,
+    #blm-prizebox::-webkit-scrollbar-track,#blm-trashbox::-webkit-scrollbar-track,#blm-diag::-webkit-scrollbar-track,
+    #blm-stmenu::-webkit-scrollbar-track{background:transparent;}
+    #blm-body::-webkit-scrollbar-thumb,.blm-float::-webkit-scrollbar-thumb,#blm-detailbox::-webkit-scrollbar-thumb,
+    #blm-prizebox::-webkit-scrollbar-thumb,#blm-trashbox::-webkit-scrollbar-thumb,#blm-diag::-webkit-scrollbar-thumb,
+    #blm-stmenu::-webkit-scrollbar-thumb{background:var(--blm-bg3);border-radius:8px;border:2px solid var(--blm-bg);
+      box-shadow:inset 1px 1px 2px var(--blm-shadow);}
+    #blm-body::-webkit-scrollbar-thumb:hover,.blm-float::-webkit-scrollbar-thumb:hover,
+    #blm-detailbox::-webkit-scrollbar-thumb:hover,#blm-prizebox::-webkit-scrollbar-thumb:hover,
+    #blm-trashbox::-webkit-scrollbar-thumb:hover,#blm-diag::-webkit-scrollbar-thumb:hover,
+    #blm-stmenu::-webkit-scrollbar-thumb:hover{background:color-mix(in srgb, var(--blm-primary) 45%, var(--blm-bg3));}
   `);
 
   // 悬浮按钮要不要在当前页面显示（设置里的「按钮显示范围」控制）
@@ -1836,7 +2422,8 @@
     return true;
   }
   function applyFabVisibility() {
-    if (fab) fab.style.display = shouldShowFab() ? 'block' : 'none';
+    // 显示用 flex（FAB 内部是状态机 span，靠 flex 居中；display:block 会让文字偏）
+    if (fab) fab.style.display = shouldShowFab() ? 'flex' : 'none';
   }
 
   /* ---- 暗黑模式：跟随 B 站 / 系统主题切换面板外观 ----
@@ -1888,33 +2475,194 @@
   // 环绕进度环（打开面板的加载反馈）：外层 span 负责旋转（HTML 元素上的 transform 动画
   // 会被提到合成层，主线程忙着渲染时也照转），里层 SVG 只负责画「轨道 + 四分之一弧」。
   // 用 innerHTML 一次注入（不用 createElementNS —— 顺带让测试的 mock 环境也能跑）。
-  fab.innerHTML = '抽奖'
-    + '<span class="blm-fabring" aria-hidden="true">'
-    + '<svg viewBox="0 0 66 66">'
-    + '<circle class="trk" cx="33" cy="33" r="30"></circle>'
-    + '<circle class="arc" cx="33" cy="33" r="30"></circle>'
-    + '</svg></span>';
-  document.body.appendChild(fab);
+  // 状态机三态：idle（文案）/ success（✓ 脉冲）/ error（✗ 抖动）。
+  // data-st 由 blmFx.setFabState 切换，1.4s 后自动回 idle；loading 转环仍走 .blm-loading。
+  // 票根内部：顶部角标（待开奖条数）→ 小票图标 → 文字（展开时才出现）
+  fab.innerHTML = '<span class="st st-idle">'
+    + '<span class="fci"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+    + '<path d="M4 8.5A2.5 2.5 0 0 1 6.5 6h11A2.5 2.5 0 0 1 20 8.5a2.2 2.2 0 0 0 0 4.4 2.2 2.2 0 0 0 0 4.4A2.5 2.5 0 0 1 17.5 20h-11A2.5 2.5 0 0 1 4 17.5a2.2 2.2 0 0 0 0-4.4 2.2 2.2 0 0 0 0-4.6z"/>'
+    + '<path d="M9.6 7.2v9.6" stroke-dasharray="1.6 2.4"/></svg>'
+    + '</span>'
+    + '<span class="word">抽奖</span>'
+    + '<span class="perf" aria-hidden="true"></span>'
+    + '</span>'
+    + '<span class="st st-ok" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>'
+    + '<span class="st st-err" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span>';
+  // 票根打孔用了 mask，会把 box-shadow 裁掉 → 外面套一层负责定位 + 阴影
+  const fabWrap = document.createElement('div');
+  fabWrap.id = 'blm-fab-wrap';
+  fabWrap.appendChild(fab);
+  // 加载走光层：SVG 描边（路径 = 票根外形，含两个打孔），插在按钮前面 → 内侧被票根盖住，只露外侧
+  const fabHalo = document.createElement('div');
+  fabHalo.className = 'ld-svg';
+  fabHalo.innerHTML = '<svg viewBox="0 0 56 78" preserveAspectRatio="none" aria-hidden="true">'
+    + '<path d="M14 0 H42 A14 14 0 0 1 56 14 V34 A5 5 0 0 0 56 44 V64 A14 14 0 0 1 42 78 '
+    + 'H14 A14 14 0 0 1 0 64 V44 A5 5 0 0 0 0 34 V14 A14 14 0 0 1 14 0 Z"/></svg>';
+  fabWrap.insertBefore(fabHalo, fab);
+  (function sizeHalo() {
+    const pathEl = fabHalo.querySelector ? fabHalo.querySelector('path') : null;
+    if (!pathEl) return;
+    let len = 300;
+    try { if (pathEl.getTotalLength) len = pathEl.getTotalLength() || 300; } catch (e) {}
+    const dash = Math.max(26, Math.round(len * 0.18));
+    try {
+      pathEl.style.strokeDasharray = dash + ' ' + Math.round(len);
+      fabHalo.style.setProperty('--blm-len', (-Math.round(len)) + 'px');
+    } catch (e) {}
+  })();
+
+  // 角标单独一个节点（票根有 mask，放按钮里会被裁掉）
+  const fabBadgeEl = document.createElement('span');
+  fabBadgeEl.className = 'blm-fabbadge';
+  fabBadgeEl.id = 'blm-fab-badge';
+  fabBadgeEl.textContent = '0';
+  fabBadgeEl.style.display = 'none';
+  fabWrap.appendChild(fabBadgeEl);
+  document.body.appendChild(fabWrap);
   applyFabVisibility();
+
+  /* ---- 位置 / 形态持久化（2026-10-18 用户要求）----
+     mode = 'dock'（贴边书签）/ 'float'（自由摆放）。
+     dock 记 edge + top，float 记 left + top；都存 GM，下次启动原位复现。 */
+  const FAB_POS_KEY = 'bili_lottery_fab_pos_v1';
+  const FAB_W = 56;          // 展开 / 自由态宽度
+  const FAB_H = 78;
+  const DOCK_ARM = 48;       // 离左右边缘多少像素内算「要吸附」
+  const FAB_DOCK_W = 26;     // 吸附后的宽度（预览也用这个宽度）
+
+  function loadFabPos() {
+    try {
+      const p = GM_getValue(FAB_POS_KEY, null);
+      if (p && (p.mode === 'dock' || p.mode === 'float')) return p;
+    } catch (e) {}
+    return { mode: 'dock', edge: 'right', top: null };   // 默认：右侧书签、贴底 24（和旧版位置一致）
+  }
+  let fabPos = loadFabPos();
+
+  function fabMaxTop() { return Math.max(4, (window.innerHeight || 800) - FAB_H - 4); }
+  function clampFabTop(t) { return Math.max(4, Math.min(Number(t) || 0, fabMaxTop())); }
+
+  function applyFabPos() {
+    fabWrap.classList.remove('blm-fab-dock-left', 'blm-fab-dock-right', 'blm-fab-float');
+    fabWrap.style.left = '';
+    fabWrap.style.right = '';
+    const top = clampFabTop(fabPos.top == null ? (window.innerHeight || 800) - FAB_H - 24 : fabPos.top);
+    fabWrap.style.top = top + 'px';
+    if (fabPos.mode === 'float') {
+      fabWrap.classList.add('blm-fab-float');
+      const maxL = Math.max(0, (window.innerWidth || 1200) - FAB_W);
+      fabWrap.style.left = Math.max(0, Math.min(Number(fabPos.left) || 0, maxL)) + 'px';
+    } else {
+      fabWrap.classList.add(fabPos.edge === 'left' ? 'blm-fab-dock-left' : 'blm-fab-dock-right');
+      if (fabPos.edge === 'left') fabWrap.style.left = '0px';
+      else fabWrap.style.right = '0px';
+    }
+  }
+  function saveFabPos() {
+    try { GM_setValue(FAB_POS_KEY, fabPos); } catch (e) {}
+  }
+
+  /* ---- 拖动：位移 <4px 当点击（不打断开面板）；贴左右边缘 48px 内滑成半隐藏预览 ---- */
+  let fabDrag = null;
+  let fabDragEndAt = 0;      // 刚拖完，紧接着那次 click 要吞掉
+  fab.addEventListener('pointerdown', e => {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    const r = fabWrap.getBoundingClientRect();
+    fabDrag = { id: e.pointerId, dx: e.clientX - r.left, dy: e.clientY - r.top,
+                sx: e.clientX, sy: e.clientY, moved: false, arm: null };
+  });
+  document.addEventListener('pointermove', e => {
+    if (!fabDrag || e.pointerId !== fabDrag.id) return;
+    if (!fabDrag.moved) {
+      if (Math.abs(e.clientX - fabDrag.sx) < 4 && Math.abs(e.clientY - fabDrag.sy) < 4) return;
+      fabDrag.moved = true;
+      fabWrap.classList.add('blm-fab-dragging');
+      document.body.style.userSelect = 'none';
+    }
+    const W = window.innerWidth || 1200, H = window.innerHeight || 800;
+    const armL = e.clientX <= DOCK_ARM;
+    const armR = e.clientX >= W - DOCK_ARM;
+    fabDrag.arm = armL ? 'left' : (armR ? 'right' : null);
+    fabWrap.classList.toggle('blm-fab-armed', !!fabDrag.arm);
+    fabWrap.classList.toggle('blm-fab-arm-left', fabDrag.arm === 'left');
+    fabWrap.classList.toggle('blm-fab-arm-right', fabDrag.arm === 'right');
+    let left = e.clientX - fabDrag.dx;
+    // 贴边时直接把票根放到「吸附后」的位置：宽度先缩回 26，贴着左/右边缘
+    if (fabDrag.arm === 'left') left = 0;
+    else if (fabDrag.arm === 'right') left = W - FAB_DOCK_W;
+    else left = Math.max(0, Math.min(left, W - FAB_W));
+    const top = Math.max(4, Math.min(e.clientY - fabDrag.dy, fabMaxTop()));
+    fabWrap.style.left = Math.round(left) + 'px';                  // 先给 left 再撤 right，避免中间闪一帧
+    fabWrap.style.right = 'auto';
+    fabWrap.style.top = Math.round(top) + 'px';
+  });
+  function endFabDrag(e) {
+    if (!fabDrag || (e && e.pointerId !== undefined && e.pointerId !== fabDrag.id)) return;
+    const d = fabDrag;
+    fabDrag = null;
+    document.body.style.userSelect = '';
+    fabWrap.classList.remove('blm-fab-dragging', 'blm-fab-armed', 'blm-fab-arm-left', 'blm-fab-arm-right');
+    if (!d.moved) return;                                   // 没位移 = 点击，交给 click 处理器
+    fabDragEndAt = Date.now();
+    const top = parseInt(fabWrap.style.top, 10) || 0;
+    if (d.arm) fabPos = { mode: 'dock', edge: d.arm, top: top };
+    else fabPos = { mode: 'float', left: parseInt(fabWrap.style.left, 10) || 0, top: top };
+    saveFabPos();
+    applyFabPos();                                          // 归一化：clamp + 换类名（吸附后就地收起）
+  }
+  document.addEventListener('pointerup', endFabDrag);
+  document.addEventListener('pointercancel', endFabDrag);
+  window.addEventListener('resize', () => applyFabPos());
+  applyFabPos();
+
+  // 待开奖角标（票根顶部那个数字）。用 ledgerVersion 缓存 —— renderList 调得很勤，
+  // 但只有台账真变了才值得重算（computeStatus 要逐条跑日期判定，几百条也是几百次）。
+  let fabBadgeVer = -1;
+  function updateFabBadge(force) {
+    const el = document.getElementById('blm-fab-badge');
+    if (!el) return;
+    if (!force && fabBadgeVer === ledgerVersion) return;
+    fabBadgeVer = ledgerVersion;
+    let n = 0;
+    const lg = loadLedger();
+    Object.keys(lg).forEach(k => {
+      const it = lg[k];
+      if (!it || it.deleted) return;
+      let st = null;
+      try { st = computeStatus(it); } catch (e) { return; }
+      if (st && st.key === 'pending') n++;
+    });
+    el.textContent = n > 99 ? '99+' : String(n);
+    el.style.display = n ? '' : 'none';
+    fab.title = 'B站转发抽奖动态管理器' + (n ? '（' + n + ' 条待开奖）' : '');
+  }
+  updateFabBadge(true);
 
   const panel = document.createElement('div');
   panel.id = 'blm-panel';
+  // 标题已去掉（v1.1.5），面板仍需要一个无障碍名字，读屏 / 键盘用户才知道这是什么浮层
+  panel.setAttribute('role', 'dialog');
+  panel.setAttribute('aria-label', 'B站转发抽奖动态管理');
   panel.innerHTML = `
-    <div class="blm-head" id="blm-head">
-      <h3>转发抽奖动态管理</h3>
-      <button class="blm-btn" id="blm-close">收起</button>
-    </div>
-    <div class="blm-tabs">
-      <button data-tab="list" class="on">动态台账</button>
-      <button data-tab="follow">关注管理</button>
-      <button data-tab="set">设置</button>
+    <div class="blm-head" id="blm-head" title="按住可拖动面板"></div>
+    <div class="blm-top">
+      <div class="blm-tabs">
+        <button data-tab="list" class="on">动态台账</button>
+        <button data-tab="follow">关注管理</button>
+        <button data-tab="set">设置</button>
+      </div>
+      <button class="blm-xbtn" id="blm-close" title="收起面板" aria-label="收起面板"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     </div>
     <div class="blm-bar" id="blm-bar">
-      <button class="blm-btn" id="blm-scan" title="读取你全部的转发动态，建立台账（已有记录会按转发时间统一重排编号）">扫描建档</button>
-      <button class="blm-btn" id="blm-verify">核验开奖状态</button>
+      <button class="blm-btn btn-scan" id="blm-scan" title="读取你全部的转发动态，建立台账（已有记录会按转发时间统一重排编号）">建档</button>
+      <button class="blm-btn btn-verify" id="blm-verify" title="逐条核验开奖状态（官方接口 + 文案识别），查到中奖会提醒你">核验</button>
       <span class="blm-searchwrap"><input id="blm-search" placeholder="搜 UP 主 / 正文关键词" autocomplete="off"><button id="blm-sclear" title="退出检索：清空搜索词 + 取消「只看 UP」（也可在搜索框里按 Esc）" style="display:none">×</button></span>
     </div>
     <div class="blm-bar2" id="blm-bar2">
+      <!-- 正序 / 倒序放在整行最左（2026-10-18 用户要求）：它管的是「排序方向」，挨着排序下拉更顺手 -->
+      <button class="blm-iconbtn" id="blm-sortdir" title="切换正序 / 倒序">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4v16"/><path d="M4 17l3 3 3-3"/><path d="M17 20V4"/><path d="M14 7l3-3 3 3"/></svg>
+      </button>
       <div class="blm-bar2-tools">
         <select id="blm-sort" title="排序方式">
           <option value="pub">按转发时间</option>
@@ -1926,9 +2674,6 @@
         <button class="blm-btn" id="blm-sel-cur" title="勾选当前筛选结果里所有可以删的条目"><span class="blm-ck"></span>全选</button>
         <button class="blm-btn" id="blm-sel-all" title="一键勾选当前筛选结果里零风险的删除候选（官方已确认未中奖等）；在「重复」筛选下则按保底规则勾选每组多余条目"><span class="blm-ck"></span>可删</button>
       </div>
-      <button class="blm-iconbtn" id="blm-sortdir" title="切换正序 / 倒序">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4v16"/><path d="M4 17l3 3 3-3"/><path d="M17 20V4"/><path d="M14 7l3-3 3 3"/></svg>
-      </button>
     </div>
     <div class="blm-timerow" id="blm-timerow">
       <input type="datetime-local" id="blm-time-from" title="按上方排序所选的字段筛选（开奖时间 / 转发时间）">
@@ -1947,14 +2692,18 @@
       <button class="blm-btn danger" id="blm-stop" style="display:none">中止</button>
       <button class="blm-btn danger" id="blm-del" disabled>删除选中 (0)</button>
     </div>
-    <div class="blm-toast" id="blm-toast"></div>`;
+    <div class="blm-ufbar" id="blm-ufbar"></div>
+    <div class="blm-setbar" id="blm-setbar">
+      <span class="n" id="blm-set-n">没有改动</span>
+      <button class="no" id="s-discard" title="放弃这些改动，回到已保存的设置">放弃</button>
+      <button class="blm-btn pri" id="s-save">保存</button>
+    </div>
+    <div class="blm-toast" id="blm-toast" aria-live="polite"></div>`;
   document.body.appendChild(panel);
   applyTheme();   // 按设置 / B站主题套用外观（亮/暗）
   watchTheme();   // 监听 B站 / 系统主题变化，自动跟随
 
-  const floatBox = document.createElement('div');
-  floatBox.id = 'blm-float';
-  document.body.appendChild(floatBox);
+  // 浮条已改为多实例（.blm-float，见 showFloat / removeFloat），不再有全局单例容器
 
   let curTab = 'list';
   // 状态筛选改为**多选**：filterSet 里存选中的状态 key，空集 = 全部。
@@ -1978,17 +2727,22 @@
   // 卡片重建 → scrollTop 被程序化写回 → 误判为"用户在滚动" → chips/pagebar 收起 → 300ms 后又复位。
   // 这就是用户实测的「卡顿一下、收起又复位」。用它把这一小段程序化滚动标记出来，滚动监听里跳过。
   let programmaticScroll = false;
-  let followDaysFilter = '';
-  let followShowUnfollowed = false;   // 关注页：是否把「已取关」的 UP 也列出来（默认收起）
   let followSearch = '';              // 关注页：昵称 / UID 搜索
   let followSort = 'auto';            // 关注页排序：auto=安全性 / last=最近转发 / count=参与次数 / won=中奖次数 / first=关注时间
   let followSortDir = 'asc';          // 关注页排序方向：asc=正序（默认，数值从小到大）/ desc=倒序
-  let followOnlyLottery = false;      // 关注页：只看「为抽奖关注」的 UP
-  let followPreset = '';              // 关注页快捷筛选：'' / once 一次性 / stale 半年没转 / won 中过奖 / never 从没中过
-  let followMoreOpen = false;         // 关注页：低频筛选区是否展开（重置筛选、天数、智能补标都收在这里）
+  // ---- 筛选区（2026-10-18 改版：4 个多选项 + 2 条自定义条件）----
+  let followWon = false;              // 中过奖（与 followNever 互斥 —— "有奖/没奖"的两半，同时选等于不筛）
+  let followNever = false;            // 未中过
+  let followOnlyLottery = false;      // 抽奖关注（为抽奖而关注）
+  let followUfView = false;           // 已取关：独立视图（红色按钮，单选；只显示已取关的，其他条件不参与）
+  let followMoreOpen = false;         // 「更多筛选」展开
+  let followRange = { on: false, min: '', max: '' };              // 共转过 min~max 次（历史累计条数）
+  let followNth = { on: false, n: '1', op: '>=', val: '' };       // 第 n 次转发距今 ≥/≤ x 天（n 从最早数）
   const followSelected = new Set();   // 关注页：已勾选取关的 UP（mid，字符串）。2026-10-11 起从"只写 DOM class"改成集合 ——
                                       // 解锁 / 标记 / 排序 / 后台轮询的任何重渲染都不再清空勾选
   const unlockedFollow = new Set();   // 关注页：本页会话内临时解锁的 UP（mid），不持久化
+  const justUnfollowed = new Set();   // 关注页：本会话刚取关的 UP（mid）—— 卡片先留在原位（按钮翻成「关注」），
+                                      // 用户明确要求：刷新前别把它清走，否则刚点完就找不到人、也看不到按钮翻转
   let lastFollowMap = {};             // 关注页上一次算出的 UP 聚合表，取关确认时按它点名风险
   const selected = new Set();
   const textOpen = new Set();     // 正文处于展开状态的卡片
@@ -2357,24 +3111,23 @@
     let extra = '';
     extra += timeChip('转发', it.pubTs ? fmtTime(it.pubTs).slice(0, 16) : '未知', 'pub');
     if (it.drawTs) {
-      if (it.drawTs <= now) {
-        // 已确认未中奖的结果直接写在结果线上（「未中奖 · 2天前」）——这时「已开奖」是句废话；
-        // 已中奖不在这说（顶部金色标签管结果，这里管时间），结果未定保持「已开奖」
-        const resTxt = it.won === false ? '未中奖' : '已开奖';
-        extra += '<span class="blm-chip' + clickCls + '" style="background:var(--blm-ok-bg);color:var(--blm-ok-text)"' + editAttr
-          + ' title="' + fmtTime(it.drawTs) + ' 开奖' + (gateOpen ? '，点击修改开奖时间' : hint) + '">' + resTxt + ' · ' + relTime(it.drawTs) + '</span>';
-      } else {
-        // 已删除的条目不会再开奖，倒计时没有意义 —— 不挂 data-ts、不进每秒刷新队列
-        // （用户实报：清理重复删掉的条目还在跑 92 天倒计时）。数字停在渲染时刻即可。
-        const cd = it.deleted
-          ? fmtCountdown(it.drawTs - now)
-          : '<span class="blm-count" data-ts="' + it.drawTs + '">' + fmtCountdown(it.drawTs - now) + '</span>';
-        extra += '<span class="blm-chip' + clickCls + '" style="background:var(--blm-warn-bg);color:var(--blm-warn-text)"' + editAttr
-          + ' title="' + fmtTime(it.drawTs) + ' 开奖' + (gateOpen ? '，点击修改开奖时间' : hint) + '">开奖 · ' + cd + '</span>';
-      }
+      // 已确认未中奖的结果直接写在胶囊上（「未中奖 · 2天前」）——这时「已开奖」是句废话；
+      // 已中奖不在这说（顶部金色标签管结果，这里管时间），结果未定保持「已开奖」
+      const isPend = it.drawTs > now;
+      const lab = isPend ? '开奖' : (it.won === false ? '未中奖' : '已开奖');
+      const cls = isPend ? 'pend' : 'ok';
+      // 已删除的条目不会再开奖，倒计时没有意义 —— 不挂 data-ts、不进每秒刷新队列
+      // （用户实报：清理重复删掉的条目还在跑 92 天倒计时）。数字停在渲染时刻即可。
+      let cd;
+      if (!isPend) cd = relTime(it.drawTs);
+      else if (it.deleted) cd = fmtCountdown(it.drawTs - now);
+      else cd = '<span class="t-num blm-count" data-ts="' + it.drawTs + '">' + fmtCountdown(it.drawTs - now) + '</span>';
+      extra += '<span class="blm-chip t-draw ' + cls + clickCls + '"' + editAttr
+        + ' title="' + fmtTime(it.drawTs) + ' 开奖' + (gateOpen ? '，点击修改开奖时间' : hint) + '"><i class="t-lab">' + lab
+        + '</i><span class="t-num">' + cd + '</span></span>';
     } else {
-      extra += '<span class="blm-chip' + clickCls + '" style="background:var(--blm-grey-bg);color:var(--blm-grey-text)"' + editAttr
-        + ' title="' + (gateOpen ? '点击录入开奖时间' : '上锁中：点左上角的锁解锁后才能录入开奖时间') + '">开奖 未录入</span>';
+      extra += '<span class="blm-chip t-draw grey' + clickCls + '"' + editAttr
+        + ' title="' + (gateOpen ? '点击录入开奖时间' : '上锁中：点左上角的锁解锁后才能录入开奖时间') + '"><i class="t-lab">开奖</i><span class="t-num">未录入</span></span>';
     }
     if (it.forLotteryFollow) extra += '<span class="blm-tag">为抽奖关注</span>';
     return extra;
@@ -2572,9 +3325,22 @@
       const ufm = t.closest('[data-ufmark]');
       if (ufm) { toggleFollowMark(ufm.getAttribute('data-ufmark')); return; }
 
-      // 关注页：重新关注（取关的对称操作，可逆，风险低得多）
-      const ufr = t.closest('[data-ufrefollow]');
-      if (ufr) { refollowOne(ufr.getAttribute('data-ufrefollow')); return; }
+      // 关注页：单条取关 —— 先弹确认气泡，确认后立刻只对这一个动手
+      const ufo = t.closest('[data-ufone]');
+      if (ufo) {
+        const m = ufo.getAttribute('data-ufone');
+        // 锁的语义必须和勾选框一致：上锁的不给绕过去的入口（否则确认气泡成了一键开锁）
+        if (isFollowLocked(m)) {
+          toast('这位名下还有未开奖 / 中过奖 —— 先点左边的锁解锁，再点「取关」。', { type: 'warn' });
+          return;
+        }
+        openTakeTip(ufo, m, 'unfollow');
+        return;
+      }
+
+      // 关注页：单条关注 —— 已取关的卡片上，取关按钮翻成了「关注」，同样先弹气泡
+      const uff = t.closest('[data-uffollow]');
+      if (uff) { openTakeTip(uff, uff.getAttribute('data-uffollow'), 'follow'); return; }
 
       // 关注页：摘掉「已取关」标记（你又关注回去的情况）
       const ufu = t.closest('[data-ufundo]');
@@ -2589,19 +3355,8 @@
           // 勾选存进集合（不只看 DOM）—— 这样解锁 / 标记 / 排序 / 后台轮询重渲染后勾选依然在
           if (followSelected.has(mid)) { followSelected.delete(mid); box.classList.remove('on'); }
           else { followSelected.add(mid); box.classList.add('on'); }
-          // 原地刷新底部计数（不整页重渲染，保住滚动位置）
-          const sel = document.getElementById('blm-uf-seln');
-          const goBtn = document.getElementById('blm-uf-go');
-          if (sel) {
-            const n = Array.from(followSelected).filter(k => {
-              const x = lastFollowMap[k];
-              return x && !x.unfollowedAt;
-            }).length;
-            sel.innerHTML = n
-              ? '已勾选 <b>' + n + '</b> 位，点左侧按钮执行'
-              : '还没勾选任何 UP —— 右侧每张卡片勾「取关」';
-            if (goBtn) goBtn.disabled = !n;
-          }
+          // 原地刷新底部工具栏（勾选数 + 浮起/收起），不整页重渲染，保住滚动位置
+          refreshFollowBar();
         }
         return;
       }
@@ -2617,10 +3372,6 @@
         else if (a === 'open') window.open('https://t.bilibili.com/' + ((loadLedger()[dyn] || {}).origId), '_blank');
       }
     });
-    body.addEventListener('change', e => {
-      const di = e.target.closest('#blm-uf-days');
-      if (di) { followDaysFilter = di.value; renderList(); }
-    });
   }
 
   /* ---- 卡片按压反馈（v1.0.2）：按住时轻微倾斜 + 光斑跟随，松开弹性复原 ----
@@ -2631,6 +3382,7 @@
      - 大面积委托到 body 一次绑定，卡片全量重建也不用重挂。
      - 节流用 requestAnimationFrame：pointermove 触发频率远高于帧率，不节流会让几十张卡疯狂写样式。 */
   let pressCard = null;         // 当前被按住的卡片
+  let pressIsTouch = false;     // 本次按下是否为触摸（双端分化：触摸端不倾斜、只缩放）
   let pressRaf = 0;             // rAF 句柄
   let pressPoint = null;        // 最近一次触点（页面坐标），rAF 里消费
   // 设置保存后的回调钩子（按压反馈等需要「改完即时生效」的功能挂在这）
@@ -2652,9 +3404,12 @@
     // 光斑位置（百分比，给 radial-gradient 的 --px/--py）
     pressCard.style.setProperty('--px', ((nx + 0.5) * 100).toFixed(1) + '%');
     pressCard.style.setProperty('--py', ((ny + 0.5) * 100).toFixed(1) + '%');
-    // 倾斜：鼠标在右下 → 卡片右下「沉」下去（rotateY 正、rotateX 负）
-    pressCard.style.setProperty('--tx', (nx * 2 * max).toFixed(2));
-    pressCard.style.setProperty('--ty', (-ny * 2 * max).toFixed(2));
+    // 倾斜：鼠标在右下 → 卡片右下「沉」下去（rotateY 正、rotateX 负）。
+    // 触摸端跳过倾斜（blm-press-mob 只做缩放 + 光斑）—— 手指面积大，倾斜只会显得抖
+    if (!pressIsTouch) {
+      pressCard.style.setProperty('--tx', (nx * 2 * max).toFixed(2));
+      pressCard.style.setProperty('--ty', (-ny * 2 * max).toFixed(2));
+    }
   }
   function schedulePressTilt(e) {
     pressPoint = { x: e.clientX, y: e.clientY };
@@ -2667,13 +3422,13 @@
     const card = pressCard;
     pressCard = null; pressPoint = null;
     if (animate === false) {   // 卡片即将被重建，不用等动画，直接清干净
-      card.classList.remove('blm-press', 'blm-release');
+      card.classList.remove('blm-press', 'blm-press-mob', 'blm-release');
       card.style.removeProperty('--tx'); card.style.removeProperty('--ty');
       card.style.removeProperty('--px'); card.style.removeProperty('--py');
       return;
     }
     // 松手：先摘 .blm-press（去掉倾斜），再挂 .blm-release 走回弹曲线复位的过渡
-    card.classList.remove('blm-press');
+    card.classList.remove('blm-press', 'blm-press-mob');
     card.classList.add('blm-release');
     card.style.removeProperty('--tx'); card.style.removeProperty('--ty');
     // 过渡结束后把 release 也摘掉，避免下次按下时残留 transition 拖慢响应
@@ -2682,6 +3437,180 @@
       card.style.removeProperty('--px'); card.style.removeProperty('--py');
     }, 460);
   }
+  /* ==========================================================================
+     交互反馈统一模块 blmFx（2026-10-17 交互反馈升级方案落地）
+     - 触觉 / 涟漪 / 状态机 / 手势全部收在这里，组件不各写各的
+     - 事件委托在面板 / body 上一次性绑定；开关（hapticFeedback / gestureNav）
+       与 prefers-reduced-motion 实时查询，改设置即时生效
+     ========================================================================== */
+  const blmFx = {
+    reduced(){ try { return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); } catch (e) { return false; } },
+    // 触觉模式表：tap 轻点 / toggle 切换 / confirm 不可逆执行锚点 / warn 警告 / success 重要正向事件
+    HAPTIC: { tap: [10], toggle: [15], confirm: [12, 28, 12], warn: [18, 40, 18], success: [10, 36, 10, 36, 24] },
+    // 仅 Android / 桌面 Chrome 有效；iOS Safari 无 navigator.vibrate → 静默跳过（视觉补偿见各调用方）
+    haptic(p){ if (!SETTINGS.hapticFeedback) return; try { if (navigator.vibrate) navigator.vibrate(p); } catch (e) {} },
+    // 涟漪：只动 transform/opacity，结束即移除（animationend + 超时双保险）；reduced-motion 不生成
+    ripple(host, e){
+      if (this.reduced() || !host || !host.appendChild) return;
+      const r = host.getBoundingClientRect();
+      const size = Math.max(r.width, r.height) * 1.2;
+      const el = document.createElement('span');
+      el.className = 'blm-ripple';
+      const x = (e && typeof e.clientX === 'number' ? e.clientX : r.left + r.width / 2) - r.left - size / 2;
+      const y = (e && typeof e.clientY === 'number' ? e.clientY : r.top + r.height / 2) - r.top - size / 2;
+      el.style.cssText = 'width:' + size + 'px;height:' + size + 'px;left:' + x + 'px;top:' + y + 'px';
+      host.appendChild(el);
+      const done = () => { if (el.parentNode) el.parentNode.removeChild(el); };
+      el.addEventListener('animationend', done);
+      setTimeout(done, 700);
+    },
+    // 状态机：data-st = idle / success / error，CSS 负责表现；非 idle 态 duration 毫秒后自动回退
+    setState(el, st, duration){
+      if (!el || !el.dataset) return;
+      el.dataset.st = st;
+      if (st !== 'idle' && duration) setTimeout(() => { if (el.dataset.st === st) el.dataset.st = 'idle'; }, duration);
+    },
+    setFabState(st, duration){
+      this.setState(document.getElementById('blm-fab'), st, duration == null ? 1400 : duration);
+      // 角标挂在 wrap 上，靠这个镜像属性让位（成功/失败时隐藏）
+      const w = document.getElementById('blm-fab-wrap');
+      if (w && w.setAttribute) w.setAttribute('data-st', st);
+    }
+  };
+
+  // 涟漪 + 触觉轻点：面板内主操作控件按下即反馈（委托一次绑定，按钮重建不丢）
+  function bindFxEvents() {
+    const panel = document.getElementById('blm-panel');
+    if (!panel) return;
+    panel.addEventListener('pointerdown', e => {
+      if (e.pointerType === 'mouse' && e.button !== 0) return;   // 右键不掺和
+      const host = e.target.closest && e.target.closest('.blm-btn:not([disabled]),.blm-seg button,.blm-pg:not([disabled])');
+      if (!host) return;
+      blmFx.ripple(host, e);
+      // 触觉轻点只给「切换 / 选中」类控件 —— 操作按钮也震会麻木
+      if (host.closest('.blm-seg') || host.classList.contains('blm-chip')) blmFx.haptic(blmFx.HAPTIC.tap);
+    }, true);
+  }
+
+  /* ---- 左滑露出只读操作（2026-10-17 P2，仅触摸端 + gestureNav）----
+     设计红线：滑动条只有「详情 / 原动态」两个只读动作。删除不可逆，
+     必须走「勾选 → 二次确认 → 执行」主流程，绝不进手势（防误触删错）。 */
+  let swipeOpen = null;   // 当前展开的 { inner }
+  function closeSwipe() {
+    if (!swipeOpen) return;
+    try { swipeOpen.inner.style.transform = ''; swipeOpen.inner.classList.remove('dragging'); } catch (e) {}
+    swipeOpen = null;
+  }
+  function bindSwipeEvents() {
+    const body = document.getElementById('blm-body');
+    if (!body) return;
+    let sx = 0, sy = 0, dx = 0, dragging = false, decided = false, inner = null;
+    body.addEventListener('pointerdown', e => {
+      // 点已露出的操作按钮：不收起、不新手势（让 click 正常触发）
+      if (e.target.closest && e.target.closest('.blm-swipeacts')) return;
+      closeSwipe();
+      if (e.pointerType !== 'touch' || !SETTINGS.gestureNav || e.button !== 0) return;
+      const card = e.target.closest && e.target.closest('.blm-item');
+      if (!card || card.classList.contains('locked') || card.classList.contains('blm-nopress')) return;
+      const inn = card.querySelector('.blm-cardinner');
+      if (!inn) return;
+      sx = e.clientX; sy = e.clientY; dx = 0; dragging = true; decided = false; inner = inn;
+    }, true);
+    body.addEventListener('pointermove', e => {
+      if (!dragging || !inner) return;
+      const mx = e.clientX - sx, my = e.clientY - sy;
+      if (!decided) {
+        // 方向仲裁：10px 内分出横竖；横向才接管（纵向交给页面滚动）
+        if (Math.abs(mx) > 10 && Math.abs(mx) > Math.abs(my)) { decided = true; inner.classList.add('dragging'); }
+        else if (Math.abs(my) > 10) { dragging = false; return; }
+        else return;
+      }
+      dx = Math.max(-152, Math.min(0, mx));   // 钳制：最多露出两个操作钮
+      inner.style.transform = 'translateX(' + dx + 'px)';
+    }, { passive: true });
+    function snap() {
+      if (!dragging || !inner) { dragging = false; return; }
+      const wasDecided = decided, inn = inner;
+      dragging = false; decided = false;
+      inn.classList.remove('dragging');
+      if (!wasDecided) { inn.style.transform = ''; return; }
+      if (dx < -56) {   // 过半露出：吸附打开 + 轻震一下
+        inn.style.transform = 'translateX(-152px)';
+        swipeOpen = { inner: inn };
+        blmFx.haptic(blmFx.HAPTIC.tap);
+      } else {
+        inn.style.transform = '';
+      }
+    }
+    body.addEventListener('pointerup', snap, true);
+    body.addEventListener('pointercancel', () => {
+      if (inner) { inner.classList.remove('dragging'); inner.style.transform = ''; }
+      dragging = false; decided = false;
+    }, true);
+    body.addEventListener('scroll', closeSwipe, { passive: true });   // 滚动时收起
+  }
+
+  /* ---- 长按快捷菜单（2026-10-17 P2，仅触摸端 + gestureNav）----
+     550ms 阈值、移动超 10px 取消；菜单只放只读 / 低风险动作，删除不进菜单。 */
+  function bindLongPressEvents() {
+    const body = document.getElementById('blm-body');
+    const panel = document.getElementById('blm-panel');
+    if (!body || !panel) return;
+    let menu = document.getElementById('blm-lpmenu');
+    if (!menu) {
+      menu = document.createElement('div');
+      menu.className = 'blm-lpmenu';
+      menu.id = 'blm-lpmenu';
+      menu.setAttribute('role', 'menu');
+      panel.appendChild(menu);
+      // 点到别处 / 滚动 → 收起
+      document.addEventListener('click', e => { if (menu.style.display !== 'none' && !menu.contains(e.target)) hideMenu(); }, true);
+      body.addEventListener('scroll', hideMenu, { passive: true });
+      menu.addEventListener('click', e => {
+        const b = e.target.closest('button');
+        const dyn = menu.getAttribute('data-dyn');
+        hideMenu();
+        if (!b || !dyn) return;
+        if (b.hasAttribute('data-detail')) showDetailModal(dyn);
+        else if (b.getAttribute('data-act') === 'verify') verifySingle(dyn);
+        else if (b.getAttribute('data-act') === 'open') window.open('https://t.bilibili.com/' + ((loadLedger()[dyn] || {}).origId), '_blank');
+      });
+    }
+    let timer = null, sx = 0, sy = 0;
+    function hideMenu(){ if (timer) { clearTimeout(timer); timer = null; } menu.style.display = 'none'; }
+    body.addEventListener('pointerdown', e => {
+      if (e.target.closest && e.target.closest('.blm-swipeacts')) return;   // 操作按钮不长按
+      if (e.pointerType !== 'touch' || !SETTINGS.gestureNav || e.button !== 0) return;
+      const card = e.target.closest && e.target.closest('.blm-item');
+      if (!card || card.classList.contains('locked') || card.classList.contains('blm-nopress')) return;
+      const dyn = card.getAttribute('data-dyn');
+      if (!dyn) return;
+      sx = e.clientX; sy = e.clientY;
+      timer = setTimeout(() => {
+        timer = null;
+        const it = loadLedger()[dyn];
+        if (!it) return;
+        // 只读 / 低风险动作；「核验」只在可核验时出现
+        menu.innerHTML = '<button type="button" data-detail="' + dyn + '">详情</button>'
+          + (needVerify(it) ? '<button type="button" data-act="verify" data-dyn="' + dyn + '">核验开奖状态</button>' : '')
+          + '<button type="button" data-act="open" data-dyn="' + dyn + '">打开原动态</button>';
+        menu.setAttribute('data-dyn', dyn);
+        const pr = panel.getBoundingClientRect(), r = card.getBoundingClientRect();
+        menu.style.right = Math.max(4, pr.right - r.right + 8) + 'px';
+        menu.style.top = Math.max(4, r.top - pr.top + 8) + 'px';
+        menu.style.display = 'flex';
+        blmFx.haptic(blmFx.HAPTIC.warn);
+      }, 550);
+    }, true);
+    body.addEventListener('pointermove', e => {
+      if (!timer) return;
+      if (Math.abs(e.clientX - sx) > 10 || Math.abs(e.clientY - sy) > 10) { clearTimeout(timer); timer = null; }
+    }, { passive: true });
+    const cancel = () => { if (timer) { clearTimeout(timer); timer = null; } };
+    body.addEventListener('pointerup', cancel, true);
+    body.addEventListener('pointercancel', cancel, true);
+  }
+
   function bindCardPressFeedback() {
     const body = document.getElementById('blm-body');
     if (!body) return;
@@ -2705,7 +3634,10 @@
       // 按下的「意图」已经成立，先把卡片记下，让第一次移动立即生效
       endPress(false);
       pressCard = card;
+      // 双端分化（2026-10-17 P1）：触摸端不倾斜（防误触抖动），只留光斑 + 轻微缩放
+      pressIsTouch = (e.pointerType === 'touch');
       card.classList.add('blm-press');
+      if (pressIsTouch) card.classList.add('blm-press-mob');
       // 按住期间禁掉文本选择：鼠标按住拖动时，卡片跟着倾斜的同时还会把
       // 正文里的字选中一片 —— 又花又乱，而且松手后选区还留着。松手/复位时还原。
       panel.classList.add('blm-pressing');
@@ -2720,6 +3652,7 @@
         endPress(false);
         pressCard = card;
         card.classList.add('blm-press');
+        if (pressIsTouch) card.classList.add('blm-press-mob');
       }
       schedulePressTilt(e);
     }, true);
@@ -2770,10 +3703,19 @@
         rows.push(['抽奖发起者', escapeHtml(iss) + '（加码抽奖，非源动态作者）']);
       }
     }
-    rows.push(['转发时间', it.pubTs ? fmtTime(it.pubTs) : '未知']);
-    rows.push(['开奖时间', it.drawTs
-      ? fmtTime(it.drawTs) + '（' + relTime(it.drawTs) + '）'
-      : (it.drawUnknown ? '文案未标明开奖日期（你已确认）' : '未录入')]);
+    // 时间行与卡片胶囊同一语言（2026-10-18 方案一）：转发=中性+时钟；开奖=状态胶囊+完整日期
+    rows.push(['转发时间', it.pubTs
+      ? '<span class="blm-chip t-pub">' + CLOCK_SVG + '<span class="t-num">' + fmtTime(it.pubTs) + '</span></span>'
+      : '未知']);
+    rows.push(['开奖时间', (() => {
+      if (!it.drawTs) return (it.drawUnknown ? '文案未标明开奖日期（你已确认）' : '未录入');
+      const pend = it.drawTs > Date.now();
+      const lab = pend ? '倒计时' : (it.won === false ? '未中奖' : '已开奖');
+      const val = pend ? fmtCountdown(it.drawTs - Date.now()) : relTime(it.drawTs);
+      return '<span class="blm-chip t-draw ' + (pend ? 'pend' : 'ok') + '"><i class="t-lab">' + lab
+        + '</i><span class="t-num">' + val + '</span></span>'
+        + '<span style="color:var(--blm-text3)">' + fmtTime(it.drawTs) + '</span>';
+    })()]);
     rows.push(['信息来源', bd.text + (it.guessRaw ? '，依据「' + escapeHtml(it.guessRaw) + '」' : '')]);
     rows.push(['抽奖类型', (() => {
       const tp = typeOf(it);
@@ -2803,12 +3745,13 @@
       ));
       const conds = uniq('cond');
       if (conds.length) {
-        rows.push(['参与需求', conds.map(escapeHtml).join(' · ')
+        // 2026-10-18 A+：详情弹窗的识别项也上高亮，与卡片正文同一视觉语言（原先只有纯文本）
+        rows.push(['参与需求', conds.map(c => '<mark class="blm-hl blm-hl-cond">' + escapeHtml(c) + '</mark>').join(' · ')
           + '<span style="color:var(--blm-text3)">　识别自正文，仅供核验参考</span>']);
       }
       const prizes = uniq('prize');
       if (prizes.length && !(it.prizes && it.prizes.length)) {
-        rows.push(['奖品', prizes.map(escapeHtml).join(' · ')
+        rows.push(['奖品', prizes.map(p => '<mark class="blm-hl blm-hl-prize">' + escapeHtml(p) + '</mark>').join(' · ')
           + '<span style="color:var(--blm-text3)">　识别自正文，仅供参考</span>']);
       }
     }
@@ -2886,7 +3829,7 @@
 
     handle.addEventListener('mousedown', e => {
       if (e.button !== 0) return;
-      if (e.target && e.target.tagName === 'BUTTON') return;   // 别把「收起」按钮当成拖拽把手
+      if (e.target && e.target.tagName === 'BUTTON') return;   // 兜底：拖拽带里理论上没有按钮了，仍别把按钮当把手
       const r = panel.getBoundingClientRect();
       // 拖动前先把它从「贴右侧」改成「绝对定位」，否则 left/top 不生效
       panel.style.left = r.left + 'px';
@@ -2945,17 +3888,38 @@
      替代大部分非危险 alert，不打断操作流。可带一个操作按钮（如删除撤销）。
      多行文字用 \n 即可（CSS white-space:pre-line 自动换行）。
      面板没打开时 toast 容器不存在，调用会自动跳过（不会报错）。 */
+  /* 类型元数据：ok 成功 / warn 注意 / danger 危险·不可逆 / info 提示（默认） */
+  const TOAST_META = {
+    ok: { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg>' },
+    warn: { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17.5v.5"/></svg>' },
+    danger: { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.5"/></svg>' },
+    info: { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.5v.5"/></svg>' }
+  };
   function toast(msg, opts) {
     opts = opts || {};
     const wrap = document.getElementById('blm-toast');
     if (!wrap || !msg) return;
+    const type = TOAST_META[opts.type] ? opts.type : 'info';
     const el = document.createElement('div');
-    el.className = 'blm-toast-item';
+    el.className = 'blm-toast-item ' + type;
+    const ic = document.createElement('span');
+    ic.className = 'blm-toast-ic';
+    ic.innerHTML = TOAST_META[type].icon;
+    ic.setAttribute('aria-hidden', 'true');
+    el.appendChild(ic);
     const span = document.createElement('span');
     span.textContent = msg;
     el.appendChild(span);
     let timer = null;
-    const close = () => { if (timer) clearTimeout(timer); el.remove(); };
+    let closed = false;
+    const close = () => {
+      if (closed) return;
+      closed = true;
+      if (timer) clearTimeout(timer);
+      // 退场：先挂 .out 走 180ms 过渡再移除 —— 不再硬删（突然消失很出戏）
+      el.classList.add('out');
+      setTimeout(() => { if (el.parentNode) el.parentNode.removeChild(el); }, 220);
+    };
     const dur = (opts.duration == null) ? 2600 : opts.duration;
     if (opts.action && opts.action.text) {
       const btn = document.createElement('button');
@@ -2983,6 +3947,7 @@
   let lastRenderedVersion = -1;      // 上次完整渲染对应的台账版本
   let lastRenderedAt = 0;            // 上次完整渲染的时刻（秒开加时间上限，别让「N天前」等文案太旧）
   let panelLoading = false;          // 加载窗口（骨架亮起到渲染完成）
+  let staggerNext = false;          // 骨架 → 内容错峰淡入（P2，showSkeleton 置位、renderListInner 消费）
   let suppressClickBefore = 0;       // 早于这个时间戳的 click 视为「加载窗口里攒下的」，吞掉
   const SKIP_RENDER_MAX_MS = 5 * 60 * 1000;   // 秒开的最长有效期：超过就正常重渲染一次
 
@@ -3000,6 +3965,7 @@
 
   // 面板里铺骨架 + FAB 转环（渲染完成后的真内容会自然覆盖骨架，不用手动清理）
   function showSkeleton() {
+    staggerNext = true;   // 骨架之后的内容错峰淡入（P2 完成感反馈）
     const body = document.getElementById('blm-body');
     if (body) {
       let html = '<div class="blm-skel" aria-hidden="true">';
@@ -3016,10 +3982,10 @@
       programmaticScroll = true;
       body.innerHTML = html + '</div>';
     }
-    try { fab.classList.add('blm-loading'); } catch (e) {}
+    try { fab.classList.add('blm-loading'); fabWrap.classList.add('blm-fab-loading'); } catch (e) {}
   }
   function endLoadingState() {
-    try { fab.classList.remove('blm-loading'); } catch (e) {}
+    try { fab.classList.remove('blm-loading'); fabWrap.classList.remove('blm-fab-loading'); } catch (e) {}
   }
 
   // 带反馈的渲染：先铺骨架 + 亮环，再让两帧后跑重活。
@@ -3095,6 +4061,7 @@
     lastRenderedVersion = ledgerVersion;
     lastRenderedAt = Date.now();
     everRendered = true;
+    updateFabBadge();          // 台账变了 → 票根上的「待开奖 N」跟着变
   }
 
   // 筛选/操作工具栏（扫描核验搜索行、排序筛选行、时间范围、状态 chips、只看UP 条）
@@ -3124,6 +4091,8 @@
     // 底栏（条数 / 中止 / 删除选中）是台账页的专属部件 —— 关注页必须整体收掉，
     // 否则会露出一个「删除选中 (0)」按钮，让人以为关注页也能删动态（用户实测截图点名）。
     // 同时收掉台账页的悬浮筛选条 / 只看UP条，别盖住关注页内容。
+    if (curTab !== 'follow') hideFollowBar();   // 批量工具栏只属于关注页
+    if (curTab !== 'set') hideSetBar();          // 设置页的吸底保存条
     if (curTab !== 'list') hideListChrome();
     if (curTab === 'set') { renderSettings(); return; }
     if (curTab === 'follow') { renderFollow(); return; }
@@ -3209,6 +4178,10 @@
     body.innerHTML = '';
     // II档：只渲染当前这一页的卡片（其余页在翻页时再画），几千条也不会一次性建满 DOM
     const pageItems = items.slice(curPage * PAGE_SIZE, (curPage + 1) * PAGE_SIZE);
+    // P2：骨架 → 内容的错峰淡入（仅面板打开后第一次渲染；之后的筛选切换不重放，避免眼花）
+    const doStagger = staggerNext;
+    staggerNext = false;
+    let staggerIdx = 0;
     for (const it of pageItems) {
       const st = computeStatus(it);
       const tOpen = textOpen.has(it.dynId);
@@ -3260,7 +4233,16 @@
       const isBoost = isBoostLottery(it);
 
       row.innerHTML =
-        tbm +
+        // P2 滑动态：操作条藏在内容后面（z-index 1），内容整体左移才露出。
+        // 只放「详情 / 原动态」两个只读动作 —— 删除不可逆，绝不进滑动条（安全红线）。
+        '<div class="blm-swipeacts" aria-hidden="true">'
+        + '<button type="button" class="blm-swipeact detail" tabindex="-1" data-detail="' + it.dynId + '">'
+        + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>详情</button>'
+        + '<button type="button" class="blm-swipeact open" tabindex="-1" data-act="open" data-dyn="' + it.dynId + '">'
+        + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6M20 4L10 14M8 6H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3"/></svg>原动态</button>'
+        + '</div>'
+        + '<div class="blm-cardinner">'
+        + tbm +
         '<div class="blm-dot" style="background:' + st.color + '"></div>' +
         '<div class="blm-main">' +
           '<div class="blm-line1">' +
@@ -3297,9 +4279,15 @@
               ? '这条原本是官方抽奖，你覆盖过开奖时间 —— 点这里用官方数据恢复'
               : '不确定这条是不是官方抽奖 —— 点这里试试查官方数据，查到就替换你手填的日期')
             + '">核验</a>'
-          : '');
+          : '')
+        + '</div>';
 
       body.appendChild(row);
+      if (doStagger && staggerIdx < 12) {
+        row.classList.add('blm-in');
+        row.style.animationDelay = (staggerIdx * 0.03) + 's';
+      }
+      staggerIdx++;
     }
 
     // II档：判断「展开」按钮是否显示需要读 scrollHeight/clientHeight（触发布局重排）。
@@ -3493,17 +4481,19 @@
     if (x.needcheck > 0 || x.unknown > 0) return 'warn';
     return 'safe';
   }
+  // 2026-10-18 用户选定「极简文案」：把"2 条未开奖"压成"未开奖 2"——
+  // 标签行本来就只有 460px 宽，"条"字占位不产信息；状态词前置还能一眼扫到「未开奖」。
   function followRiskTags(x) {
     let s = '';
     if (x.pending) s += '<span class="blm-tag" style="background:var(--blm-warn-bg);color:var(--blm-warn-text)"'
-      + ' title="名下还有 ' + x.pending + ' 条未开奖 —— 这时候取关多半等于弃权">' + x.pending + ' 条未开奖</span>';
+      + ' title="名下还有 ' + x.pending + ' 条未开奖 —— 这时候取关多半等于弃权">未开奖 ' + x.pending + '</span>';
     // 「中过奖」不在这里出标签 —— 卡片上已经有红色的「中过 N 次」，别重复表达同一件事
     if (x.cooldown) s += '<span class="blm-tag" style="background:var(--blm-warn-bg);color:var(--blm-warn-text)"'
-      + ' title="名下 ' + x.cooldown + ' 条刚开奖还在缓冲期，奖可能还没领">' + x.cooldown + ' 条缓冲期</span>';
+      + ' title="名下 ' + x.cooldown + ' 条刚开奖还在缓冲期，奖可能还没领">缓冲期 ' + x.cooldown + '</span>';
     if (x.needcheck) s += '<span class="blm-tag" style="background:var(--blm-amber-bg);color:var(--blm-amber-text)"'
-      + ' title="名下 ' + x.needcheck + ' 条结果还没定（名单待公布 / 你还没确认中没中）">' + x.needcheck + ' 条结果未定</span>';
+      + ' title="名下 ' + x.needcheck + ' 条结果还没定（名单待公布 / 你还没确认中没中）">待确认 ' + x.needcheck + '</span>';
     if (x.unknown) s += '<span class="blm-tag" style="background:var(--blm-amber-bg);color:var(--blm-amber-text)"'
-      + ' title="名下 ' + x.unknown + ' 条开奖日期不明，没法确认是不是还在进行中">' + x.unknown + ' 条日期不明</span>';
+      + ' title="名下 ' + x.unknown + ' 条开奖日期不明，没法确认是不是还在进行中">日期? ' + x.unknown + '</span>';
     return s;
   }
   // 锁的悬停提示：把"为什么锁"说在解锁这一步（后果则留到执行确认时点名）
@@ -3530,62 +4520,76 @@
 
   // 「为抽奖关注」标记：整组切换（同一 UP 名下的动态一起改，免得标了一半）
   // 这个标记是关注页的立身之本 —— 把"我为了抽奖才关注他"和"我本来就喜欢他"分开
-  function toggleFollowMark(mid) {
-    const ledger = loadLedger();
-    const k = String(mid);
-    let target = null, n = 0;
-    Object.values(ledger).forEach(it => {
-      if (!it.upMid || String(it.upMid) !== k) return;
-      if (target === null) target = !it.forLotteryFollow;   // 以第一条的现状为准，整组统一
-      it.forLotteryFollow = target;
-      n++;
-    });
-    if (!n) return;
-    saveLedger(ledger);
-    renderList();
-  }
-  // 智能补标：规则是"转过 2 条以上 + 半数以上有开奖时间或判定为官方抽奖"。
-  // 只是推测，标错了随时能在卡片上点回来 —— 所以它敢做成批量，也只改一个标签字段。
-  function smartMarkLotteryFollow() {
-    const ledger = loadLedger();
-    const groups = {};
-    Object.values(ledger).forEach(it => {
-      if (!it.upMid || String(it.upMid) === String(myUid())) return;
-      (groups[String(it.upMid)] = groups[String(it.upMid)] || []).push(it);
-    });
-    let picked = 0, touched = 0;
-    const undoRows = [];   // 本次被改动的条目 + 改动前的值，供撤销一键回滚
-    Object.values(groups).forEach(arr => {
-      if (arr.length < 2) return;
-      if (arr.some(it => it.forLotteryFollow)) return;   // 手动标过的不动，尊重你的判断
-      const hit = arr.filter(it => it.drawTs || it.official === true || it.dynType === 'official').length;
-      if (hit / arr.length >= 0.5) {
-        arr.forEach(it => { undoRows.push({ dynId: it.dynId, prev: !!it.forLotteryFollow }); it.forLotteryFollow = true; touched++; });
-        picked++;
-      }
-    });
-    if (!picked) {
-      toast('没找到符合规则的 UP。\n\n规则：转过 2 条以上，且其中至少一半录了开奖时间或判定为官方抽奖。');
-      return;
-    }
-    saveLedger(ledger);
-    renderList();
-    toast('已按规则标出 ' + picked + ' 位（涉及 ' + touched + ' 条动态）。\n\n'
-      + '这只是推测，标错了点下面的「撤销」一键回滚，或单独在卡片上点标签改回来。', {
-      duration: 8000,
-      action: {
-        text: '撤销',
-        onClick: () => {
-          const lg = loadLedger();
-          let n = 0;
-          undoRows.forEach(r => { const e = lg[r.dynId]; if (e) { e.forLotteryFollow = r.prev; n++; } });
-          if (n) { saveLedger(lg); renderList(); }
-          toast('已撤销本次智能补标，恢复 ' + n + ' 条标记。');
-        }
-      }
-    });
+  // 2026-10-17：数据源与关注页显示口径对齐（台账 + 回收站）—— 某 UP 的条目全被归档进
+  // 回收站时，旧版只查台账会找不到 → 点了没反应（用户实测反馈的「标记按钮失效」）
+  // 「第 n 次转发距今 ≥/≤ x 天」—— n 从【最早】数（用户 2026-10-18 定：n=1 就是第一次转发他）。
+  // tsList 是升序时间戳数组（聚合时排好），所以第 n 次直接取 tsList[n-1]。
+  // 不足 n 次的 UP 返回 false（这个条件对它无从成立）。
+  function nthRepostMatch(x, k, op, v, nowTs) {
+    const n = Math.max(1, parseInt(k, 10) || 1);
+    if (!x || !x.tsList || x.tsList.length < n) return false;
+    const days = Math.floor(((nowTs || Date.now()) - x.tsList[n - 1]) / DAY_MS);
+    return op === '>=' ? days >= v : days <= v;
   }
 
+  // 这位现在是否上锁（blocked 且没手动解锁）—— 勾选框和单条取关按钮共用同一把锁
+  function isFollowLocked(mid) {
+    const x = lastFollowMap[String(mid)];
+    if (!x || x.unfollowedAt) return false;
+    return x.risk === 'blocked' && !unlockedFollow.has(String(mid));
+  }
+  // 显式设值（批量标记 / 单个 toggle 共用）。返回改动条数，0 表示这位在台账里查不到
+  function setFollowMark(mid, on) {
+    const ledger = loadLedger();
+    const trash = loadTrash();
+    const k = String(mid);
+    let n = 0, trashDirty = false;
+    const apply = (it, fromTrash) => {
+      if (!it.upMid || String(it.upMid) !== k) return;
+      it.forLotteryFollow = !!on;
+      n++;
+      if (fromTrash) trashDirty = true;
+    };
+    Object.values(ledger).forEach(it => apply(it, false));
+    Object.values(trash).forEach(it => apply(it, true));
+    if (!n) return 0;
+    if (trashDirty) saveTrash(trash);
+    saveLedger(ledger);
+    return n;
+  }
+  // 当前标记状态：直接读数据（台账 + 回收站），不依赖 lastFollowMap ——
+  // 关注状态同步、批量标记这些场景下 lastFollowMap 可能还没算出来，用它会永远判成「未标记」
+  function getFollowMark(mid) {
+    const k = String(mid);
+    let on = false;
+    const scan = it => { if (it.upMid && String(it.upMid) === k && it.forLotteryFollow) on = true; };
+    Object.values(loadLedger()).forEach(scan);
+    if (!on) Object.values(loadTrash()).forEach(scan);
+    return on;
+  }
+  function toggleFollowMark(mid) {
+    const k = String(mid);
+    const on = !getFollowMark(k);
+    const n = setFollowMark(k, on);
+    if (!n) return;
+    toast(on
+      ? '已标记「为抽奖关注」—— 抽奖都结束后，这位会进入取关候选。'
+      : '已取消「为抽奖关注」标记。');
+    renderList();
+  }
+  // 批量标记（底部工具栏用）：对当前勾选的所有 UP 显式设值
+  function batchMarkSelected(on) {
+    const mids = Array.from(followSelected).filter(k => {
+      const x = lastFollowMap[k];
+      return x && !x.unfollowedAt;
+    });
+    if (!mids.length) return;
+    let n = 0;
+    mids.forEach(k => { n += setFollowMark(k, on); });
+    if (!n) return;
+    toast(on ? '已把 ' + n + ' 位标为「为抽奖关注」' : '已取消 ' + n + ' 位的「为抽奖关注」标记');
+    renderList();
+  }
   function renderFollow() {
     stopCountdown();
     hideListChrome();   // 悬浮的筛选条属于台账页，关注页必须收掉，否则盖住内容
@@ -3604,14 +4608,16 @@
       if (!it.upMid || it.upMid === Number(myUid())) return;
       const mk = String(it.upMid);   // 统一用字符串键 —— 勾选集合 / lastFollowMap 都按字符串 mid 取
       if (!map[mk]) map[mk] = {
-        mid: it.upMid, name: it.upName, first: it.pubTs, last: it.pubTs, count: 0, marked: false,
-        won: 0, lost: 0, pending: 0, cooldown: 0, needcheck: 0, unknown: 0
+        mid: it.upMid, name: it.upName, first: it.pubTs, last: it.pubTs, count: 0, dead: 0, marked: false,
+        won: 0, lost: 0, pending: 0, cooldown: 0, needcheck: 0, unknown: 0, tsList: []
       };
       const x = map[mk];
       x.count++;
+      if (it.deleted) x.dead++;   // 已删除 / 归档的条数：条数标签要在悬停里说清楚"含已删几条"
       if (it.pubTs) {
         if (!x.first || it.pubTs < x.first) x.first = it.pubTs;
         if (!x.last || it.pubTs > x.last) x.last = it.pubTs;
+        x.tsList.push(it.pubTs);   // 「第 n 次转发距今」要用：从最早数第 n 次
       }
       if (it.forLotteryFollow) x.marked = true;
       // 同一次抽奖转多条（含官方加码那条）只算一次 —— 用 dupKey 去重，别拿"动态条数"冒充"抽奖次数"
@@ -3639,28 +4645,36 @@
       x._lotNos = x._seen ? Object.entries(x._seen).map(([k, c]) => ({ no: x._lotNo[k] || 0, c })) : [];
       x.days = x.first ? Math.floor((now - x.first) / DAY_MS) : -1;              // 首次转发距今
       x.lastDays = x.last ? Math.floor((now - x.last) / DAY_MS) : -1;            // 最近一次转发距今
+      x.tsList.sort((a, b) => a - b);   // 升序：tsList[0] = 第一次转发（最早）
       x.rate = (x.won + x.lost) ? Math.round(x.won / (x.won + x.lost) * 100) : -1;  // 命中率（只算有结果的）
       x.unfollowedAt = ufMap[String(x.mid)] || 0;
       x.risk = followRiskOf(x);
     });
     lastFollowMap = map;   // 供「执行取关」点名风险
 
-    // ---- 筛选：天数 / 搜索 / 只看为抽奖关注 / 快捷预设 ----
-    const days = parseInt(followDaysFilter, 10);
+    // ---- 筛选（2026-10-18 改版）----
+    // 已取关是【独立视图】：点进去只有已取关的，其他条件一律不参与（"不被其他筛选项收容"）。
     const q = (followSearch || '').trim().toLowerCase();
-    const PRESET_STALE_DAYS = 180;
+    // 自定义条件里留空 = 不限；只有开关打开时才参与筛选（值本身一直保留）
+    const rMin = followRange.min === '' ? -Infinity : Number(followRange.min);
+    const rMax = followRange.max === '' ? Infinity : Number(followRange.max);
+    const nthOn = followNth.on && String(followNth.val).trim() !== '';
+    const nthK = Math.max(1, parseInt(followNth.n, 10) || 1);
+    const nthV = Number(followNth.val);
     let filtered = list.filter(x => {
-      if (!isNaN(days) && !(x.days >= days)) return false;
-      if (followOnlyLottery && !x.marked) return false;
+      if (followUfView) return !!x.unfollowedAt;                 // 独立视图：其他条件全不参与
+      // 普通视图：已取关默认不列出（本会话刚取关的除外 —— 要让人看见按钮翻成「关注」）
+      if (x.unfollowedAt && !justUnfollowed.has(String(x.mid))) return false;
       if (q && !((x.name || '').toLowerCase().indexOf(q) >= 0 || String(x.mid).indexOf(q) >= 0)) return false;
-      if (followPreset === 'once' && x.lots !== 1) return false;    // 只抽过 1 次（同一次转多条也算一次）
-      if (followPreset === 'stale' && !(x.lastDays >= PRESET_STALE_DAYS)) return false;
-      if (followPreset === 'won' && !(x.won > 0)) return false;
-      if (followPreset === 'never' && !(x.won === 0)) return false;
+      if (followWon && !(x.won > 0)) return false;
+      if (followNever && !(x.won === 0)) return false;
+      if (followOnlyLottery && !x.marked) return false;
+      if (followRange.on) {
+        if (!(x.count >= rMin && x.count <= rMax)) return false;
+      }
+      if (nthOn && !nthRepostMatch(x, nthK, followNth.op, nthV, now)) return false;
       return true;
     });
-    const ufN = filtered.filter(x => x.unfollowedAt).length;
-    if (!followShowUnfollowed) filtered = filtered.filter(x => !x.unfollowedAt);
 
     // ---- 排序 ----
     // 每个 cmp 都写成「正序（递增）」语义 —— 默认就是正序；点倒序按钮整体取反。
@@ -3682,9 +4696,10 @@
     const cmp = (baseCmp[followSort] || baseCmp.auto);
     filtered.sort((a, b) => dirK * cmp(a, b));
 
-    const chipBtn = (on, txt, title) =>
-      '<button class="blm-btn' + (on ? ' pri' : '') + '" data-fpreset="' + txt + '" style="font-size:12px"'
-      + (title ? ' title="' + title + '"' : '') + '>' + txt + '</button>';
+    // 筛选胶囊（多选）：已取关那颗红一号、且是单选独立视图
+    const fchip = (on, txt, key, title, red, dis) =>
+      '<button class="blm-fchip' + (on ? ' on' : '') + (red ? ' red' : '') + '" data-ufchip="' + key + '"'
+      + (dis ? ' disabled' : '') + (title ? ' title="' + title + '"' : '') + '>' + txt + '</button>';
 
     // 顶部不再放统计/范围说明两段文字 —— 信息密度太高，用户明确要求去掉。
     // 「转发过抽奖的 UP 共 N 位」这类数字，底部页脚与卡片标签已经能表达，不在这里重复。
@@ -3693,44 +4708,70 @@
     // ===== 第一行：检索 + 排序（搜索框 / 排序字段 / 正倒序按钮）=====
     // 搜索框拉满剩余宽度（flex:1），别让右边空着；排序字段与正倒序按钮固定宽度跟在后面
     html += '<div style="display:flex;align-items:center;gap:6px;margin-bottom:7px;font-size:12px;color:var(--blm-text2);flex-wrap:wrap">'
-      + '<input id="blm-uf-search" placeholder="搜昵称 / UID" value="' + escapeHtml(followSearch)
-      + '" style="flex:1;min-width:120px;padding:4px 8px;border:1px solid #E3E5E7;border-radius:5px;font-size:12px;box-sizing:border-box">'
-      + '<select id="blm-uf-sort" title="排序方式" style="flex:none;font-size:12px;padding:3px 4px;border:1px solid #E3E5E7;border-radius:5px">'
+      + '<input id="blm-uf-search" class="blm-uffield" placeholder="搜昵称 / UID" value="' + escapeHtml(followSearch)
+      + '" style="flex:1;min-width:120px">'
+      + '<select id="blm-uf-sort" class="blm-uffield sel" title="排序方式" style="flex:none">'
       + [['auto', '安全性'], ['last', '最近转发'], ['count', '参与次数'], ['won', '中奖次数'], ['first', '关注时间']]
           .map(o => '<option value="' + o[0] + '"' + (followSort === o[0] ? ' selected' : '') + '>' + o[1] + '</option>').join('')
       + '</select>'
+      // 排序方向：只用一个箭头（↑ 正序 / ↓ 倒序），状态直接画在图标上，不写文字
       + '<button class="blm-iconbtn" id="blm-uf-sortdir" style="flex:none"'
-      + ' title="当前' + (followSortDir === 'asc' ? '正序' : '倒序') + '，点击切换">'
-      + '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
-      + '<path d="M7 4v16"/><path d="M4 17l3 3 3-3"/><path d="M17 20V4"/><path d="M14 7l3-3 3 3"/></svg>'
+      + ' title="当前' + (followSortDir === 'asc' ? '正序（小 → 大）' : '倒序（大 → 小）') + '，点击切换">'
+      + (followSortDir === 'asc'
+          ? '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="M6 11l6-6 6 6"/></svg>'
+          : '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"/><path d="M6 13l6 6 6-6"/></svg>')
       + '</button>'
       + '</div>';
 
-    // ===== 第二行：全部筛选项（快捷 chip / 只为抽奖关注 / 显示已取关 / 更多筛选）=====
-    html += '<div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;font-size:12px;color:var(--blm-text2);flex-wrap:wrap">'
-      + '<span style="color:var(--blm-text3)">快捷：</span>'
-      + chipBtn(followPreset === 'once', '一次性', '只抽过 1 次 —— 大概率是冲着那一次抽奖来的')
-      + chipBtn(followPreset === 'stale', '半年没转', '最近一次转发距今超过 180 天')
-      + chipBtn(followPreset === 'won', '中过奖', '在你这中过奖的 UP')
-      + chipBtn(followPreset === 'never', '从没中过', '一次都没中过的 UP')
-      + (followPreset ? '<button class="blm-btn" id="blm-uf-pclear" style="font-size:12px">清除</button>' : '')
-      + '<button class="blm-btn' + (followOnlyLottery ? ' pri' : '') + '" id="blm-uf-onlylot" style="font-size:12px"'
-      + ' title="只看你标记过「为抽奖关注」的 UP —— 这类才是真正可以考虑清理的">只为抽奖关注</button>'
-      + (ufN ? '<button class="blm-btn" id="blm-uf-show" style="font-size:12px" title="取关过的 UP 默认收起，点这里翻出来核对">'
-          + (followShowUnfollowed ? '收起已取关' : '显示已取关（' + ufN + '）') + '</button>' : '')
-      + '<button class="blm-btn' + (followMoreOpen ? ' pri' : '') + '" id="blm-uf-more" style="font-size:12px;margin-left:auto"'
-      + ' title="展开低频筛选：天数 / 智能补标 / 重置">更多筛选 ' + (followMoreOpen ? '▴' : '▾') + '</button>'
+    // ===== 第二行：4 个多选胶囊 + 更多筛选（方案 A）=====
+    const ufTotal = list.filter(x => x.unfollowedAt).length;
+    const dis = followUfView;   // 已取关视图下，其他胶囊置灰
+    html += '<div class="blm-frow">'
+      + fchip(followWon, '中过奖', 'won', '在你这中过奖的 UP（与「未中过」互斥）', false, dis)
+      + fchip(followNever, '未中过', 'never', '一次都没中过的 UP（与「中过奖」互斥）', false, dis)
+      + fchip(followOnlyLottery, '抽奖关注', 'marked', '你标记过「为抽奖关注」的 UP —— 这类才是真正可以考虑清理的', false, dis)
+      + fchip(followUfView, '已取关 ' + ufTotal, 'uf',
+          '只看已取关的 UP（独立视图：其他筛选不参与）· 再点一次退出', true, false)
+      + '<span class="blm-fsp"></span>'
+      + '<span class="blm-fcount" title="当前筛选出 ' + filtered.length + ' 位 UP 主">共 '
+      + filtered.length + ' 位</span>'
+      + '<button class="blm-fmore' + (followMoreOpen ? ' on' : '') + '" id="blm-uf-more"'
+      + ' title="展开自定义条件：共转过多少条 / 第几次转发距今多久">更多筛选 ' + (followMoreOpen ? '▴' : '▾') + '</button>'
       + '</div>';
 
-    // 第三行：低频项（默认收起）
-    html += '<div class="blm-ufmore' + (followMoreOpen ? ' open' : '') + '" id="blm-uf-morebox">'
-      + '<button class="blm-btn" id="blm-uf-smart" style="font-size:12px"'
-      + ' title="按规则批量推断：转过 2 条以上、且半数以上录了开奖时间或判定为官方抽奖的 UP，标为「为抽奖关注」">智能补标</button>'
-      + '<span style="color:var(--blm-text3)">首次转发超过</span>'
-      + '<input type="number" id="blm-uf-days" min="0" placeholder="天数" value="'
-      + (isNaN(days) ? '' : days) + '" style="width:66px;padding:4px 6px;border:1px solid #E3E5E7;border-radius:5px;font-size:12px"> 天'
-      + '<button class="blm-btn" id="blm-uf-all" style="font-size:12px">重置筛选</button>'
+    // ===== 第三行：自定义条件（默认收起；滑块不启用就只存值不筛选）=====
+    html += '<div class="blm-fx' + (followMoreOpen ? ' open' : '') + '" id="blm-uf-morebox">'
+      + '<div class="blm-cond">'
+      + '<span class="blm-cl' + (followRange.on ? '' : ' dim') + '">共转过</span>'
+      + '<input type="number" min="0" class="blm-uffield blm-ci" id="blm-uf-rmin" placeholder="不限"'
+      + ' value="' + escapeHtml(followRange.min) + '"' + (followRange.on ? '' : ' disabled') + '>'
+      + '<span class="blm-cl' + (followRange.on ? '' : ' dim') + '">~</span>'
+      + '<input type="number" min="0" class="blm-uffield blm-ci" id="blm-uf-rmax" placeholder="不限"'
+      + ' value="' + escapeHtml(followRange.max) + '"' + (followRange.on ? '' : ' disabled') + '>'
+      + '<span class="blm-cl' + (followRange.on ? '' : ' dim') + '">次</span>'
+      + '<button class="blm-sw' + (followRange.on ? ' on' : '') + '" id="blm-uf-ron"'
+      + ' title="' + (followRange.on ? '已启用：按条数筛选' : '未启用：只保存数值，不筛选') + '"></button>'
+      + '</div>'
+      + '<div class="blm-cond">'
+      + '<span class="blm-cl' + (followNth.on ? '' : ' dim') + '">第</span>'
+      + '<input type="number" min="1" class="blm-uffield blm-ci" id="blm-uf-nth" value="'
+      + escapeHtml(followNth.n) + '"' + (followNth.on ? '' : ' disabled') + '>'
+      + '<span class="blm-cl' + (followNth.on ? '' : ' dim') + '">次转发距今</span>'
+      + '<select id="blm-uf-nop"' + (followNth.on ? '' : ' disabled') + '>'
+      + '<option value=">="' + (followNth.op === '>=' ? ' selected' : '') + '>≥</option>'
+      + '<option value="<="' + (followNth.op === '<=' ? ' selected' : '') + '>≤</option>'
+      + '</select>'
+      + '<input type="number" min="0" class="blm-uffield blm-ci" id="blm-uf-nval" placeholder="30" value="'
+      + escapeHtml(followNth.val) + '"' + (followNth.on ? '' : ' disabled') + '>'
+      + '<span class="blm-cl' + (followNth.on ? '' : ' dim') + '">天</span>'
+      + '<button class="blm-sw' + (followNth.on ? ' on' : '') + '" id="blm-uf-non"'
+      + ' title="' + (followNth.on ? '已启用：按转发时间筛选' : '未启用：只保存数值，不筛选') + '"></button>'
+      + '</div>'
+      + '<div class="blm-fxfoot"><span>「第 n 次」从最早数：1 = 第一次转发他；不启用开关时只保存不筛选</span>'
+      + '<a href="javascript:;" id="blm-uf-all">重置筛选</a></div>'
       + '</div>';
+
+    if (followUfView) html += '<div class="blm-fnote">正在只看<b>已取关</b>的 UP（独立视图）· 其他筛选项暂不可用 · 再点一次红色胶囊退出</div>';
 
     if (!filtered.length) html += '<div class="blm-empty">没有符合条件的 UP 主。</div>';
     filtered.forEach(x => {
@@ -3738,83 +4779,113 @@
       const open = unlockedFollow.has(String(x.mid));
       const canSel = !x.unfollowedAt && (!isBlocked || open);
       const picked = followSelected.has(String(x.mid));
-      // 右侧操作区：取关勾选 / 已取关后的重新关注，外加「为抽奖关注」标记开关
+      // 右列两行（2026-10-18 用户定稿）：上 = 多选勾选框（进批量），下 = 单条取关/关注按钮（带确认气泡）
       let ops = '';
       if (x.unfollowedAt) {
-        ops = '<a href="javascript:;" data-ufrefollow="' + x.mid + '" class="blm-ufact" title="把这位重新关注回来">重新关注</a>'
+        ops = '<button class="blm-uftake follow" data-uffollow="' + x.mid + '"'
+          + ' title="重新关注这位 UP（会先弹确认）">关注</button>'
           + '<a href="javascript:;" data-ufundo="' + x.mid + '" class="blm-ufact" style="color:var(--blm-text3)"'
           + ' title="你已经在 B 站别处关注回去了？点这里摘掉「已取关」标记">撤销标记</a>';
       } else {
-        ops = '<span data-uf="' + x.mid + '" class="blm-ufrow">' +
-          '<span class="blm-ck' + (canSel ? (picked ? ' on' : '') : ' dis') + '"></span><span>取关</span></span>'
-          + '<a href="javascript:;" data-ufmark="' + x.mid + '" class="blm-ufact"'
-          + (x.marked ? ' style="color:var(--blm-ok-text)"' : ' style="color:var(--blm-text3)"')
-          + ' title="' + (x.marked ? '这位是为抽奖关注的 —— 点一下取消标记' : '标成「为抽奖关注」：当初是为了抽奖才关注他的') + '">'
-          + (x.marked ? '✓ 为抽奖关注' : '标为抽奖关注') + '</a>';
+        ops = '<span class="blm-ckbox" data-uf="' + x.mid + '"'
+          + ' title="勾选后底部会浮出工具栏，可以批量取关 / 批量标记">'
+          + '<span class="blm-ck' + (canSel ? (picked ? ' on' : '') : ' dis') + '"></span></span>'
+          + '<button class="blm-uftake' + (canSel ? '' : ' dis') + '" data-ufone="' + x.mid + '"'
+          + (canSel ? ' title="只取关这一位（会先弹确认）"' : ' title="' + escapeHtml(ufLockTip(x, open)) + '"')
+          + '>取关</button>';
       }
+      // 心形标记：虚 = 只是关注；裂开实心 = 为抽奖而来（点一下切换）
+      const heart = '<button class="blm-heart' + (x.marked ? ' on' : '') + '" data-ufmark="' + x.mid + '"'
+        + ' title="' + (x.marked
+          ? '已标记「为抽奖关注」：抽奖都结束后，这位会进取关候选。点一下取消'
+          : '标成「为抽奖关注」—— 当初只是为了抽奖才关注他，抽完就该走') + '"'
+        + ' aria-pressed="' + (x.marked ? 'true' : 'false') + '">'
+        + (x.marked
+          ? '<svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true">'
+            + '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>'
+            + '<path d="M12.6 5.3l-1.7 4.2 2.3 1.7-2 4.2" fill="none" stroke="var(--blm-bg)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'
+            + '</svg>'
+          : '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true">'
+            + '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>'
+            + '</svg>')
+        + '</button>';
       // 卡片上的口径：抽奖次数为主，重复转发单独提示（别再让人以为"转过 N 条"= 抽了 N 次）
+      // 2026-10-18 用户定 A 方案：条数改叫「共转 N 条」（明确是历史累计），并把"含已删除几条"写进悬停
       let countTag = '<span class="blm-tag" title="这位 UP 名下，你参与过 ' + x.lots + ' 次抽奖'
-        + (x.dups ? '（共转过 ' + x.count + ' 条动态，其中 ' + x.dups + ' 条是同一次抽奖的重复转发）' : '')
+        + '（共转过 ' + x.count + ' 条动态' + (x.dead ? '，其中 ' + x.dead + ' 条已删除 / 归档' : '') + '）'
         + '">抽过 ' + x.lots + ' 次</span>';
       if (x.dups) countTag += '<span class="blm-tag" style="background:var(--blm-grey-bg);color:var(--blm-grey-text)"'
-        + ' title="同一次抽奖你转了不止一条（比如又转了官方加码那条）—— 这些不影响抽奖次数，只是动态条数多">'
-        + x.count + ' 条（含 ' + x.dups + ' 重复）</span>';
+        + ' title="你一共转过 ' + x.count + ' 条动态（历史累计，已删除的也算）'
+        + (x.dead ? '，其中 ' + x.dead + ' 条已删除 / 归档' : '')
+        + '；有 ' + x.dups + ' 条是同一次抽奖的重复转发（比如又转了官方加码那条），不影响抽奖次数">'
+        + '共转 ' + x.count + ' 条（' + x.dups + ' 重复）</span>';
       // 已取关的卡片挂 .blm-nopress：不可交互（只能「重新关注」），不给按压动效
-      html += '<div class="blm-item' + (x.unfollowedAt ? ' blm-nopress' : '') + '" style="padding-right:12px' + (x.unfollowedAt ? ';opacity:.55' : '') + '"><div class="blm-main">' +
+      html += '<div class="blm-item ufcard' + (x.unfollowedAt ? ' blm-nopress' : '') + '"'
+        + (x.unfollowedAt ? ' style="opacity:.55"' : '') + '><div class="blm-main">' +
         '<div class="blm-line1">' +
         (isBlocked ? '<span class="blm-lock' + (open ? ' open' : '') + '" data-uflock="' + x.mid
             + '" title="' + ufLockTip(x, open) + '">' + lockIcon(open) + '</span>' : '') +
         (isBlocked && ufLockShort(x) ? '<span class="blm-ufwhy">' + escapeHtml(ufLockShort(x)) + '</span>' : '') +
         // UP 名字本身就是主页入口（v1.0.1 起：关注页去掉单独的「主页」链接，功能转嫁到名字上）
         '<a href="https://space.bilibili.com/' + x.mid + '" target="_blank" rel="noreferrer"'
-          + ' class="blm-up blm-uplink" title="打开「' + escapeHtml(x.name || ('UP' + x.mid)) + '」的 B 站主页">'
+          + ' class="blm-up blm-uplink" title="打开「' + escapeHtml(x.name || ('UP' + x.mid))
+          + '」的 B 站主页｜UID ' + x.mid + '">'
           + escapeHtml(x.name || ('UP' + x.mid)) + '</a>' +
-        countTag +
-        (x.lastDays >= 0 ? '<span class="blm-tag" title="最近一次转发他的抽奖是在 '
-            + fmtTime(x.last).slice(0, 10) + '">最近 ' + x.lastDays + ' 天前</span>' : '') +
-        // 「中过 N 次」保留（这是取关风险的关键信息）；「从没中过」「命中率」不出标签 ——
-        // 前者信息量低（没中过是常态），后者是派生统计，两个都只会把标签行挤得没重点（用户要求）。
+        heart +
+        // 2026-10-18 用户选定「风险前置」：风险类标签紧跟名字，历史类的（抽过/共转）排在后面 ——
+        // 风险才是"要不要取关"的依据，被挤到行尾就白标了。
         (x.won ? '<span class="blm-tag" style="background:var(--blm-warn-bg);color:var(--blm-warn-text)"'
             + ' title="在他这中过 ' + x.won + ' 次奖 —— 取关后很可能联系不上、领不到奖">中过 ' + x.won + ' 次</span>' : '') +
-        (x.marked ? '<span class="blm-tag" style="color:var(--blm-ok-text);background:var(--blm-ok-bg)">为抽奖关注</span>' : '') +
         followRiskTags(x) +
+        countTag +
         (x.unfollowedAt ? '<span class="blm-tag" style="background:var(--blm-grey-bg);color:var(--blm-grey-text)"'
             + ' title="取关动作已执行，记录保留在这里是为了避免你下次又勾一遍">已取关 '
             + fmtTime(x.unfollowedAt).slice(0, 10) + '</span>' : '') +
         '</div>' +
-        '<div class="blm-meta"><span>UID ' + x.mid + '</span><span>首次 '
-        + (x.first ? fmtTime(x.first).slice(0, 10) : '未知') + '</span></div>' +
+        // UID 降级到名字的 title（搜索仍按 UID 命中）：这行让给真正影响判断的时间信息
+        '<div class="blm-meta">'
+        + (x.lastDays >= 0 ? '<span title="最近一次转发他的抽奖是在 ' + fmtTime(x.last).slice(0, 10) + '">最近 '
+            + x.lastDays + ' 天前</span>' : '')
+        + '<span>首次 ' + (x.first ? fmtTime(x.first).slice(0, 10) : '未知') + '</span></div>' +
         '</div>' +
         '<div class="blm-ufops">' + ops + '</div>' +
         '</div>';
     });
-    // 底部执行条：带一个实时计数 —— 勾了谁、勾了几个，一眼能对上（底栏是台账页专属，关注页得自己报数）
-    const selN = filtered.filter(x => followSelected.has(String(x.mid)) && !x.unfollowedAt).length;
-    html += '<div style="padding:10px 0 0;display:flex;align-items:center;gap:10px">'
-      + '<button class="blm-btn danger" id="blm-uf-go"' + (selN ? '' : ' disabled') + '>执行取关（不可撤销）</button>'
-      + '<span class="blm-ufseln" id="blm-uf-seln">' + (selN
-          ? '已勾选 <b>' + selN + '</b> 位，点左侧按钮执行'
-          : '还没勾选任何 UP —— 右侧每张卡片勾「取关」') + '</span>'
-      + '</div>';
     body.innerHTML = html;
+    // 底部工具栏不写进列表流里 —— 它是面板底部的浮层，只有勾选了东西才浮起来
+    refreshFollowBar();
 
     const go = document.getElementById('blm-uf-go');
     if (go) go.addEventListener('click', doUnfollow);
     const all = document.getElementById('blm-uf-all');
     if (all) all.addEventListener('click', () => {
-      followDaysFilter = ''; followSearch = ''; followPreset = ''; followOnlyLottery = false;
+      followSearch = ''; followWon = false; followNever = false; followOnlyLottery = false;
+      followUfView = false;
+      followRange = { on: false, min: '', max: '' };
+      followNth = { on: false, n: '1', op: '>=', val: '' };
       renderList();
     });
-    const show = document.getElementById('blm-uf-show');
-    if (show) show.addEventListener('click', () => { followShowUnfollowed = !followShowUnfollowed; renderList(); });
     const moreBtn = document.getElementById('blm-uf-more');
     if (moreBtn) moreBtn.addEventListener('click', () => { followMoreOpen = !followMoreOpen; renderList(); });
-    const smart = document.getElementById('blm-uf-smart');
-    if (smart) smart.addEventListener('click', smartMarkLotteryFollow);
-    const onlyLot = document.getElementById('blm-uf-onlylot');
-    if (onlyLot) onlyLot.addEventListener('click', () => { followOnlyLottery = !followOnlyLottery; renderList(); });
-    const pclear = document.getElementById('blm-uf-pclear');
-    if (pclear) pclear.addEventListener('click', () => { followPreset = ''; renderList(); });
+    // 两个滑块：切换启用状态（值保留）
+    const ron = document.getElementById('blm-uf-ron');
+    if (ron) ron.addEventListener('click', () => { followRange.on = !followRange.on; renderList(); });
+    const non = document.getElementById('blm-uf-non');
+    if (non) non.addEventListener('click', () => { followNth.on = !followNth.on; renderList(); });
+    // 数值：失焦 / 回车才生效（逐字重渲染会掉焦点，也和搜索框的行为一致）
+    const bindNum = (id, get, set) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const apply = () => { set(el.value.trim()); renderList(); };
+      el.addEventListener('change', apply);
+      el.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); apply(); } });
+    };
+    bindNum('blm-uf-rmin', null, v => { followRange.min = v; });
+    bindNum('blm-uf-rmax', null, v => { followRange.max = v; });
+    bindNum('blm-uf-nth', null, v => { followNth.n = v || '1'; });
+    bindNum('blm-uf-nval', null, v => { followNth.val = v; });
+    const nop = document.getElementById('blm-uf-nop');
+    if (nop) nop.addEventListener('change', () => { followNth.op = nop.value; renderList(); });
     const sortSel = document.getElementById('blm-uf-sort');
     if (sortSel) sortSel.addEventListener('change', () => { followSort = sortSel.value; renderList(); });
     const sortDirBtn = document.getElementById('blm-uf-sortdir');
@@ -3824,17 +4895,49 @@
     });
     const searchIn = document.getElementById('blm-uf-search');
     if (searchIn) {
-      // 输入时不逐字重渲染（几百张卡会顿），回车或失焦才生效
-      const apply = () => { followSearch = searchIn.value || ''; renderList(); };
-      searchIn.addEventListener('change', apply);
-      searchIn.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); apply(); } });
+      // 2026-10-18：和台账页对齐 —— 边打边筛（300ms 防抖），不再等回车 / 失焦。
+      // ⚠️ 关注页的搜索框是随列表一起重建的（台账那个在静态面板里，不会掉焦点），
+      // 所以渲染后必须把焦点和光标位置还回去，否则打一个字光标就飞走。
+      let ufSearchTimer = null;
+      const applyLive = () => {
+        const v = searchIn.value || '';
+        if (v === followSearch) return;
+        const hadFocus = document.activeElement === searchIn;
+        const caret = searchIn.selectionStart;
+        followSearch = v;
+        renderList();
+        if (hadFocus) {
+          const again = document.getElementById('blm-uf-search');
+          if (again) {
+            again.focus();
+            try { again.setSelectionRange(caret, caret); } catch (e) {}
+          }
+        }
+      };
+      searchIn.addEventListener('input', e => {
+        if (e && e.isComposing) return;        // 中文输入法拼写中先不筛，等组词结束
+        clearTimeout(ufSearchTimer);
+        ufSearchTimer = setTimeout(applyLive, 300);
+      });
+      searchIn.addEventListener('keydown', e => {
+        if (e.key === 'Enter') { e.preventDefault(); clearTimeout(ufSearchTimer); applyLive(); }
+        else if (e.key === 'Escape') {
+          e.preventDefault();
+          searchIn.value = '';
+          clearTimeout(ufSearchTimer);
+          applyLive();
+          searchIn.blur();
+        }
+      });
     }
-    body.querySelectorAll('[data-fpreset]').forEach(b => {
+    body.querySelectorAll('[data-ufchip]').forEach(b => {
       b.addEventListener('click', () => {
-        const t = b.getAttribute('data-fpreset');
-        const MAP = { '一次性': 'once', '半年没转': 'stale', '中过奖': 'won', '从没中过': 'never' };
-        const v = MAP[t] || '';
-        followPreset = (followPreset === v) ? '' : v;
+        const k = b.getAttribute('data-ufchip');
+        if (k === 'uf') { followUfView = !followUfView; renderList(); return; }
+        if (followUfView) return;                       // 独立视图里其他胶囊是禁用的
+        if (k === 'won') { followWon = !followWon; if (followWon) followNever = false; }
+        else if (k === 'never') { followNever = !followNever; if (followNever) followWon = false; }
+        else if (k === 'marked') followOnlyLottery = !followOnlyLottery;
         renderList();
       });
     });
@@ -4024,7 +5127,7 @@
       box = document.createElement('div');
       box.id = 'blm-trashbox';
       box.style.cssText = 'position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);'
-        + 'z-index:2147483007;background:var(--blm-bg);border:1px solid var(--blm-border);border-radius:10px;'
+        + 'z-index:2147483007;background:var(--blm-bg);border:none;border-radius:20px;'
         + 'padding:14px 16px;width:660px;max-width:94vw;max-height:78vh;'
         + 'box-shadow:0 8px 32px rgba(0,0,0,.28);font-family:-apple-system,"Microsoft YaHei",sans-serif;'
         + 'font-size:13px;color:var(--blm-text);display:none;box-sizing:border-box;flex-direction:column;';
@@ -4132,11 +5235,11 @@
           + '<input type="checkbox" data-tb-ck="' + it.dynId + '"' + (trashSel.has(it.dynId) ? ' checked' : '') + ' style="width:auto;flex:none">'
           + '<span style="flex:none;min-width:36px;font-size:11px;color:var(--blm-text3)">#' + (it.no || '-') + '</span>'
           + '<span style="flex:none;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px" title="' + escapeHtml(it.upName || '') + '">' + escapeHtml(it.upName || '未知UP') + '</span>'
-          + (it.won === true ? '<span style="flex:none;font-size:10px;font-weight:700;color:#E24B4A;border:1px solid rgba(226,75,74,.45);border-radius:8px;padding:1px 5px">已中奖</span>' : '')
+          + (it.won === true ? '<span style="flex:none;font-size:10px;font-weight:700;color:#C4624E;border:1px solid rgba(196,98,78,.45);border-radius:8px;padding:1px 5px">已中奖</span>' : '')
           + '<span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:var(--blm-text2)" title="' + escapeHtml(txt) + '">' + escapeHtml(txt || '（无正文）') + '</span>'
           + '<span style="flex:none;font-size:11px;color:var(--blm-text3)" title="' + (it.deletedVia === 'sync' ? 'B站侧删除（扫描判定）' : '脚本删除') + '">' + (ts ? fmtTime(ts) : '') + '</span>'
           + '<button class="blm-btn" data-tb="restore" data-id="' + it.dynId + '" style="flex:none;padding:2px 8px;font-size:11px">恢复</button>'
-          + '<button class="blm-btn" data-tb="purge" data-id="' + it.dynId + '" style="flex:none;padding:2px 8px;font-size:11px;color:#E24B4A">抹除</button>'
+          + '<button class="blm-btn" data-tb="purge" data-id="' + it.dynId + '" style="flex:none;padding:2px 8px;font-size:11px;color:#C4624E">抹除</button>'
           + '</div>';
       }).join('')
       + '</div>';
@@ -4151,85 +5254,254 @@
     box.innerHTML = html;
   }
 
+  /* ===== 设置页（2026-10-18 方案 A）=====
+     脏值追踪：把每个控件的 id 与 SETTINGS 字段对起来，任何改动都能算出「几项未保存」，
+     底部吸底条据此浮起；保存后自动归零，放弃则重渲染回到已保存的值。 */
+  const setTipOpen = {};   // 哪几项展开了「为什么」
+  const SET_FIELDS = [
+    ['deleteInterval', 's-deleteInterval', 'num'],
+    ['queryInterval', 's-queryInterval', 'num'],
+    ['bufferDays', 's-bufferDays', 'num'],
+    ['officialBufferDays', 's-officialBufferDays', 'num'],
+    ['floatAutoHide', 's-floatAutoHide', 'num'],
+    ['appearance', 's-appearance', 'sel'],
+    ['fabScope', 's-fabScope', 'sel'],
+    ['allowCheckUnverified', 's-allowCheckUnverified', 'bool'],
+    ['winNotify', 's-winNotify', 'bool'],
+    ['highlightText', 's-highlightText', 'bool'],
+    ['pressFeedback', 's-pressFeedback', 'bool'],
+    ['hapticFeedback', 's-hapticFeedback', 'bool'],
+    ['gestureNav', 's-gestureNav', 'bool'],
+    ['autoUnfollowPurged', 's-autoUnfollowPurged', 'bool'],
+    ['autoFloatOnRepost', 's-autoFloatOnRepost', 'bool'],
+    ['confirmBeforeDelete', 's-confirmBeforeDelete', 'bool']
+  ];
+  function settingsDirtyKeys() {
+    const out = [];
+    SET_FIELDS.forEach(f => {
+      const el = document.getElementById(f[1]);
+      if (!el) return;
+      let v;
+      if (f[2] === 'bool') v = !!el.checked;
+      else if (f[2] === 'num') v = parseInt(el.value, 10);
+      else v = el.value;
+      const cur = SETTINGS[f[0]];
+      let same;
+      if (f[2] === 'num') same = !isNaN(v) && v === cur;     // 填了非法值也算「未保存」
+      else same = String(v) === String(cur);
+      if (!same) out.push(f[0]);
+    });
+    return out;
+  }
+  function syncSetBar() {
+    const bar = document.getElementById('blm-setbar');
+    const body = document.getElementById('blm-body');
+    if (!bar) return;
+    if (typeof curTab !== 'undefined' && curTab !== 'set') { bar.classList.remove('show'); if (body) body.style.paddingBottom = ''; return; }
+    const dirty = settingsDirtyKeys();
+    const n = dirty.length;
+    const lab = document.getElementById('blm-set-n');
+    if (lab) lab.innerHTML = n ? '有 <b>' + n + '</b> 项未保存' : '没有改动';
+    bar.classList.toggle('show', n > 0);
+    if (body) body.style.paddingBottom = n ? '66px' : '';
+    if (body) body.querySelectorAll('.blm-srow').forEach(row => {
+      row.classList.toggle('chg', dirty.indexOf(row.getAttribute('data-k')) >= 0);
+    });
+  }
+  function hideSetBar() {
+    const bar = document.getElementById('blm-setbar');
+    if (bar) bar.classList.remove('show');
+    const body = document.getElementById('blm-body');
+    if (body) body.style.paddingBottom = '';
+  }
+  // 保存：读表单 → 写 SETTINGS → 落盘 → 让需要即时生效的功能跟上
+  function saveSettingsNow() {
+    SETTINGS.deleteInterval = num('s-deleteInterval', SETTINGS.deleteInterval);
+    SETTINGS.queryInterval = num('s-queryInterval', SETTINGS.queryInterval);
+    SETTINGS.bufferDays = num('s-bufferDays', SETTINGS.bufferDays);
+    SETTINGS.officialBufferDays = num('s-officialBufferDays', SETTINGS.officialBufferDays);
+    SETTINGS.floatAutoHide = num('s-floatAutoHide', SETTINGS.floatAutoHide);
+    const au = document.getElementById('s-allowCheckUnverified');
+    if (au) SETTINGS.allowCheckUnverified = au.checked;
+    const wn = document.getElementById('s-winNotify');
+    if (wn) SETTINGS.winNotify = wn.checked;
+    const hl = document.getElementById('s-highlightText');
+    if (hl) SETTINGS.highlightText = hl.checked;
+    const pf = document.getElementById('s-pressFeedback');
+    if (pf) SETTINGS.pressFeedback = pf.checked;
+    const hp = document.getElementById('s-hapticFeedback');
+    if (hp) SETTINGS.hapticFeedback = hp.checked;
+    const gs = document.getElementById('s-gestureNav');
+    if (gs) SETTINGS.gestureNav = gs.checked;
+    const autoufEl = document.getElementById('s-autoUnfollowPurged');
+    if (autoufEl) SETTINGS.autoUnfollowPurged = autoufEl.checked;
+    const autof = document.getElementById('s-autoFloatOnRepost');
+    if (autof) SETTINGS.autoFloatOnRepost = autof.checked;
+    const cf = document.getElementById('s-confirmBeforeDelete');
+    if (cf) SETTINGS.confirmBeforeDelete = cf.checked;
+    const fs = document.getElementById('s-fabScope');
+    if (fs) SETTINGS.fabScope = fs.value;
+    const ap = document.getElementById('s-appearance');
+    if (ap) SETTINGS.appearance = ap.value;
+    applyTheme();   // 外观切换即时生效，无需重开面板
+    saveSettings(SETTINGS);
+    settingsChangedHooks.forEach(fn => { try { fn(); } catch (e) {} });   // 让需要即时生效的功能跟上
+    applyFabVisibility();
+    syncSetBar();   // 归零 → 吸底条收起、小圆点消失
+    if (SETTINGS.fabScope === 'hidden') toast('设置已保存。按钮已隐藏，之后点浏览器右上角的油猴图标，选「打开抽奖动态管理面板」唤出。');
+    else toast('设置已保存');
+  }
+
   function renderSettings() {
     stopCountdown();   // 切到设置页时停掉未开奖倒计时（关注页已处理，这里补齐，避免定时任务空跑查空节点）
     hideListChrome();  // 悬浮的筛选条只属于台账页，其他 tab 必须收掉
     const body = document.getElementById('blm-body');
-    body.innerHTML =
-      row('删除间隔（毫秒）', 'deleteInterval', SETTINGS.deleteInterval, '每删一条等这么久，越小越快但越容易触发风控') +
-      row('核验间隔（毫秒）', 'queryInterval', SETTINGS.queryInterval, '每条动态查询开奖信息的间隔') +
-      row('自发缓冲天数', 'bufferDays', SETTINGS.bufferDays, 'UP主自发抽奖：开奖后多少天才列为建议删除，覆盖中奖后7天内回复的规则') +
-      row('官方缓冲天数', 'officialBufferDays', SETTINGS.officialBufferDays, '官方抽奖单独用一个天数。0=名单公布后确认没中奖就立刻列为建议删除（推荐）；填 1~2 则再多稳一天。官方名单还没出来的会标「名单待公布」，不受这项影响') +
-      row('浮条自动收起（毫秒）', 'floatAutoHide', SETTINGS.floatAutoHide, '转发后录入浮条多久自动消失') +
-      '<div class="blm-set"><label>悬浮按钮显示范围<div class="blm-tip">全站=任何 B 站页面都显示；仅动态页=只在动态相关页面出现；隐藏=不显示按钮，改用油猴菜单唤出</div></label>' +
-      '<select id="s-fabScope" style="width:96px;padding:4px 6px;border:1px solid #E3E5E7;border-radius:5px;font-size:12px;">' +
-        '<option value="all"' + (SETTINGS.fabScope === 'all' ? ' selected' : '') + '>全站</option>' +
-        '<option value="dynamic"' + (SETTINGS.fabScope === 'dynamic' ? ' selected' : '') + '>仅动态页</option>' +
-        '<option value="hidden"' + (SETTINGS.fabScope === 'hidden' ? ' selected' : '') + '>隐藏</option>' +
-      '</select></div>' +
-      '<div class="blm-set"><label>外观<div class="blm-tip">跟随B站=自动随B站/系统深色切换；永远亮/永远暗=固定，不随环境变化</div></label>' +
-      '<select id="s-appearance" style="width:96px;padding:4px 6px;border:1px solid var(--blm-border);border-radius:5px;font-size:12px;background:var(--blm-bg);color:var(--blm-text);">' +
-        '<option value="follow"' + (SETTINGS.appearance === 'follow' ? ' selected' : '') + '>跟随B站</option>' +
-        '<option value="light"' + (SETTINGS.appearance === 'light' ? ' selected' : '') + '>永远亮</option>' +
-        '<option value="dark"' + (SETTINGS.appearance === 'dark' ? ' selected' : '') + '>永远暗</option>' +
-      '</select></div>' +
-      '<div class="blm-set"><label>允许勾选「结果未定」条目<div class="blm-tip">默认关闭：开奖结果还没确认的动态一律不许删。打开后也能勾选，但删除时会再警告一次。新手扫描完发现全都选不动，就是因为这个开关</div></label><input type="checkbox" id="s-allowunverified"' + (SETTINGS.allowCheckUnverified ? ' checked' : '') + ' style="width:auto"></div>' +
-      '<div class="blm-set"><label>中奖系统通知<div class="blm-tip">开奖后自动查到你中奖时，发一条系统桌面通知（页面切到后台也能收到，点通知可回到本页）。关掉则完全不弹，中奖只会标记在列表里</div></label><span style="display:flex;align-items:center;gap:6px"><input type="checkbox" id="s-winnotify"' + (SETTINGS.winNotify ? ' checked' : '') + ' style="width:auto"><button class="blm-btn" id="s-testnotify" style="padding:3px 8px;font-size:11px">测试</button></span></div>' +
-      '<div class="blm-set"><label>正文高亮<div class="blm-tip">把「参与条件」标青、「开奖奖品」标紫，一眼扫到关键信息。单字简写（转/评/关）只在识别出条件块时才标，避免误伤</div></label><input type="checkbox" id="s-hl"' + (SETTINGS.highlightText ? ' checked' : '') + ' style="width:auto"></div>' +
-      '<div class="blm-set"><label>卡片按压反馈<div class="blm-tip">鼠标按住卡片时，卡片朝触点方向轻微倾斜、一圈柔光跟随手指。只对「当前能操作」的卡片生效（上锁 / 已取关的不响应）。若系统开了「减弱动态效果」，会自动禁用</div></label><input type="checkbox" id="s-press"' + (SETTINGS.pressFeedback ? ' checked' : '') + ' style="width:auto"></div>' +
-      '<div class="blm-set"><label>转发后自动弹录入浮条</label><input type="checkbox" id="s-auto"' + (SETTINGS.autoFloatOnRepost ? ' checked' : '') + ' style="width:auto"></div>' +
-      '<div class="blm-set"><label>删除前二次确认</label><input type="checkbox" id="s-confirm"' + (SETTINGS.confirmBeforeDelete ? ' checked' : '') + ' style="width:auto"></div>' +
-      '<div style="padding:12px 0 0;display:flex;gap:8px">' +
-        '<button class="blm-btn pri" id="s-save">保存设置</button>' +
-        '<button class="blm-btn" id="s-diag">接口自检</button>' +
-        '<button class="blm-btn" id="s-rawdump">导出动态原始结构</button>' +
-        '<button class="blm-btn" id="s-resetpos">重置面板位置</button>' +
-        '<button class="blm-btn" id="s-clear">清空台账</button>' +
-      '</div>' +
-      '<div style="padding:8px 0 0;display:flex;gap:8px">' +
-        '<button class="blm-btn" id="s-export">导出备份</button>' +
-        '<button class="blm-btn" id="s-import">导入恢复</button>' +
-        '<button class="blm-btn" id="s-woncsv" title="只导出中奖条目（含已删除的中奖记录）；带 BOM，双击用 Excel 打开中文不乱码">导出中奖 CSV</button>' +
-        '<input type="file" id="s-import-file" accept="application/json,.json" style="display:none">' +
-      '</div>' +
-      '<div style="padding:8px 0 0;display:flex;gap:8px;align-items:center">' +
-        '<button class="blm-btn" id="s-trash" title="删除过的记录归档在这里（不再占台账列表）；可以找回记录，也可以永久抹除">回收站</button>' +
-        '<span class="blm-tip" style="margin:0">已删除的记录归档在这里：可找回，或永久抹除（B站动态本身已删、无法找回）</span>' +
-      '</div>' +
-      '<div class="blm-tip">导出会把台账和设置存成一个 JSON 文件（不含任何账号密码）；导入会用备份覆盖当前台账。建议先导出再导入。「导出中奖 CSV」只导出中奖条目，方便留档核对奖品。</div>' +
-      '<div style="margin-top:14px;padding-top:12px;border-top:1px dashed var(--blm-border);display:flex;align-items:center;gap:12px">'
-        + '<img src="' + OC_WATERMARK + '" width="56" height="56" alt="糖心月" style="border-radius:12px;flex:none">'
-        + '<div style="font-size:12px;color:var(--blm-text2);line-height:1.7">作者 <b style="color:var(--blm-text)">糖心月</b> · 本脚本用爱发电</div>'
-        + '</div>' +
-      '<div class="blm-tip">脚本版本 v' + VERSION + '（反馈问题时请带上这个号）。台账只存在你这台电脑的浏览器里，不会上传到任何地方。清空前请确认不再需要这些记录。</div>';
 
-    document.getElementById('s-save').addEventListener('click', () => {
-      SETTINGS.deleteInterval = num('s-deleteInterval', SETTINGS.deleteInterval);
-      SETTINGS.queryInterval = num('s-queryInterval', SETTINGS.queryInterval);
-      SETTINGS.bufferDays = num('s-bufferDays', SETTINGS.bufferDays);
-      SETTINGS.officialBufferDays = num('s-officialBufferDays', SETTINGS.officialBufferDays);
-      SETTINGS.floatAutoHide = num('s-floatAutoHide', SETTINGS.floatAutoHide);
-      const au = document.getElementById('s-allowunverified');
-      if (au) SETTINGS.allowCheckUnverified = au.checked;
-      const wn = document.getElementById('s-winnotify');
-      if (wn) SETTINGS.winNotify = wn.checked;
-      const hl = document.getElementById('s-hl');
-      if (hl) SETTINGS.highlightText = hl.checked;
-      const pf = document.getElementById('s-press');
-      if (pf) SETTINGS.pressFeedback = pf.checked;
-      SETTINGS.autoFloatOnRepost = document.getElementById('s-auto').checked;
-      SETTINGS.confirmBeforeDelete = document.getElementById('s-confirm').checked;
-      const fs = document.getElementById('s-fabScope');
-      if (fs) SETTINGS.fabScope = fs.value;
-      const ap = document.getElementById('s-appearance');
-      if (ap) SETTINGS.appearance = ap.value;
-      applyTheme();   // 外观切换即时生效，无需重开面板
-      saveSettings(SETTINGS);
-      settingsChangedHooks.forEach(fn => { try { fn(); } catch (e) {} });   // 让需要即时生效的功能跟上
-      applyFabVisibility();
-      if (SETTINGS.fabScope === 'hidden') toast('设置已保存。按钮已隐藏，之后点浏览器右上角的油猴图标，选「打开抽奖动态管理面板」唤出。');
-      else toast('设置已保存');
+    // 说明：长的默认收一行，点「为什么」展开（状态存在 setTipOpen）
+    const tipOf = (key, tip) => {
+      if (!tip) return '';
+      if (tip.length <= 34) return '<div class="blm-stip">' + tip + '</div>';
+      if (setTipOpen[key]) {
+        return '<div class="blm-stip">' + tip + '</div>'
+          + '<span class="blm-more" data-tip="' + key + '">收起</span>';
+      }
+      return '<div class="blm-stip one">' + tip + '</div>'
+        + '<span class="blm-more" data-tip="' + key + '">为什么</span>';
+    };
+    // 一行设置：左标题 + 说明，右控件
+    const srow = (o) => {
+      const id = 's-' + o.key;
+      let ctl = '';
+      if (o.type === 'num') {
+        ctl = '<input type="number" id="' + id + '" class="blm-num" value="' + SETTINGS[o.key] + '">'
+          + (o.unit ? '<span class="blm-unit">' + o.unit + '</span>' : '');
+      } else if (o.type === 'sel') {
+        ctl = '<select id="' + id + '" class="blm-sel">'
+          + o.opts.map(v => '<option value="' + v[0] + '"' + (SETTINGS[o.key] === v[0] ? ' selected' : '') + '>'
+              + v[1] + '</option>').join('')
+          + '</select>';
+      } else {
+        ctl = '<input type="checkbox" id="' + id + '" class="blm-swtch"' + (SETTINGS[o.key] ? ' checked' : '') + '>'
+          + (o.test ? '<button class="blm-btn" id="s-testnotify" style="padding:3px 8px;font-size:11px">测试</button>' : '');
+      }
+      return '<div class="blm-srow" data-k="' + o.key + '">'
+        + '<div class="blm-sm"><div class="blm-sn">' + o.label + '<i class="dt"></i></div>' + tipOf(o.key, o.tip) + '</div>'
+        + '<div class="blm-sctl">' + ctl + '</div></div>';
+    };
+    const grp = (title, rows) =>
+      '<div class="blm-setgrp"><div class="blm-setgh"><i></i><h4>' + title + '</h4><span></span></div>'
+      + '<div class="blm-setcard">' + rows + '</div></div>';
+
+    let html = '';
+
+    html += grp('运行与风控',
+      srow({ key: 'deleteInterval', type: 'num', unit: '毫秒', label: '删除间隔',
+             tip: '每删一条等这么久。越小越快，但越容易触发 B站 风控（-352）。' })
+      + srow({ key: 'queryInterval', type: 'num', unit: '毫秒', label: '核验间隔',
+             tip: '每条动态查询开奖信息的间隔。' })
+      + srow({ key: 'bufferDays', type: 'num', unit: '天', label: '自发缓冲天数',
+             tip: 'UP 主自发抽奖：开奖后多少天才列为建议删除。覆盖「中奖后 7 天内回复」的规则。' })
+      + srow({ key: 'officialBufferDays', type: 'num', unit: '天', label: '官方缓冲天数',
+             tip: '官方抽奖单独用一个天数。0 = 名单公布后确认没中奖就能删（推荐）；填 1~2 再多稳一天。名单还没出来的会标「名单待公布」，不受这项影响。' })
+    );
+
+    html += grp('界面与反馈',
+      srow({ key: 'appearance', type: 'sel', label: '外观',
+             opts: [['follow', '跟随B站'], ['light', '永远亮'], ['dark', '永远暗']],
+             tip: '跟随 = 自动随 B站 / 系统深色切换。' })
+      + srow({ key: 'fabScope', type: 'sel', label: '悬浮按钮显示范围',
+             opts: [['all', '全站'], ['dynamic', '仅动态页'], ['hidden', '隐藏']],
+             tip: '隐藏后不显示按钮，改用油猴菜单唤出面板。' })
+      + srow({ key: 'floatAutoHide', type: 'num', unit: '毫秒', label: '浮条自动收起',
+             tip: '转发后录入浮条多久消失。0 = 不自动收起。' })
+      + srow({ key: 'highlightText', type: 'bool', label: '正文高亮',
+             tip: '参与条件标绿下划线、奖品标琥珀芯片，一眼扫到关键信息。' })
+      + srow({ key: 'pressFeedback', type: 'bool', label: '卡片按压反馈',
+             tip: '按住卡片时朝触点轻微倾斜、一圈柔光跟随。系统开了「减弱动态效果」会自动禁用。' })
+      + srow({ key: 'hapticFeedback', type: 'bool', label: '触觉反馈',
+             tip: '删除 / 取关执行时震一下。仅 Android / 桌面 Chrome 有效。' })
+      + srow({ key: 'gestureNav', type: 'bool', label: '滑动手势',
+             tip: '触屏：卡片左滑出详情、长按出快捷菜单。只含只读动作。' })
+    );
+
+    html += grp('安全与通知',
+      srow({ key: 'confirmBeforeDelete', type: 'bool', label: '删除前二次确认',
+             tip: '删之前弹确认框，逐条点名风险。' })
+      + srow({ key: 'allowCheckUnverified', type: 'bool', label: '允许勾选「结果未定」',
+             tip: '默认关闭：结果没确认的动态不许勾。打开后能勾，但删除时会再警告一次。' })
+      + srow({ key: 'winNotify', type: 'bool', test: true, label: '中奖系统通知',
+             tip: '查到中奖时发桌面通知，页面切到后台也能收到。' })
+      + srow({ key: 'autoFloatOnRepost', type: 'bool', label: '转发后自动弹浮条',
+             tip: '转发成功后自动弹录入浮条。' })
+      + srow({ key: 'autoUnfollowPurged', type: 'bool', label: '自动取关（动态全删）',
+             tip: '标了「为抽奖关注」的 UP 动态全删后自动取关。中过奖的永不自动取关。' })
+    );
+
+    html += '<div class="blm-setgrp"><div class="blm-setgh"><i></i><h4>数据管理</h4><span></span></div>'
+      + '<div class="blm-setcard">'
+      + '<div style="display:flex;flex-wrap:wrap;gap:7px;padding:10px 0 6px">'
+      + '<button class="blm-btn" id="s-export">导出备份</button>'
+      + '<button class="blm-btn" id="s-import">导入恢复</button>'
+      + '<button class="blm-btn" id="s-woncsv" title="只导出中奖条目（含已删除的中奖记录）；带 BOM，双击用 Excel 打开中文不乱码">导出中奖 CSV</button>'
+      + '<button class="blm-btn" id="s-trash" title="删除过的记录归档在这里（不再占台账列表）；可以找回记录，也可以永久抹除">回收站</button>'
+      + '<input type="file" id="s-import-file" accept="application/json,.json" style="display:none">'
+      + '</div>'
+      + '<div class="blm-tip" style="padding-bottom:10px">导出会把台账和设置存成一个 JSON 文件（不含账号密码）；'
+      + '导入会用备份覆盖当前台账，建议先导出。「导出中奖 CSV」只导出中奖条目，方便留档核对奖品。</div>'
+      + '</div></div>';
+
+    html += grp('工具与诊断',
+      '<div style="display:flex;flex-wrap:wrap;gap:7px;padding:10px 0">'
+      + '<button class="blm-btn" id="s-diag">接口自检</button>'
+      + '<button class="blm-btn" id="s-rawdump">导出动态原始结构</button>'
+      + '<button class="blm-btn" id="s-resetpos">重置面板位置</button>'
+      + '</div>'
+    );
+
+    html += '<div class="blm-dangerbox">'
+      + '<div class="dh">⚠ 危险操作</div>'
+      + '<div style="display:flex;flex-wrap:wrap;gap:7px">'
+      + '<button class="blm-btn danger-ghost" id="s-clear">清空台账</button>'
+      + '<button class="blm-btn danger-ghost" id="s-resetall">重置所有设置为默认</button>'
+      + '</div>'
+      + '<div class="blm-tip" style="color:var(--blm-danger);opacity:.85;margin-top:7px">'
+      + '清空不可恢复，建议先导出备份。重置设置只影响偏好，不动台账。</div></div>';
+
+    html += '<div style="margin-top:14px;padding-top:12px;border-top:1px dashed var(--blm-border);display:flex;align-items:center;gap:12px">'
+      + '<img src="' + OC_WATERMARK + '" width="44" height="44" alt="糖心月" style="border-radius:12px;flex:none">'
+      + '<div style="font-size:11.5px;color:var(--blm-text2);line-height:1.7">作者 <b style="color:var(--blm-text)">糖心月</b> · 本脚本用爱发电<br>'
+      + '<span style="color:var(--blm-text3);font-size:11px">脚本 v' + VERSION + ' · 台账只存在本机浏览器，不上传任何地方</span></div>'
+      + '</div>';
+
+    body.innerHTML = html;
+
+    // 说明展开/收起
+    body.querySelectorAll('[data-tip]').forEach(el => {
+      el.addEventListener('click', () => {
+        const k = el.getAttribute('data-tip');
+        setTipOpen[k] = !setTipOpen[k];
+        renderSettings();
+      });
     });
+    // 任何改动 → 吸底条报数 + 行上小圆点
+    const onEdit = () => syncSetBar();
+    body.querySelectorAll('.blm-num,.blm-swtch,.blm-sel').forEach(el => {
+      el.addEventListener('input', onEdit);
+      el.addEventListener('change', onEdit);
+    });
+    // 重置所有设置（危险区）
+    const ra = document.getElementById('s-resetall');
+    if (ra) ra.addEventListener('click', () => {
+      if (!confirm('把所有设置恢复成默认值吗？\n\n台账数据不受影响，只重置偏好。')) return;
+      SETTINGS = Object.assign({}, CONFIG);
+      saveSettings(SETTINGS);
+      applyTheme(); applyFabVisibility();
+      settingsChangedHooks.forEach(fn => { try { fn(); } catch (e) {} });
+      renderSettings();
+      toast('已恢复默认设置');
+    });
+    syncSetBar();   // 每次重渲染后按当前值刷新吸底条（放弃改动 / 恢复默认后要收起）
+
     const dg = document.getElementById('s-diag');
     if (dg) dg.addEventListener('click', runDiagnose);
     const tn = document.getElementById('s-testnotify');
@@ -4259,10 +5531,6 @@
     });
   }
 
-  function row(label, key, val, tip) {
-    return '<div class="blm-set"><label>' + label + '<div class="blm-tip">' + tip + '</div></label>' +
-      '<input type="number" id="s-' + key + '" value="' + val + '"></div>';
-  }
   function num(id, def) {
     const v = parseInt(document.getElementById(id).value, 10);
     return isNaN(v) ? def : v;
@@ -4327,7 +5595,7 @@
       box = document.createElement('div');
       box.id = 'blm-diag';
       box.style.cssText = 'position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2147483005;'
-        + 'background:var(--blm-bg);border:1px solid var(--blm-border);border-radius:10px;padding:14px;width:580px;max-width:92vw;'
+        + 'background:var(--blm-bg);border:none;border-radius:20px;padding:14px;width:580px;max-width:92vw;'
         + 'box-shadow:0 8px 32px rgba(0,0,0,.28);font-family:-apple-system,"Microsoft YaHei",sans-serif;'
         + 'font-size:13px;color:var(--blm-text);display:none;';
       document.body.appendChild(box);
@@ -4361,7 +5629,7 @@
       box = document.createElement('div');
       box.id = 'blm-detailbox';
       box.style.cssText = 'position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);'
-        + 'z-index:2147483005;background:var(--blm-bg);border:1px solid var(--blm-border);border-radius:10px;'
+        + 'z-index:2147483005;background:var(--blm-bg);border:none;border-radius:20px;'
         + 'padding:14px 16px;width:480px;max-width:92vw;max-height:76vh;overflow-y:auto;'
         + 'box-shadow:0 8px 32px rgba(0,0,0,.28);font-family:-apple-system,"Microsoft YaHei",sans-serif;'
         + 'font-size:13px;color:var(--blm-text);display:none;box-sizing:border-box;';
@@ -4508,7 +5776,7 @@
       box = document.createElement('div');
       box.id = 'blm-prizebox';
       box.style.cssText = 'position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);'
-        + 'z-index:2147483006;background:var(--blm-bg);border:1px solid var(--blm-border);border-radius:10px;'
+        + 'z-index:2147483006;background:var(--blm-bg);border:none;border-radius:20px;'
         + 'padding:14px 16px;width:420px;max-width:92vw;'
         + 'box-shadow:0 8px 32px rgba(0,0,0,.28);font-family:-apple-system,"Microsoft YaHei",sans-serif;'
         + 'font-size:13px;color:var(--blm-text);display:none;box-sizing:border-box;';
@@ -4710,7 +5978,19 @@
      优先用油猴的 GM_notification（系统级桌面通知，页面切到后台也能收到，点通知可回到本页）；
      没有这个 API 时退回浏览器 Notification；再不行才用 alert 弹窗兜底。
      设置页可关（winNotify），关掉后完全不弹，中奖只会在列表里标记。 */
+  const WIN_NOTIFIED_KEY = 'bili_lottery_win_notified_v1';   // { sig, at }
   function notifyWin(gotWon) {
+    // 同一批动态（按 dynId 排序做签名）10 分钟内只提醒一次 ——
+    // 多标签同时开着时，两边都可能判定「刚中奖」；台账被另一页覆盖还可能把 won 冲回 null，
+    // 于是一分钟一次地重复弹。这里按签名去重，真·新中奖不受影响。
+    const sig = gotWon.map(it => it.dynId).filter(Boolean).sort().join(',');
+    try {
+      const last = GM_getValue(WIN_NOTIFIED_KEY, null);
+      if (last && last.sig === sig && Date.now() - (last.at || 0) < 10 * 60 * 1000) {
+        return;
+      }
+      GM_setValue(WIN_NOTIFIED_KEY, { sig: sig, at: Date.now() });
+    } catch (e) {}
     const names = gotWon.map(it => '· ' + (it.upName || '?')
       + (it.prizes && it.prizes[0] ? '（' + it.prizes[0].name + '）' : '')).join('\n');
     const title = '🎉 开奖结果出来了，你中奖了！';
@@ -4745,9 +6025,24 @@
   }
 
   /* ---- 设置页的「测试」按钮：发一条测试通知，顺便让用户确认权限是通的 ---- */
+  let lastTestNotifyAt = 0;
   function testNotify() {
+    // 防连点：20 秒内重复点忽略（也挡住面板重渲染后误触发的重复调用）
+    if (Date.now() - lastTestNotifyAt < 20000) {
+      toast('刚发过测试通知，等一会儿再试。');
+      return;
+    }
+    lastTestNotifyAt = Date.now();
     if (typeof GM_notification === 'function') {
-      GM_notification({ title: '通知测试成功', text: '以后自动查到你中奖时，就会像这样提醒你。', onclick: () => { try { window.focus(); } catch (e) {} } });
+      // ★ timeout 必须显式给：Tampermonkey 默认 0 = 永不自动关闭，
+      //   通知会一直留在系统通知中心，某些系统唤醒 / 解锁时会再弹一次 ——
+      //   用户看到的就是「隔一段时间给我发一次」。测试通知 6 秒自动收掉。
+      GM_notification({
+        title: '通知测试成功',
+        text: '以后自动查到你中奖时，就会像这样提醒你。',
+        timeout: 6000,
+        onclick: () => { try { window.focus(); } catch (e) {} }
+      });
       alert('已发出一条测试通知，请看屏幕角落 / 系统通知中心。\n\n如果没收到：检查浏览器或系统是否禁用了 Tampermonkey 的通知权限。');
       return;
     }
@@ -4934,11 +6229,24 @@
     selected.clear();
     setBusy(false, '完成：成功 ' + ok + ' 条，失败 ' + fail + ' 条');
     renderList();
+    // 自动取关检查（2026-10-17）：删除后「为抽奖关注」且动态全删的 UP 自动取关（后台执行）
+    if (SETTINGS.autoUnfollowPurged) {
+      autoUnfollowDeletedUps().then(r => {
+        if (r && r.unfollowed) {
+          renderList();
+          toast('自动取关 ' + r.unfollowed + ' 位：' + r.names.join('、')
+            + '\n（「为抽奖关注」且动态已全部删除）', { duration: 8000 });
+        }
+      });
+    }
     // IV档：删除成功给 5 秒撤销 —— 撤销 = 把记录从回收站取回台账（B站上的动态已真删、无法找回，
     // 但"这条曾参与过"的记录可以整体救回），避免用户手滑确认后连痕迹都没了。
     if (ok > 0) {
+      // 不可逆操作的物理确认锚点：执行即震 + 红 toast（与确认弹窗各管一段，不重复打扰）
+      blmFx.haptic(blmFx.HAPTIC.confirm);
       const undoIds = list.filter(it => it.deleted).map(it => it.dynId);
       toast('已删除 ' + ok + ' 条（B站动态已删；记录已归档到回收站，5 秒内可撤销）', {
+        type: 'danger',
         duration: 5000,
         action: {
           text: '撤销',
@@ -4968,26 +6276,141 @@
     }
   }
 
-  // 重新关注：取关的对称操作。风险比取关低（关注错了还能再取关），
-  // 但仍走确认 + 限速，成功后摘掉本地的「已取关」标记
+  // 重新关注：取关的对称操作。确认在气泡里做过（openTakeTip），这里只管执行 + 回执
   async function refollowOne(mid) {
     if (busy) return;
-    const x = lastFollowMap[mid];
+    const k = String(mid);
+    const x = lastFollowMap[k];
     const name = (x && x.name) ? x.name : ('UP' + mid);
-    if (!confirm('确定重新关注「' + name + '」吗？\n\n关注和取关不一样：这个是能反悔的，回头再取关就行。')) return;
     abortFlag = false;
-    setBusy(true, '正在重新关注…');
+    setBusy(true, '正在关注…');
     let done = false;
     try { done = await followUser(mid); } catch (e) {}
-    setBusy(false, done ? '已重新关注' : '重新关注失败');
+    setBusy(false, done ? '已关注' : '关注失败');
     if (done) {
+      justUnfollowed.delete(k);
+      blmFx.haptic(blmFx.HAPTIC.success);
       clearUnfollowedMark(mid);   // 内部已重渲染，别再画一遍
-      toast('已重新关注「' + name + '」，这条记录上的「已取关」标记也去掉了。');
+      toast('已重新关注「' + name + '」。');
       return;
     }
-    toast('重新关注失败。\n\n通常是撞上 B 站风控（-352），过一会儿再试。');
+    toast('关注失败。\n\n通常是撞上 B 站风控（-352），过一会儿再试。', { type: 'warn' });
     renderFollow();
   }
+
+  // 单条取关（气泡里确认后调用）：只动这一位，成功即摘勾 + 标记已取关，
+  // 并且把它留在「刚取关」集合里 —— 卡片不消失，按钮翻成「关注」。
+  async function unfollowOne(mid) {
+    if (busy) return;
+    const k = String(mid);
+    const x = lastFollowMap[k];
+    const name = (x && x.name) ? x.name : ('UP' + mid);
+    abortFlag = false;
+    setBusy(true, '正在取关…');
+    let done = false;
+    try { done = await unfollowUser(mid); } catch (e) {}
+    setBusy(false, done ? '已取关' : '取关失败');
+    if (done) {
+      markUnfollowed(mid);
+      justUnfollowed.add(k);
+      followSelected.delete(k);
+      blmFx.haptic(blmFx.HAPTIC.confirm);
+      toast('已取关「' + name + '」。这条记录先留在原位，按钮变成了「关注」；刷新页面后才会归进「显示已取关」。',
+        { type: 'warn', duration: 7000 });
+      renderFollow();
+      return;
+    }
+    toast('取关失败。\n\n通常是撞上 B 站风控（-352），过一会儿再试。', { type: 'warn' });
+    renderFollow();
+  }
+
+  /* ---- 底部批量工具栏（只在勾选了东西时从底部浮起） ---- */
+  function refreshFollowBar() {
+    const bar = document.getElementById('blm-ufbar');
+    const bodyEl = document.getElementById('blm-body');
+    if (!bar) return;
+    const mids = Array.from(followSelected).filter(k => {
+      const x = lastFollowMap[k];
+      return x && !x.unfollowedAt;
+    });
+    if (!mids.length) {
+      bar.className = 'blm-ufbar';
+      bar.innerHTML = '';
+      if (bodyEl) bodyEl.style.paddingBottom = '';
+      return;
+    }
+    const allMarked = mids.every(k => lastFollowMap[k] && lastFollowMap[k].marked);
+    bar.innerHTML = '<span class="n">已选 <b>' + mids.length + '</b> 位</span><span class="sp"></span>'
+      + '<button class="blm-btn" data-ufbatch="mark" data-on="' + (allMarked ? '0' : '1') + '">'
+      + (allMarked ? '取消标记' : '标记为抽奖关注') + '</button>'
+      + '<button class="blm-btn danger" data-ufbatch="go">取关 ' + mids.length + ' 位</button>';
+    bar.className = 'blm-ufbar show';
+    if (bodyEl) bodyEl.style.paddingBottom = '66px';   // 给浮起的工具栏让位，别压住最后一张卡
+  }
+  function hideFollowBar() {
+    const bar = document.getElementById('blm-ufbar');
+    if (bar) { bar.className = 'blm-ufbar'; bar.innerHTML = ''; }
+    const bodyEl = document.getElementById('blm-body');
+    if (bodyEl) bodyEl.style.paddingBottom = '';
+  }
+
+  /* ---- 确认气泡（点外面任意处 = 取消；Esc 也取消） ---- */
+  let tipBox = null;
+  function closeTipBox() {
+    if (tipBox && tipBox.parentNode) tipBox.parentNode.removeChild(tipBox);
+    tipBox = null;
+  }
+  function openTakeTip(anchor, mid, mode) {
+    const x = lastFollowMap[String(mid)];
+    const name = (x && x.name) ? x.name : ('UP' + mid);
+    const isUn = mode !== 'follow';
+    closeTipBox();
+    let why = '';
+    if (isUn && x && x.risk !== 'safe') {
+      if (x.pending) why = '名下还有 ' + x.pending + ' 条未开奖 —— 取关多半等于弃权。';
+      else if (x.won) why = '你在 TA 这中过奖 —— 取关后可能联系不上、领不到奖。';
+      else if (x.cooldown) why = '名下还有刚开奖、仍在缓冲期的动态，奖可能还没领。';
+    }
+    const box = document.createElement('div');
+    box.className = 'blm-tipbox';
+    box.innerHTML = '<div class="th">' + (isUn ? '取关「' : '关注「') + escapeHtml(name) + '」？</div>'
+      + '<div class="tb">' + (isUn
+          ? '取关不可撤销。' + (why ? '<br>' + escapeHtml(why) : '') + '<br>回头想关注回来，这张卡上会留一个「关注」按钮。'
+          : '关注可以反悔，回头再取关就行。') + '</div>'
+      + '<div class="tr"><button class="blm-btn" data-tcancel="1">取消</button>'
+      + '<button class="blm-btn ' + (isUn ? 'danger' : 'pri') + '" data-tok="1">'
+      + (isUn ? '确认取关' : '确认关注') + '</button></div>';
+    panel.appendChild(box);
+
+    // 定位：优先贴在按钮上方，右对齐；越界就往里收
+    const pr = panel.getBoundingClientRect();
+    const ar = anchor.getBoundingClientRect();
+    const bw = box.offsetWidth || 210;
+    const bh = box.offsetHeight || 92;
+    let left = ar.right - pr.left - bw;
+    left = Math.max(10, Math.min(left, pr.width - bw - 10));
+    let top = ar.top - pr.top - bh - 8;
+    if (top < 8) top = ar.bottom - pr.top + 8;   // 上面放不下 → 放下面
+    box.style.left = Math.round(left) + 'px';
+    box.style.top = Math.round(top) + 'px';
+
+    box.querySelector('[data-tok]').addEventListener('click', () => {
+      closeTipBox();
+      if (isUn) unfollowOne(mid); else refollowOne(mid);
+    });
+    box.querySelector('[data-tcancel]').addEventListener('click', closeTipBox);
+    tipBox = box;
+  }
+  // 点气泡外面任意处 = 取消（捕获阶段：先于按钮自己的逻辑跑；点取关/关注按钮本身时交给它重开，不在这里关）
+  document.addEventListener('click', e => {
+    if (!tipBox) return;
+    if (tipBox.contains(e.target)) return;
+    if (e.target.closest && e.target.closest('[data-ufone],[data-uffollow]')) return;
+    closeTipBox();
+  }, true);
+  document.addEventListener('keydown', e => {
+    if (tipBox && (e.key === 'Escape' || e.key === 'Esc')) closeTipBox();
+  });
 
   async function doUnfollow() {
     if (busy) return;
@@ -5028,23 +6451,66 @@
       setBusy(true, '正在取关（' + (i + 1) + '/' + mids.length + '）…');
       let done = false;
       try { done = await unfollowUser(mid); } catch (e) {}
-      if (done) { ok++; markUnfollowed(mid); followSelected.delete(String(mid)); } else fail++;
+      if (done) { ok++; markUnfollowed(mid); justUnfollowed.add(String(mid)); followSelected.delete(String(mid)); } else fail++;
       await sleep(SETTINGS.deleteInterval);
     }
     const skipped = mids.length - ok - fail;
     setBusy(false, '取关结束：成功 ' + ok + '，失败 ' + fail + (skipped ? '，未执行 ' + skipped : ''));
+    if (ok > 0) blmFx.haptic(blmFx.HAPTIC.confirm);   // 取关不可逆：成功即震确认
     toast('取关完成：成功 ' + ok + '，失败 ' + fail
       + (skipped ? '，中途中止（还有 ' + skipped + ' 位没动）' : '')
-      + (ok ? '\n\n已取关的会在这页里收起，点「显示已取关」可以随时翻出来核对。' : '')
-      + (fail ? '\n\n失败的通常是撞上 B 站风控（-352），过一会儿再单独试那几个。' : ''));
+      + (ok ? '\n\n已取关的先留在原位（按钮变成了「关注」），刷新页面后才归进「显示已取关」。' : '')
+      + (fail ? '\n\n失败的通常是撞上 B 站风控（-352），过一会儿再单独试那几个。' : ''),
+      { type: 'warn', duration: 8000 });
     renderFollow();
   }
 
   /* ==========================================================================
      第十部分：转发后立即录入（浮条）
      ========================================================================== */
-  let floatTimer = null;
   let pendingRepost = null;
+  // ===== 多浮条管理器（2026-10-17 重构）=====
+  // 旧版单浮条：新转发直接顶掉旧浮条（用户实测：固定住的 a 被后来转发的 b 顶掉）。
+  // 新版：每条转发一个独立浮条实例，互不顶替；浮条可拖动摆放；
+  //       层级按「最近被操作」判定 —— 点击 / 编辑 / 拖动 / 新出现都会把对应浮条置顶。
+  let floatSeq = 0;
+  let floatZTop = 2147483010;   // z-index 基线（面板 2147483001 之上）
+  const floatInstances = [];    // 在场浮条：{id, item, el, pinned, hover, focus, timer}
+  function bringFloatToFront(inst) {
+    floatZTop = (floatZTop >= 2147483600) ? 2147483010 : floatZTop + 1;   // 顶到上限就回绕
+    inst.el.style.zIndex = floatZTop;
+  }
+  // 自动收起时长（毫秒）：0 / 空 / 脏值一律当「不自动收起」。
+  // ★ 2026-10-18 排查「转发后浮条不显示」时确认的坑：旧代码直接
+  //   setTimeout(..., SETTINGS.floatAutoHide)，一旦这个值存成 0 / null（设置页填 0、
+  //   或导入的备份里没有这个字段），定时器就是 0ms —— 浮条刚淡入就被 removeFloat 摘掉，
+  //   表现和「根本没弹」一模一样，只有诊断日志里能看出「创建」紧跟着「关闭」。
+  function floatHideMs() {
+    const v = Number(SETTINGS.floatAutoHide);
+    return (isFinite(v) && v > 0) ? v : 0;
+  }
+  // 统一的重置读秒：任何"正在使用"的状态（固定 / 悬停 / 编辑）都暂停该浮条的自动收起
+  function resetFloatTimer(inst) {
+    clearTimeout(inst.timer);
+    if (inst.pinned || inst.hover || inst.focus) return;
+    const ms = floatHideMs();
+    if (!ms) return;                                   // 0 = 永不自动收起（手动保存 / 不是抽奖 才关）
+    inst.timer = setTimeout(() => removeFloat(inst), ms);
+  }
+  // 保存成功态：原地变「✓ 已录入台账 · 编号 #N」停留 1.5 秒再收起 ——
+  // 让"进台账"这件事看得见（2026-10-17 用户提出：保存后无声消失，像什么都没发生）
+  function flashFloatSaved(inst, no) {
+    clearTimeout(inst.timer);
+    inst.el.innerHTML = '<div class="blm-fl-saved">✓ 已录入台账 · 编号 #' + (no || '-') + '</div>';
+    inst.timer = setTimeout(() => removeFloat(inst), 1500);
+  }
+
+  // 测试浮条（菜单「试弹一条测试浮条」）的收尾：只原地提示，绝不写台账
+  function testFloatDone(inst) {
+    clearTimeout(inst.timer);
+    inst.el.innerHTML = '<div class="blm-fl-saved">测试浮条 · 不会写入台账</div>';
+    inst.timer = setTimeout(() => removeFloat(inst), 1400);
+  }
 
   // 台账里没有这条就新建一条（转发浮条保存、标记不确定都用它）
   function ensureItem(ledger, item) {
@@ -5058,63 +6524,210 @@
     return ledger[item.dynId];
   }
 
-  function showFloat(item) {
-    if (!SETTINGS.autoFloatOnRepost) return;
-    clearTimeout(floatTimer);
-    const g = guessDrawDate(item.text, item.pubTs);
-    const guessTxt = g ? fmtTime(g.ts).slice(0, 16) : '';
-    floatBox.innerHTML =
-      '<div class="blm-fl-title">刚转发的这条是抽奖吗？</div>' +
-      '<div class="blm-txt" style="margin:0 0 8px">' + escapeHtml(item.upName || '') + '：' + escapeHtml((item.text || '').slice(0, 50)) + '</div>' +
-      '<div class="blm-fl-row"><span style="width:64px;color:var(--blm-text2)">开奖时间</span>' +
-      '<input type="text" id="blm-fl-time" placeholder="2026-10-08 20:00" value="' + escapeHtml(guessTxt) + '"></div>' +
-      (g ? '<div class="blm-tip">脚本从文案里猜到「' + escapeHtml(g.raw) + '」，核对一下对不对</div>' : '<div class="blm-tip">没在文案里找到开奖日期，可手动填</div>') +
-      '<div class="blm-fl-row" style="margin-top:8px"><label><input type="checkbox" id="blm-fl-follow"> 这是为抽奖关注的</label></div>' +
-      '<div class="blm-fl-row" style="justify-content:flex-end;margin-bottom:0">' +
-      '<a href="javascript:;" id="blm-fl-unknown" style="font-size:11px;color:var(--blm-text3);margin-right:auto">文案没写日期</a>' +
-      '<button class="blm-btn" id="blm-fl-skip">不是抽奖</button>' +
-      '<button class="blm-btn pri" id="blm-fl-save">保存</button></div>';
-    floatBox.style.display = 'block';
+  // 浮条录入的判定继承（2026-10-17 用户实测反馈：浮条录入的动态掉回「其他」，
+  // 抹掉了之前核验过的官方/自发判定）——同一抽奖（同 origId）的所有转发指向同一次开奖，
+  // 官方/自发、你中没中、官方奖品都是同一次抽奖的同一事实，新转发的记录直接继承。
+  // 只补空缺：已有判定/日期/奖品不被覆盖；skipDraw=true 时不继承开奖时间（「文案没写日期」场景）。
+  function inheritLotteryFields(it, ledger, item, skipDraw) {
+    if (it.official !== null) return;   // 已有判定不覆盖
+    let ref = null;
+    Object.values(ledger).forEach(o => {
+      if (o !== it && !o.deleted && o.origId && o.origId === item.origId && o.official !== null) {
+        ref = ref || o;   // 取第一条已判定的同源记录为准
+      }
+    });
+    if (!ref) return;
+    it.official = ref.official;                                        // 官方/自发判定
+    if (ref.won !== null) it.won = ref.won;                            // 中奖事实（同一次抽奖）
+    if (ref.winnersConfirmed === true) it.winnersConfirmed = true;
+    if (ref.prizes && ref.prizes.length && !(it.prizes && it.prizes.length)) it.prizes = ref.prizes.slice();
+    if (ref.participants) it.participants = ref.participants;
+    if (!skipDraw && ref.drawTs && !it.drawTs) {
+      it.drawTs = ref.drawTs;
+      if (ref.source === 'api') it.source = 'api';                     // 权威数据来源一并继承
+    }
+  }
 
-    document.getElementById('blm-fl-save').addEventListener('click', () => {
-      const v = document.getElementById('blm-fl-time').value.trim();
-      const fl = document.getElementById('blm-fl-follow').checked;
+  function showFloat(item) {
+    const isTest = !!(item && item.test);   // 菜单里的「测试浮条」：只为验证显示链路
+    repostDiagLog('showFloat 调用（autoFloatOnRepost=' + SETTINGS.autoFloatOnRepost
+      + (isTest ? '，测试浮条' : '') + '）');
+    if (!SETTINGS.autoFloatOnRepost && !isTest) return;
+    const inst = { id: ++floatSeq, item: item, pinned: false, hover: false, focus: false, timer: null, el: null, guess: null };
+    const g = guessDrawDate(item.text, item.pubTs);
+    inst.guess = g;
+    const guessTxt = g ? fmtTime(g.ts).slice(0, 16) : '';
+    // 正文识别（与面板卡片同源，2026-10-17 信息对齐）：奖品 / 参与条件，仅供参考
+    const marks = findMarks(item.text || '');
+    const uniqMark = kind => Array.from(new Set(
+      marks.filter(m => m.kind === kind).map(m => (item.text || '').slice(m.start, m.end))
+    ));
+    const recapParts = [];      // 纯文本（title 兜底用）
+    const recapHtmlParts = [];  // 带高亮（可见行用；CSS ellipsis 负责裁切，不能 slice——会切断 mark 标签）
+    const mkPrizes = uniqMark('prize');
+    const mkConds = uniqMark('cond');
+    if (mkPrizes.length) {
+      recapParts.push('奖品：' + mkPrizes.join(' · ').slice(0, 60));
+      recapHtmlParts.push('奖品：' + mkPrizes.map(w => '<mark class="blm-hl blm-hl-prize">' + escapeHtml(w) + '</mark>').join(' · '));
+    }
+    if (mkConds.length) {
+      recapParts.push('条件：' + mkConds.join(' · ').slice(0, 60));
+      recapHtmlParts.push('条件：' + mkConds.map(w => '<mark class="blm-hl blm-hl-cond">' + escapeHtml(w) + '</mark>').join(' · '));
+    }
+    const recapTxt = recapParts.join('　｜　');
+    const recapHtml = recapHtmlParts.join('　｜　');
+    const el = document.createElement('div');
+    el.className = 'blm-float';
+    el.dataset.fid = inst.id;
+    // 错位堆叠：同一批多浮条时依次错开，不完全重叠
+    const off = (floatInstances.length % 5) * 30;
+    el.style.right = (24 + off) + 'px';
+    el.style.bottom = (88 + off) + 'px';
+    el.innerHTML =
+      '<div class="blm-fl-head"><span class="blm-fl-title">刚转发的这条是抽奖吗？</span>' +
+      '<button class="blm-fl-pin" title="固定：不自动收起，慢慢编辑；再点一下取消固定并重新读秒">' +
+      '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17v5"/><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/></svg>' +
+      '</button></div>' +
+      '<div class="blm-txt" style="margin:0 0 8px">' + escapeHtml(item.upName || '') + '：' + escapeHtml((item.text || '').slice(0, 50)) + '</div>' +
+      (recapHtml ? '<div class="blm-tip blm-fl-recap" title="从文案自动识别，仅供参考：' + escapeHtml(recapTxt) + '">' + recapHtml + '</div>' : '') +
+      '<div class="blm-fl-row"><span style="width:64px;color:var(--blm-text2)">开奖时间</span>' +
+      '<input type="text" class="blm-fl-time" placeholder="2026-10-08 20:00" value="' + escapeHtml(guessTxt) + '"></div>' +
+      (g ? '<div class="blm-tip">脚本从文案里猜到「' + escapeHtml(g.raw) + '」，核对一下对不对</div>' : '<div class="blm-tip">没在文案里找到开奖日期，可手动填</div>') +
+      '<div class="blm-fl-row" style="margin-top:8px"><label><input type="checkbox" class="blm-fl-follow"> 这是为抽奖关注的</label></div>' +
+      '<div class="blm-fl-row" style="justify-content:flex-end;margin-bottom:0">' +
+      '<a href="javascript:;" class="blm-fl-unknown" style="font-size:11px;color:var(--blm-text3);margin-right:auto">文案没写日期</a>' +
+      '<button class="blm-btn blm-fl-skip">不是抽奖</button>' +
+      '<button class="blm-btn pri blm-fl-save">保存</button></div>';
+    document.body.appendChild(el);
+    inst.el = el;
+    floatInstances.push(inst);
+    bindFloatEvents(inst);
+    bringFloatToFront(inst);   // 新出现的浮条层级最高
+    void el.offsetWidth;       // 强制 reflow 后再弹入
+    el.classList.add('blm-fl-in');
+    repostDiagLog('浮条 #' + inst.id + ' 创建（在场 ' + floatInstances.length + ' 条）');
+    resetFloatTimer(inst);
+  }
+  // 单个浮条的事件（创建时绑定一次）：置顶 / 拖动 / 固定 / 悬停与编辑暂停 / 各操作
+  function bindFloatEvents(inst) {
+    const el = inst.el;
+    el.addEventListener('mousedown', () => bringFloatToFront(inst));   // 点谁谁置顶
+    // 拖动：头部是手柄（pin 按钮除外）
+    el.querySelector('.blm-fl-head').addEventListener('mousedown', e => {
+      if (e.target.closest('.blm-fl-pin')) return;
+      e.preventDefault();
+      const rect = el.getBoundingClientRect();
+      const offX = e.clientX - rect.left, offY = e.clientY - rect.top;
+      const move = ev => {
+        const x = Math.min(Math.max(ev.clientX - offX, 4), window.innerWidth - rect.width - 4);
+        const y = Math.min(Math.max(ev.clientY - offY, 4), window.innerHeight - 44);
+        el.style.left = x + 'px'; el.style.top = y + 'px';
+        el.style.right = 'auto'; el.style.bottom = 'auto';
+      };
+      const up = () => {
+        document.removeEventListener('mousemove', move);
+        document.removeEventListener('mouseup', up);
+      };
+      document.addEventListener('mousemove', move);
+      document.addEventListener('mouseup', up);
+    });
+    el.querySelector('.blm-fl-pin').addEventListener('click', () => {
+      inst.pinned = !inst.pinned;
+      const pin = el.querySelector('.blm-fl-pin');
+      pin.classList.toggle('on', inst.pinned);
+      pin.title = inst.pinned ? '已固定：不会自动收起；再点一下取消固定并重新读秒' : '固定：不自动收起，慢慢编辑；再点一下取消固定并重新读秒';
+      resetFloatTimer(inst);
+    });
+    el.querySelector('.blm-fl-save').addEventListener('click', () => {
+      if (inst.item && inst.item.test) { testFloatDone(inst); return; }   // 测试浮条不写台账
+      const v = el.querySelector('.blm-fl-time').value.trim();
+      const fl = el.querySelector('.blm-fl-follow').checked;
       const ledger = loadLedger();
-      const it = ensureItem(ledger, item);
+      const it = ensureItem(ledger, inst.item);
       assignNumbers(ledger);   // 转发时新增的记录也立刻拿到编号
       if (v) {
-        const ts = parseUserDate(v, item.pubTs);
+        const ts = parseUserDate(v, inst.item.pubTs);
         if (isNaN(ts)) { alert('时间格式看不懂。\n\n可以填：2026-10-08 / 10-08 / 10.8 / 10月8日\n（不写年份就按今年算）'); return; }
         it.drawTs = ts; it.source = 'user'; it.drawUnknown = false;
-      } else if (g) {
-        it.drawTs = g.ts; it.source = 'guess'; it.guessRaw = g.raw;
+      } else if (inst.guess) {
+        it.drawTs = inst.guess.ts; it.source = 'guess'; it.guessRaw = inst.guess.raw;
       }
       if (fl) it.forLotteryFollow = true;
+      inheritLotteryFields(it, ledger, inst.item, false);   // 继承同抽奖的官方/中奖判定（不掉回「其他」）
       saveLedger(ledger);
-      hideFloat();
-      renderList();
+      renderList();               // 面板若开着，立即能看到新卡片
+      flashFloatSaved(inst, it.no);   // 浮条原地变「已录入台账 · 编号 #N」再收起
+      blmFx.setFabState('success');   // 面板收起时 FAB 可见：闪一下成功态
     });
     // 文案压根没写开奖日期：明确标记，和「脚本没猜出来」区分开
-    document.getElementById('blm-fl-unknown').addEventListener('click', () => {
-      const fl = document.getElementById('blm-fl-follow').checked;
+    el.querySelector('.blm-fl-unknown').addEventListener('click', () => {
+      if (inst.item && inst.item.test) { testFloatDone(inst); return; }   // 测试浮条不写台账
+      const fl = el.querySelector('.blm-fl-follow').checked;
       const ledger = loadLedger();
-      const it = ensureItem(ledger, item);
+      const it = ensureItem(ledger, inst.item);
       assignNumbers(ledger);
       it.drawTs = null;
       it.drawUnknown = true;
       it.source = 'user';
       if (fl) it.forLotteryFollow = true;
+      inheritLotteryFields(it, ledger, inst.item, true);   // 继承判定但不继承开奖时间（这条没写日期）
       saveLedger(ledger);
-      hideFloat();
       renderList();
+      flashFloatSaved(inst, it.no);
+      blmFx.setFabState('success');   // 面板收起时 FAB 可见：闪一下成功态
     });
-    document.getElementById('blm-fl-skip').addEventListener('click', hideFloat);
-    floatTimer = setTimeout(hideFloat, SETTINGS.floatAutoHide);
+    el.querySelector('.blm-fl-skip').addEventListener('click', () => removeFloat(inst));
+    // 悬停 / 编辑暂停读秒：鼠标在浮条上、或焦点在输入框中时不催着消失；
+    // 移开鼠标、或退出编辑（点击页面空白处等）后自动重新读秒（2026-10-17 用户需求）
+    el.addEventListener('mouseenter', () => { inst.hover = true; clearTimeout(inst.timer); });
+    el.addEventListener('mouseleave', () => { inst.hover = false; resetFloatTimer(inst); });
+    el.addEventListener('focusin', () => { inst.focus = true; clearTimeout(inst.timer); });
+    el.addEventListener('focusout', e => {
+      if (el.contains(e.relatedTarget)) return;   // 焦点还在浮条内（切到另一个控件），不重读
+      inst.focus = false;
+      resetFloatTimer(inst);   // 退出编辑 → 重新读秒
+    });
   }
-  function hideFloat() { floatBox.style.display = 'none'; clearTimeout(floatTimer); }
+  // 收起浮条：带出场动画（先退场 240ms 再移除 DOM），并从在场列表摘除
+  function removeFloat(inst) {
+    clearTimeout(inst.timer);
+    inst.pinned = false; inst.hover = false; inst.focus = false;
+    inst.el.classList.remove('blm-fl-in');
+    setTimeout(() => { inst.el.remove(); }, 240);
+    const i = floatInstances.indexOf(inst);
+    if (i >= 0) floatInstances.splice(i, 1);
+    repostDiagLog('浮条 #' + inst.id + ' 关闭（在场 ' + floatInstances.length + ' 条）');
+  }
+
+  // 动态流缓存延迟的重试：最多再补 2 次（2.5s / 4s），之后才认定「真没有」
+  const REPOST_RETRY_MAX = 3;
+  function retryNote(tryN) {
+    return tryN < REPOST_RETRY_MAX
+      ? '，' + (tryN === 1 ? 2500 : 4000) + 'ms 后重试（第 ' + (tryN + 1) + ' 次）'
+      : '（共查 ' + REPOST_RETRY_MAX + ' 次仍没看到，放弃）';
+  }
+  function retryRepostCheck(tryN) {
+    if (tryN >= REPOST_RETRY_MAX) return;
+    setTimeout(() => { handleRepostSuccess(tryN + 1); }, tryN === 1 ? 2500 : 4000);
+  }
 
   // 转发成功后，拉取最新一条动态作为刚转发的内容（比解析请求体更可靠）
-  async function handleRepostSuccess() {
+  async function handleRepostSuccess(attempt) {
+    const tryN = attempt || 1;   // 第几次尝试（动态流有缓存延迟，头一次拉可能还是旧数据）
+    if (tryN === 1 && Date.now() - lastRepostCheckAt < 3000) {
+      // 节流不丢活：排一个重试等窗口过了再查（评论接口触发放宽后，「评论完紧接着又转发」
+      // 会在 3 秒窗口里被撞上；多个待办只保留一个，最终由同条去重兜底）
+      repostDiagLog('触发节流：3 秒内刚检查过，排入重试');
+      if (!repostRetryTimer) {
+        repostRetryTimer = setTimeout(() => {
+          repostRetryTimer = 0;
+          handleRepostSuccess();
+        }, 3000 - (Date.now() - lastRepostCheckAt) + 80);
+      }
+      return;
+    }
+    lastRepostCheckAt = Date.now();
+    repostDiagLog('handleRepostSuccess 触发，1.5s 后拉取最新动态…');
     await sleep(1500);
     try {
       const r = await req({
@@ -5122,13 +6735,35 @@
              '&platform=web&timezone_offset=-480&web_location=333.1387&features=itemOpusStyle,listOnlyfans,opusBigCover,onlyfansVote,forwardListHidden,decorationCard,commentsNewVersion,onlyfansAssetsV2,ugcDelete,onlyfansQaCard'
       });
       const it = r && r.data && r.data.items && r.data.items[0];
-      if (!it) return;
+      if (!it) {
+        repostDiagLog('拉取失败：没有 items' + retryNote(tryN));
+        retryRepostCheck(tryN);
+        return;
+      }
       const pubTs = ((it.modules && it.modules.module_author && it.modules.module_author.pub_ts) || 0) * 1000;
-      if (Date.now() - pubTs > 5 * 60 * 1000) return;   // 不是刚才发的
+      repostDiagLog('拉到最新动态 ' + it.id_str + '（发布距今 ' + Math.round((Date.now() - pubTs) / 1000) + ' 秒）');
+      if (it.id_str === lastRepostDynId) {
+        // 最新一条还是上一条 → 动态流还没刷出刚转的这条，等一下再看
+        repostDiagLog('跳过：这条刚才已经处理过' + retryNote(tryN));
+        retryRepostCheck(tryN);
+        return;
+      }
+      if (Date.now() - pubTs > 5 * 60 * 1000) {
+        repostDiagLog('跳过：不是刚发的（超过 5 分钟）' + retryNote(tryN));
+        retryRepostCheck(tryN);
+        return;
+      }
       const orig = it.orig;
       const isForward = it.type === 'DYNAMIC_TYPE_FORWARD';
-      const text = extractText(orig || it) + ' ' + extractText(it);
-      if (!isForward && !looksLikeLottery(text)) return;  // 普通转发且不像抽奖，不打扰
+      // 无 orig 的动态不能 orig+自己拼两份，否则文案重复一遍（2026-10-17 修）
+      const text = orig ? (extractText(orig) + ' ' + extractText(it)) : extractText(it);
+      if (!isForward && !looksLikeLottery(text)) {
+        repostDiagLog('跳过：动态类型 ' + it.type + ' 不是转发类且文案不像抽奖'
+          + (it.type === 'DYNAMIC_TYPE_AV'
+            ? '（视频分享型动态 —— 视频页「评论+同时转发至动态」的产物，不入转发台账；'
+            + '2026-10-17 实测浮条链路仍不通，用户确认放弃识别这一类）' : ''));
+        return;
+      }
       const author = (orig && orig.modules && orig.modules.module_author) || (it.modules && it.modules.module_author) || {};
       pendingRepost = {
         dynId: it.id_str,
@@ -5136,41 +6771,117 @@
         upMid: author.mid, upName: author.name || '',
         pubTs: pubTs, text: text, dynType: DYN_TYPE_MAP[it.type] || 1
       };
+      repostDiagLog('判定通过（' + (isForward ? '转发' : '发布') + '），准备弹浮条');
+      lastRepostDynId = it.id_str;
       showFloat(pendingRepost);
-    } catch (e) { /* 静默失败，不打扰用户 */ }
+    } catch (e) { repostDiagLog('拉取/判定异常：' + (e && e.message)); }
+  }
+
+  // 转发触发判定（2026-10-17 定稿：评论接口需 body 命中宽关键词）：
+  //   · 转发接口（x/dynamic/... 或 dynamic_repost）→ URL 命中即触发；
+  //   · 评论接口（x/v2/reply/add）→ 需 body 命中关键词（勾了「转发至动态」时请求体会带相关字段，
+  //     字段名未文档化，用宽关键词兜底；hook 侧已用 bodyTextOf 预还原，FormData 也能匹配）。
+  //   · 曾试过「评论接口 URL 命中即触发」以救视频页「评论+转发」—— 实测仍不弹浮条，
+  //     2026-10-17 用户确认放弃识别视频分享型动态，故回退：不放宽，避免每次评论都拉接口。
+  const REPOST_URL_RE = /\/x\/dynamic\/(feed|opus)\/(create|repost)|dynamic_repost|\/x\/dynamic\/feed\/create/;
+  const REPLY_URL_RE = /\/x\/v2\/reply\/add/;
+  const REPOST_BODY_HINT = /forward|dynamic|repost|sync/i;
+  function isRepostTrigger(url, body) {
+    const u = String(url || '');
+    if (REPOST_URL_RE.test(u)) return true;
+    if (REPLY_URL_RE.test(u) && body != null && REPOST_BODY_HINT.test(String(body))) return true;
+    return false;
+  }
+  let lastRepostCheckAt = 0;   // 触发节流：3 秒内只处理一次（XHR/fetch 双通道可能重复触发）
+  let repostRetryTimer = 0;    // 节流期间到来的新触发排入重试，不丢（评论触发放宽后的必要配套）
+  let lastRepostDynId = '';    // 同条去重：这条动态刚处理过就不再弹（评论转发可能连着触发多次）
+
+  // 请求体转文本（诊断日志用）：string / URLSearchParams / FormData 都尽量还原 ——
+  // FormData 直接 String() 会得到 "[object FormData]"，线索全丢（视频页评论体就可能是它）
+  function bodyTextOf(body) {
+    if (body == null) return '';
+    if (typeof body === 'string') return body;
+    try {
+      if (typeof URLSearchParams !== 'undefined' && body instanceof URLSearchParams) return body.toString();
+    } catch (e) {}
+    try {
+      if (typeof FormData !== 'undefined' && body instanceof FormData) {
+        const parts = [];
+        body.forEach((v, k) => { parts.push(k + '=' + (typeof v === 'string' ? v : '[blob]')); });
+        return parts.join('&');
+      }
+    } catch (e) {}
+    try { return String(body); } catch (e) { return ''; }
+  }
+
+  // 转发监听诊断（2026-10-17 加）：浮条不弹时，用油猴菜单「转发监听诊断」看断在哪一环。
+  // 全链路记录：hook 安装 → 与 dynamic 相关的 POST 请求（匹配与否）→ 拉取最新动态 → 判定 → 弹浮条。
+  const repostDiag = [];
+  function repostDiagLog(msg) {
+    try {
+      repostDiag.push(new Date().toTimeString().slice(0, 8) + '  ' + msg);
+      if (repostDiag.length > 40) repostDiag.shift();   // 环形，只留最近 40 条
+    } catch (e) {}
   }
 
   // 监听 B 站转发请求
   function hookRepost() {
-    const RE = /\/x\/dynamic\/(feed|opus)\/(create|repost)|dynamic_repost|\/x\/dynamic\/feed\/create/;
-    const origOpen = XMLHttpRequest.prototype.open;
-    const origSend = XMLHttpRequest.prototype.send;
-    XMLHttpRequest.prototype.open = function (method, url) {
+    // ★ 关键修复（2026-10-17，用户实测「转发浮条从未弹出」）：
+    // 本脚本声明了 @grant → Tampermonkey 在沙箱里运行；直接改沙箱侧的
+    // XMLHttpRequest / window.fetch，页面上下文（B站前端）感知不到 —— 转发请求根本拦不到。
+    // 必须改「页面上下文」的对象（unsafeWindow）；无沙箱环境（测试/非油猴）退回 window。
+    const W = (typeof unsafeWindow !== 'undefined' && unsafeWindow) ? unsafeWindow : window;
+    const LOOSE = /dynamic|repost|reply/i;   // 诊断用的宽条件：与转发/评论相关的 POST 都记一笔
+    repostDiagLog('hook 已安装（' + location.host + '，用 ' + (W === window ? 'window' : 'unsafeWindow') + '）');
+    const origOpen = W.XMLHttpRequest.prototype.open;
+    const origSend = W.XMLHttpRequest.prototype.send;
+    W.XMLHttpRequest.prototype.open = function (method, url) {
       this.__blm_method = method; this.__blm_url = String(url);
       return origOpen.apply(this, arguments);
     };
-    XMLHttpRequest.prototype.send = function () {
-      if (this.__blm_method && this.__blm_method.toUpperCase() === 'POST' && RE.test(this.__blm_url || '')) {
+    W.XMLHttpRequest.prototype.send = function (body) {
+      const method = this.__blm_method ? this.__blm_method.toUpperCase() : '';
+      const url = String(this.__blm_url || '');
+      try {
+        if (method === 'POST' && LOOSE.test(url)) {
+          repostDiagLog('XHR POST ' + url.slice(0, 130) + ' body=' + bodyTextOf(body).slice(0, 160)
+            + (isRepostTrigger(url, body) ? ' ✅判定为转发' : ' ⛔非转发'));
+        }
+      } catch (e) {}
+      if (method === 'POST' && isRepostTrigger(url, body)) {
         this.addEventListener('load', () => {
           try {
-            const r = JSON.parse(this.responseText);
+            // responseType='json' 时读 responseText 会抛 InvalidStateError（B站换写法就会把整条链路静默吞掉）
+            const raw = (this.responseType === 'json' && this.response) ? this.response : this.responseText;
+            const r = (typeof raw === 'string') ? JSON.parse(raw) : raw;
+            repostDiagLog('XHR 响应 code=' + (r && r.code));
             if (r && r.code === 0) handleRepostSuccess();
-          } catch (e) {}
+          } catch (e) { repostDiagLog('XHR 响应解析失败：' + (e && e.name)); }
         });
       }
       return origSend.apply(this, arguments);
     };
-    if (window.fetch) {
-      const of = window.fetch;
-      window.fetch = function (input, init) {
+    if (W.fetch) {
+      const of = W.fetch;
+      W.fetch = function (input, init) {
         const url = typeof input === 'string' ? input : (input && input.url) || '';
-        const method = (init && init.method) || (input && input.method) || 'GET';
+        const method = ((init && init.method) || (input && input.method) || 'GET').toUpperCase();
+        const body = bodyTextOf((init && init.body != null) ? init.body : '');
+        try {
+          if (method === 'POST' && LOOSE.test(url)) {
+            repostDiagLog('fetch POST ' + String(url).slice(0, 130) + ' body=' + body.slice(0, 160)
+              + (isRepostTrigger(url, body) ? ' ✅判定为转发' : ' ⛔非转发'));
+          }
+        } catch (e) {}
         const p = of.apply(this, arguments);
-        if (method.toUpperCase() === 'POST' && RE.test(url)) {
+        if (method === 'POST' && isRepostTrigger(url, body)) {
           p.then(res => {
             try {
-              res.clone().json().then(r => { if (r && r.code === 0) handleRepostSuccess(); });
-            } catch (e) {}
+              res.clone().json().then(r => {
+                repostDiagLog('fetch 响应 code=' + (r && r.code));
+                if (r && r.code === 0) handleRepostSuccess();
+              }).catch(() => {});
+            } catch (e) { repostDiagLog('fetch clone 失败（响应体已被页面先读取）'); }
           }).catch(() => {});
         }
         return p;
@@ -5190,6 +6901,7 @@
   }, true);
 
   fab.addEventListener('click', e => {
+    if (Date.now() - fabDragEndAt < 320) return;   // 刚拖过：这次 click 是拖拽的尾巴，别开面板
     if (panelLoading) return;        // 加载窗口（含让帧空档）里的点击：忽略
     if (isStaleClick(e)) return;     // 加载窗口里攒下的点击，补发到这里：吞掉（防面板乱开合）
     if (!panel.classList.contains('blm-show')) applyPanelPos();
@@ -5210,6 +6922,22 @@
       curTab = b.getAttribute('data-tab');
       renderList();
     });
+  });
+
+  // 关注页底部批量工具栏（勾选后才浮起）：批量取关 / 批量标记。
+  // 工具栏挂在面板上（不在 body 里），所以单独绑，不能靠 body 的委托。
+  // 设置页吸底条（静态节点，只绑一次）
+  const setSaveBtn = document.getElementById('s-save');
+  if (setSaveBtn) setSaveBtn.addEventListener('click', () => saveSettingsNow());
+  const setDiscardBtn = document.getElementById('s-discard');
+  if (setDiscardBtn) setDiscardBtn.addEventListener('click', () => { renderSettings(); });
+
+  const ufbarEl = document.getElementById('blm-ufbar');
+  if (ufbarEl) ufbarEl.addEventListener('click', e => {
+    const b = e.target.closest('[data-ufbatch]');
+    if (!b) return;
+    if (b.getAttribute('data-ufbatch') === 'go') { doUnfollow(); return; }
+    batchMarkSelected(b.getAttribute('data-on') === '1');
   });
 
   // 滚动时收起状态筛选条 / 分页条，滚动停止 300ms 后自动恢复 —— 给内容让出可视高度。
@@ -5370,6 +7098,9 @@
 
   bindListEvents();
   bindCardPressFeedback();   // 卡片按压反馈（倾斜 + 光斑），受设置开关 / prefers-reduced-motion 控制
+  bindFxEvents();            // 涟漪 + 触觉轻点（P0/P1）
+  bindSwipeEvents();         // 左滑露出只读操作（P2，仅触摸端 + gestureNav 开关）
+  bindLongPressEvents();     // 长按快捷菜单（P2，仅触摸端 + gestureNav 开关）
   document.getElementById('blm-del').addEventListener('click', doDelete);
   const selCurBtn = document.getElementById('blm-sel-cur');
   if (selCurBtn) selCurBtn.addEventListener('click', selectAllCurrent);
@@ -5402,6 +7133,14 @@
           + (r.sync && r.sync.skipped === 'truncated' ? '（本次未扫全，跳过删除同步）' : '')
           + (r.sync && r.sync.skipped === 'tooMany' ? '（消失条目异常偏多，跳过删除同步）' : '')));
       renderList();
+      // P0 状态机 + P2 触觉：扫描成功在按钮 / FAB 上闪一下成功态（1.4s 自回退）；中止不算成功也不算失败
+      if (abortFlag) {
+        blmFx.setState(document.getElementById('blm-scan'), 'idle');
+      } else {
+        blmFx.setState(document.getElementById('blm-scan'), 'success', 2200);
+        blmFx.setFabState('success');
+        blmFx.haptic(blmFx.HAPTIC.success);
+      }
       // 删除同步的结果说明（含核对明细，便于排查）
       if (!abortFlag && r.sync && (r.sync.missing || r.sync.confirmed || r.sync.revived)) {
         const s = r.sync;
@@ -5415,8 +7154,44 @@
       if (!abortFlag && r.added) {
         alert('扫描完成，共 ' + r.total + ' 条转发记录。\n\n接下来点「核验开奖状态」，脚本会逐条查询是否是官方抽奖、是否已开奖。');
       }
+      // 关注状态同步（2026-10-17 用户需求）：拉全自己的关注列表对照关注页 ——
+      // 「手动取关、脚本不知情」的标上收起，「又关注回来」的自动摘标记，抹平静态信息差。
+      // 失败 / 中止都只跳过这一步，不影响本次扫描的成果。
+      if (!abortFlag) {
+        setBusy(true, '正在同步关注状态…');
+        const fs = await syncFollowStatus((n, t) => setBusy(true, '正在同步关注状态（' + n + '/' + (t || n) + '）…'));
+        if (fs.ok && (fs.marked || fs.revived)) {
+          setBusy(false, '扫描完成：关注状态已同步');
+          alert('关注状态同步（共核对 ' + fs.scanned + ' 位 UP）：\n\n'
+            + (fs.marked ? '· ' + fs.marked + ' 位已不在你的关注列表（多半是手动取关过），标记为「已取关」默认收起\n' : '')
+            + (fs.revived ? '· ' + fs.revived + ' 位之前标过已取关、现在又关注回去了，已自动恢复\n' : '')
+            + '\n关注页点「显示已取关」可以随时翻出来核对。');
+        } else if (fs.ok) {
+          setBusy(false, '扫描完成（关注状态已核对，无变化）');
+        } else if (fs.reason !== 'aborted' && fs.reason !== 'no-login') {
+          setBusy(false, '扫描完成（关注状态同步已跳过：' + (
+            fs.reason === 'api' ? '接口异常'
+            : fs.reason === 'partial' ? '关注列表拉取不完整或为空'
+            : '未知原因') + '，本次不做标记）');
+        } else {
+          setBusy(false, '扫描完成');
+        }
+      }
+      // 自动取关（2026-10-17 用户需求）：「为抽奖关注」且动态全删的 UP 自动取关（后台执行，不阻塞扫描结果展示）
+      if (!abortFlag && SETTINGS.autoUnfollowPurged) {
+        autoUnfollowDeletedUps().then(r => {
+          if (r && r.unfollowed) {
+            renderList();
+            toast('自动取关 ' + r.unfollowed + ' 位：' + r.names.join('、')
+              + '\n（「为抽奖关注」且动态已全部删除）', { duration: 8000 });
+          }
+        });
+      }
     } catch (e) {
       setBusy(false, '扫描失败');
+      blmFx.setState(document.getElementById('blm-scan'), 'error', 3000);
+      blmFx.setFabState('error');
+      blmFx.haptic(blmFx.HAPTIC.warn);
       alert('扫描失败：' + e.message + '\n\n常见原因：未登录 B 站、或触发了风控。请稍等几分钟再试。');
     }
   });
@@ -5452,6 +7227,12 @@
           + (r.skipped ? '，跳过 ' + r.skipped + ' 条' : '')
           + (r.errCount ? '，' + r.errCount + ' 条查询失败' : '')));
       renderList();
+      // P0 状态机：核验完成闪成功 / 部分失败闪错误
+      if (abortFlag) blmFx.setState(document.getElementById('blm-verify'), 'idle');
+      else {
+        blmFx.setState(document.getElementById('blm-verify'), r.errCount ? 'error' : 'success', r.errCount ? 3000 : 2200);
+        if (r.errCount) blmFx.haptic(blmFx.HAPTIC.warn);
+      }
       if (!abortFlag && r.errCount) {
         alert('有 ' + r.errCount + ' 条因为网络或风控查询失败。\n\n'
           + '脚本**没有**给它们下结论（仍然保持「未判定」），'
@@ -5464,9 +7245,16 @@
           + '② 接口参数又变了。\n\n'
           + '要分清是哪一种：到「设置」点「接口自检」，把结果发给开发者。');
       }
-      if (!abortFlag && r.wonCount) alert('注意：检测到 ' + r.wonCount + ' 条你中奖的抽奖动态，这些已被锁定，不会被删除。');
+      if (!abortFlag && r.wonCount) {
+        // 查到中奖 = 重要正向事件：FAB 成功脉冲 + success 五峰震（桌面通知另走 winNotify）
+        blmFx.setFabState('success');
+        blmFx.haptic(blmFx.HAPTIC.success);
+        alert('注意：检测到 ' + r.wonCount + ' 条你中奖的抽奖动态，这些已被锁定，不会被删除。');
+      }
     } catch (e) {
       setBusy(false, '核验失败');
+      blmFx.setState(document.getElementById('blm-verify'), 'error', 3000);
+      blmFx.haptic(blmFx.HAPTIC.warn);
       alert('核验失败：' + e.message);
     }
   });
@@ -5476,6 +7264,34 @@
   });
   GM_registerMenuCommand('重置面板位置（回到默认右侧）', resetPanelPos);
   GM_registerMenuCommand('中止当前操作（扫描/核验/删除）', () => { if (busy) abortFlag = true; });
+  // 转发浮条不弹时的自查入口：能看到 hook 是否装上、请求是否被捕获、断在哪一环
+  GM_registerMenuCommand('转发监听诊断（浮条不弹时用）', () => {
+    const hideMs = floatHideMs();
+    const rawHide = SETTINGS.floatAutoHide;
+    const rawOk = isFinite(Number(rawHide)) && Number(rawHide) > 0;   // 存的值本身可用吗
+    alert('转发监听诊断（最近 ' + repostDiag.length + ' 条）\n'
+      + '当前设置：自动弹浮条=' + (SETTINGS.autoFloatOnRepost ? '开' : '关')
+      + '，自动收起=' + (hideMs ? hideMs + 'ms' : '不自动收起')
+      + (rawOk ? '' : '（存的值是 ' + JSON.stringify(rawHide) + '，按「不自动收起」处理）')
+      + '，在场浮条=' + floatInstances.length + ' 条\n\n'
+      + (repostDiag.length ? repostDiag.join('\n') : '（暂无记录 —— 请先在电脑上转发一条动态，再来查看）')
+      + '\n\n正常链路：hook 已安装 → XHR/fetch POST [✅匹配] → handleRepostSuccess 触发 → 拉到最新动态 → 判定通过 → showFloat 调用。'
+      + '\n哪一步没有出现，问题就在那一步。');
+  });
+
+  // 浮条不弹时的第一步自查：点一下看浮条本身能不能出来。
+  //   出了 → 显示链路正常，问题在上游（hook 没拦住 / 没判定成转发）；不出 → 显示或设置的问题。
+  GM_registerMenuCommand('试弹一条测试浮条（查浮条能不能显示）', () => {
+    showFloat({
+      test: true, dynId: 'BLM_TEST', origId: 'BLM_TEST', upMid: 0, upName: '测试',
+      pubTs: Date.now(),
+      text: '这是一条测试浮条：能看到它，说明浮条的显示链路是正常的，问题在上游（转发请求没被识别）。'
+        + '点「不是抽奖」即可关闭，不会写进台账。'
+        + (SETTINGS.autoFloatOnRepost ? '' : '（注意：「转发后自动弹录入浮条」现在是关的，真实转发也不会弹）'),
+      dynType: 1
+    });
+    repostDiagLog('手动试弹测试浮条');
+  });
 
   hookRepost();
 

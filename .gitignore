@@ -7,6 +7,24 @@ _probe.js
 _v100.js
 _v113_load_preview.html
 _watermark_b64.txt
+_fx_apply.py
+_fx_apply2.py
+_fx_test_update.py
+_fx_fix_hoverloop.py
+_fx_fix_replytrigger.py
+_fx_av_share.py
+_fx_revert_av.py
+_fx_hl_aplus.py
+_fx_hl_docs.py
+_fx_hl_test.py
+_fx_time_p1.py
+_fx_time_test.py
+_fx_time_test2.py
+_fx_font_audit.py
+_fx_font_names.py
+_fx_ck_fix.py
+_fx_type_impl.py
+_fx_type_audit.py
 
 # 图标源工程（miora 画布与其中间产物，成品在 icon/）
 *.miora
@@ -20,3 +38,8 @@ oc-avatar.svg
 # 系统文件
 Thumbs.db
 Desktop.ini
+
+# 方案预览 / 一次性补丁脚本（生成物，不入库）
+_v*.html
+_make_*.py
+_patch_*.py
