@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 680" role="img">
+  <title>糖心月 OC 头像</title>
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#EFE6FA"/>
+    </linearGradient>
+    <linearGradient id="hairBackGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#E8F1FD"/>
+      <stop offset="1" stop-color="#B9D2F5"/>
+    </linearGradient>
+    <linearGradient id="hairFrontGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.72" stop-color="#F4F9FF"/>
+      <stop offset="1" stop-color="#CFE3FB"/>
+    </linearGradient>
+    <linearGradient id="eyeGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1E2C7E"/>
+      <stop offset="0.55" stop-color="#4A68D0"/>
+      <stop offset="1" stop-color="#9DB9F2"/>
+    </linearGradient>
+    <linearGradient id="starGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFF6C9"/>
+      <stop offset="1" stop-color="#FFD35E"/>
+    </linearGradient>
+    <linearGradient id="hoodieGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#D6E6FB"/>
+      <stop offset="0.6" stop-color="#C9D9F9"/>
+      <stop offset="1" stop-color="#D9CDF6"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="0" y="0" width="680" height="680" rx="48" fill="url(#bgGrad)"/>
+
+  <path d="M108 196 L118 220 L142 230 L118 240 L108 264 L98 240 L74 230 L98 220 Z" fill="#FFE9A8" opacity="0.9"/>
+  <path d="M580 150 L588 170 L608 178 L588 186 L580 206 L572 186 L552 178 L572 170 Z" fill="#FFF3C9" opacity="0.9"/>
+
+  <path d="M340,112 C200,112 138,220 142,345 C144,430 150,470 158,505 C200,522 480,522 522,505 C530,470 536,430 538,345 C542,220 480,112 340,112 Z"
+        fill="url(#hairBackGrad)" stroke="#3B3B8F" stroke-width="7"/>
+
+  <path d="M340,116 C330,78 356,50 396,56 C366,60 350,84 356,114 Z"
+        fill="#FFFFFF" stroke="#3B3B8F" stroke-width="7" stroke-linejoin="round"/>
+
+  <path d="M214,684 C210,598 246,560 300,552 L380,552 C434,560 470,598 466,684 Z"
+        fill="url(#hoodieGrad)" stroke="#3B3B8F" stroke-width="7"/>
+  <path d="M302,556 C318,598 362,598 378,556 C366,568 314,568 302,556 Z"
+        fill="#FFFFFF" stroke="#3B3B8F" stroke-width="5"/>
+  <path d="M324,580 C320,600 319,616 318,630" fill="none" stroke="#3B3B8F" stroke-width="4" stroke-linecap="round"/>
+  <path d="M356,580 C360,600 361,616 362,630" fill="none" stroke="#3B3B8F" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="318" cy="634" r="4" fill="#3B3B8F"/>
+  <circle cx="362" cy="634" r="4" fill="#3B3B8F"/>
+  <path d="M252,610 C260,600 272,596 282,596" fill="none" stroke="#3B3B8F" stroke-width="4" stroke-linecap="round" opacity="0.55"/>
+  <path d="M428,610 C420,600 408,596 398,596" fill="none" stroke="#3B3B8F" stroke-width="4" stroke-linecap="round" opacity="0.55"/>
+  <path d="M470,632 L474,642 L484,646 L474,650 L470,660 L466,650 L456,646 L466,642 Z" fill="#FFFFFF" opacity="0.95"/>
+  <path d="M212,640 L216,649 L225,653 L216,657 L212,666 L208,657 L199,653 L208,649 Z" fill="#FFFFFF" opacity="0.95"/>
+
+  <ellipse cx="340" cy="392" rx="152" ry="138" fill="#FFFDFD" stroke="#3B3B8F" stroke-width="7"/>
+
+  <path d="M178,452 C150,492 140,540 154,576 C160,592 178,592 182,574 C190,526 190,482 192,452 Z"
+        fill="url(#hairFrontGrad)" stroke="#3B3B8F" stroke-width="7" stroke-linejoin="round"/>
+  <path d="M502,452 C530,492 540,540 526,576 C520,592 502,592 498,574 C490,526 490,482 488,452 Z"
+        fill="url(#hairFrontGrad)" stroke="#3B3B8F" stroke-width="7" stroke-linejoin="round"/>
+
+  <path d="M188,402
+           C176,252 260,168 340,168
+           C420,168 504,252 492,402
+           C480,368 466,360 452,396
+           C442,422 430,424 420,400
+           C408,372 396,372 384,402
+           C374,428 360,430 350,404
+           C340,380 328,380 318,404
+           C308,430 294,428 284,400
+           C274,374 262,372 250,398
+           C240,420 228,416 220,396
+           C212,378 200,378 188,402 Z"
+        fill="url(#hairFrontGrad)" stroke="#3B3B8F" stroke-width="7" stroke-linejoin="round"/>
+
+  <path d="M452,248 L460.8,269.9 L484.3,271.5 L464.1,286.6 L472,309.5 L452,297 L432,309.5 L439.9,286.6 L419.7,271.5 L443.2,269.9 Z"
+        fill="url(#starGrad)" stroke="#3B3B8F" stroke-width="5" stroke-linejoin="round"/>
+
+  <path d="M245,402 C262,372 308,368 328,398" fill="none" stroke="#3B3B8F" stroke-width="10" stroke-linecap="round"/>
+  <ellipse cx="286" cy="430" rx="40" ry="44" fill="url(#eyeGrad)" stroke="#3B3B8F" stroke-width="5"/>
+  <circle cx="272" cy="412" r="13" fill="#FFFFFF"/>
+  <circle cx="298" cy="448" r="6" fill="#FFFFFF" opacity="0.9"/>
+  <path d="M286,424 L289,431 L296,434 L289,437 L286,444 L283,437 L276,434 L283,431 Z" fill="#FFFFFF" opacity="0.85"/>
+
+  <path d="M354,398 C374,368 420,372 436,402" fill="none" stroke="#3B3B8F" stroke-width="10" stroke-linecap="round"/>
+  <ellipse cx="396" cy="430" rx="40" ry="44" fill="url(#eyeGrad)" stroke="#3B3B8F" stroke-width="5"/>
+  <circle cx="382" cy="412" r="13" fill="#FFFFFF"/>
+  <circle cx="408" cy="448" r="6" fill="#FFFFFF" opacity="0.9"/>
+  <path d="M396,424 L399,431 L406,434 L399,437 L396,444 L393,437 L386,434 L393,431 Z" fill="#FFFFFF" opacity="0.85"/>
+
+  <ellipse cx="240" cy="474" rx="27" ry="14" fill="#FBC4D8" opacity="0.85"/>
+  <ellipse cx="442" cy="474" rx="27" ry="14" fill="#FBC4D8" opacity="0.85"/>
+
+  <path d="M318,482 C330,510 356,510 368,482 C352,494 334,494 318,482 Z"
+        fill="#B4485E" stroke="#3B3B8F" stroke-width="4" stroke-linejoin="round"/>
+</svg>
