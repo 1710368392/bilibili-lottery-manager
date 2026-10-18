@@ -1622,8 +1622,13 @@ S.allowCheckUnverified = false;
   check('selectAllSafe 空态区分：无记录 vs 无零风险条目',
     src47.indexOf('当前筛选条件下没有记录，先调整筛选或点「全部」看看。') >= 0
       && src47.indexOf('当前筛选结果里没有零风险可删的条目。') >= 0);
-  check('版本号已升至 1.2.0（正式版，@version 与 VERSION 两处一致）',
-    src47.indexOf('@version      1.2.0') >= 0 && src47.indexOf("VERSION = '1.2.0'") >= 0);
+  // 版本号断言改成「两处自动比对」而不是写死具体版本：
+  // 写死的话每次发版都要改断言（1.2.0 → 1.2.1 → …），容易漏改或忘改；
+  // 自动比对能永久守住「@version 与 VERSION 必须一致」这条真正的约定。
+  var vMeta = (src47.match(/@version\s+([0-9][0-9.]*)/) || [])[1] || '';
+  var vConst = (src47.match(/const VERSION = '([0-9][0-9.]*)'/) || [])[1] || '';
+  check('版本号两处一致：@version 与 VERSION 必须同步（@version=' + (vMeta || '?') + '）',
+    !!vMeta && vMeta === vConst);
 
   console.log('\n[48] v1.0.1 「清理重复」按钮并入「可删」（重复视图上下文语义）');
   const src48 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
@@ -1743,7 +1748,8 @@ S.allowCheckUnverified = false;
   check('存在 OC_WATERMARK base64 常量（WebP data URI）',
     /const OC_WATERMARK = 'data:image\/webp;base64,/.test(src55));
   check('设置页渲染水印作者栏并引用常量',
-    src55.indexOf("img src=\"' + OC_WATERMARK + '\"") >= 0 && src55.indexOf('作者 <b style="color:var(--blm-text)">糖心月</b>') >= 0);
+    src55.indexOf("' + OC_WATERMARK + '\"") >= 0 && src55.indexOf('alt="糖心月"') >= 0
+      && src55.indexOf('class="blm-author"') >= 0);
   // 油猴脚本列表图标：@icon / @icon64 内嵌 base64（64px PNG，约 9.4KB）
   // 用内嵌而非外链：油猴列表图标不依赖网络，断网/墙 raw 时也能正常显示
   check('元数据声明 @icon（内嵌 base64 PNG，油猴列表显示专属图标）',
@@ -1891,7 +1897,7 @@ S.allowCheckUnverified = false;
         && src61.indexOf("'命中率 ' + x.rate + '%</span>'") < 0);
     check('设置页作者署名只留一行（「你的 OC 看着你清理抽奖动态」已去掉）',
       src61.indexOf('你的 OC 看着你清理抽奖动态') < 0
-        && /作者 <b style="color:var\(--blm-text\)">糖心月<\/b> · 本脚本用爱发电/.test(src61));
+        && /作者 <a class="blm-author-nm"[^>]*>糖心月<\/a> · 本脚本用爱发电/.test(src61));
 
     // II 为抽奖关注
     check('为抽奖关注可整组切换（toggleFollowMark 按 upMid 批量）',
@@ -3463,6 +3469,52 @@ S.allowCheckUnverified = false;
       && /last\.sig === sig && Date\.now\(\) - \(last\.at \|\| 0\) < 10 \* 60 \* 1000/.test(src85));
   check('去重状态存 GM 存储（跨标签页生效）',
     /GM_setValue\(WIN_NOTIFIED_KEY, \{ sig: sig, at: Date\.now\(\) \}\)/.test(src85));
+
+  console.log('\n[86] 浮条必须真的看得见（2026-10-18 用户实测：转发后浮条不弹）');
+  const src86 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
+  const floatBase86 = (src86.match(/\.blm-float\{([^}]*)\}/) || ['', ''])[1];
+  const floatIn86 = (src86.match(/\.blm-float\.blm-fl-in\{([^}]*)\}/) || ['', ''])[1];
+  check('基础 .blm-float 是隐藏态（未加显示类时不占位、不闪现）',
+    floatBase86.replace(/\s/g, '').indexOf('display:none') >= 0);
+  check('★ .blm-fl-in 必须把 display 拉回来（修「DOM 里有但看不见」的真 bug）',
+    floatIn86.replace(/\s/g, '').indexOf('display:block') >= 0, floatIn86.trim());
+  check('显示类同时恢复 opacity 与 transform（入场动画的前提）',
+    /opacity:1/.test(floatIn86) && /transform:none/.test(floatIn86));
+  check('显隐成对：去掉显示类即回到隐藏（removeFloat 移除 .blm-fl-in）',
+    /classList\.remove\('blm-fl-in'\)/.test(src86)
+      && /classList\.add\('blm-fl-in'\)/.test(src86));
+  check('诊断日志自检 display/opacity（下次「不弹」能一眼分清是没建还是没渲染）',
+    src86.indexOf('可见性自检 display=') >= 0
+      && src86.indexOf('getComputedStyle(el).display') >= 0);
+  check('同文件其他弹窗的 display 恢复写法一致（防止只修一处、别处照旧漏）',
+    /#blm-panel\.blm-show\{display:flex;\}/.test(src86));
+
+  console.log('\n[87] 作者区跳 GitHub 主页（2026-10-18 用户需求）');
+  const src87 = fs.readFileSync(path.join(__dirname, 'bilibili-lottery-manager.user.js'), 'utf8');
+  const GH87 = 'https://github.com/1710368392/bilibili-lottery-manager';
+  check('头像与作者名都链到 GitHub 主页（两个入口，用户要求「点图片或名字」）',
+    (src87.match(/href="https:\/\/github\.com\/1710368392\/bilibili-lottery-manager"/g) || []).length === 2
+      && /class="blm-author-av" href="[^"]*github/.test(src87)
+      && /class="blm-author-nm" href="[^"]*github/.test(src87));
+  check('用原生 a 标签（天然支持新标签页/中键/右键，不靠 window.open 拦截）',
+    (src87.match(/target="_blank" rel="noreferrer"/g) || []).length >= 2
+      && src87.indexOf('rel="noopener') < 0);
+  check('href 指向仓库地址且带 title 提示（可点击性可被发现）',
+    src87.indexOf('title="打开作者的 GitHub 主页"') >= 0);
+  check('作者区有类名可挂样式（不再是纯内联，便于测试断言与统一改）',
+    /class="blm-author"/.test(src87) && /class="blm-author-tx"/.test(src87)
+      && /class="blm-author-sub"/.test(src87));
+  check('名字链接默认不画下划线（避免与正文里的普通链接混淆）',
+    /\.blm-author-nm\{[^}]*text-decoration:none/.test(src87));
+  check('hover 只改颜色/底色，不改布局（与项目 hover 语言一致，无位移抖动）',
+    /\.blm-author-nm:hover\{[^}]*color:var\(--blm-primary\)/.test(src87)
+      && /\.blm-author-nm:hover\{[^}]*(margin|padding-top|left|top)/.test(src87) === false);
+  check('头像 hover 有轻微放大反馈，且尊重 reduced-motion',
+    /\.blm-author-av:hover\{[^}]*transform:scale\(1\.06\)/.test(src87)
+      && /prefers-reduced-motion: reduce\)\{ \.blm-author-av\{transition:none;/.test(src87));
+  check('作者区样式进了 CSS 变量作用域（暗色下不发白/不可读）',
+    src87.indexOf('#blm-panel,#blm-fab,.blm-float,#blm-detailbox,#blm-diag,#blm-stmenu,#blm-prizebox,#blm-trashbox{') >= 0
+      && /\.blm-author-tx\{[^}]*color:var\(--blm-text2\)/.test(src87));
 
   console.log('\n结果: ' + passed + ' 通过, ' + failed + ' 失败');
   process.exit(failed ? 1 : 0);

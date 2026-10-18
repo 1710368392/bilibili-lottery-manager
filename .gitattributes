@@ -2,5 +2,15 @@
 # 背景：test-smoke.js 里有断言硬编码了含 \n 的多行匹配；
 # Windows 的 core.autocrlf=true 会在 checkout 时把工作区文件转成 CRLF，
 # 导致多行断言集体失配（2026-10-11 踩过两次坑）。这里显式声明，一劳永逸。
-*.js text eol=lf
-*.md text eol=lf
+*.js   text eol=lf
+
+# Markdown 同理：README 与安装说明里有多行表格与代码块，CRLF 会让对照渲染出偏差。
+*.md   text eol=lf
+
+# 2026-10-18 补：目录整理后新增了 tools/ 下的 Python 脚本与 SVG 素材。
+# 之前只锁了 js / md，git 提示「LF will be replaced by CRLF」——
+# Python 补丁脚本里全是断言用的多行匹配串，被转 CRLF 后同样会静默失配。
+*.py   text eol=lf
+*.svg  text eol=lf
+*.json text eol=lf
+*.yml  text eol=lf
