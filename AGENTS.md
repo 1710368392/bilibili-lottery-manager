@@ -178,11 +178,23 @@ archive/                           ← 历史补丁脚本，只读档案
 ### 发布时的注意事项
 
 - 版本号：`@version` 与 `VERSION` 两处必须一致（设置页与诊断弹窗会显示版本，方便确认油猴里跑的是哪版）
-- 当前版本：**1.2.0**（已发布，远程 tag `v1.0.0` / `v1.1.1` / `v1.1.3` / `v1.2.0`）
+- 当前版本：**1.2.0**（远程 tag `v1.0.0` / `v1.1.1` / `v1.1.3` / `v1.2.0`）
 - 发布流程：`git add -A` → commit → `git push origin main` → `git tag -a vX.Y.Z` → `git push origin vX.Y.Z`
+- **必须创建 Release 页面并上传附件**（用户明确要求，与 v1.1.3 保持一致）：
+  - 只打 tag **不算发布** —— GitHub 只有存在 Release 才会把它标成 `Latest`，
+    用户看到的会是上一个版本（2026-10-18 踩过：Latest 一直停在 v1.1.3）。
+  - Release 附件要手动上传 `bilibili-lottery-manager.user.js`
+    （zip / tar.gz 那两个是 GitHub 自动生成的，不用管）。
+  - Release 正文只写**该版本相对上一正式版的改动**，不要把发布周期之外的小修混进去。
+- **小修不升版本号**：发布周期内做的零散修复，跟着下一个正式版走，不要单独发小版本
+  （2026-10-18 差点误发 v1.2.1，用户明确纠正过）。
 - 油叉（GreasyFork）**无法自动上传**（需登录 + 网页操作），只能提醒用户手动操作
-- 推完要**实际核对**：`raw.githubusercontent.com/.../main/bilibili-lottery-manager.user.js`
-  返回的字节数与版本号是否与本地一致
+- **推完要实际核对**，三项全过才算成功：
+  ① `gh api .../contents/{file}` 返回的字节数与本地一致
+  ② 该 blob 的 SHA 与本地 `git hash-object {file}` **逐位相同**
+  ③ base64 解出正文 grep 关键改动确实命中
+  ⚠️ **不要用 `raw.githubusercontent.com` 核对** —— CDN 缓存未刷新，会拿到旧内容误判成推送失败
+  （2026-10-18 踩过：线上返回 31815 字节的旧文件，实际早已推送成功）。
 
 ---
 
